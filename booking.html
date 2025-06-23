@@ -74,9 +74,11 @@
 </head>
 <body>
   <h1>Book Your Haircut</h1>
+
   <form action="https://formsubmit.co/owethuandrew10@gmail.com" method="POST">
     <input type="hidden" name="_captcha" value="false">
     <input type="hidden" name="_subject" value="New Booking from Website">
+    <input type="hidden" name="_next" value="thankyou.html">
 
     <label for="name">Full Name:</label>
     <input type="text" id="name" name="name" required>
@@ -87,6 +89,15 @@
     <label for="phone">Phone Number:</label>
     <input type="tel" id="phone" name="phone" required>
 
+    <label for="service">Select Service:</label>
+    <select id="service" name="service" required>
+      <option value="">-- Select --</option>
+      <option value="Haircut">Haircut</option>
+      <option value="Beard Trim">Beard Trim</option>
+      <option value="Shave">Shave</option>
+      <option value="Haircut + Beard">Haircut + Beard Combo</option>
+    </select>
+
     <label for="day">Preferred Day:</label>
     <select id="day" name="preferred_day" required>
       <option value="">-- Select --</option>
@@ -95,8 +106,15 @@
       <option value="Wednesday">Wednesday</option>
     </select>
 
+    <label for="time">Preferred Time:</label>
+    <input type="time" id="time" name="preferred_time" required>
+
     <label for="location">Location:</label>
-    <p><a href="https://www.google.com/maps" target="_blank" class="map-button">📍 Open Google Maps to Select Location</a></p>
+    <p>
+      <a href="https://www.google.com/maps" target="_blank" class="map-button">
+        📍 Open Google Maps to Select Location
+      </a>
+    </p>
     <button type="button" onclick="getLocation()">📍 Use My Current Location</button>
     <input type="url" id="location" name="location" placeholder="Paste your Google Maps location URL here" required>
 
@@ -105,6 +123,7 @@
 
     <button type="submit">Submit Booking</button>
   </form>
+
   <a href="index.html" class="back-link">← Back to Home</a>
 
   <script>
