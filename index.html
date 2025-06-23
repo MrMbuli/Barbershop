@@ -43,34 +43,17 @@
     }
 
     .menu-toggle {
-      position: absolute;
+      position: fixed;
+      top: 25px;
       left: 20px;
-      width: 30px;
-      height: 24px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      font-size: 28px;
+      background: none;
+      border: none;
+      color: black;
       cursor: pointer;
-      z-index: 1001;
-    }
-
-    .menu-toggle div {
-      background: black;
-      height: 2px;
-      border-radius: 1px;
-      transition: all 0.3s ease;
-    }
-
-    .menu-toggle.active div:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px);
-    }
-
-    .menu-toggle.active div:nth-child(2) {
-      opacity: 0;
-    }
-
-    .menu-toggle.active div:nth-child(3) {
-      transform: rotate(-45deg) translate(6px, -6px);
+      z-index: 2000;
+      font-weight: bold;
+      transition: transform 0.3s ease;
     }
 
     #dropdown-menu {
@@ -116,7 +99,8 @@
     .hero::before {
       content: "";
       position: absolute;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       background: rgba(0, 0, 0, 0.4);
@@ -209,11 +193,7 @@
 </head>
 <body>
   <header id="header">
-    <div class="menu-toggle" id="menuToggle" onclick="toggleMenu()">
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
+    <div class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</div>
     <h1>Owethu Mbuli</h1>
   </header>
 
@@ -256,8 +236,15 @@
     function toggleMenu() {
       const menu = document.getElementById("dropdown-menu");
       const toggle = document.getElementById("menuToggle");
+
       menu.classList.toggle("active");
-      toggle.classList.toggle("active");
+
+      // Toggle text between ☰ and <
+      if (menu.classList.contains("active")) {
+        toggle.textContent = "<";
+      } else {
+        toggle.textContent = "☰";
+      }
     }
 
     const sections = document.querySelectorAll("section");
