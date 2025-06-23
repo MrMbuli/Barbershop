@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,66 +6,97 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Book a Cut | Owethu Mbuli</title>
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      color: #fff;
-      padding: 20px;
-      margin: 0;
-      background: url('barbershop-chair.jpg') no-repeat center center fixed;
-      background-size: cover;
-    }
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: url('file-4x77RcotodqiCC5EMK5cBD') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    padding: 20px;
+    margin: 0;
+  }
 
-    h1 {
-      text-align: center;
-      color: #ffffff;
-      text-shadow: 2px 2px 5px #000;
-    }
+  h1 {
+    text-align: center;
+    color: #ffffff;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+  }
 
-    form {
-      max-width: 500px;
-      margin: auto;
-      background: rgba(0, 0, 0, 0.7); /* semi-transparent background */
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.3);
-    }
+  form {
+    max-width: 500px;
+    margin: auto;
+    background: rgba(0, 0, 0, 0.75);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  }
 
-    label {
-      display: block;
-      margin: 15px 0 5px;
-      color: #fff;
-    }
+  label {
+    display: block;
+    margin: 15px 0 5px;
+    color: #fff;
+  }
 
-    input, select, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
+  input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 6px;
+  }
 
-    button {
-      background: #8e2de2;
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
+  button {
+    background: #8e2de2;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
 
-    button:hover {
-      background: #4a00e0;
-    }
+  button:hover {
+    background: #4a00e0;
+  }
 
-    .back-link {
-      display: block;
-      text-align: center;
-      margin-top: 20px;
-      color: #ffffff;
-      text-shadow: 1px 1px 3px #000;
-      text-decoration: none;
-    }
-  </style>
+  .back-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #ffffff;
+    text-decoration: none;
+  }
+</style>
 </head>
 <body>
-  <h1>Book Your
+  <h1>Book Your Haircut</h1>
+  <form action="https://formsubmit.co/owethuandrew10@gmail.com" method="POST">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_subject" value="New Booking from Website">
+
+    <label for="name">Full Name:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="phone">Phone Number:</label>
+    <input type="tel" id="phone" name="phone" required>
+
+    <label for="day">Preferred Day:</label>
+    <select id="day" name="preferred_day" required>
+      <option value="">-- Select --</option>
+      <option value="Monday">Monday</option>
+      <option value="Tuesday">Tuesday</option>
+      <option value="Wednesday">Wednesday</option>
+    </select>
+
+    <label for="location">Location (Paste Google Maps link):</label>
+    <input type="url" id="location" name="location" placeholder="https://maps.app.goo.gl/...">
+
+    <label for="message">Message (Optional):</label>
+    <textarea id="message" name="message" rows="4"></textarea>
+
+    <button type="submit">Submit Booking</button>
+  </form>
+  <a href="index.html" class="back-link">← Back to Home</a>
+</body>
+</html>
