@@ -34,7 +34,7 @@
       z-index: 1000;
       transition: background 0.4s ease;
       display: flex;
-      justify-content: center;
+      justify-content: center; /* center title */
       align-items: center;
     }
 
@@ -105,4 +105,140 @@
     }
 
     .hero {
-      background: url("background.jpg
+      background: url("background.jpg") center center/cover no-repeat;
+      color: white;
+      padding: 80px 20px 40px;
+      text-align: center;
+      position: relative;
+      margin-top: 90px;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 1;
+    }
+
+    .hero * {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-size: 2.2em;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 1.2em;
+    }
+
+    section {
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: auto;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .btn {
+      display: inline-block;
+      background: #8e2de2;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 20px;
+    }
+
+    footer {
+      background: #1e1e2f;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9em;
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 1.6em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header id="header">
+    <div class="menu-toggle" id="menuToggle" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <h1>Owethu Mbuli</h1>
+  </header>
+
+  <nav id="dropdown-menu">
+    <a href="#about" onclick="toggleMenu()">About</a>
+    <a href="booking.html" onclick="toggleMenu()">Book Now</a>
+    <a href="#contact" onclick="toggleMenu()">Contact</a>
+    <a href="gallery.html" onclick="toggleMenu()">View Our Work</a>
+  </nav>
+
+  <section class="hero" id="home">
+    <h1>Personal Barber & House Call Specialist</h1>
+    <p>Serving Soweto, Roodepoort & surrounding areas.</p>
+  </section>
+
+  <section class="section" id="about">
+    <h2>About Me</h2>
+    <p>I'm Owethu Mbuli, a personal barber offering professional house call grooming services in Gauteng — especially Soweto, Roodepoort, and nearby areas. Whether it’s a fresh fade or a classic clean-up, I come to you.</p>
+    <p><strong>Available:</strong> Monday, Tuesday, Wednesday</p>
+  </section>
+
+  <section class="section" id="contact">
+    <h2>Contact</h2>
+    <p>Email: <a href="mailto:owethuandrew10@gmail.com">owethuandrew10@gmail.com</a></p>
+    <p>Phone: <a href="tel:+27635892769">063 589 2769</a></p>
+  </section>
+
+  <footer>
+    &copy; 2025 Owethu Mbuli. All rights reserved.
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("dropdown-menu");
+      const toggle = document.getElementById("menuToggle");
+      menu.classList.toggle("active");
+      toggle.classList.toggle("active");
+    }
+
+    // Animate sections on scroll
+    const sections = document.querySelectorAll("section");
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        }
+      });
+    }, { threshold: 0.1 });
+
+    sections.forEach(section => observer.observe(section));
+
+    // Header fade on scroll
+    window.addEventListener("scroll", () => {
+      const header = document.getElementById("header");
+      header.classList.toggle("scrolled", window.scrollY > 10);
+    });
+  </script>
+</body>
+</html>
