@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-background: url('barbershop-chair.jpg') no-repeat center center fixed;
+      background: url('barbershop-chair.jpg') no-repeat center center fixed;
       background-size: cover;
       color: #fff;
       padding: 20px;
@@ -44,58 +44,3 @@ background: url('barbershop-chair.jpg') no-repeat center center fixed;
     }
 
     button {
-      background: #8e2de2;
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #4a00e0;
-    }
-
-    .back-link {
-      display: block;
-      text-align: center;
-      margin-top: 20px;
-      color: #ffffff;
-      text-decoration: none;
-    }
-  </style>
-</head>
-<body>
-  <h1>Book Your Haircut</h1>
-  <form action="https://formsubmit.co/owethuandrew10@gmail.com" method="POST">
-    <input type="hidden" name="_captcha" value="false">
-    <input type="hidden" name="_subject" value="New Booking from Website">
-
-    <label for="name">Full Name:</label>
-    <input type="text" id="name" name="name" required>
-
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
-
-    <label for="phone">Phone Number:</label>
-    <input type="tel" id="phone" name="phone" required>
-
-    <label for="day">Preferred Day:</label>
-    <select id="day" name="preferred_day" required>
-      <option value="">-- Select --</option>
-      <option value="Monday">Monday</option>
-      <option value="Tuesday">Tuesday</option>
-      <option value="Wednesday">Wednesday</option>
-    </select>
-
-    <label for="location">Location (Paste Google Maps link):</label>
-    <input type="url" id="location" name="location" placeholder="https://maps.app.goo.gl/...">
-
-    <label for="message">Message (Optional):</label>
-    <textarea id="message" name="message" rows="4"></textarea>
-
-    <button type="submit">Submit Booking</button>
-  </form>
-  <a href="index.html" class="back-link">← Back to Home</a>
-</body>
-</html>
