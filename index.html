@@ -59,7 +59,7 @@
     #dropdown-menu {
       position: fixed;
       top: 0;
-      left: -250px;
+      right: -250px;
       height: 100%;
       width: 250px;
       background: #1e1e2f;
@@ -67,12 +67,12 @@
       flex-direction: column;
       align-items: flex-start;
       padding-top: 80px;
-      transition: left 0.3s ease;
+      transition: right 0.3s ease;
       z-index: 1000;
     }
 
     #dropdown-menu.active {
-      left: 0;
+      right: 0;
     }
 
     #dropdown-menu a {
@@ -87,6 +87,18 @@
       background: #333;
     }
 
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      width: 24px;
+      height: 24px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 1100;
+    }
+
     .hero {
       background: url("background.jpg") center center/cover no-repeat;
       color: white;
@@ -99,8 +111,7 @@
     .hero::before {
       content: "";
       position: absolute;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       width: 100%;
       height: 100%;
       background: rgba(0, 0, 0, 0.4);
@@ -193,11 +204,12 @@
 </head>
 <body>
   <header id="header">
-    <div class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</div>
+    <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</button>
     <h1>Owethu Mbuli</h1>
   </header>
 
   <nav id="dropdown-menu">
+    <button class="close-btn" onclick="toggleMenu()"></button>
     <a href="#about" onclick="toggleMenu()">About</a>
     <a href="booking.html" onclick="toggleMenu()">Book Now</a>
     <a href="#contact" onclick="toggleMenu()">Contact</a>
@@ -239,12 +251,9 @@
 
       menu.classList.toggle("active");
 
-      // Toggle text between ☰ and <
-      if (menu.classList.contains("active")) {
-        toggle.textContent = "<";
-      } else {
-        toggle.textContent = "☰";
-      }
+      // Toggle icon text and visibility
+      toggle.textContent = menu.classList.contains("active") ? "<" : "☰";
+      toggle.style.display = menu.classList.contains("active") ? "none" : "block";
     }
 
     const sections = document.querySelectorAll("section");
