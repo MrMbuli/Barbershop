@@ -27,7 +27,6 @@
       padding: 30px;
       border-radius: 10px;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-      position: relative;
     }
 
     label {
@@ -71,33 +70,19 @@
       color: #8e2de2;
       text-decoration: underline;
     }
-
-    #loading-message {
-      display: none;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.85);
-      border-radius: 10px;
-      color: #fff;
-      font-size: 18px;
-      text-align: center;
-      padding-top: 100px;
-    }
   </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your public key
+    })();
+  </script>
 </head>
 <body>
   <h1>Book Your Haircut</h1>
 
-  <form id="bookingForm" action="https://formsubmit.co/owethuandrew10@gmail.com" method="POST" onsubmit="showLoadingMessage()">
-    <div id="loading-message">⏳ Submitting your booking... Please wait.</div>
-
-    <input type="hidden" name="_captcha" value="false">
-    <input type="hidden" name="_subject" value="New Booking from Website">
-    <input type="hidden" name="_next" value="index.html">
-
+  <form id="bookingForm" onsubmit="sendEmail(event)">
     <label for="name">Full Name:</label>
     <input type="text" id="name" name="name" required>
 
@@ -139,11 +124,6 @@
     <label for="message">Message (Optional):</label>
     <textarea id="message" name="message" rows="4"></textarea>
 
-    <label>
-      <input type="checkbox" name="sms_reminder" value="Yes" required>
-      I agree to receive an SMS reminder for my booking
-    </label>
-
     <button type="submit">Submit Booking</button>
   </form>
 
@@ -165,10 +145,15 @@
       }
     }
 
-    function showLoadingMessage() {
-      document.getElementById('loading-message').style.display = 'block';
-      const form = document.getElementById('bookingForm');
-      Array.from(form.elements).forEach(el => el.disabled = true);
+    function sendEmail(event) {
+      event.preventDefault();
+
+      emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', event.target)
+        .then(() => {
+          window.location.href = 'thankyou.html'; // redirect after success
+        }, (error) => {
+          alert('Failed to send email: ' + error.text);
+        });
     }
   </script>
 </body>
