@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Book a Cut | Owethu Mbuli</title>
-
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -72,7 +71,6 @@
       text-decoration: underline;
     }
 
-    /* Loader styles */
     #loading-overlay {
       display: none;
       position: fixed;
@@ -106,10 +104,11 @@
     }
   </style>
 
+  <!-- EmailJS -->
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script>
-    (function() {
-      emailjs.init("YOUR_PUBLIC_KEY"); // replace with your EmailJS public key
+    (function(){
+      emailjs.init("B4S4CAw3KzrJg_6Mr"); // Your public key
     })();
   </script>
 </head>
@@ -168,7 +167,7 @@
 
   <a href="index.html" class="back-link">← Back to Home</a>
 
-  <!-- Loading Overlay -->
+  <!-- Loader Overlay -->
   <div id="loading-overlay">
     <div class="loader"></div>
   </div>
@@ -189,20 +188,22 @@
       }
     }
 
-    function sendEmail(event) {
-      event.preventDefault();
+    function showLoadingMessage() {
       document.getElementById('loading-overlay').style.display = 'flex';
-
       const form = document.getElementById('bookingForm');
       Array.from(form.elements).forEach(el => el.disabled = true);
+    }
 
-      emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', form)
+    function sendEmail(event) {
+      event.preventDefault();
+      showLoadingMessage();
+
+      emailjs.sendForm('service_ctisr1e', '__ejs-test-mail-service__', event.target)
         .then(() => {
           window.location.href = 'thankyou.html';
         }, (error) => {
           alert('Failed to send email: ' + error.text);
           document.getElementById('loading-overlay').style.display = 'none';
-          Array.from(form.elements).forEach(el => el.disabled = false);
         });
     }
   </script>
