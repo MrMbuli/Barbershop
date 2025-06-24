@@ -3,198 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Book a Cut | Owethu Mbuli</title>
+  <title>Thank You!</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: url('barbershop-chair.jpg') no-repeat center center fixed;
-      background-size: cover;
+      background: #1e1e2f;
       color: #fff;
-      padding: 20px;
-      margin: 0;
-    }
-    h1 {
-      text-align: center;
-      color: #ffffff;
-      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
-    }
-    form {
-      max-width: 500px;
-      margin: auto;
-      background: rgba(0, 0, 0, 0.75);
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    }
-    label {
-      display: block;
-      margin: 15px 0 5px;
-      color: #fff;
-    }
-    input, select, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
-      border: none;
-      border-radius: 6px;
-    }
-    button {
-      background: #8e2de2;
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #4a00e0;
-    }
-    .back-link {
-      display: block;
-      text-align: center;
-      margin-top: 20px;
-      color: #ffffff;
-      text-decoration: none;
-    }
-    .map-button {
-      display: inline-block;
-      margin-bottom: 10px;
-      color: #8e2de2;
-      text-decoration: underline;
-    }
-    #loading-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.85);
-      z-index: 9999;
+      display: flex;
       justify-content: center;
       align-items: center;
+      height: 100vh;
+      text-align: center;
+      padding: 20px;
     }
-    .loader {
-      width: 60px;
-      height: 60px;
-      border: 6px solid #ffffff;
-      border-top: 6px solid transparent;
-      border-radius: 50%;
-      animation: spin 1s linear infinite, scratch 0.3s infinite alternate;
-      box-shadow: 0 0 8px #fff, inset 0 0 10px #fff;
+    h1 {
+      font-size: 2em;
+      margin-bottom: 10px;
     }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    p {
+      font-size: 1.2em;
     }
-    @keyframes scratch {
-      0% { box-shadow: 0 0 8px #fff, inset 0 0 5px #fff; }
-      100% { box-shadow: 0 0 12px #fff, inset 0 0 15px #fff; }
+    a {
+      color: #8e2de2;
+      text-decoration: none;
+      margin-top: 20px;
+      display: inline-block;
     }
   </style>
-
-  <!-- EmailJS -->
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-  <script>
-    (function() {
-      emailjs.init("B4S4CAw3KzrJg_6Mr"); // Your public key
-    })();
-  </script>
 </head>
 <body>
-  <h1>Book Your Haircut</h1>
-
-  <form id="bookingForm" onsubmit="sendEmail(event)">
-    <label for="name">Full Name:</label>
-    <input type="text" id="name" name="name" required>
-
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
-
-    <label for="phone">Phone Number:</label>
-    <input type="tel" id="phone" name="phone" required>
-
-    <label for="service">Select Service:</label>
-    <select id="service" name="service" required>
-      <option value="">-- Select --</option>
-      <option value="Haircut">Haircut</option>
-      <option value="Beard Trim">Beard Trim</option>
-      <option value="Shave">Shave</option>
-      <option value="Haircut + Beard">Haircut + Beard Combo</option>
-    </select>
-
-    <label for="day">Preferred Day:</label>
-    <select id="day" name="preferred_day" required>
-      <option value="">-- Select --</option>
-      <option value="Monday">Monday</option>
-      <option value="Tuesday">Tuesday</option>
-      <option value="Wednesday">Wednesday</option>
-    </select>
-
-    <label for="time">Preferred Time:</label>
-    <input type="time" id="time" name="preferred_time" required>
-
-    <label for="location">Location:</label>
-    <p>
-      <a href="https://www.google.com/maps" target="_blank" class="map-button">
-        📍 Open Google Maps to Select Location
-      </a>
-    </p>
-    <button type="button" onclick="getLocation()">📍 Use My Current Location</button>
-    <input type="url" id="location" name="location" placeholder="Paste your Google Maps location URL here" required>
-
-    <label for="message">Message (Optional):</label>
-    <textarea id="message" name="message" rows="4"></textarea>
-
-    <label>
-      <input type="checkbox" name="sms_reminder" value="Yes" required>
-      I agree to receive an SMS reminder for my booking
-    </label>
-
-    <button type="submit">Submit Booking</button>
-  </form>
-
-  <a href="index.html" class="back-link">← Back to Home</a>
-
-  <!-- Loader -->
-  <div id="loading-overlay">
-    <div class="loader"></div>
+  <div>
+    <h1>Thank You!</h1>
+    <p>Your booking has been received. We'll get back to you shortly.</p>
+    <a href="index.html">← Back to Home</a>
   </div>
-
-  <script>
-    function getLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          const lat = position.coords.latitude;
-          const lon = position.coords.longitude;
-          const mapsLink = `https://www.google.com/maps?q=${lat},${lon}`;
-          document.getElementById('location').value = mapsLink;
-        }, function(error) {
-          alert("Unable to retrieve your location. Please allow access and try again.");
-        });
-      } else {
-        alert("Geolocation is not supported by your browser.");
-      }
-    }
-
-    function showLoadingMessage() {
-      document.getElementById('loading-overlay').style.display = 'flex';
-      document.getElementById('bookingForm').querySelectorAll("input, select, textarea, button")
-        .forEach(el => el.disabled = true);
-    }
-
-    function sendEmail(event) {
-      event.preventDefault();
-      showLoadingMessage();
-
-      emailjs.sendForm('service_ctisr1e', '_ejs-test-mail-service_', event.target)
-        .then(() => {
-          window.location.href = 'thankyou.html';
-        }, (error) => {
-          alert('Error sending email: ' + error.text);
-          document.getElementById('loading-overlay').style.display = 'none';
-        });
-    }
-  </script>
 </body>
 </html>
