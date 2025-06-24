@@ -131,8 +131,7 @@
     .hero::before {
       content: "";
       position: absolute;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       width: 100%;
       height: 100%;
       background: rgba(0, 0, 0, 0.4);
@@ -235,6 +234,7 @@
       <a href="booking.html" onclick="toggleMenu()">Book Now</a>
       <a href="#contact" onclick="toggleMenu()">Contact</a>
       <a href="gallery.html" onclick="toggleMenu()">View Our Work</a>
+      <a href="advertising.html" onclick="toggleMenu()">Advertising</a>
 
       <div class="drawer-contact-buttons">
         <a href="https://wa.me/27635892769" class="drawer-btn whatsapp" target="_blank">💬 WhatsApp</a>
@@ -281,7 +281,6 @@
       toggle.classList.toggle("open", isOpen);
     }
 
-    // Close drawer when clicking outside
     document.addEventListener("click", function (event) {
       const menu = document.getElementById("dropdown-menu");
       const toggle = document.getElementById("menuToggle");
@@ -296,7 +295,6 @@
       }
     });
 
-    // Animate sections
     const sections = document.querySelectorAll("section");
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -308,7 +306,6 @@
 
     sections.forEach(section => observer.observe(section));
 
-    // Header background on scroll
     window.addEventListener("scroll", () => {
       const header = document.getElementById("header");
       header.classList.toggle("scrolled", window.scrollY > 10);
