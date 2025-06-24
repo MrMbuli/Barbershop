@@ -111,21 +111,41 @@
   </footer>
 
   <script>
-    function sendToWhatsApp() {
-      const name = document.getElementById("name").value;
-      const ad = document.getElementById("ad").value;
-      const type = document.getElementById("type").value;
-      const audience = document.getElementById("audience").value;
-      const budget = document.getElementById("budget").value;
-      const contact = document.getElementById("contact").value;
+    // Autofill from localStorage
+    window.onload = function() {
+      const fields = ["name", "ad", "type", "audience", "budget", "contact"];
+      fields.forEach(id => {
+        const saved = localStorage.getItem(id);
+        if (saved) {
+          document.getElementById(id).value = saved;
+        }
+      });
+    };
 
+    // Send to WhatsApp and save to localStorage
+    function sendToWhatsApp() {
+      const fields = {
+        name: document.getElementById("name").value,
+        ad: document.getElementById("ad").value,
+        type: document.getElementById("type").value,
+        audience: document.getElementById("audience").value,
+        budget: document.getElementById("budget").value,
+        contact: document.getElementById("contact").value
+      };
+
+      // Save inputs
+      Object.keys(fields).forEach(key => {
+        localStorage.setItem(key, fields[key]);
+      });
+
+      // Create WhatsApp message
       const message = `Hello, I want to advertise on your website.%0A
-Business Name: ${name}%0A
-Ad: ${ad}%0A
-Type: ${type}%0A
-Target Audience: ${audience}%0A
-Budget: ${budget}%0A
-Contact: ${contact}`;
+Business Name: ${fields.name}%0A
+Ad: ${fields.ad}%0A
+Type: ${fields.type}%0A
+Target Audience: ${fields.audience}%0A
+Budget: ${fields.budget}%0A
+Contact: ${fields.contact}`;
 
       const phone = "27635892769";
       const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
