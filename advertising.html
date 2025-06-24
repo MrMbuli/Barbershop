@@ -38,7 +38,7 @@
       margin-top: 15px;
       font-weight: bold;
     }
-    input, textarea, select {
+    input, select {
       width: 100%;
       padding: 10px;
       margin-top: 6px;
@@ -47,8 +47,13 @@
       background: #444;
       color: white;
     }
-    input::placeholder, textarea::placeholder {
+    input::placeholder {
       color: #bbb;
+    }
+    input[type="file"] {
+      background: transparent;
+      padding: 0;
+      border: none;
     }
     button {
       margin-top: 20px;
@@ -77,7 +82,7 @@
   <h1>📢 Advertise With Us</h1>
   <p>Fill out this short form and we’ll get back to you shortly via email or WhatsApp.</p>
 
-  <form action="mailto:owethuandrew10@gmail.com" method="POST" enctype="text/plain">
+  <form action="mailto:owethuandrew10@gmail.com" method="POST" enctype="multipart/form-data">
     <label for="name">Business Name:</label>
     <input type="text" id="name" name="Business Name" required>
 
@@ -93,16 +98,16 @@
     </select>
 
     <label for="audience">Target Audience:</label>
-    <input type="text" id="audience" name="Audience" placeholder="e.g. Males 18-35 in Soweto">
+    <input type="text" id="audience" name="Audience" placeholder="e.g. Males 18–35 in Soweto">
 
     <label for="budget">Estimated Budget Range:</label>
-    <input type="text" id="budget" name="Budget" placeholder="e.g. R500 - R1500">
+    <input type="text" id="budget" name="Budget" placeholder="e.g. R500 – R1500">
 
     <label for="contact">Contact Info:</label>
     <input type="text" id="contact" name="Contact" placeholder="WhatsApp number or email" required>
 
-    <label for="message">Additional Notes:</label>
-    <textarea id="message" name="Message" rows="4" placeholder="Let us know anything important..."></textarea>
+    <label for="images">Upload at least 2 product images:</label>
+    <input type="file" id="images" name="Images" accept="image/*" multiple required>
 
     <button type="submit">Send Request</button>
   </form>
