@@ -50,6 +50,10 @@
     input::placeholder {
       color: #bbb;
     }
+    input[type="file"] {
+      background: none;
+      color: white;
+    }
     button {
       margin-top: 20px;
       padding: 12px 24px;
@@ -75,9 +79,9 @@
 </head>
 <body>
   <h1>📢 Advertise With Us</h1>
-  <p>Fill out this form to send your advertising request directly to our WhatsApp.</p>
+  <p>Fill out this form and upload your product images. We’ll get back to you via WhatsApp.</p>
 
-  <form id="whatsappForm" onsubmit="sendToWhatsApp(); return false;">
+  <form id="whatsappForm" onsubmit="sendToWhatsApp(); return false;" enctype="multipart/form-data">
     <label for="name">Business Name:</label>
     <input type="text" id="name" required>
 
@@ -98,8 +102,8 @@
     <label for="budget">Estimated Budget Range:</label>
     <input type="text" id="budget" placeholder="e.g. R500 – R1500">
 
-    <label for="contact">Your Contact Info:</label>
-    <input type="text" id="contact" placeholder="WhatsApp or Email" required>
+    <label for="images">Upload at least 2 product images:</label>
+    <input type="file" id="images" name="images" accept="image/*" multiple required>
 
     <button type="submit">Send via WhatsApp</button>
   </form>
@@ -113,7 +117,7 @@
   <script>
     // Autofill from localStorage
     window.onload = function() {
-      const fields = ["name", "ad", "type", "audience", "budget", "contact"];
+      const fields = ["name", "ad", "type", "audience", "budget"];
       fields.forEach(id => {
         const saved = localStorage.getItem(id);
         if (saved) {
@@ -122,34 +126,35 @@
       });
     };
 
-    // Send to WhatsApp and save to localStorage
     function sendToWhatsApp() {
+      const files = document.getElementById("images").files;
+      if (files.length < 2) {
+        alert("Please upload at least 2 product images.");
+        return;
+      }
+
       const fields = {
         name: document.getElementById("name").value,
         ad: document.getElementById("ad").value,
         type: document.getElementById("type").value,
         audience: document.getElementById("audience").value,
-        budget: document.getElementById("budget").value,
-        contact: document.getElementById("contact").value
+        budget: document.getElementById("budget").value
       };
 
-      // Save inputs
       Object.keys(fields).forEach(key => {
         localStorage.setItem(key, fields[key]);
       });
 
-      // Create WhatsApp message
       const message = `Hello, I want to advertise on your website.%0A
 Business Name: ${fields.name}%0A
 Ad: ${fields.ad}%0A
 Type: ${fields.type}%0A
 Target Audience: ${fields.audience}%0A
 Budget: ${fields.budget}%0A
-Contact: ${fields.contact}`;
+Images uploaded: ${files.length}`;
 
       const phone = "27635892769";
       const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-
       window.open(url, '_blank');
     }
   </script>
