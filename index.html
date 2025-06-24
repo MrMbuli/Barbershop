@@ -424,6 +424,22 @@
     }
   });
 </script>
+  <script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('thankyou') === '1') {
+      const popup = document.getElementById('thankYouPopup');
+      popup.style.display = 'block';
+      setTimeout(() => {
+        popup.style.display = 'none';
+        // Remove ?thankyou=1 from URL without reloading
+        const url = new URL(window.location);
+        url.searchParams.delete('thankyou');
+        window.history.replaceState({}, '', url);
+      }, 3000);
+    }
+  });
+  </script>
 
 </body>
 </html>
