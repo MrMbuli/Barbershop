@@ -164,6 +164,41 @@
     }, 4000); // Change slide every 4 seconds
   });
   </script>
+  <script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const slider = document.getElementById("autoScrollSlider");
+    const slides = slider.querySelectorAll(".ad-slide");
+    const slideWidth = slides[0].offsetWidth + 20; // 20 is the gap
+    let scrollAmount = 0;
+    let isHovered = false;
+
+    // Duplicate slides for seamless infinite scroll
+    slides.forEach(slide => {
+      const clone = slide.cloneNode(true);
+      slider.appendChild(clone);
+    });
+
+    function autoScroll() {
+      if (!isHovered) {
+        scrollAmount += 1;
+        slider.scrollLeft += 1;
+
+        // Reset scroll if end is reached
+        if (scrollAmount >= slideWidth * slides.length) {
+          slider.scrollLeft = 0;
+          scrollAmount = 0;
+        }
+      }
+      requestAnimationFrame(autoScroll);
+    }
+
+    // Pause on hover
+    slider.addEventListener("mouseenter", () => isHovered = true);
+    slider.addEventListener("mouseleave", () => isHovered = false);
+
+    autoScroll(); // start scrolling
+  });
+  </script>
 <body>
   <header id="header">
     <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</button>
