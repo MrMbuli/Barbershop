@@ -152,7 +152,9 @@
     <h1>Owethu Mbuli</h1>
   </header>
 
-<nav id="dropdown-menu">
+
+ <nav id="dropdown-menu">
+  <button id="close-drawer" onclick="toggleMenu()">✖</button>
   <h2 style="width: 100%; text-align: center; color: white; padding: 15px 0; border-bottom: 1px solid #444; animation: fadeSlideIn 0.6s ease;">Menu</h2>
   <a href="#about" onclick="toggleMenu()">About</a>
   <a href="booking.html" onclick="toggleMenu()">Book Now</a>
@@ -164,7 +166,7 @@
     <a href="https://wa.me/27635892769" class="drawer-btn whatsapp" target="_blank">💬 WhatsApp</a>
     <a href="tel:+27635892769" class="drawer-btn call">📞 Call</a>
   </div>
-</nav>
+</nav> 
   <section class="hero" id="home">
     <h1>Personal Barber & House Call Specialist</h1>
     <p>Serving Soweto, Roodepoort & surrounding areas.</p>
@@ -306,6 +308,20 @@
   #privacy-popup button#accept-privacy:hover {
     transform: scale(1.2);
   }
+  #close-drawer {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+  z-index: 1100;
+}
+#close-drawer:hover {
+  transform: scale(1.2);
+}
 </style>
 
 <script>
