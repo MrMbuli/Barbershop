@@ -204,11 +204,14 @@
 
   <script>
     function toggleMenu() {
-      const menu = document.getElementById("dropdown-menu");
-      const toggle = document.getElementById("menuToggle");
-      const isOpen = menu.classList.toggle("active");
-      toggle.textContent = isOpen ? "<" : "☰";
-      toggle.classList.toggle("open", isOpen);
+  const menu = document.getElementById("dropdown-menu");
+  const toggle = document.getElementById("menuToggle");
+  const isOpen = menu.classList.toggle("active");
+  toggle.textContent = isOpen ? "<" : "☰";
+  toggle.classList.toggle("open", isOpen);
+
+  // Prevent scrolling on body when menu is open
+  document.body.style.overflow = isOpen ? "hidden" : "auto";
     }
 
     document.addEventListener("click", function (event) {
