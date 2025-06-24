@@ -148,6 +148,22 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 </head>
+  <script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const slider = document.querySelector(".ad-slider");
+    const slides = document.querySelectorAll(".ad-slide");
+    const slideWidth = slides[0].offsetWidth + 20; // width + gap
+    let index = 0;
+
+    setInterval(() => {
+      index = (index + 1) % slides.length;
+      slider.scrollTo({
+        left: slideWidth * index,
+        behavior: "smooth"
+      });
+    }, 4000); // Change slide every 4 seconds
+  });
+  </script>
 <body>
   <header id="header">
     <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</button>
