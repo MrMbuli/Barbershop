@@ -195,58 +195,74 @@
   </style>
 </head>
 <body>
-  <header id="header">
-    <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</button>
-    <h1>Owethu Mbuli</h1>
-  </header>
+  <div id="page-container">
+    <header id="header">
+      <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</button>
+      <h1>Owethu Mbuli</h1>
+    </header>
 
-  <nav id="dropdown-menu">
-    <a href="#about" onclick="toggleMenu()">About</a>
-    <a href="booking.html" onclick="toggleMenu()">Book Now</a>
-    <a href="#contact" onclick="toggleMenu()">Contact</a>
-    <a href="gallery.html" onclick="toggleMenu()">View Our Work</a>
-  </nav>
+    <nav id="dropdown-menu">
+      <a href="#about" onclick="toggleMenu()">About</a>
+      <a href="booking.html" onclick="toggleMenu()">Book Now</a>
+      <a href="#contact" onclick="toggleMenu()">Contact</a>
+      <a href="gallery.html" onclick="toggleMenu()">View Our Work</a>
+    </nav>
 
-  <section class="hero" id="home">
-    <h1>Personal Barber & House Call Specialist</h1>
-    <p>Serving Soweto, Roodepoort & surrounding areas.</p>
-  </section>
+    <section class="hero" id="home">
+      <h1>Personal Barber & House Call Specialist</h1>
+      <p>Serving Soweto, Roodepoort & surrounding areas.</p>
+    </section>
 
-  <section class="section" id="about">
-    <h2>About Me</h2>
-    <p>I'm Owethu Mbuli, a personal barber offering professional house call grooming services in Gauteng — especially Soweto, Roodepoort, and nearby areas. Whether it’s a fresh fade or a classic clean-up, I come to you.</p>
-    <p><strong>Available:</strong> Monday, Tuesday, Wednesday</p>
-  </section>
+    <section class="section" id="about">
+      <h2>About Me</h2>
+      <p>I'm Owethu Mbuli, a personal barber offering professional house call grooming services in Gauteng — especially Soweto, Roodepoort, and nearby areas. Whether it’s a fresh fade or a classic clean-up, I come to you.</p>
+      <p><strong>Available:</strong> Monday, Tuesday, Wednesday</p>
+    </section>
 
-  <section class="section product-coming-soon">
-    <div class="overlay">
-      <h2>🛍️ Products</h2>
-      <p>Coming Soon</p>
-    </div>
-  </section>
+    <section class="section product-coming-soon">
+      <div class="overlay">
+        <h2>🛍️ Products</h2>
+        <p>Coming Soon</p>
+      </div>
+    </section>
 
-  <section class="section" id="contact">
-    <h2>Contact</h2>
-    <p>Email: <a href="mailto:owethuandrew10@gmail.com">owethuandrew10@gmail.com</a></p>
-    <p>Phone: <a href="tel:+27635892769">063 589 2769</a></p>
-  </section>
+    <section class="section" id="contact">
+      <h2>Contact</h2>
+      <p>Email: <a href="mailto:owethuandrew10@gmail.com">owethuandrew10@gmail.com</a></p>
+      <p>Phone: <a href="tel:+27635892769">063 589 2769</a></p>
+    </section>
 
-  <footer>
-    &copy; 2025 Owethu Mbuli. All rights reserved.
-  </footer>
+    <footer>
+      &copy; 2025 Owethu Mbuli. All rights reserved.
+    </footer>
+  </div>
 
   <script>
     function toggleMenu() {
       const menu = document.getElementById("dropdown-menu");
       const toggle = document.getElementById("menuToggle");
 
-      menu.classList.toggle("active");
-
-      const isOpen = menu.classList.contains("active");
+      const isOpen = menu.classList.toggle("active");
       toggle.textContent = isOpen ? "<" : "☰";
       toggle.classList.toggle("open", isOpen);
     }
 
+    // Close the drawer when clicking outside
+    document.addEventListener("click", function (event) {
+      const menu = document.getElementById("dropdown-menu");
+      const toggle = document.getElementById("menuToggle");
+
+      const clickedInsideMenu = menu.contains(event.target);
+      const clickedToggle = toggle.contains(event.target);
+
+      if (!clickedInsideMenu && !clickedToggle && menu.classList.contains("active")) {
+        menu.classList.remove("active");
+        toggle.textContent = "☰";
+        toggle.classList.remove("open");
+      }
+    });
+
+    // Animate sections
     const sections = document.querySelectorAll("section");
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -258,6 +274,7 @@
 
     sections.forEach(section => observer.observe(section));
 
+    // Header background on scroll
     window.addEventListener("scroll", () => {
       const header = document.getElementById("header");
       header.classList.toggle("scrolled", window.scrollY > 10);
