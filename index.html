@@ -178,13 +178,17 @@
     <p><strong>Available:</strong> Monday, Tuesday, Wednesday</p>
   </section>
 
-  <section class="section product-coming-soon">
-    <div class="overlay">
-      <h2>🛍️ Products</h2>
-      <p>Coming Soon</p>
-    </div>
-  </section>
-
+  <section class="section" id="ads-slider">
+  <h2>💈 Featured Ads</h2>
+  <div class="ad-slider">
+    <div class="ad-slide" style="background:#e74c3c;"><p>Ad 1</p><a href="#">Learn More</a></div>
+    <div class="ad-slide" style="background:#3498db;"><p>Ad 2</p><a href="#">Learn More</a></div>
+    <div class="ad-slide" style="background:#2ecc71;"><p>Ad 3</p><a href="#">Learn More</a></div>
+    <div class="ad-slide" style="background:#f1c40f;"><p>Ad 4</p><a href="#">Learn More</a></div>
+    <div class="ad-slide" style="background:#9b59b6;"><p>Ad 5</p><a href="#">Learn More</a></div>
+    <div class="ad-slide" style="background:#1abc9c;"><p>Ad 6</p><a href="#">Learn More</a></div>
+  </div>
+</section>
   <section class="section" id="ads">
     <h2>Look Out For</h2>
     <img src="billboard.jpg" alt="Advertising Billboard" style="max-width:100%; height:auto; border-radius:10px; margin:20px 0;">
@@ -321,6 +325,57 @@
 }
 #close-drawer:hover {
   transform: scale(1.2);
+}
+  #ad-slider {
+  margin-top: 40px;
+}
+
+.ad-slider {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  scroll-snap-type: x mandatory;
+  padding: 10px 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ad-slide {
+  min-width: 240px;
+  flex: 0 0 auto;
+  height: 180px;
+  border-radius: 12px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  scroll-snap-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease;
+}
+
+.ad-slide:hover {
+  transform: scale(1.05);
+}
+
+.ad-slide p {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.ad-slide a {
+  background: rgba(255,255,255,0.2);
+  padding: 6px 12px;
+  border-radius: 8px;
+  color: white;
+  text-decoration: none;
+  font-size: 0.9em;
+  align-self: flex-start;
+  transition: background 0.3s ease;
+}
+
+.ad-slide a:hover {
+  background: rgba(255,255,255,0.35);
 }
 </style>
 
