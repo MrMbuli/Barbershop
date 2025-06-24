@@ -74,7 +74,8 @@
     #loading-overlay {
       display: none;
       position: fixed;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 100vw;
       height: 100vh;
       background: rgba(0, 0, 0, 0.85);
@@ -108,7 +109,7 @@
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script>
     (function(){
-      emailjs.init("B4S4CAw3KzrJg_6Mr"); // Your public key
+      emailjs.init("B4S4CAw3KzrJg_6Mr"); // Public key
     })();
   </script>
 </head>
@@ -198,7 +199,7 @@
       event.preventDefault();
       showLoadingMessage();
 
-      emailjs.sendForm('service_ctisr1e', '__ejs-test-mail-service__', event.target)
+      emailjs.sendForm('service_ctisr1e', 'ejs-test-mail-service', event.target)
         .then(() => {
           window.location.href = 'thankyou.html';
         }, (error) => {
