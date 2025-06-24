@@ -361,47 +361,49 @@
 
 
 <script>
-  function setCookie(name, value, days) {
-    const d = new Date();
-    d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
-    const expires = "expires=" + d.toUTCString();
-    document.cookie = name + "=" + value + ";" + expires + ";path=/";
-  }
+  let startX = 0;
+  let endX = 0;
 
-  function getCookie(name) {
-    const decodedCookie = decodeURIComponent(document.cookie);
-    const ca = decodedCookie.split(';');
-    name = name + "=";
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) === ' ') c = c.substring(1);
-      if (c.indexOf(name) === 0) return c.substring(name.length, c.length);
+  const menu = document.getElementById("dropdown-menu");
+  const toggle = document.getElementById("menuToggle");
+
+  // Swipe on the menu to CLOSE
+  menu.addEventListener("touchstart", (e) => {
+    startX = e.changedTouches[0].screenX;
+  });
+
+  menu.addEventListener("touchend", (e) => {
+    endX = e.changedTouches[0].screenX;
+    const swipeRight = endX - startX;
+
+    if (swipeRight > 50) { // Swiped RIGHT
+      menu.classList.remove("active");
+      toggle.textContent = "☰";
+      toggle.classList.remove("open");
+      document.body.style.overflow = "auto";
     }
-    return "";
-  }
+  });
 
-  window.addEventListener("load", () => {
-    const popup = document.getElementById("privacy-popup");
-    const shown = getCookie("seenPrivacyPopup");
+  // Swipe on the screen edge to OPEN
+  document.addEventListener("touchstart", (e) => {
+    // Only start tracking if the touch begins on the right edge (within 20px)
+    if (e.touches[0].clientX > window.innerWidth - 20) {
+      startX = e.touches[0].clientX;
+    } else {
+      startX = 0;
+    }
+  });
 
-    if (!shown) {
-      let triggered = false;
+  document.addEventListener("touchend", (e) => {
+    if (!startX) return;
+    endX = e.changedTouches[0].clientX;
+    const swipeLeft = startX - endX;
 
-      window.addEventListener("scroll", () => {
-        if (!triggered && window.scrollY > 100) {
-          popup.classList.add("show");
-          triggered = true;
-
-          const closePopup = () => popup.classList.remove("show");
-
-          setTimeout(closePopup, 5000);
-
-          document.getElementById("accept-privacy").addEventListener("click", () => {
-            setCookie("seenPrivacyPopup", "true", 4);
-            closePopup();
-          });
-        }
-      });
+    if (swipeLeft > 50) { // Swiped LEFT from right edge
+      menu.classList.add("active");
+      toggle.textContent = "✖";
+      toggle.classList.add("open");
+      document.body.style.overflow = "hidden";
     }
   });
 </script>
