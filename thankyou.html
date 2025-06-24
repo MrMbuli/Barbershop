@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Thank You!</title>
+  <meta http-equiv="refresh" content="3;url=index.html" />
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -23,19 +24,19 @@
     p {
       font-size: 1.2em;
     }
-    a {
-      color: #8e2de2;
-      text-decoration: none;
-      margin-top: 20px;
-      display: inline-block;
+    .fade {
+      animation: fadeIn 1.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
     }
   </style>
 </head>
 <body>
-  <div>
+  <div class="fade">
     <h1>Thank You!</h1>
-    <p>Your booking has been received. We'll get back to you shortly.</p>
-    <a href="index.html">← Back to Home</a>
+    <p>Your booking has been received. Redirecting to home...</p>
   </div>
 </body>
 </html>
