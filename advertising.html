@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Advertise with Us | Owethu Mbuli</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #1e1e2f;
+      color: white;
+      margin: 0;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.2em;
+      margin-bottom: 10px;
+    }
+    p {
+      max-width: 600px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    form {
+      width: 100%;
+      max-width: 600px;
+      text-align: left;
+      background: #2b2b40;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border: none;
+      border-radius: 6px;
+      background: #444;
+      color: white;
+    }
+    input::placeholder, textarea::placeholder {
+      color: #bbb;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px 24px;
+      background: #8e2de2;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .btn-back {
+      display: inline-block;
+      margin-top: 30px;
+      text-decoration: none;
+      color: #aaa;
+    }
+    footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <h1>📢 Advertise With Us</h1>
+  <p>Fill out this short form and we’ll get back to you shortly via email or WhatsApp.</p>
+
+  <form action="mailto:owethuandrew10@gmail.com" method="POST" enctype="text/plain">
+    <label for="name">Business Name:</label>
+    <input type="text" id="name" name="Business Name" required>
+
+    <label for="ad">What do you want to advertise?</label>
+    <input type="text" id="ad" name="Ad Content" placeholder="e.g. Men's hair products, services..." required>
+
+    <label for="type">Type of Advertisement:</label>
+    <select id="type" name="Ad Type">
+      <option value="Banner Ad">Banner Ad</option>
+      <option value="Sponsored Post">Sponsored Post</option>
+      <option value="Product Placement">Product Placement</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <label for="audience">Target Audience:</label>
+    <input type="text" id="audience" name="Audience" placeholder="e.g. Males 18-35 in Soweto">
+
+    <label for="budget">Estimated Budget Range:</label>
+    <input type="text" id="budget" name="Budget" placeholder="e.g. R500 - R1500">
+
+    <label for="contact">Contact Info:</label>
+    <input type="text" id="contact" name="Contact" placeholder="WhatsApp number or email" required>
+
+    <label for="message">Additional Notes:</label>
+    <textarea id="message" name="Message" rows="4" placeholder="Let us know anything important..."></textarea>
+
+    <button type="submit">Send Request</button>
+  </form>
+
+  <a href="index.html" class="btn-back">← Back to Home</a>
+
+  <footer>
+    &copy; 2025 Owethu Mbuli. All rights reserved.
+  </footer>
+</body>
+</html>
