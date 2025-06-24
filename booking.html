@@ -7,9 +7,8 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: url('barbershop-chair.jpg') no-repeat center center;
+      background: url('barbershop-chair.jpg') no-repeat center center fixed;
       background-size: cover;
-      background-attachment: scroll;
       color: #fff;
       padding: 20px;
       margin: 0;
@@ -72,11 +71,47 @@
       text-decoration: underline;
     }
 
+    #loading-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .loader {
+      width: 60px;
+      height: 60px;
+      border: 6px solid #ffffff;
+      border-top: 6px solid transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite, scratch 0.3s infinite alternate;
+      box-shadow: 0 0 8px #fff, inset 0 0 10px #fff;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes scratch {
+      0% { box-shadow: 0 0 8px #fff, inset 0 0 5px #fff; }
+      100% { box-shadow: 0 0 12px #fff, inset 0 0 15px #fff; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
     #thankYouPopup {
       display: none;
       position: fixed;
-      top: 50%;
-      left: 50%;
+      top: 50%; left: 50%;
       transform: translate(-50%, -50%);
       background: #222;
       color: white;
@@ -87,23 +122,12 @@
       text-align: center;
       animation: fadeIn 0.4s ease-in-out;
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
   </style>
 </head>
 <body>
   <h1>Book Your Haircut</h1>
 
-  <form 
-    id="bookingForm" 
-    action="https://formsubmit.co/owethuandrew10@gmail.com" 
-    method="POST" 
-    target="invisibleFrame" 
-    onsubmit="showPopup()"
-  >
+  <form id="bookingForm" method="POST">
     <input type="hidden" name="_captcha" value="false">
 
     <label for="name">Full Name:</label>
@@ -152,12 +176,15 @@
 
   <a href="index.html" class="back-link">← Back to Home</a>
 
-  <!-- Invisible iframe to block redirect -->
-  <iframe name="invisibleFrame" style="display: none;"></iframe>
+  <!-- Loader -->
+  <div id="loading-overlay">
+    <div class="loader"></div>
+  </div>
 
   <!-- Thank You Popup -->
   <div id="thankYouPopup">
     <h2>✅ Thank you!</h2>
+    <p>Your booking has been received.</p>
   </div>
 
   <script>
@@ -176,17 +203,31 @@
       }
     }
 
-    function showPopup() {
-      setTimeout(() => {
-        const popup = document.getElementById('thankYouPopup');
-        popup.style.display = 'block';
-        document.getElementById('bookingForm').reset();
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+      e.preventDefault();
 
-        setTimeout(() => {
-          popup.style.display = 'none';
-        }, 3000);
-      }, 1000);
-    }
+      document.getElementById('loading-overlay').style.display = 'flex';
+
+      const form = e.target;
+      const formData = new FormData(form);
+      formData.append("_captcha", "false");
+
+      fetch("https://formsubmit.co/owethuandrew10@gmail.com", {
+        method: "POST",
+        body: formData
+      }).then(response => {
+        if (response.ok) {
+          form.reset();
+          document.getElementById('thankYouPopup').style.display = 'block';
+        } else {
+          alert("Submission failed. Please try again.");
+        }
+      }).catch(error => {
+        alert("Error: " + error.message);
+      }).finally(() => {
+        document.getElementById('loading-overlay').style.display = 'none';
+      });
+    });
   </script>
 </body>
 </html>
