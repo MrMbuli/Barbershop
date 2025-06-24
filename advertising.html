@@ -5,110 +5,141 @@
   <title>Advertise with Us | Owethu Mbuli</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
+    :root {
+      --main-bg: #f0f4f8;
+      --accent: #25d366;
+      --header: #1e1e2f;
+      --text: #222;
+      --input-bg: #fff;
+      --border: #ccc;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #1e1e2f;
-      color: white;
-      margin: 0;
-      padding: 40px 20px;
+      background: linear-gradient(-45deg, #f0f4f8, #d9e4ec, #c0d6e4, #f0f4f8);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      color: var(--text);
       display: flex;
       flex-direction: column;
       align-items: center;
-      text-align: center;
+      padding: 50px 20px;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     h1 {
-      font-size: 2.2em;
+      color: var(--header);
       margin-bottom: 10px;
+      font-size: 2.5em;
     }
 
     p {
+      font-size: 1.1em;
+      margin-bottom: 30px;
       max-width: 600px;
-      line-height: 1.6;
-      margin-bottom: 20px;
+      text-align: center;
     }
 
     form {
       width: 100%;
       max-width: 600px;
-      text-align: left;
-      background: #2b2b40;
-      padding: 20px;
-      border-radius: 10px;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
     }
 
     label {
       display: block;
-      margin-top: 15px;
       font-weight: bold;
+      margin-top: 20px;
+      color: var(--header);
     }
 
     input, select {
       width: 100%;
-      padding: 10px;
-      margin-top: 6px;
-      border: none;
-      border-radius: 6px;
-      background: #444;
-      color: white;
+      padding: 12px;
+      margin-top: 8px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--input-bg);
+      font-size: 1em;
     }
 
-    input::placeholder {
-      color: #bbb;
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.3);
     }
 
     button {
-      margin-top: 20px;
-      padding: 12px 24px;
-      background: #25d366;
+      margin-top: 30px;
+      width: 100%;
+      padding: 15px;
+      font-size: 1.1em;
+      background: var(--accent);
       color: white;
       border: none;
-      border-radius: 6px;
+      border-radius: 10px;
       cursor: pointer;
-      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #1ebd5b;
     }
 
     .btn-back {
-      display: inline-block;
-      margin-top: 30px;
+      margin-top: 20px;
       text-decoration: none;
-      color: #aaa;
+      color: #555;
     }
 
     footer {
-      margin-top: 40px;
+      margin-top: 60px;
       font-size: 0.9em;
-      color: #aaa;
+      color: #888;
     }
 
     #thankYouPopup {
       display: none;
       position: fixed;
-      bottom: 20px;
+      bottom: 30px;
       left: 50%;
       transform: translateX(-50%);
-      background: #25d366;
+      background: var(--accent);
       color: white;
       padding: 15px 25px;
       border-radius: 8px;
       font-weight: bold;
-      box-shadow: 0 0 10px #000;
-      z-index: 999;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      z-index: 1000;
     }
   </style>
 </head>
 <body>
   <h1>📢 Advertise With Us</h1>
-  <p>Fill out this short form. We’ll contact you via your preferred method to discuss your ad.</p>
+  <p>We’d love to promote your product or service. Fill in your details below and we’ll get back to you.</p>
 
   <form id="whatsappForm" onsubmit="sendToWhatsApp(); return false;">
-    <label for="name">Business Name:</label>
+    <label for="name">Business Name</label>
     <input type="text" id="name" required>
 
     <label for="ad">What do you want to advertise?</label>
     <input type="text" id="ad" placeholder="e.g. Hair Products, Barber Deals" required>
 
-    <label for="type">Type of Advertisement:</label>
+    <label for="type">Type of Advertisement</label>
     <select id="type">
       <option value="Banner Ad">Banner Ad</option>
       <option value="Sponsored Post">Sponsored Post</option>
@@ -116,13 +147,13 @@
       <option value="Other">Other</option>
     </select>
 
-    <label for="audience">Target Audience:</label>
+    <label for="audience">Target Audience</label>
     <input type="text" id="audience" placeholder="e.g. Males 18–35 in Soweto">
 
-    <label for="budget">Estimated Budget Range:</label>
+    <label for="budget">Estimated Budget Range</label>
     <input type="text" id="budget" placeholder="e.g. R500 – R1500">
 
-    <label for="contactMethod">Preferred Contact Method:</label>
+    <label for="contactMethod">Preferred Contact Method</label>
     <select id="contactMethod">
       <option value="WhatsApp">WhatsApp</option>
       <option value="Email">Email</option>
@@ -138,20 +169,9 @@
     &copy; 2025 Owethu Mbuli. All rights reserved.
   </footer>
 
-  <!-- Thank You Popup -->
   <div id="thankYouPopup">✅ Thank you! We'll be in touch soon.</div>
 
   <script>
-    window.onload = function () {
-      const fields = ["name", "ad", "type", "audience", "budget", "contactMethod"];
-      fields.forEach(id => {
-        const saved = localStorage.getItem(id);
-        if (saved) {
-          document.getElementById(id).value = saved;
-        }
-      });
-    };
-
     function sendToWhatsApp() {
       const fields = {
         name: document.getElementById("name").value,
@@ -161,10 +181,6 @@
         budget: document.getElementById("budget").value,
         contactMethod: document.getElementById("contactMethod").value
       };
-
-      Object.keys(fields).forEach(key => {
-        localStorage.setItem(key, fields[key]);
-      });
 
       const message = `Hello, I want to advertise on your website.%0A
 Business Name: ${fields.name}%0A
