@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Book a Cut | Owethu Mbuli</title>
+
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -70,12 +71,45 @@
       color: #8e2de2;
       text-decoration: underline;
     }
+
+    /* Loader styles */
+    #loading-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .loader {
+      width: 60px;
+      height: 60px;
+      border: 6px solid #ffffff;
+      border-top: 6px solid transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite, scratch 0.3s infinite alternate;
+      box-shadow: 0 0 8px #fff, inset 0 0 10px #fff;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes scratch {
+      0% { box-shadow: 0 0 8px #fff, inset 0 0 5px #fff; }
+      100% { box-shadow: 0 0 12px #fff, inset 0 0 15px #fff; }
+    }
   </style>
 
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script>
-    (function(){
-      emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your public key
+    (function() {
+      emailjs.init("YOUR_PUBLIC_KEY"); // replace with your EmailJS public key
     })();
   </script>
 </head>
@@ -124,10 +158,20 @@
     <label for="message">Message (Optional):</label>
     <textarea id="message" name="message" rows="4"></textarea>
 
+    <label>
+      <input type="checkbox" name="sms_reminder" value="Yes" required>
+      I agree to receive an SMS reminder for my booking
+    </label>
+
     <button type="submit">Submit Booking</button>
   </form>
 
   <a href="index.html" class="back-link">← Back to Home</a>
+
+  <!-- Loading Overlay -->
+  <div id="loading-overlay">
+    <div class="loader"></div>
+  </div>
 
   <script>
     function getLocation() {
@@ -147,12 +191,18 @@
 
     function sendEmail(event) {
       event.preventDefault();
+      document.getElementById('loading-overlay').style.display = 'flex';
 
-      emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', event.target)
+      const form = document.getElementById('bookingForm');
+      Array.from(form.elements).forEach(el => el.disabled = true);
+
+      emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', form)
         .then(() => {
-          window.location.href = 'thankyou.html'; // redirect after success
+          window.location.href = 'thankyou.html';
         }, (error) => {
           alert('Failed to send email: ' + error.text);
+          document.getElementById('loading-overlay').style.display = 'none';
+          Array.from(form.elements).forEach(el => el.disabled = false);
         });
     }
   </script>
