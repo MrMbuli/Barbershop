@@ -96,7 +96,7 @@
 
     <input type="hidden" name="_captcha" value="false">
     <input type="hidden" name="_subject" value="New Booking from Website">
-    <input type="hidden" name="_next" value="thankyou.html">
+    <input type="hidden" name="_next" value="index.html">
 
     <label for="name">Full Name:</label>
     <input type="text" id="name" name="name" required>
@@ -167,7 +167,6 @@
 
     function showLoadingMessage() {
       document.getElementById('loading-message').style.display = 'block';
-
       const form = document.getElementById('bookingForm');
       Array.from(form.elements).forEach(el => el.disabled = true);
     }
