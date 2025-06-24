@@ -1,233 +1,224 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Book a Cut | Owethu Mbuli</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: url('barbershop-chair.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: #fff;
-      padding: 20px;
-      margin: 0;
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+  <meta charset="UTF-8" />  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>  
+  <title>Book a Cut | Owethu Mbuli</title>  
+  <style>  
+    body {  
+      font-family: 'Segoe UI', sans-serif;  
+      background: url('barbershop-chair.jpg') no-repeat center center fixed;  
+      background-size: cover;  
+      color: #fff;  
+      padding: 20px;  
+      margin: 0;  
+    }  
+  
+    h1 {  
+      text-align: center;  
+      color: #ffffff;  
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);  
+    }  
+  
+    form {  
+      max-width: 500px;  
+      margin: auto;  
+      background: rgba(0, 0, 0, 0.75);  
+      padding: 30px;  
+      border-radius: 10px;  
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);  
+    }  
+  
+    label {  
+      display: block;  
+      margin: 15px 0 5px;  
+      color: #fff;  
+    }  
+  
+    input, select {  
+      width: 100%;  
+      padding: 10px;  
+      margin-bottom: 10px;  
+      border: none;  
+      border-radius: 6px;  
+    }  
+  
+    button {  
+      background: #8e2de2;  
+      color: white;  
+      padding: 12px 20px;  
+      border: none;  
+      border-radius: 6px;  
+      cursor: pointer;  
+    }  
+  
+    button:hover {  
+      background: #4a00e0;  
+    }  
+  
+    .back-link {  
+      display: block;  
+      text-align: center;  
+      margin-top: 20px;  
+      color: #ffffff;  
+      text-decoration: none;  
+    }  
+  
+    .map-button {  
+      display: inline-block;  
+      margin-bottom: 10px;  
+      color: #8e2de2;  
+      text-decoration: underline;  
+    }  
+  
+    #loading-overlay {  
+      display: none;  
+      position: fixed;  
+      top: 0; left: 0;  
+      width: 100vw;  
+      height: 100vh;  
+      background: rgba(0, 0, 0, 0.85);  
+      z-index: 9999;  
+      justify-content: center;  
+      align-items: center;  
+    }  
+  
+    .loader {  
+      width: 60px;  
+      height: 60px;  
+      border: 6px solid #ffffff;  
+      border-top: 6px solid transparent;  
+      border-radius: 50%;  
+      animation: spin 1s linear infinite, scratch 0.3s infinite alternate;  
+      box-shadow: 0 0 8px #fff, inset 0 0 10px #fff;  
+    }  
+  
+    @keyframes spin {  
+      0% { transform: rotate(0deg); }  
+      100% { transform: rotate(360deg); }  
+    }  
+  
+    @keyframes scratch {  
+      0% { box-shadow: 0 0 8px #fff, inset 0 0 5px #fff; }  
+      100% { box-shadow: 0 0 12px #fff, inset 0 0 15px #fff; }  
     }
 
-    h1 {
-      text-align: center;
-      color: #ffffff;
-      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
-    }
-
-    form {
-      max-width: 500px;
-      margin: auto;
-      background: rgba(0, 0, 0, 0.75);
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    }
-
-    label {
-      display: block;
-      margin: 15px 0 5px;
-      color: #fff;
-    }
-
-    input, select, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
-      border: none;
-      border-radius: 6px;
-    }
-
-    button {
-      background: #8e2de2;
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #4a00e0;
-    }
-
-    .back-link {
-      display: block;
+    #success-message {
+      display: none;
       text-align: center;
       margin-top: 20px;
-      color: #ffffff;
-      text-decoration: none;
-    }
-
-    .map-button {
-      display: inline-block;
-      margin-bottom: 10px;
-      color: #8e2de2;
-      text-decoration: underline;
-    }
-
-    #loading-overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.85);
-      z-index: 9999;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .loader {
-      width: 60px;
-      height: 60px;
-      border: 6px solid #ffffff;
-      border-top: 6px solid transparent;
-      border-radius: 50%;
-      animation: spin 1s linear infinite, scratch 0.3s infinite alternate;
-      box-shadow: 0 0 8px #fff, inset 0 0 10px #fff;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    @keyframes scratch {
-      0% { box-shadow: 0 0 8px #fff, inset 0 0 5px #fff; }
-      100% { box-shadow: 0 0 12px #fff, inset 0 0 15px #fff; }
+      background: #28a745;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #28a745;
+      animation: fadeIn 0.4s ease-in-out;
     }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: scale(0.95); }
       to { opacity: 1; transform: scale(1); }
     }
+  </style>  
+</head>  
+<body>  
+  <h1>Book Your Haircut</h1>  
+  
+  <form id="bookingForm" method="POST">  
+    <input type="hidden" name="_captcha" value="false">  
+  
+    <label for="name">Full Name:</label>  
+    <input type="text" id="name" name="name" required>  
+  
+    <label for="email">Email:</label>  
+    <input type="email" id="email" name="email" required>  
+  
+    <label for="phone">Phone Number:</label>  
+    <input type="tel" id="phone" name="phone" required>  
+  
+    <label for="service">Select Service:</label>  
+    <select id="service" name="service" required>  
+      <option value="">-- Select --</option>  
+      <option value="Haircut">Haircut</option>  
+      <option value="Beard Trim">Beard Trim</option>  
+      <option value="Shave">Shave</option>  
+      <option value="Haircut + Beard">Haircut + Beard Combo</option>  
+    </select>  
+  
+    <label for="day">Preferred Day:</label>  
+    <select id="day" name="preferred_day" required>  
+      <option value="">-- Select --</option>  
+      <option value="Monday">Monday</option>  
+      <option value="Tuesday">Tuesday</option>  
+      <option value="Wednesday">Wednesday</option>  
+    </select>  
+  
+    <label for="time">Preferred Time:</label>  
+    <input type="time" id="time" name="preferred_time" required>  
+  
+    <label for="location">Location:</label>  
+    <p>  
+      <a href="https://www.google.com/maps" target="_blank" class="map-button">  
+        📍 Open Google Maps to Select Location  
+      </a>  
+    </p>  
+    <button type="button" onclick="getLocation()">📍 Use My Current Location</button>  
+    <input type="url" id="location" name="location" placeholder="Paste your Google Maps location URL here" required>  
+  
+    <button type="submit">Submit Booking</button>  
+  </form>  
 
-    #thankYouPopup {
-      display: none;
-      position: fixed;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      background: #222;
-      color: white;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 25px rgba(0, 255, 0, 0.4);
-      z-index: 10000;
-      text-align: center;
-      animation: fadeIn 0.4s ease-in-out;
-    }
-  </style>
-</head>
-<body>
-  <h1>Book Your Haircut</h1>
-
-  <form id="bookingForm" method="POST">
-    <input type="hidden" name="_captcha" value="false">
-
-    <label for="name">Full Name:</label>
-    <input type="text" id="name" name="name" required>
-
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
-
-    <label for="phone">Phone Number:</label>
-    <input type="tel" id="phone" name="phone" required>
-
-    <label for="service">Select Service:</label>
-    <select id="service" name="service" required>
-      <option value="">-- Select --</option>
-      <option value="Haircut">Haircut</option>
-      <option value="Beard Trim">Beard Trim</option>
-      <option value="Shave">Shave</option>
-      <option value="Haircut + Beard">Haircut + Beard Combo</option>
-    </select>
-
-    <label for="day">Preferred Day:</label>
-    <select id="day" name="preferred_day" required>
-      <option value="">-- Select --</option>
-      <option value="Monday">Monday</option>
-      <option value="Tuesday">Tuesday</option>
-      <option value="Wednesday">Wednesday</option>
-    </select>
-
-    <label for="time">Preferred Time:</label>
-    <input type="time" id="time" name="preferred_time" required>
-
-    <label for="location">Location:</label>
-    <p>
-      <a href="https://www.google.com/maps" target="_blank" class="map-button">
-        📍 Open Google Maps to Select Location
-      </a>
-    </p>
-    <button type="button" onclick="getLocation()">📍 Use My Current Location</button>
-    <input type="url" id="location" name="location" placeholder="Paste your Google Maps location URL here" required>
-
-    <label for="message">Message (Optional):</label>
-    <textarea id="message" name="message" rows="4"></textarea>
-
-    <button type="submit">Submit Booking</button>
-  </form>
-
-  <a href="index.html" class="back-link">← Back to Home</a>
-
-  <!-- Loader -->
-  <div id="loading-overlay">
-    <div class="loader"></div>
-  </div>
-
-  <!-- Thank You Popup -->
-  <div id="thankYouPopup">
-    <h2>✅ Thank you!</h2>
-    <p>Your booking has been received.</p>
-  </div>
-
-  <script>
-    function getLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          const lat = position.coords.latitude;
-          const lon = position.coords.longitude;
-          const mapsLink = `https://www.google.com/maps?q=${lat},${lon}`;
-          document.getElementById('location').value = mapsLink;
-        }, function(error) {
-          alert("Unable to retrieve your location. Please allow access and try again.");
-        });
-      } else {
-        alert("Geolocation is not supported by your browser.");
-      }
-    }
-
-    document.getElementById('bookingForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      document.getElementById('loading-overlay').style.display = 'flex';
-
-      const form = e.target;
-      const formData = new FormData(form);
-      formData.append("_captcha", "false");
-
-      fetch("https://formsubmit.co/owethuandrew10@gmail.com", {
-        method: "POST",
-        body: formData
-      }).then(response => {
-        if (response.ok) {
-          form.reset();
-          document.getElementById('thankYouPopup').style.display = 'block';
-        } else {
-          alert("Submission failed. Please try again.");
-        }
-      }).catch(error => {
-        alert("Error: " + error.message);
-      }).finally(() => {
-        document.getElementById('loading-overlay').style.display = 'none';
-      });
-    });
-  </script>
-</body>
+  <div id="success-message">✅ Success! Your booking has been received.</div>
+  
+  <a href="index.html" class="back-link">← Back to Home</a>  
+  
+  <!-- Loader -->  
+  <div id="loading-overlay">  
+    <div class="loader"></div>  
+  </div>  
+  
+  <script>  
+    function getLocation() {  
+      if (navigator.geolocation) {  
+        navigator.geolocation.getCurrentPosition(function(position) {  
+          const lat = position.coords.latitude;  
+          const lon = position.coords.longitude;  
+          const mapsLink = `https://www.google.com/maps?q=${lat},${lon}`;  
+          document.getElementById('location').value = mapsLink;  
+        }, function(error) {  
+          alert("Unable to retrieve your location. Please allow access and try again.");  
+        });  
+      } else {  
+        alert("Geolocation is not supported by your browser.");  
+      }  
+    }  
+  
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {  
+      e.preventDefault();  
+      document.getElementById('loading-overlay').style.display = 'flex';  
+      const form = e.target;  
+      const formData = new FormData(form);  
+      formData.append("_captcha", "false");  
+  
+      fetch("https://formsubmit.co/owethuandrew10@gmail.com", {  
+        method: "POST",  
+        body: formData  
+      }).then(response => {  
+        if (response.ok) {  
+          form.reset();  
+          const msg = document.getElementById('success-message');  
+          msg.style.display = 'block';  
+          setTimeout(() => {  
+            msg.style.display = 'none';  
+          }, 4000); // hide after 4 seconds  
+        } else {  
+          alert("Submission failed. Please try again.");  
+        }  
+      }).catch(error => {  
+        alert("Error: " + error.message);  
+      }).finally(() => {  
+        document.getElementById('loading-overlay').style.display = 'none';  
+      });  
+    });  
+  </script>  
+</body>  
 </html>
