@@ -107,11 +107,7 @@
 <body>
   <h1>Book Your Haircut</h1>
 
-  <form id="bookingForm" action="https://formsubmit.co/owethuandrew10@gmail.com" method="POST" onsubmit="return handleFormSubmit()">
-    <!-- Hidden FormSubmit Fields -->
-    <input type="hidden" name="_captcha" value="false">
-    <input type="hidden" name="_next" value="index.html?thankyou=1">
-
+  <form id="bookingForm">
     <label for="name">Full Name:</label>
     <input type="text" id="name" name="name" required>
 
@@ -153,11 +149,6 @@
     <label for="message">Message (Optional):</label>
     <textarea id="message" name="message" rows="4"></textarea>
 
-    <label>
-      <input type="checkbox" name="sms_reminder" value="Yes" required>
-      I agree to receive an SMS reminder for my booking
-    </label>
-
     <button type="submit">Submit Booking</button>
   </form>
 
@@ -184,12 +175,29 @@
       }
     }
 
-    function handleFormSubmit() {
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+      e.preventDefault();
       document.getElementById('loading-overlay').style.display = 'flex';
-      const form = document.getElementById('bookingForm');
-      Array.from(form.elements).forEach(el => el.disabled = true);
-      return true; // allow form to submit
-    }
+
+      const form = e.target;
+      const formData = new FormData(form);
+      formData.append('_captcha', 'false');
+
+      fetch("https://formsubmit.co/owethuandrew10@gmail.com", {
+        method: "POST",
+        body: formData
+      }).then(response => {
+        if (response.ok) {
+          window.location.href = "thankyou.html";
+        } else {
+          alert("Something went wrong. Please try again.");
+        }
+      }).catch(error => {
+        alert("Error: " + error.message);
+      }).finally(() => {
+        document.getElementById('loading-overlay').style.display = 'none';
+      });
+    });
   </script>
 </body>
 </html>
