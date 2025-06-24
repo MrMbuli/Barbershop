@@ -102,15 +102,33 @@
       0% { box-shadow: 0 0 8px #fff, inset 0 0 5px #fff; }
       100% { box-shadow: 0 0 12px #fff, inset 0 0 15px #fff; }
     }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    #thankYouPopup {
+      display: none;
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: #222;
+      color: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(0, 255, 0, 0.4);
+      z-index: 10000;
+      text-align: center;
+      animation: fadeIn 0.4s ease-in-out;
+    }
   </style>
 </head>
 <body>
   <h1>Book Your Haircut</h1>
 
   <form id="bookingForm" method="POST">
-    <!-- Hidden FormSubmit fields -->
     <input type="hidden" name="_captcha" value="false">
-    <input type="hidden" name="_next" value="thankyou.html">
 
     <label for="name">Full Name:</label>
     <input type="text" id="name" name="name" required>
@@ -158,8 +176,15 @@
 
   <a href="index.html" class="back-link">← Back to Home</a>
 
+  <!-- Loader -->
   <div id="loading-overlay">
     <div class="loader"></div>
+  </div>
+
+  <!-- Thank You Popup -->
+  <div id="thankYouPopup">
+    <h2>✅ Thank you!</h2>
+    <p>Your booking has been received.</p>
   </div>
 
   <script>
@@ -185,13 +210,15 @@
 
       const form = e.target;
       const formData = new FormData(form);
+      formData.append("_captcha", "false");
 
       fetch("https://formsubmit.co/owethuandrew10@gmail.com", {
         method: "POST",
         body: formData
       }).then(response => {
         if (response.ok) {
-          window.location.href = "thankyou.html";
+          form.reset();
+          document.getElementById('thankYouPopup').style.display = 'block';
         } else {
           alert("Submission failed. Please try again.");
         }
