@@ -16,58 +16,172 @@
       align-items: center;
       text-align: center;
     }
+
     h1 {
       font-size: 2.2em;
       margin-bottom: 10px;
     }
+
     p {
       max-width: 600px;
       line-height: 1.6;
       margin-bottom: 20px;
     }
-    .btn {
-      display: inline-block;
-      padding: 14px 28px;
+
+    form {
+      width: 100%;
+      max-width: 600px;
+      text-align: left;
+      background: #2b2b40;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border: none;
+      border-radius: 6px;
+      background: #444;
+      color: white;
+    }
+
+    input::placeholder {
+      color: #bbb;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 24px;
       background: #25d366;
       color: white;
-      text-decoration: none;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
       font-weight: bold;
-      font-size: 1.1em;
-      border-radius: 8px;
-      margin-top: 20px;
-      transition: background 0.3s ease;
     }
-    .btn:hover {
-      background: #1da851;
-    }
+
     .btn-back {
       display: inline-block;
       margin-top: 30px;
       text-decoration: none;
       color: #aaa;
     }
+
     footer {
       margin-top: 40px;
       font-size: 0.9em;
       color: #aaa;
     }
+
+    #thankYouPopup {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #25d366;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 8px;
+      font-weight: bold;
+      box-shadow: 0 0 10px #000;
+      z-index: 999;
+    }
   </style>
 </head>
 <body>
   <h1>📢 Advertise With Us</h1>
-  <p>
-    We're excited to promote your business! Use the button below to fill in our advertising form and upload 2 product images.
-    After submitting, you'll be redirected to WhatsApp to confirm your ad.
-  </p>
+  <p>Fill out this short form. We’ll contact you via your preferred method to discuss your ad.</p>
 
-  <a href="https://forms.gle/YOUR_GOOGLE_FORM_LINK" target="_blank" class="btn">
-    📋 Open Advertising Form
-  </a>
+  <form id="whatsappForm" onsubmit="sendToWhatsApp(); return false;">
+    <label for="name">Business Name:</label>
+    <input type="text" id="name" required>
+
+    <label for="ad">What do you want to advertise?</label>
+    <input type="text" id="ad" placeholder="e.g. Hair Products, Barber Deals" required>
+
+    <label for="type">Type of Advertisement:</label>
+    <select id="type">
+      <option value="Banner Ad">Banner Ad</option>
+      <option value="Sponsored Post">Sponsored Post</option>
+      <option value="Product Placement">Product Placement</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <label for="audience">Target Audience:</label>
+    <input type="text" id="audience" placeholder="e.g. Males 18–35 in Soweto">
+
+    <label for="budget">Estimated Budget Range:</label>
+    <input type="text" id="budget" placeholder="e.g. R500 – R1500">
+
+    <label for="contactMethod">Preferred Contact Method:</label>
+    <select id="contactMethod">
+      <option value="WhatsApp">WhatsApp</option>
+      <option value="Email">Email</option>
+      <option value="Phone Call">Phone Call</option>
+    </select>
+
+    <button type="submit">Send via WhatsApp</button>
+  </form>
 
   <a href="index.html" class="btn-back">← Back to Home</a>
 
   <footer>
     &copy; 2025 Owethu Mbuli. All rights reserved.
   </footer>
+
+  <!-- Thank You Popup -->
+  <div id="thankYouPopup">✅ Thank you! We'll be in touch soon.</div>
+
+  <script>
+    window.onload = function () {
+      const fields = ["name", "ad", "type", "audience", "budget", "contactMethod"];
+      fields.forEach(id => {
+        const saved = localStorage.getItem(id);
+        if (saved) {
+          document.getElementById(id).value = saved;
+        }
+      });
+    };
+
+    function sendToWhatsApp() {
+      const fields = {
+        name: document.getElementById("name").value,
+        ad: document.getElementById("ad").value,
+        type: document.getElementById("type").value,
+        audience: document.getElementById("audience").value,
+        budget: document.getElementById("budget").value,
+        contactMethod: document.getElementById("contactMethod").value
+      };
+
+      Object.keys(fields).forEach(key => {
+        localStorage.setItem(key, fields[key]);
+      });
+
+      const message = `Hello, I want to advertise on your website.%0A
+Business Name: ${fields.name}%0A
+Ad: ${fields.ad}%0A
+Type: ${fields.type}%0A
+Target Audience: ${fields.audience}%0A
+Budget: ${fields.budget}%0A
+Preferred Contact: ${fields.contactMethod}`;
+
+      const phone = "27635892769";
+      const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
+
+      const popup = document.getElementById("thankYouPopup");
+      popup.style.display = "block";
+      setTimeout(() => popup.style.display = "none", 5000);
+    }
+  </script>
 </body>
 </html>
