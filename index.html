@@ -6,16 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Owethu Mbuli | Personal Barber</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       font-family: 'Segoe UI', sans-serif;
       background-color: #f5f5f5;
@@ -23,7 +15,6 @@
       line-height: 1.6;
       overflow-x: hidden;
     }
-
     header {
       background: rgba(30, 30, 47, 1);
       color: white;
@@ -37,11 +28,7 @@
       justify-content: center;
       align-items: center;
     }
-
-    header.scrolled {
-      background: rgba(30, 30, 47, 0.85);
-    }
-
+    header.scrolled { background: rgba(30, 30, 47, 0.85); }
     .menu-toggle {
       position: fixed;
       top: 25px;
@@ -55,11 +42,7 @@
       font-weight: bold;
       transition: color 0.3s ease;
     }
-
-    .menu-toggle.open {
-      color: white;
-    }
-
+    .menu-toggle.open { color: white; }
     #dropdown-menu {
       position: fixed;
       top: 0;
@@ -74,11 +57,7 @@
       transition: right 0.3s ease;
       z-index: 1000;
     }
-
-    #dropdown-menu.active {
-      right: 0;
-    }
-
+    #dropdown-menu.active { right: 0; }
     #dropdown-menu a {
       color: white;
       padding: 15px 25px;
@@ -86,11 +65,7 @@
       width: 100%;
       border-bottom: 1px solid #333;
     }
-
-    #dropdown-menu a:hover {
-      background: #333;
-    }
-
+    #dropdown-menu a:hover { background: #333; }
     .drawer-contact-buttons {
       margin-top: auto;
       width: 100%;
@@ -99,7 +74,6 @@
       flex-direction: column;
       gap: 10px;
     }
-
     .drawer-btn {
       background: #25d366;
       color: white;
@@ -110,15 +84,8 @@
       font-weight: bold;
       transition: background 0.3s ease;
     }
-
-    .drawer-btn.call {
-      background: #3c3c3c;
-    }
-
-    .drawer-btn:hover {
-      opacity: 0.9;
-    }
-
+    .drawer-btn.call { background: #3c3c3c; }
+    .drawer-btn:hover { opacity: 0.9; }
     .hero {
       background: url("background.jpg") center center/cover no-repeat;
       color: white;
@@ -127,7 +94,6 @@
       position: relative;
       margin-top: 90px;
     }
-
     .hero::before {
       content: "";
       position: absolute;
@@ -137,45 +103,16 @@
       background: rgba(0, 0, 0, 0.4);
       z-index: 1;
     }
-
-    .hero * {
-      position: relative;
-      z-index: 2;
-    }
-
-    .hero h1 {
-      font-size: 2.2em;
-      margin-bottom: 10px;
-    }
-
-    .hero p {
-      font-size: 1.2em;
-    }
-
+    .hero * { position: relative; z-index: 2; }
+    .hero h1 { font-size: 2.2em; margin-bottom: 10px; }
+    .hero p { font-size: 1.2em; }
     section {
       padding: 40px 20px;
       max-width: 800px;
       margin: auto;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+      text-align: center;
     }
-
-    section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .btn {
-      display: inline-block;
-      background: #8e2de2;
-      color: white;
-      padding: 12px 24px;
-      border-radius: 6px;
-      text-decoration: none;
-      margin-top: 20px;
-    }
-
+    section h2 { font-size: 1.8em; margin-bottom: 10px; }
     .product-coming-soon {
       background: url('product-coming.jpg') center center/cover no-repeat;
       height: 300px;
@@ -184,7 +121,6 @@
       margin-top: 40px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
-
     .product-coming-soon .overlay {
       background: rgba(0, 0, 0, 0.5);
       color: #fff;
@@ -196,17 +132,8 @@
       align-items: center;
       border-radius: 10px;
     }
-
-    .product-coming-soon h2 {
-      font-size: 1.8em;
-      margin-bottom: 10px;
-    }
-
-    .product-coming-soon p {
-      font-size: 0.9em;
-      opacity: 0.8;
-    }
-
+    .product-coming-soon h2 { font-size: 1.8em; margin-bottom: 10px; }
+    .product-coming-soon p { font-size: 0.9em; opacity: 0.8; }
     footer {
       background: #1e1e2f;
       color: white;
@@ -214,68 +141,70 @@
       padding: 20px;
       font-size: 0.9em;
     }
-
     @media (max-width: 600px) {
-      .hero h1 {
-        font-size: 1.6em;
-      }
+      .hero h1 { font-size: 1.6em; }
     }
   </style>
 </head>
 <body>
-  <div id="page-container">
-    <header id="header">
-      <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</button>
-      <h1>Owethu Mbuli</h1>
-    </header>
+  <header id="header">
+    <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</button>
+    <h1>Owethu Mbuli</h1>
+  </header>
 
-    <nav id="dropdown-menu">
-      <a href="#about" onclick="toggleMenu()">About</a>
-      <a href="booking.html" onclick="toggleMenu()">Book Now</a>
-      <a href="#contact" onclick="toggleMenu()">Contact</a>
-      <a href="gallery.html" onclick="toggleMenu()">View Our Work</a>
-      <a href="advertising.html" onclick="toggleMenu()">Advertising</a>
+  <nav id="dropdown-menu">
+    <a href="#about" onclick="toggleMenu()">About</a>
+    <a href="booking.html" onclick="toggleMenu()">Book Now</a>
+    <a href="#contact" onclick="toggleMenu()">Contact</a>
+    <a href="gallery.html" onclick="toggleMenu()">View Our Work</a>
+    <a href="advertising.html" onclick="toggleMenu()">Advertising</a>
+    <div class="drawer-contact-buttons">
+      <a href="https://wa.me/27635892769" class="drawer-btn whatsapp" target="_blank">💬 WhatsApp</a>
+      <a href="tel:+27635892769" class="drawer-btn call">📞 Call</a>
+    </div>
+  </nav>
 
-      <div class="drawer-contact-buttons">
-        <a href="https://wa.me/27635892769" class="drawer-btn whatsapp" target="_blank">💬 WhatsApp</a>
-        <a href="tel:+27635892769" class="drawer-btn call">📞 Call</a>
-      </div>
-    </nav>
+  <section class="hero" id="home">
+    <h1>Personal Barber & House Call Specialist</h1>
+    <p>Serving Soweto, Roodepoort & surrounding areas.</p>
+  </section>
 
-    <section class="hero" id="home">
-      <h1>Personal Barber & House Call Specialist</h1>
-      <p>Serving Soweto, Roodepoort & surrounding areas.</p>
-    </section>
+  <section class="section" id="about">
+    <h2>About Me</h2>
+    <p>I'm Owethu Mbuli, a personal barber offering professional house call grooming services in Gauteng — especially Soweto, Roodepoort, and nearby areas. Whether it’s a fresh fade or a classic clean-up, I come to you.</p>
+    <p><strong>Available:</strong> Monday, Tuesday, Wednesday</p>
+  </section>
 
-    <section class="section" id="about">
-      <h2>About Me</h2>
-      <p>I'm Owethu Mbuli, a personal barber offering professional house call grooming services in Gauteng — especially Soweto, Roodepoort, and nearby areas. Whether it’s a fresh fade or a classic clean-up, I come to you.</p>
-      <p><strong>Available:</strong> Monday, Tuesday, Wednesday</p>
-    </section>
+  <section class="section product-coming-soon">
+    <div class="overlay">
+      <h2>🛍️ Products</h2>
+      <p>Coming Soon</p>
+    </div>
+  </section>
 
-    <section class="section product-coming-soon">
-      <div class="overlay">
-        <h2>🛍️ Products</h2>
-        <p>Coming Soon</p>
-      </div>
-    </section>
+  <section class="section" id="ads">
+    <h2>Look Out For</h2>
+    <img src="billboard.jpg" alt="Advertising Billboard" style="max-width:100%; height:auto; border-radius:10px; margin:20px 0;">
+    <p>We’ll soon be featuring sponsored products and promotions from brands we trust. Watch this space!</p>
+    <p>If you'd like your product featured here, 
+      <a href="advertising.html" style="color:#8e2de2; font-weight:bold;">click here to advertise</a>.
+    </p>
+  </section>
 
-    <section class="section" id="contact">
-      <h2>Contact</h2>
-      <p>Email: <a href="mailto:owethuandrew10@gmail.com">owethuandrew10@gmail.com</a></p>
-      <p>Phone: <a href="tel:+27635892769">063 589 2769</a></p>
-    </section>
+  <section class="section" id="contact">
+    <h2>Contact</h2>
+    <p>Email: <a href="mailto:owethuandrew10@gmail.com">owethuandrew10@gmail.com</a></p>
+    <p>Phone: <a href="tel:+27635892769">063 589 2769</a></p>
+  </section>
 
-    <footer>
-      &copy; 2025 Owethu Mbuli. All rights reserved.
-    </footer>
-  </div>
+  <footer>
+    &copy; 2025 Owethu Mbuli. All rights reserved.
+  </footer>
 
   <script>
     function toggleMenu() {
       const menu = document.getElementById("dropdown-menu");
       const toggle = document.getElementById("menuToggle");
-
       const isOpen = menu.classList.toggle("active");
       toggle.textContent = isOpen ? "<" : "☰";
       toggle.classList.toggle("open", isOpen);
@@ -284,31 +213,13 @@
     document.addEventListener("click", function (event) {
       const menu = document.getElementById("dropdown-menu");
       const toggle = document.getElementById("menuToggle");
-
-      const clickedInsideMenu = menu.contains(event.target);
-      const clickedToggle = toggle.contains(event.target);
-
-      if (!clickedInsideMenu && !clickedToggle && menu.classList.contains("active")) {
-        menu.classList.remove("active");
-        toggle.textContent = "☰";
-        toggle.classList.remove("open");
-      }
-    });
-
-    const sections = document.querySelectorAll("section");
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
+      if (!menu.contains(event.target) && !toggle.contains(event.target)) {
+        if (menu.classList.contains("active")) {
+          menu.classList.remove("active");
+          toggle.textContent = "☰";
+          toggle.classList.remove("open");
         }
-      });
-    }, { threshold: 0.1 });
-
-    sections.forEach(section => observer.observe(section));
-
-    window.addEventListener("scroll", () => {
-      const header = document.getElementById("header");
-      header.classList.toggle("scrolled", window.scrollY > 10);
+      }
     });
   </script>
 </body>
