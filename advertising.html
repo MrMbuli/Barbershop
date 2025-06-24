@@ -50,15 +50,10 @@
     input::placeholder {
       color: #bbb;
     }
-    input[type="file"] {
-      background: transparent;
-      padding: 0;
-      border: none;
-    }
     button {
       margin-top: 20px;
       padding: 12px 24px;
-      background: #8e2de2;
+      background: #25d366;
       color: white;
       border: none;
       border-radius: 6px;
@@ -80,17 +75,17 @@
 </head>
 <body>
   <h1>📢 Advertise With Us</h1>
-  <p>Fill out this short form and we’ll get back to you shortly via email or WhatsApp.</p>
+  <p>Fill out this form to send your advertising request directly to our WhatsApp.</p>
 
-  <form action="mailto:owethuandrew10@gmail.com" method="POST" enctype="multipart/form-data">
+  <form id="whatsappForm" onsubmit="sendToWhatsApp(); return false;">
     <label for="name">Business Name:</label>
-    <input type="text" id="name" name="Business Name" required>
+    <input type="text" id="name" required>
 
     <label for="ad">What do you want to advertise?</label>
-    <input type="text" id="ad" name="Ad Content" placeholder="e.g. Men's hair products, services..." required>
+    <input type="text" id="ad" placeholder="e.g. Hair Products, Barber Deals" required>
 
     <label for="type">Type of Advertisement:</label>
-    <select id="type" name="Ad Type">
+    <select id="type">
       <option value="Banner Ad">Banner Ad</option>
       <option value="Sponsored Post">Sponsored Post</option>
       <option value="Product Placement">Product Placement</option>
@@ -98,18 +93,15 @@
     </select>
 
     <label for="audience">Target Audience:</label>
-    <input type="text" id="audience" name="Audience" placeholder="e.g. Males 18–35 in Soweto">
+    <input type="text" id="audience" placeholder="e.g. Males 18–35 in Soweto">
 
     <label for="budget">Estimated Budget Range:</label>
-    <input type="text" id="budget" name="Budget" placeholder="e.g. R500 – R1500">
+    <input type="text" id="budget" placeholder="e.g. R500 – R1500">
 
-    <label for="contact">Contact Info:</label>
-    <input type="text" id="contact" name="Contact" placeholder="WhatsApp number or email" required>
+    <label for="contact">Your Contact Info:</label>
+    <input type="text" id="contact" placeholder="WhatsApp or Email" required>
 
-    <label for="images">Upload at least 2 product images:</label>
-    <input type="file" id="images" name="Images" accept="image/*" multiple required>
-
-    <button type="submit">Send Request</button>
+    <button type="submit">Send via WhatsApp</button>
   </form>
 
   <a href="index.html" class="btn-back">← Back to Home</a>
@@ -117,5 +109,29 @@
   <footer>
     &copy; 2025 Owethu Mbuli. All rights reserved.
   </footer>
+
+  <script>
+    function sendToWhatsApp() {
+      const name = document.getElementById("name").value;
+      const ad = document.getElementById("ad").value;
+      const type = document.getElementById("type").value;
+      const audience = document.getElementById("audience").value;
+      const budget = document.getElementById("budget").value;
+      const contact = document.getElementById("contact").value;
+
+      const message = `Hello, I want to advertise on your website.%0A
+Business Name: ${name}%0A
+Ad: ${ad}%0A
+Type: ${type}%0A
+Target Audience: ${audience}%0A
+Budget: ${budget}%0A
+Contact: ${contact}`;
+
+      const phone = "27635892769";
+      const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+      window.open(url, '_blank');
+    }
+  </script>
 </body>
 </html>
