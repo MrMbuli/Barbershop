@@ -107,7 +107,11 @@
 <body>
   <h1>Book Your Haircut</h1>
 
-  <form id="bookingForm">
+  <form id="bookingForm" method="POST">
+    <!-- Hidden FormSubmit fields -->
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_next" value="thankyou.html">
+
     <label for="name">Full Name:</label>
     <input type="text" id="name" name="name" required>
 
@@ -154,7 +158,6 @@
 
   <a href="index.html" class="back-link">← Back to Home</a>
 
-  <!-- Loader Overlay -->
   <div id="loading-overlay">
     <div class="loader"></div>
   </div>
@@ -177,11 +180,11 @@
 
     document.getElementById('bookingForm').addEventListener('submit', function(e) {
       e.preventDefault();
+
       document.getElementById('loading-overlay').style.display = 'flex';
 
       const form = e.target;
       const formData = new FormData(form);
-      formData.append('_captcha', 'false');
 
       fetch("https://formsubmit.co/owethuandrew10@gmail.com", {
         method: "POST",
@@ -190,7 +193,7 @@
         if (response.ok) {
           window.location.href = "thankyou.html";
         } else {
-          alert("Something went wrong. Please try again.");
+          alert("Submission failed. Please try again.");
         }
       }).catch(error => {
         alert("Error: " + error.message);
