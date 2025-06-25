@@ -163,7 +163,7 @@
 
   <nav>
     <a href="#hero">Home</a>
-    <a href="#ads">Promos</a>
+    <a href="#register">Promos</a>
     <a href="#register">Loyalty</a>
     <a href="#contact">Contact</a>
   </nav>
@@ -173,7 +173,19 @@
     <p>We come to you — mobile barber services at your convenience.</p>
   </section>
 
-  <section class="ads" id="ads">
+  <!-- Registration Form Section -->
+  <section class="register" id="registerSection">
+    <h2>Loyalty Points Registration</h2>
+    <form onsubmit="registerClient(event)">
+      <input type="text" id="name" placeholder="Your Full Name" required />
+      <input type="tel" id="phone" placeholder="Phone Number" required />
+      <input type="email" id="email" placeholder="Email Address (optional)" />
+      <button type="submit">Register</button>
+    </form>
+  </section>
+
+  <!-- Ad Slides Section (initially hidden) -->
+  <section class="ads" id="adsSection" style="display: none;">
     <div class="ads-container" id="adsContainer">
       <div class="ad-slide">🔥 20% OFF First Cut</div>
       <div class="ad-slide">💈 Refer a Friend = Free Trim</div>
@@ -186,23 +198,14 @@
     </div>
   </section>
 
-  <section class="register" id="register">
-    <h2>Loyalty Points Registration</h2>
-    <form onsubmit="registerClient(event)">
-      <input type="text" id="name" placeholder="Your Full Name" required />
-      <input type="tel" id="phone" placeholder="Phone Number" required />
-      <input type="email" id="email" placeholder="Email Address (optional)" />
-      <button type="submit">Register</button>
-    </form>
-  </section>
-
+  <!-- Privacy Popup -->
   <div class="privacy-popup" id="privacyPopup">
     We use cookies to improve your experience.
     <button onclick="acceptPrivacy()">Accept</button>
   </div>
 
   <script>
-    // Auto-scrolling ads
+    // Ad Slide Logic
     let currentIndex = 0;
     const totalSlides = 3;
     const adsContainer = document.getElementById("adsContainer");
@@ -224,9 +227,9 @@
       showSlide(index);
     }
 
-    setInterval(nextSlide, 5000); // Auto-scroll every 5 seconds
+    setInterval(nextSlide, 5000); // auto scroll every 5 seconds
 
-    // Privacy popup
+    // Privacy popup logic
     function acceptPrivacy() {
       document.getElementById("privacyPopup").classList.remove("show");
       localStorage.setItem("acceptedPrivacy", "yes");
@@ -236,14 +239,27 @@
       document.getElementById("privacyPopup").classList.add("show");
     }
 
-    // Loyalty form
+    // Loyalty registration logic
     function registerClient(e) {
       e.preventDefault();
       const name = document.getElementById("name").value;
       const phone = document.getElementById("phone").value;
       const email = document.getElementById("email").value;
+
       alert(`Thank you, ${name}! You're registered for loyalty points.`);
-      e.target.reset();
+
+      // Save registration in localStorage
+      localStorage.setItem("registeredClient", "yes");
+
+      // Hide form and show ad section
+      document.getElementById("registerSection").style.display = "none";
+      document.getElementById("adsSection").style.display = "block";
+    }
+
+    // Check if user has already registered
+    if (localStorage.getItem("registeredClient") === "yes") {
+      document.getElementById("registerSection").style.display = "none";
+      document.getElementById("adsSection").style.display = "block";
     }
   </script>
 </body>
