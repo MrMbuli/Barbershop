@@ -5,7 +5,6 @@
   <meta http-equiv="X-Frame-Options" content="DENY" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>King's Cut Barbershop | Personal Barber</title>
-
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -16,43 +15,36 @@
       line-height: 1.6;
       overflow-x: hidden;
     }
-
     header {
-      background: rgba(30, 30, 47, 1);
-      color: white;
-      padding: 20px;
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transition: background 0.4s ease;
-    }
-
+  background: rgba(30, 30, 47, 1);
+  color: white;
+  padding: 20px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: background 0.4s ease;
+  display: flex;
+  justify-content: space-between; /* make space between title and icon */
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 60px; /* create space so icon doesn't crowd text */
+}
+    header.scrolled { background: rgba(30, 30, 47, 0.85); }
     .menu-toggle {
-      position: absolute;
+      position: fixed;
+      top: 25px;
       right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 26px;
+      font-size: 28px;
       background: none;
       border: none;
-      color: white;
+      color: black;
       cursor: pointer;
       z-index: 2000;
       font-weight: bold;
+      transition: color 0.3s ease;
     }
-
-    .header-title {
-      font-size: 1.3em;
-      text-align: center;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
+    .menu-toggle.open { color: white; }
     #dropdown-menu {
       position: fixed;
       top: 0;
@@ -67,9 +59,7 @@
       transition: right 0.3s ease;
       z-index: 1000;
     }
-
     #dropdown-menu.active { right: 0; }
-
     #dropdown-menu a {
       color: white;
       padding: 15px 25px;
@@ -77,9 +67,7 @@
       width: 100%;
       border-bottom: 1px solid #333;
     }
-
     #dropdown-menu a:hover { background: #333; }
-
     .drawer-contact-buttons {
       margin-top: auto;
       width: 100%;
@@ -88,7 +76,6 @@
       flex-direction: column;
       gap: 10px;
     }
-
     .drawer-btn {
       background: #25d366;
       color: white;
@@ -99,35 +86,8 @@
       font-weight: bold;
       transition: background 0.3s ease;
     }
-
     .drawer-btn.call { background: #3c3c3c; }
     .drawer-btn:hover { opacity: 0.9; }
-
-    #close-drawer {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      background: transparent;
-      border: none;
-      font-size: 28px;
-      color: white;
-      cursor: pointer;
-      z-index: 1100;
-      padding: 10px;
-      border-radius: 50%;
-      transition: transform 0.2s ease, background 0.2s ease;
-    }
-
-    #close-drawer:hover {
-      background: rgba(255, 255, 255, 0.1);
-      transform: scale(1.2);
-    }
-
-    #close-drawer:active {
-      transform: scale(0.95);
-      background: rgba(255, 255, 255, 0.2);
-    }
-
     .hero {
       background: url("background.jpg") center center/cover no-repeat;
       color: white;
@@ -136,7 +96,6 @@
       position: relative;
       margin-top: 90px;
     }
-
     .hero::before {
       content: "";
       position: absolute;
@@ -146,236 +105,557 @@
       background: rgba(0, 0, 0, 0.4);
       z-index: 1;
     }
-
     .hero * { position: relative; z-index: 2; }
     .hero h1 { font-size: 2.2em; margin-bottom: 10px; }
     .hero p { font-size: 1.2em; }
-
     section {
       padding: 40px 20px;
       max-width: 800px;
       margin: auto;
       text-align: center;
     }
-
     section h2 { font-size: 1.8em; margin-bottom: 10px; }
-
-    .ad-slider {
-      display: flex;
-      overflow: hidden;
+    .product-coming-soon {
+      background: url('product-coming.jpg') center center/cover no-repeat;
+      height: 300px;
       position: relative;
+      border-radius: 10px;
+      margin-top: 40px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
-
-    .ad-slide {
-      min-width: 100%;
-      transition: transform 0.5s ease-in-out;
-      background: #222;
-      color: white;
-      padding: 40px 20px;
-    }
-
-    .scroll-dots {
-      margin-top: 15px;
+    .product-coming-soon .overlay {
+      background: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      height: 100%;
+      width: 100%;
       display: flex;
+      flex-direction: column;
       justify-content: center;
-      gap: 10px;
+      align-items: center;
+      border-radius: 10px;
     }
-
-    .scroll-dot {
-      width: 12px;
-      height: 12px;
-      background: #ccc;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .scroll-dot.active { background: #333; }
-
-    .products {
-      display: flex;
-      overflow-x: auto;
-      gap: 10px;
+    .product-coming-soon h2 { font-size: 1.8em; margin-bottom: 10px; }
+    .product-coming-soon p { font-size: 0.9em; opacity: 0.8; }
+    footer {
+      background: #1e1e2f;
+      color: white;
+      text-align: center;
       padding: 20px;
+      font-size: 0.9em;
     }
-
-    .product {
-      flex: 0 0 auto;
-      width: 150px;
-      background: #eee;
-      border-radius: 12px;
-      padding: 15px;
-      text-align: center;
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 1.6em; }
     }
-
-    .product button {
-      margin-top: 10px;
-      padding: 8px 10px;
-      border: none;
-      border-radius: 5px;
-      background: #1e1e2f;
-      color: white;
-      cursor: pointer;
+  
+.scroll-dots {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.scroll-dot {
+  width: 12px;
+  height: 12px;
+  background: #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.scroll-dot.active {
+  background: #333;
+}
+#backToTop {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: #1e1e2f;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 50px;
+  font-size: 14px;
+  cursor: pointer;
+  display: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+#backToTop:hover {
+  background: #8e2de2;
+  transform: scale(1.1);
+}
+    header h1 {
+  font-size: 1.2em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 70%;
     }
+    header {
+  background: rgba(30, 30, 47, 1);
+  color: white;
+  padding: 20px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: background 0.4s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-    .product button:hover {
-      background: #8e2de2;
-    }
+.menu-toggle {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 26px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  z-index: 2000;
+  font-weight: bold;
+}
 
-    #contact {
-      padding: 40px 20px;
-    }
+.header-title {
+  font-size: 1.3em;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-    .privacy-popup {
-      position: fixed;
-      bottom: 10px;
-      left: 10px;
-      right: 10px;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-      padding: 15px;
-      z-index: 2000;
-      text-align: center;
-    }
-
-    #backToTop {
-      position: fixed;
-      bottom: 25px;
-      right: 25px;
-      background: #1e1e2f;
-      color: white;
-      border: none;
-      padding: 12px 18px;
-      border-radius: 50px;
-      font-size: 14px;
-      cursor: pointer;
-      display: none;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-      z-index: 1000;
-      transition: background 0.3s ease, transform 0.3s ease;
-    }
-
-    #backToTop:hover {
-      background: #8e2de2;
-      transform: scale(1.1);
-    }
-  </style>
-
+</style>
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 </head>
+  
+  
+<header id="header">
+  <h1 class="header-title">King's Cut Barbershop</h1>
+  <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</button>
+</header>
 
-<body>
-  <header id="header">
-    <h1 class="header-title">King's Cut Barbershop</h1>
-    <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</button>
-  </header>
 
-  <nav id="dropdown-menu">
-    <button id="close-drawer" onclick="toggleMenu()">✖</button>
-    <h2 style="width: 100%; text-align: center; color: white; padding: 15px 0; border-bottom: 1px solid #444;">Menu</h2>
-    <a href="#about" onclick="toggleMenu()">About</a>
-    <a href="booking.html" onclick="toggleMenu()">Book Now</a>
-    <a href="#contact" onclick="toggleMenu()">Contact</a>
-    <a href="gallery.html" onclick="toggleMenu()">View Our Work</a>
-    <a href="advertising.html" onclick="toggleMenu()">Advertising</a>
-    <a href="privacy.html" onclick="toggleMenu()">Privacy Policy</a>
-    <div class="drawer-contact-buttons">
-      <a href="register.html" onclick="toggleMenu()">Register</a>
-      <a href="https://wa.me/27635892769" class="drawer-btn whatsapp" target="_blank">💬 WhatsApp</a>
-      <a href="tel:+27635892769" class="drawer-btn call">📞 Call</a>
-    </div>
-  </nav>
-
-  <div class="hero">
-    <h1>Welcome to King's Cut</h1>
-    <p>Barbering excellence at your doorstep</p>
+ <nav id="dropdown-menu">
+  <button id="close-drawer" onclick="toggleMenu()">✖</button>
+  <h2 style="width: 100%; text-align: center; color: white; padding: 15px 0; border-bottom: 1px solid #444; animation: fadeSlideIn 0.6s ease;">Menu</h2>
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="booking.html" onclick="toggleMenu()">Book Now</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+  <a href="gallery.html" onclick="toggleMenu()">View Our Work</a>
+  <a href="advertising.html" onclick="toggleMenu()">Advertising</a>
+  <a href="privacy.html" onclick="toggleMenu()" style="color: white; padding: 15px 25px; text-decoration: none; width: 100%; border-bottom: 1px solid #333;">Privacy Policy</a>
+  <div class="drawer-contact-buttons">
+    <a href="register.html" onclick="toggleMenu()">Register</a>
+    <a href="https://wa.me/27635892769" class="drawer-btn whatsapp" target="_blank">💬 WhatsApp</a>
+    <a href="tel:+27635892769" class="drawer-btn call">📞 Call</a>
   </div>
-
-  <section id="about">
-    <h2>About Us</h2>
-    <p>We bring the barbershop experience to your home with professional, convenient grooming services.</p>
+</nav> 
+  <section class="hero" id="home">
+    <h1>Personal Barber & House Call Specialist</h1>
+    <p>Serving Soweto, Roodepoort & surrounding areas.</p>
   </section>
 
-  <section>
-    <h2>Featured Ads</h2>
-    <div class="ad-slider" id="adSlider">
-      <div class="ad-slide">Ad Slide 1</div>
-      <div class="ad-slide">Ad Slide 2</div>
-      <div class="ad-slide">Ad Slide 3</div>
-    </div>
-    <div class="scroll-dots" id="scrollDots"></div>
+  <section class="section" id="about">
+    <h2>About Me</h2>
+    <p>I'm Owethu Mbuli, a personal barber offering professional house call grooming services in Gauteng — especially Soweto, Roodepoort, and nearby areas. Whether it’s a fresh fade or a classic clean-up, I come to you.</p>
+    <p><strong>Available:</strong> Monday, Tuesday, Wednesday</p>
+    <a href="booking.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background: #8e2de2; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; transition: background 0.3s ease;">Book Now</a>
   </section>
 
-  <section>
-    <h2>Our Products</h2>
-    <div class="products">
-      <div class="product" style="background: #e1bee7;">Product 1 <br><button>Buy</button> <button>Learn More</button></div>
-      <div class="product" style="background: #b3e5fc;">Product 2 <br><button>Buy</button> <button>Learn More</button></div>
-      <div class="product" style="background: #c8e6c9;">Product 3 <br><button>Buy</button> <button>Learn More</button></div>
-      <div class="product" style="background: #ffe082;">Product 4 <br><button>Buy</button> <button>Learn More</button></div>
-      <div class="product" style="background: #ffab91;">Product 5 <br><button>Buy</button> <button>Learn More</button></div>
-      <div class="product" style="background: #d7ccc8;">Product 6 <br><button>Buy</button> <button>Learn More</button></div>
-    </div>
-  </section>
-
-  <section id="contact">
-    <h2>Contact Us</h2>
-    <p>Phone: +27 63 589 2769<br>Email: info@kingscut.co.za</p>
-  </section>
-
-  <div class="privacy-popup" id="privacyPopup">
-    This website uses cookies to enhance your experience.
+  <section class="section" id="ads-slider">
+  <h2>💈 Featured Ads</h2>
+  <div class="ad-slider">
+    <div class="ad-slide" style="background:#e74c3c;"><p>Ad 1</p><a href="#">Learn More</a></div>
+    <div class="ad-slide" style="background:#3498db;"><p>Ad 2</p><a href="#">Learn More</a></div>
+    <div class="ad-slide" style="background:#2ecc71;"><p>Ad 3</p><a href="#">Learn More</a></div>
+    <div class="ad-slide" style="background:#f1c40f;"><p>Ad 4</p><a href="#">Learn More</a></div>
+    <div class="ad-slide" style="background:#9b59b6;"><p>Ad 5</p><a href="#">Learn More</a></div>
+    <div class="ad-slide" style="background:#1abc9c;"><p>Ad 6</p><a href="#">Learn More</a></div>
   </div>
+<div class="scroll-dots" id="scrollDots"></div>
+</section>
+  <section class="section" id="ads">
+    <h2>Look Out For</h2>
+    <img src="billboard.jpg" alt="Advertising Billboard" style="max-width:100%; height:auto; border-radius:10px; margin:20px 0;">
+    <p>We’ll soon be featuring sponsored products and promotions from brands we trust. Watch this space!</p>
+    <p>If you'd like your product featured here, 
+      <a href="advertising.html" style="color:#8e2de2; font-weight:bold;">click here to advertise</a>.
+    </p>
+  </section>
 
-  <button id="backToTop" onclick="scrollToTop()">⬆ Top</button>
+  <section class="section" id="contact">
+    <h2>Contact</h2>
+    <p>Email: <a href="mailto:owethuandrew10@gmail.com">owethuandrew10@gmail.com</a></p>
+    <p>Phone: <a href="tel:+27635892769">063 589 2769</a></p>
+  </section>
+
+  <footer>
+    &copy; 2025 King's Cut Barbershop. All rights reserved.
+  </footer>
 
   <script>
     function toggleMenu() {
+  const menu = document.getElementById("dropdown-menu");
+  const toggle = document.getElementById("menuToggle");
+  const isOpen = menu.classList.toggle("active");
+  toggle.textContent = isOpen ? "<" : "☰";
+  toggle.classList.toggle("open", isOpen);
+
+  // Prevent scrolling on body when menu is open
+  document.body.style.overflow = isOpen ? "hidden" : "auto";
+    }
+
+    document.addEventListener("click", function (event) {
       const menu = document.getElementById("dropdown-menu");
       const toggle = document.getElementById("menuToggle");
-      const isOpen = menu.classList.toggle("active");
-      toggle.textContent = isOpen ? "✖" : "☰";
-      toggle.classList.toggle("open", isOpen);
-      document.body.style.overflow = isOpen ? "hidden" : "auto";
-    }
-
-    const backToTopBtn = document.getElementById("backToTop");
-    window.addEventListener("scroll", () => {
-      backToTopBtn.style.display = window.scrollY > 300 ? "block" : "none";
+      if (!menu.contains(event.target) && !toggle.contains(event.target)) {
+        if (menu.classList.contains("active")) {
+          menu.classList.remove("active");
+          toggle.textContent = "☰";
+          toggle.classList.remove("open");
+        }
+      }
     });
-
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    // Slider functionality
-    const slides = document.querySelectorAll(".ad-slide");
-    const dotsContainer = document.getElementById("scrollDots");
-    let current = 0;
-
-    slides.forEach((_, i) => {
-      const dot = document.createElement("div");
-      dot.className = "scroll-dot";
-      dot.addEventListener("click", () => showSlide(i));
-      dotsContainer.appendChild(dot);
-    });
-
-    function showSlide(index) {
-      document.getElementById("adSlider").style.transform = `translateX(-${index * 100}%)`;
-      dotsContainer.querySelectorAll(".scroll-dot").forEach(dot => dot.classList.remove("active"));
-      dotsContainer.children[index].classList.add("active");
-      current = index;
-    }
-
-    function autoSlide() {
-      current = (current + 1) % slides.length;
-      showSlide(current);
-    }
-
-    showSlide(0);
-    setInterval(autoSlide, 5000);
   </script>
+
+<!-- Privacy Notice Popup -->
+<div id="privacy-popup">
+  <p>We value your privacy and use your information only to provide better service. By continuing, you accept our Privacy Policy.</p>
+  <a href="privacy.html" id="view-policy-link">View Policy</a>
+  <button id="accept-privacy">Accept</button>
+</div>
+
+<style>
+  #privacy-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.95);
+    background: #1e1e2f;
+    color: white;
+    padding: 20px 30px 50px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+    border-radius: 12px;
+    font-size: 0.95em;
+    z-index: 3000;
+    display: none;
+    max-width: 90%;
+    width: 300px;
+    text-align: center;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+  }
+
+  #privacy-popup.show {
+    display: block;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  #privacy-popup #view-policy-link {
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    font-size: 0.85em;
+    color: #8e2de2;
+    text-decoration: none;
+  }
+
+  #privacy-popup button#accept-privacy {
+    margin-top: 15px;
+    background: none;
+    color: white;
+    border: none;
+    font-weight: bold;
+    font-size: 1em;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -40%) scale(0.8);
+  }
+  60% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+  80% {
+    transform: translate(-50%, -48%) scale(0.98);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+#privacy-popup.show {
+  display: block;
+  animation: bounceIn 0.6s ease forwards;
+}
+
+  #privacy-popup button#accept-privacy:hover {
+    transform: scale(1.2);
+  }
+  #close-drawer {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+  z-index: 1100;
+}
+#close-drawer:hover {
+  transform: scale(1.2);
+}
+  #ad-slider {
+  margin-top: 40px;
+}
+
+.ad-slider {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  scroll-snap-type: x mandatory;
+  padding: 10px 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ad-slide {
+  min-width: 240px;
+  flex: 0 0 auto;
+  height: 180px;
+  border-radius: 12px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  scroll-snap-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease;
+}
+
+.ad-slide:hover {
+  transform: scale(1.05);
+}
+
+.ad-slide p {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.ad-slide a {
+  background: rgba(255,255,255,0.2);
+  padding: 6px 12px;
+  border-radius: 8px;
+  color: white;
+  text-decoration: none;
+  font-size: 0.9em;
+  align-self: flex-start;
+  transition: background 0.3s ease;
+}
+
+.ad-slide a:hover {
+  background: rgba(255,255,255,0.35);
+}
+
+.scroll-dots {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.scroll-dot {
+  width: 12px;
+  height: 12px;
+  background: #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.scroll-dot.active {
+  background: #333;
+}
+#backToTop {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: #1e1e2f;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 50px;
+  font-size: 14px;
+  cursor: pointer;
+  display: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+#backToTop:hover {
+  background: #8e2de2;
+  transform: scale(1.1);
+}
+
+</style>
+
+<script>
+  function setCookie(name, value, days) {
+    const d = new Date();
+    d.setTime(d.getTime() + (days*24*60*60*1000));
+    const expires = "expires=" + d.toUTCString();
+    document.cookie = name + "=" + value + ";" + expires + ";path=/";
+  }
+
+  function getCookie(name) {
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const ca = decodedCookie.split(';');
+    name = name + "=";
+    for(let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === ' ') c = c.substring(1);
+      if (c.indexOf(name) === 0) return c.substring(name.length, c.length);
+    }
+    return "";
+  }
+
+  window.addEventListener("load", () => {
+    const popup = document.getElementById("privacy-popup");
+    const shown = getCookie("seenPrivacyPopup");
+    if (!shown) {
+      popup.classList.add("show");
+      const closePopup = () => popup.classList.remove("show");
+      setTimeout(closePopup, 5000);
+      document.getElementById("accept-privacy").addEventListener("click", () => {
+        setCookie("seenPrivacyPopup", "true", 4);
+        closePopup();
+      });
+    }
+  });
+</script>
+
+
+<script>
+  let startX = 0;
+  let endX = 0;
+
+  const menu = document.getElementById("dropdown-menu");
+  const toggle = document.getElementById("menuToggle");
+
+  // Swipe on the menu to CLOSE
+  menu.addEventListener("touchstart", (e) => {
+    startX = e.changedTouches[0].screenX;
+  });
+
+  menu.addEventListener("touchend", (e) => {
+    endX = e.changedTouches[0].screenX;
+    const swipeRight = endX - startX;
+
+    if (swipeRight > 50) { // Swiped RIGHT
+      menu.classList.remove("active");
+      toggle.textContent = "☰";
+      toggle.classList.remove("open");
+      document.body.style.overflow = "auto";
+    }
+  });
+
+  // Swipe on the screen edge to OPEN
+  document.addEventListener("touchstart", (e) => {
+    // Only start tracking if the touch begins on the right edge (within 20px)
+    if (e.touches[0].clientX > window.innerWidth - 20) {
+      startX = e.touches[0].clientX;
+    } else {
+      startX = 0;
+    }
+  });
+
+  document.addEventListener("touchend", (e) => {
+    if (!startX) return;
+    endX = e.changedTouches[0].clientX;
+    const swipeLeft = startX - endX;
+
+    if (swipeLeft > 50) { // Swiped LEFT from right edge
+      menu.classList.add("active");
+      toggle.textContent = "✖";
+      toggle.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+  });
+</script>
+
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  const slider = document.querySelector(".ad-slider");
+  const slides = document.querySelectorAll(".ad-slide");
+  const dotsContainer = document.getElementById("scrollDots");
+
+  let index = 0;
+  let intervalId;
+
+  // Create scroll dots
+  slides.forEach((_, i) => {
+    const dot = document.createElement("div");
+    dot.classList.add("scroll-dot");
+    if (i === 0) dot.classList.add("active");
+    dot.addEventListener("click", () => {
+      index = i;
+      updateSlider();
+      resetInterval();
+    });
+    dotsContainer.appendChild(dot);
+  });
+
+  const dots = document.querySelectorAll(".scroll-dot");
+
+  function updateSlider() {
+    slider.scrollTo({
+      left: index * (slides[0].offsetWidth + 20),
+      behavior: "smooth"
+    });
+    dots.forEach(dot => dot.classList.remove("active"));
+    dots[index].classList.add("active");
+  }
+
+  function autoScroll() {
+    index = (index + 1) % slides.length;
+    updateSlider();
+  }
+
+  function resetInterval() {
+    clearInterval(intervalId);
+    intervalId = setInterval(autoScroll, 5000); // 5 seconds
+  }
+
+  resetInterval(); // Start auto scroll
+});
+</script>
+
+<button id="backToTop" onclick="scrollToTop()">⬆ Top</button>
+
+<script>
+  const backToTopBtn = document.getElementById("backToTop");
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 300) {
+      backToTopBtn.style.display = "block";
+    } else {
+      backToTopBtn.style.display = "none";
+    }
+  });
+
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+</script>
+
 </body>
 </html>
