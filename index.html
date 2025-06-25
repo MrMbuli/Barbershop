@@ -16,18 +16,20 @@
       overflow-x: hidden;
     }
     header {
-      background: rgba(30, 30, 47, 1);
-      color: white;
-      padding: 20px;
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
-      transition: background 0.4s ease;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+  background: rgba(30, 30, 47, 1);
+  color: white;
+  padding: 20px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: background 0.4s ease;
+  display: flex;
+  justify-content: space-between; /* make space between title and icon */
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 60px; /* create space so icon doesn't crowd text */
+}
     header.scrolled { background: rgba(30, 30, 47, 0.85); }
     .menu-toggle {
       position: fixed;
