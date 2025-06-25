@@ -6,284 +6,245 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>King's Cut Barbershop | Personal Barber</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: sans-serif;
+    }
+
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f5f5f5;
-      color: #333;
-      line-height: 1.6;
+      background: #f4f4f4;
+      color: #222;
       overflow-x: hidden;
     }
 
     header {
-      background: rgba(30, 30, 47, 1);
-      color: white;
+      background: #111;
+      color: #fff;
       padding: 20px;
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
-      transition: background 0.4s ease;
+      text-align: center;
+    }
+
+    nav {
       display: flex;
-      justify-content: center;
-      align-items: center;
+      overflow-x: auto;
+      background: #222;
     }
 
-    .menu-toggle {
-      position: absolute;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 26px;
-      background: none;
-      border: none;
-      color: white;
-      cursor: pointer;
-      z-index: 2000;
-      font-weight: bold;
-    }
-
-    .header-title {
-      font-size: 1.3em;
+    nav a {
+      flex: 1 0 auto;
+      padding: 15px;
+      color: #fff;
+      text-decoration: none;
       text-align: center;
       white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
-    #dropdown-menu {
-      position: fixed;
-      top: 0;
-      right: -250px;
-      height: 100%;
-      width: 250px;
-      background: #1e1e2f;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      padding-top: 80px;
-      transition: right 0.3s ease;
-      z-index: 1000;
-    }
-
-    #dropdown-menu.active {
-      right: 0;
-    }
-
-    #dropdown-menu a {
-      color: white;
-      padding: 15px 25px;
-      text-decoration: none;
-      width: 100%;
-      border-bottom: 1px solid #333;
-    }
-
-    #dropdown-menu a:hover {
-      background: #333;
-    }
-
-    .drawer-contact-buttons {
-      margin-top: auto;
-      width: 100%;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .drawer-btn {
-      background: #25d366;
-      color: white;
-      text-align: center;
-      padding: 12px;
-      text-decoration: none;
-      border-radius: 6px;
-      font-weight: bold;
-      transition: background 0.3s ease;
-    }
-
-    .drawer-btn.call {
-      background: #3c3c3c;
-    }
-
-    .drawer-btn:hover {
-      opacity: 0.9;
-    }
-
-    /* Close button (moved outside nav) */
-    #close-drawer {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: rgba(255, 255, 255, 0.08);
-      border: none;
-      color: white;
-      font-size: 22px;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      cursor: pointer;
-      z-index: 3001;
-      display: none;
-      justify-content: center;
-      align-items: center;
-      transition: background 0.3s ease, transform 0.3s ease;
-    }
-
-    #close-drawer:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: scale(1.15);
-    }
-
-    #close-drawer:active {
-      transform: scale(0.95);
-    }
-
-    #close-drawer.show {
-      display: flex;
-    }
-
-    @keyframes spinClose {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    #close-drawer.spin {
-      animation: spinClose 0.4s ease;
+    nav a:hover {
+      background: #444;
     }
 
     .hero {
-      background: url("background.jpg") center center/cover no-repeat;
-      color: white;
-      padding: 80px 20px 40px;
+      padding: 40px 20px;
       text-align: center;
-      position: relative;
-      margin-top: 90px;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.4);
-      z-index: 1;
-    }
-
-    .hero * {
-      position: relative;
-      z-index: 2;
+      background: linear-gradient(#222, #333);
+      color: white;
     }
 
     .hero h1 {
-      font-size: 2.2em;
+      font-size: 2em;
       margin-bottom: 10px;
     }
 
     .hero p {
-      font-size: 1.2em;
+      font-size: 1.1em;
     }
 
-    section {
+    .ads {
+      position: relative;
+      overflow: hidden;
+      max-width: 100%;
+    }
+
+    .ads-container {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      width: 300%;
+    }
+
+    .ad-slide {
+      min-width: 100%;
       padding: 40px 20px;
-      max-width: 800px;
-      margin: auto;
+      background: #ddd;
       text-align: center;
     }
 
-    section h2 {
-      font-size: 1.8em;
-      margin-bottom: 10px;
+    .dots {
+      display: flex;
+      justify-content: center;
+      margin: 10px 0;
     }
 
-    footer {
-      background: #1e1e2f;
+    .dot {
+      height: 12px;
+      width: 12px;
+      margin: 0 5px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .dot.active {
+      background-color: #333;
+    }
+
+    .register {
+      padding: 30px 20px;
+      background: #fff;
+    }
+
+    .register h2 {
+      margin-bottom: 20px;
+    }
+
+    .register input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .register button {
+      padding: 12px;
+      width: 100%;
+      background: #222;
       color: white;
-      text-align: center;
-      padding: 20px;
-      font-size: 0.9em;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
     }
 
-    @media (max-width: 600px) {
-      .hero h1 { font-size: 1.6em; }
+    .privacy-popup {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+      background: #222;
+      color: white;
+      padding: 15px;
+      border-radius: 8px;
+      z-index: 999;
+      display: none;
     }
-    /* Remove blue tap highlight color on mobile */
-* {
-  -webkit-tap-highlight-color: transparent;
-}
+
+    .privacy-popup.show {
+      display: block;
+    }
+
+    .privacy-popup button {
+      background: #fff;
+      color: #222;
+      border: none;
+      padding: 5px 10px;
+      margin-left: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
+  <header>
+    <h1>King's Cut Barbershop</h1>
+    <p>Your Personal Barber, Anytime</p>
+  </header>
 
-<header id="header">
-  <h1 class="header-title">King's Cut Barbershop</h1>
-  <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</button>
-</header>
+  <nav>
+    <a href="#hero">Home</a>
+    <a href="#ads">Promos</a>
+    <a href="#register">Loyalty</a>
+    <a href="#contact">Contact</a>
+  </nav>
 
-<!-- Moved close button outside the nav -->
-<button id="close-drawer" onclick="toggleMenu()" aria-label="Close menu">✖</button>
+  <section class="hero" id="hero">
+    <h1>Fresh Cuts Delivered</h1>
+    <p>We come to you — mobile barber services at your convenience.</p>
+  </section>
 
-<nav id="dropdown-menu">
-  <h2 style="width: 100%; text-align: center; color: white; padding: 15px 0; border-bottom: 1px solid #444;">Menu</h2>
-  <a href="#about" onclick="toggleMenu()">About</a>
-  <a href="booking.html" onclick="toggleMenu()">Book Now</a>
-  <a href="#contact" onclick="toggleMenu()">Contact</a>
-  <a href="gallery.html" onclick="toggleMenu()">View Our Work</a>
-  <a href="advertising.html" onclick="toggleMenu()">Advertising</a>
-  <a href="privacy.html" onclick="toggleMenu()">Privacy Policy</a>
-  <div class="drawer-contact-buttons">
-    <a href="register.html" onclick="toggleMenu()">Register</a>
-    <a href="https://wa.me/27635892769" class="drawer-btn whatsapp" target="_blank">💬 WhatsApp</a>
-    <a href="tel:+27635892769" class="drawer-btn call">📞 Call</a>
+  <section class="ads" id="ads">
+    <div class="ads-container" id="adsContainer">
+      <div class="ad-slide">🔥 20% OFF First Cut</div>
+      <div class="ad-slide">💈 Refer a Friend = Free Trim</div>
+      <div class="ad-slide">🎉 Loyalty Points = Rewards</div>
+    </div>
+    <div class="dots">
+      <span class="dot active" onclick="setSlide(0)"></span>
+      <span class="dot" onclick="setSlide(1)"></span>
+      <span class="dot" onclick="setSlide(2)"></span>
+    </div>
+  </section>
+
+  <section class="register" id="register">
+    <h2>Loyalty Points Registration</h2>
+    <form onsubmit="registerClient(event)">
+      <input type="text" id="name" placeholder="Your Full Name" required />
+      <input type="tel" id="phone" placeholder="Phone Number" required />
+      <input type="email" id="email" placeholder="Email Address (optional)" />
+      <button type="submit">Register</button>
+    </form>
+  </section>
+
+  <div class="privacy-popup" id="privacyPopup">
+    We use cookies to improve your experience.
+    <button onclick="acceptPrivacy()">Accept</button>
   </div>
-</nav>
 
-<section class="hero" id="home">
-  <h1>Personal Barber & House Call Specialist</h1>
-  <p>Serving Soweto, Roodepoort & surrounding areas.</p>
-</section>
+  <script>
+    // Auto-scrolling ads
+    let currentIndex = 0;
+    const totalSlides = 3;
+    const adsContainer = document.getElementById("adsContainer");
+    const dots = document.querySelectorAll(".dot");
 
-<section class="section" id="about">
-  <h2>About Me</h2>
-  <p>I'm Owethu Mbuli, a personal barber offering professional house call grooming services in Gauteng — especially Soweto, Roodepoort, and nearby areas.</p>
-  <p><strong>Available:</strong> Monday, Tuesday, Wednesday</p>
-  <a href="booking.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background: #8e2de2; color: white; text-decoration: none; border-radius: 8px; font-weight: bold;">Book Now</a>
-</section>
+    function showSlide(index) {
+      adsContainer.style.transform = `translateX(-${index * 100}%)`;
+      dots.forEach(dot => dot.classList.remove("active"));
+      dots[index].classList.add("active");
+    }
 
-<section class="section" id="contact">
-  <h2>Contact</h2>
-  <p>Email: <a href="mailto:owethuandrew10@gmail.com">owethuandrew10@gmail.com</a></p>
-  <p>Phone: <a href="tel:+27635892769">063 589 2769</a></p>
-</section>
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      showSlide(currentIndex);
+    }
 
-<footer>
-  &copy; 2025 King's Cut Barbershop. All rights reserved.
-</footer>
+    function setSlide(index) {
+      currentIndex = index;
+      showSlide(index);
+    }
 
-<script>
-function toggleMenu() {
-  const menu = document.getElementById("dropdown-menu");
-  const toggle = document.getElementById("menuToggle");
-  const closeBtn = document.getElementById("close-drawer");
-  const isOpen = menu.classList.toggle("active");
+    setInterval(nextSlide, 5000); // Auto-scroll every 5 seconds
 
-  toggle.textContent = isOpen ? "<" : "☰";
-  toggle.classList.toggle("open", isOpen);
-  document.body.style.overflow = isOpen ? "hidden" : "auto";
+    // Privacy popup
+    function acceptPrivacy() {
+      document.getElementById("privacyPopup").classList.remove("show");
+      localStorage.setItem("acceptedPrivacy", "yes");
+    }
 
-  if (isOpen) {
-    closeBtn.classList.add("show");
-  } else {
-    closeBtn.classList.remove("show");
-    closeBtn.classList.add("spin");
-    setTimeout(() => {
-      closeBtn.classList.remove("spin");
-    }, 400);
-  }
-}
-</script>
+    if (!localStorage.getItem("acceptedPrivacy")) {
+      document.getElementById("privacyPopup").classList.add("show");
+    }
 
+    // Loyalty form
+    function registerClient(e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const phone = document.getElementById("phone").value;
+      const email = document.getElementById("email").value;
+      alert(`Thank you, ${name}! You're registered for loyalty points.`);
+      e.target.reset();
+    }
+  </script>
 </body>
 </html>
