@@ -9,25 +9,6 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <style>
-   .slider-dots {
-  display: flex;
-  justify-content: center;
-  margin-top: 15px;
-  gap: 8px;
-}
-
-.slider-dot {
-  width: 12px;
-  height: 12px;
-  background: #ccc;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.slider-dot.active {
-  background: #333;
-} 
     /* Keep your existing CSS here (unchanged) */
     /* ... Already included and well-written, so omitted for brevity ... */
   </style>
@@ -70,17 +51,16 @@
 
   <!-- Ads Slider Section -->
   <section class="section" id="ads-slider">
-  <h2>💈 Featured Ads</h2>
-  <div class="ad-slider" id="ad-slider">
-    <div class="ad-slide" style="background:#e74c3c;"><p>Ad 1</p><a href="#">Learn More</a></div>
-    <div class="ad-slide" style="background:#3498db;"><p>Ad 2</p><a href="#">Learn More</a></div>
-    <div class="ad-slide" style="background:#2ecc71;"><p>Ad 3</p><a href="#">Learn More</a></div>
-    <div class="ad-slide" style="background:#f1c40f;"><p>Ad 4</p><a href="#">Learn More</a></div>
-    <div class="ad-slide" style="background:#9b59b6;"><p>Ad 5</p><a href="#">Learn More</a></div>
-    <div class="ad-slide" style="background:#1abc9c;"><p>Ad 6</p><a href="#">Learn More</a></div>
-  </div>
-  <div class="slider-dots" id="sliderDots"></div>
-</section>
+    <h2>💈 Featured Ads</h2>
+    <div class="ad-slider" id="ad-slider">
+      <div class="ad-slide" style="background:#e74c3c;"><p>Ad 1</p><a href="#">Learn More</a></div>
+      <div class="ad-slide" style="background:#3498db;"><p>Ad 2</p><a href="#">Learn More</a></div>
+      <div class="ad-slide" style="background:#2ecc71;"><p>Ad 3</p><a href="#">Learn More</a></div>
+      <div class="ad-slide" style="background:#f1c40f;"><p>Ad 4</p><a href="#">Learn More</a></div>
+      <div class="ad-slide" style="background:#9b59b6;"><p>Ad 5</p><a href="#">Learn More</a></div>
+      <div class="ad-slide" style="background:#1abc9c;"><p>Ad 6</p><a href="#">Learn More</a></div>
+    </div>
+  </section>
 
   <!-- Advertising Section -->
   <section class="section" id="ads">
@@ -173,83 +153,44 @@
       const toggle = document.getElementById("menuToggle");
       if (!menu.contains(event.target) && !toggle.contains(event.target)) {
         if (menu.classList.contains("active")) {
-<script>
-window.addEventListener("DOMContentLoaded", () => {
-  const slider = document.querySelector(".ad-slider");
-  const slides = slider.querySelectorAll(".ad-slide");
-  const slideWidth = slides[0].offsetWidth + 20;
-  const dotsContainer = document.getElementById("sliderDots");
-  let index = 0;
-  let autoScrollInterval;
-  let isHovered = false;
-
-  // Create Dots
-  slides.forEach((_, i) => {
-    const dot = document.createElement("div");
-    dot.classList.add("slider-dot");
-    if (i === 0) dot.classList.add("active");
-    dot.addEventListener("click", () => {
-      index = i;
-      updateSlider();
-      resetAutoScroll();
-    });
-    dotsContainer.appendChild(dot);
-  });
-
-  const dots = dotsContainer.querySelectorAll(".slider-dot");
-
-  // Update slider and dots
-  function updateSlider() {
-    slider.scrollTo({ left: slideWidth * index, behavior: "smooth" });
-    dots.forEach(dot => dot.classList.remove("active"));
-    dots[index].classList.add("active");
-  }
-
-  // Auto scroll function
-  function startAutoScroll() {
-    autoScrollInterval = setInterval(() => {
-      if (!isHovered) {
-        index = (index + 1) % slides.length;
-        updateSlider();
+          menu.classList.remove("active");
+          toggle.textContent = "☰";
+          toggle.classList.remove("open");
+          document.body.style.overflow = "auto";
+        }
       }
-    }, 5000);
-  }
+    });
 
-  function resetAutoScroll() {
-    clearInterval(autoScrollInterval);
-    startAutoScroll();
-  }
+    // Swipe gestures for opening/closing drawer
+    let startX = 0, endX = 0;
+    const menu = document.getElementById("dropdown-menu");
+    const toggle = document.getElementById("menuToggle");
 
-  // Pause/resume on hover
-  slider.addEventListener("mouseenter", () => isHovered = true);
-  slider.addEventListener("mouseleave", () => isHovered = false);
+    menu.addEventListener("touchstart", (e) => startX = e.changedTouches[0].screenX);
+    menu.addEventListener("touchend", (e) => {
+      endX = e.changedTouches[0].screenX;
+      if (endX - startX > 50) {
+        menu.classList.remove("active");
+        toggle.textContent = "☰";
+        toggle.classList.remove("open");
+        document.body.style.overflow = "auto";
+      }
+    });
 
-  startAutoScroll();
+    document.addEventListener("touchstart", (e) => {
+      startX = e.touches[0].clientX > window.innerWidth - 20 ? e.touches[0].clientX : 0;
+    });
 
-  // Touch/swipe gesture support
-  let touchStartX = 0;
-
-  slider.addEventListener("touchstart", (e) => {
-    touchStartX = e.touches[0].clientX;
-  });
-
-  slider.addEventListener("touchend", (e) => {
-    const touchEndX = e.changedTouches[0].clientX;
-    const diff = touchStartX - touchEndX;
-
-    if (diff > 50) {
-      // Swipe left
-      index = (index + 1) % slides.length;
-      updateSlider();
-      resetAutoScroll();
-    } else if (diff < -50) {
-      // Swipe right
-      index = (index - 1 + slides.length) % slides.length;
-      updateSlider();
-      resetAutoScroll();
-    }
-  });
-});
-</script>
+    document.addEventListener("touchend", (e) => {
+      if (!startX) return;
+      endX = e.changedTouches[0].clientX;
+      if (startX - endX > 50) {
+        menu.classList.add("active");
+        toggle.textContent = "✖";
+        toggle.classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+    });
+  </script>
 </body>
 </html>
