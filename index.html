@@ -293,7 +293,16 @@
   <script>
     function toggleMenu() {
   const menu = document.getElementById("dropdown-menu");
+  co<script>
+function toggleMenu() {
+  const menu = document.getElementById("dropdown-menu");
   const toggle = document.getElementById("menuToggle");
+  const isOpen = menu.classList.toggle("active");
+  toggle.textContent = isOpen ? "<" : "☰";
+  toggle.classList.toggle("open", isOpen);
+  document.body.style.overflow = isOpen ? "hidden" : "auto";
+}
+</script>nst toggle = document.getElementById("menuToggle");
   const isOpen = menu.classList.toggle("active");
   toggle.textContent = isOpen ? "<" : "☰";
   toggle.classList.toggle("open", isOpen);
