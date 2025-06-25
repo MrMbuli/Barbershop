@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -183,8 +182,17 @@
   <input type="email" id="email" placeholder="Email Address (optional)" />
   <input type="password" id="regPassword" placeholder="Set Loyalty Password" required />
   <button type="submit">Register</button>
-<p style="margin-top: 8px;"><a href="javascript:void(0)" onclick="forgotPassword()" id="forgotPassword" style="color: blue; text-decoration: underline;">Forgot Password?</a></p></form> 
+</form> 
   </section>
+
+<!-- Login Form -->
+<section class="register" id="loginSection">
+  <h2>Loyalty Login</h2>
+  <input type="tel" id="loginPhone" placeholder="Phone Number" required />
+  <input type="password" id="loginPassword" placeholder="Password" required />
+  <button onclick="loginUser()">Login</button>
+</section>
+
 
   <!-- Ads Section (hidden initially) -->
   <section class="ads" id="adsSection" style="display: none;">
@@ -393,58 +401,7 @@ form.addEventListener("submit", e => {
     document.getElementById("registerSection").scrollIntoView({ behavior: "smooth" });
   }
   </script>
-  <script>
-  const correctPassword = "cut2025"; // your password
-  const cookieName = "loyaltyAccess";
-
-  function setCookie(name, value, days) {
-    const d = new Date();
-    d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
-    const expires = "expires=" + d.toUTCString();
-    document.cookie = `${name}=${value};${expires};path=/`;
-  }
-
-  function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-    return "";
-  }
-
-  function handleLoyaltyClick() {
-    const hasAccess = getCookie(cookieName);
-    if (hasAccess === "true") {
-      scrollToRegister();
-    } else {
-      openPasswordModal();
-    }
-  }
-
-  function openPasswordModal() {
-    document.getElementById("passwordModal").style.display = "flex";
-    document.getElementById("loyaltyPassword").value = "";
-    document.getElementById("passwordError").style.display = "none";
-  }
-
-  function closePasswordModal() {
-    document.getElementById("passwordModal").style.display = "none";
-  }
-
-  function checkPassword() {
-    const input = document.getElementById("loyaltyPassword").value;
-    if (input === correctPassword) {
-      setCookie(cookieName, "true", 7); // Remember for 7 days
-      closePasswordModal();
-      scrollToRegister();
-    } else {
-      document.getElementById("passwordError").style.display = "block";
-    }
-  }
-
-  function scrollToRegister() {
-    document.getElementById("registerSection").scrollIntoView({ behavior: "smooth" });
-  }
-  </script>
+  
   <!-- Password Prompt Modal -->
 <div id="passwordModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:1000; align-items:center; justify-content:center;">
   <div style="background:white; padding:20px; border-radius:10px; width:90%; max-width:300px; text-align:center;">
@@ -460,72 +417,50 @@ form.addEventListener("submit", e => {
 </div>
 
 <script>
-// Registration Handler
-document.querySelector('#registerBtn')?.addEventListener('click', function () {
-  const phone = document.querySelector('#registerPhone').value;
-  const pass = document.querySelector('#registerPassword').value;
-
-  if (phone && pass) {
-    localStorage.setItem('registeredPhone', phone);
-    localStorage.setItem('registeredPassword', pass);
-    alert('Registered successfully!');
-    document.querySelector('#registerLabel').textContent = 'Registered ✅';
-  } else {
-    alert('Please enter both phone and password.');
-  }
-});
-
-// Loyalty Login Handler
-document.querySelector('#loyaltyBtn')?.addEventListener('click', function () {
-  const phone = document.querySelector('#loyaltyPhone').value;
-  const pass = document.querySelector('#loyaltyPassword').value;
-
-  const savedPhone = localStorage.getItem('registeredPhone');
-  const savedPass = localStorage.getItem('registeredPassword');
-
-  if (phone === savedPhone && pass === savedPass) {
-    alert('Loyalty login successful!');
-  } else {
-    alert('Incorrect phone or password.');
-  }
-});
-
-// Forgot Password Handler
-document.querySelector('#forgotPassword')?.addEventListener('click', function () {
-  const phone = prompt('Enter your registered phone number:');
-  const savedPhone = localStorage.getItem('registeredPhone');
-  const savedPass = localStorage.getItem('registeredPassword');
-
-  if (phone === savedPhone) {
-    alert('Your password is: ' + savedPass);
-  } else {
-    alert('Phone not found.');
-  }
-});
-</script>
-
-
-<script>
 const scriptURL = "https://script.google.com/macros/s/AKfycby7lT5Nth0mndPlaFwULx-qhS_I-ejiKk8uPFVTYVUmXazxcCeRp8r1jVr_18wMfffz4Q/exec";
+const form = document.getElementById("loyaltyForm");
 
-function registerUser() {
-  const phone = document.getElementById("registerPhone")?.value;
-  const password = document.getElementById("registerPassword")?.value;
-  if (!phone || !password) return alert("Enter phone and password.");
+// Show ads if already registered
+if (localStorage.getItem("registeredClient") === "yes") {
+  document.getElementById("registerSection").style.display = "none";
+  document.getElementById("adsSection").style.display = "block";
+}
+
+// Form submission handler
+form.addEventListener("submit", e => {
+  e.preventDefault();
+  const name = document.getElementById("name").value;
+  const phone = document.getElementById("phone").value;
+  const email = document.getElementById("email").value;
+  const regPassword = document.getElementById("regPassword").value;
+
+  const data = { name, phone, email, password: regPassword };
 
   fetch(scriptURL, {
     method: "POST",
-    body: JSON.stringify({ phone, password }),
+    body: JSON.stringify(data),
     headers: { "Content-Type": "application/json" }
   })
-  .then(res => res.text())
-  .then(msg => {
-    alert("Registered: " + msg);
-    document.querySelector("#registerLabel").textContent = "Registered ✅";
+  .then(response => {
+    if (response.ok) {
+      alert("Thank you! You are now registered.");
+      localStorage.setItem("registeredClient", "yes");
+      localStorage.setItem("loyaltyPassword", regPassword);
+      localStorage.setItem("registeredPhone", phone);
+      form.reset();
+      document.getElementById("registerSection").style.display = "none";
+      document.getElementById("adsSection").style.display = "block";
+    } else {
+      alert("Error: Registration failed. Try again.");
+    }
   })
-  .catch(err => alert("Registration failed"));
-}
+  .catch(error => {
+    console.error("Error!", error.message);
+    alert("Could not connect. Please try again.");
+  });
+});
 
+// Forgot Password
 function forgotPassword() {
   const phone = prompt("Enter your phone number:");
   if (!phone) return;
@@ -539,7 +474,66 @@ function forgotPassword() {
         alert("Your password is: " + password);
       }
     })
-    .catch(err => alert("Error retrieving password"));
+    .catch(() => alert("Error retrieving password"));
+}
+</script>
+
+
+
+
+
+<script>
+const loginScriptURL = "https://script.google.com/macros/s/AKfycby7lT5Nth0mndPlaFwULx-qhS_I-ejiKk8uPFVTYVUmXazxcCeRp8r1jVr_18wMfffz4Q/exec";
+
+function loginUser() {
+  const phone = document.getElementById("loginPhone").value;
+  const password = document.getElementById("loginPassword").value;
+
+  if (!phone || !password) {
+    alert("Please enter both phone number and password.");
+    return;
+  }
+
+  fetch(`${loginScriptURL}?phone=${encodeURIComponent(phone)}`)
+    .then(res => res.text())
+    .then(savedPassword => {
+      if (savedPassword === "Not found") {
+        alert("Phone not found.");
+      } else if (savedPassword === password) {
+        alert("Login successful!");
+        document.getElementById("loginSection").style.display = "none";
+        document.getElementById("registerSection").style.display = "none";
+        document.getElementById("adsSection").style.display = "block";
+        localStorage.setItem("registeredClient", "yes");
+      } else {
+        alert("Incorrect password.");
+      }
+    })
+    .catch(() => alert("Error retrieving login details"));
+}
+</script>
+
+
+<script>
+function forgotPassword() {
+  const phone = prompt("Enter your phone number:");
+  if (!phone) return;
+
+  fetch(`${scriptURL}?phone=${encodeURIComponent(phone)}`)
+    .then(res => res.text())
+    .then(password => {
+      if (password === "Not found") {
+        alert("Phone not found.");
+      } else {
+        alert("Your password is: " + password);
+        // Re-register the user to trigger access
+        localStorage.setItem("registeredClient", "yes");
+        document.getElementById("registerSection").style.display = "none";
+        document.getElementById("loginSection").style.display = "none";
+        document.getElementById("adsSection").style.display = "block";
+      }
+    })
+    .catch(() => alert("Error retrieving password"));
 }
 </script>
 
