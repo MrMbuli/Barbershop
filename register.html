@@ -176,12 +176,13 @@
   <!-- Registration Form -->
   <section class="register" id="registerSection">
     <h2>Loyalty Points Registration</h2>
-    <form id="loyaltyForm">
-      <input type="text" id="name" placeholder="Your Full Name" required />
-      <input type="tel" id="phone" placeholder="Phone Number" required />
-      <input type="email" id="email" placeholder="Email Address (optional)" />
-      <button type="submit">Register</button>
-    </form>
+   <form id="loyaltyForm">
+  <input type="text" id="name" placeholder="Your Full Name" required />
+  <input type="tel" id="phone" placeholder="Phone Number" required />
+  <input type="email" id="email" placeholder="Email Address (optional)" />
+  <input type="password" id="regPassword" placeholder="Set Loyalty Password" required />
+  <button type="submit">Register</button>
+</form> 
   </section>
 
   <!-- Ads Section (hidden initially) -->
@@ -277,6 +278,58 @@
       document.getElementById("registerSection").style.display = "none";
       document.getElementById("adsSection").style.display = "block";
     }
+  </script>
+  <script>
+  const correctPassword = "cut2025"; // your password
+  const cookieName = "loyaltyAccess";
+
+  function setCookie(name, value, days) {
+    const d = new Date();
+    d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+    const expires = "expires=" + d.toUTCString();
+    document.cookie = `${name}=${value};${expires};path=/`;
+  }
+
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return "";
+  }
+
+  function handleLoyaltyClick() {
+    const hasAccess = getCookie(cookieName);
+    if (hasAccess === "true") {
+      scrollToRegister();
+    } else {
+      openPasswordModal();
+    }
+  }
+
+  function openPasswordModal() {
+    document.getElementById("passwordModal").style.display = "flex";
+    document.getElementById("loyaltyPassword").value = "";
+    document.getElementById("passwordError").style.display = "none";
+  }
+
+  function closePasswordModal() {
+    document.getElementById("passwordModal").style.display = "none";
+  }
+
+  function checkPassword() {
+    const input = document.getElementById("loyaltyPassword").value;
+    if (input === correctPassword) {
+      setCookie(cookieName, "true", 7); // Remember for 7 days
+      closePasswordModal();
+      scrollToRegister();
+    } else {
+      document.getElementById("passwordError").style.display = "block";
+    }
+  }
+
+  function scrollToRegister() {
+    document.getElementById("registerSection").scrollIntoView({ behavior: "smooth" });
+  }
   </script>
   <script>
   const correctPassword = "cut2025"; // your password
