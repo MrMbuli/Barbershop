@@ -254,7 +254,35 @@
     const form = document.getElementById("loyaltyForm");
 
     form.addEventListener("submit", e => {
-      e.preventDefault();
+  e.preventDefault();
+  const name = document.getElementById("name").value;
+  const phone = document.getElementById("phone").value;
+  const email = document.getElementById("email").value;
+  const regPassword = document.getElementById("regPassword").value;
+
+  const data = { name, phone, email };
+
+  fetch(scriptURL, {
+    method: "POST",
+    body: JSON.stringify(data),
+  })
+  .then(response => {
+    if (response.ok) {
+      alert("Thank you! You are now registered.");
+      localStorage.setItem("registeredClient", "yes");
+      localStorage.setItem("loyaltyPassword", regPassword); // Save password locally
+      form.reset();
+      document.getElementById("registerSection").style.display = "none";
+      document.getElementById("adsSection").style.display = "block";
+    } else {
+      alert("Error: Registration failed. Try again.");
+    }
+  })
+  .catch(error => {
+    console.error("Error!", error.message);
+    alert("Could not connect. Please try again.");
+  });
+});
       const data = {
         name: document.getElementById("name").value,
         phone: document.getElementById("phone").value,
@@ -326,14 +354,16 @@
   }
 
   function checkPassword() {
-    const input = document.getElementById("loyaltyPassword").value;
-    if (input === correctPassword) {
-      setCookie(cookieName, "true", 7); // Remember for 7 days
-      closePasswordModal();
-      scrollToRegister();
-    } else {
-      document.getElementById("passwordError").style.display = "block";
-    }
+  const input = document.getElementById("loyaltyPassword").value;
+  const savedPassword = localStorage.getItem("loyaltyPassword");
+  
+  if (input === savedPassword) {
+    setCookie(cookieName, "true", 7);
+    closePasswordModal();
+    scrollToRegister();
+  } else {
+    document.getElementById("passwordError").style.display = "block";
+  }
   }
 
   function scrollToRegister() {
