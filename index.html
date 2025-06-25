@@ -144,7 +144,8 @@
     @media (max-width: 600px) {
       .hero h1 { font-size: 1.6em; }
     }
-    .scroll-dots {
+  
+.scroll-dots {
   margin-top: 15px;
   display: flex;
   justify-content: center;
@@ -163,80 +164,13 @@
 .scroll-dot.active {
   background: #333;
 }
-    .scroll-dots {
-  margin-top: 15px;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
 
-.scroll-dot {
-  width: 12px;
-  height: 12px;
-  background: #ccc;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.scroll-dot.active {
-  background: #333;
-}
-  </style>
+</style>
   <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 </head>
-  <script>
-  window.addEventListener("DOMContentLoaded", () => {
-    const slider = document.querySelector(".ad-slider");
-    const slides = document.querySelectorAll(".ad-slide");
-    const slideWidth = slides[0].offsetWidth + 20; // width + gap
-    let index = 0;
-
-    setInterval(() => {
-      index = (index + 1) % slides.length;
-      slider.scrollTo({
-        left: slideWidth * index,
-        behavior: "smooth"
-      });
-    }, 4000); // Change slide every 4 seconds
-  });
-  </script>
-  <script>
-  window.addEventListener("DOMContentLoaded", () => {
-    const slider = document.getElementById("autoScrollSlider");
-    const slides = slider.querySelectorAll(".ad-slide");
-    const slideWidth = slides[0].offsetWidth + 20; // 20 is the gap
-    let scrollAmount = 0;
-    let isHovered = false;
-
-    // Duplicate slides for seamless infinite scroll
-    slides.forEach(slide => {
-      const clone = slide.cloneNode(true);
-      slider.appendChild(clone);
-    });
-
-    function autoScroll() {
-      if (!isHovered) {
-        scrollAmount += 1;
-        slider.scrollLeft += 1;
-
-        // Reset scroll if end is reached
-        if (scrollAmount >= slideWidth * slides.length) {
-          slider.scrollLeft = 0;
-          scrollAmount = 0;
-        }
-      }
-      requestAnimationFrame(autoScroll);
-    }
-
-    // Pause on hover
-    slider.addEventListener("mouseenter", () => isHovered = true);
-    slider.addEventListener("mouseleave", () => isHovered = false);
-
-    autoScroll(); // start scrolling
-  });
-  </script>
+  
+  
 <body>
   <header id="header">
     <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</button>
@@ -279,6 +213,7 @@
     <div class="ad-slide" style="background:#9b59b6;"><p>Ad 5</p><a href="#">Learn More</a></div>
     <div class="ad-slide" style="background:#1abc9c;"><p>Ad 6</p><a href="#">Learn More</a></div>
   </div>
+<div class="scroll-dots" id="scrollDots"></div>
 </section>
   <section class="section" id="ads">
     <h2>Look Out For</h2>
@@ -468,6 +403,27 @@
 .ad-slide a:hover {
   background: rgba(255,255,255,0.35);
 }
+
+.scroll-dots {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.scroll-dot {
+  width: 12px;
+  height: 12px;
+  background: #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.scroll-dot.active {
+  background: #333;
+}
+
 </style>
 
 <script>
@@ -552,6 +508,54 @@
       document.body.style.overflow = "hidden";
     }
   });
+</script>
+
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  const slider = document.querySelector(".ad-slider");
+  const slides = document.querySelectorAll(".ad-slide");
+  const dotsContainer = document.getElementById("scrollDots");
+
+  let index = 0;
+  let intervalId;
+
+  // Create scroll dots
+  slides.forEach((_, i) => {
+    const dot = document.createElement("div");
+    dot.classList.add("scroll-dot");
+    if (i === 0) dot.classList.add("active");
+    dot.addEventListener("click", () => {
+      index = i;
+      updateSlider();
+      resetInterval();
+    });
+    dotsContainer.appendChild(dot);
+  });
+
+  const dots = document.querySelectorAll(".scroll-dot");
+
+  function updateSlider() {
+    slider.scrollTo({
+      left: index * (slides[0].offsetWidth + 20),
+      behavior: "smooth"
+    });
+    dots.forEach(dot => dot.classList.remove("active"));
+    dots[index].classList.add("active");
+  }
+
+  function autoScroll() {
+    index = (index + 1) % slides.length;
+    updateSlider();
+  }
+
+  function resetInterval() {
+    clearInterval(intervalId);
+    intervalId = setInterval(autoScroll, 5000); // 5 seconds
+  }
+
+  resetInterval(); // Start auto scroll
+});
 </script>
 
 </body>
