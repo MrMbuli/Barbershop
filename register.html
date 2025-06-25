@@ -173,10 +173,10 @@
     <p>We come to you — mobile barber services at your convenience.</p>
   </section>
 
-  <!-- Registration Form Section -->
+  <!-- Registration Form -->
   <section class="register" id="registerSection">
     <h2>Loyalty Points Registration</h2>
-    <form onsubmit="registerClient(event)">
+    <form id="loyaltyForm">
       <input type="text" id="name" placeholder="Your Full Name" required />
       <input type="tel" id="phone" placeholder="Phone Number" required />
       <input type="email" id="email" placeholder="Email Address (optional)" />
@@ -184,7 +184,7 @@
     </form>
   </section>
 
-  <!-- Ad Slides Section (initially hidden) -->
+  <!-- Ads Section (hidden initially) -->
   <section class="ads" id="adsSection" style="display: none;">
     <div class="ads-container" id="adsContainer">
       <div class="ad-slide">🔥 20% OFF First Cut</div>
@@ -227,7 +227,7 @@
       showSlide(index);
     }
 
-    setInterval(nextSlide, 5000); // auto scroll every 5 seconds
+    setInterval(nextSlide, 5000);
 
     // Privacy popup logic
     function acceptPrivacy() {
@@ -239,24 +239,40 @@
       document.getElementById("privacyPopup").classList.add("show");
     }
 
-    // Loyalty registration logic
-    function registerClient(e) {
+    // Loyalty Registration via Google Sheets
+    const scriptURL = "https://script.google.com/macros/s/AKfycbxt7vdSQ24rlO5WBMgfzoivMfsopJPdkF2_ne4EHNf8pMlpe5JJfjrHw6TFKEBOn0fHPg/exec";
+    const form = document.getElementById("loyaltyForm");
+
+    form.addEventListener("submit", e => {
       e.preventDefault();
-      const name = document.getElementById("name").value;
-      const phone = document.getElementById("phone").value;
-      const email = document.getElementById("email").value;
+      const data = {
+        name: document.getElementById("name").value,
+        phone: document.getElementById("phone").value,
+        email: document.getElementById("email").value
+      };
 
-      alert(`Thank you, ${name}! You're registered for loyalty points.`);
+      fetch(scriptURL, {
+        method: "POST",
+        body: JSON.stringify(data),
+      })
+      .then(response => {
+        if (response.ok) {
+          alert("Thank you! You are now registered.");
+          localStorage.setItem("registeredClient", "yes");
+          form.reset();
+          document.getElementById("registerSection").style.display = "none";
+          document.getElementById("adsSection").style.display = "block";
+        } else {
+          alert("Error: Registration failed. Try again.");
+        }
+      })
+      .catch(error => {
+        console.error("Error!", error.message);
+        alert("Could not connect. Please try again.");
+      });
+    });
 
-      // Save registration in localStorage
-      localStorage.setItem("registeredClient", "yes");
-
-      // Hide form and show ad section
-      document.getElementById("registerSection").style.display = "none";
-      document.getElementById("adsSection").style.display = "block";
-    }
-
-    // Check if user has already registered
+    // If already registered, show ads
     if (localStorage.getItem("registeredClient") === "yes") {
       document.getElementById("registerSection").style.display = "none";
       document.getElementById("adsSection").style.display = "block";
