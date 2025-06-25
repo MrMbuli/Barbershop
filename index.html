@@ -59,6 +59,9 @@
       transition: right 0.3s ease;
       z-index: 1000;
     }
+    #close-drawer.spin {
+  animation: spinClose 0.4s ease;
+}
     #dropdown-menu.active { right: 0; }
     #dropdown-menu a {
       color: white;
@@ -226,6 +229,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+    @keyframes spinClose {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+  }
+    
 
 </style>
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -301,25 +309,21 @@
     function toggleMenu() {
   const menu = document.getElementById("dropdown-menu");
   const toggle = document.getElementById("menuToggle");
+  const closeBtn = document.getElementById("close-drawer");
   const isOpen = menu.classList.toggle("active");
+
   toggle.textContent = isOpen ? "<" : "☰";
   toggle.classList.toggle("open", isOpen);
-
-  // Prevent scrolling on body when menu is open
   document.body.style.overflow = isOpen ? "hidden" : "auto";
-    }
 
-    document.addEventListener("click", function (event) {
-      const menu = document.getElementById("dropdown-menu");
-      const toggle = document.getElementById("menuToggle");
-      if (!menu.contains(event.target) && !toggle.contains(event.target)) {
-        if (menu.classList.contains("active")) {
-          menu.classList.remove("active");
-          toggle.textContent = "☰";
-          toggle.classList.remove("open");
-        }
-      }
-    });
+  // If menu is closing, animate the X button
+  if (!isOpen && closeBtn) {
+    closeBtn.classList.add("spin");
+    setTimeout(() => {
+      closeBtn.classList.remove("spin");
+    }, 400); // match animation duration
+  }
+}
   </script>
 
 <!-- Privacy Notice Popup -->
