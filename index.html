@@ -325,6 +325,40 @@
   }
 }
   </script>
+  <script>
+  // After successful registration
+  function setCookie(name, value, days) {
+    const d = new Date();
+    d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+    document.cookie = name + "=" + value + ";expires=" + d.toUTCString() + ";path=/";
+  }
+
+  // Call this when the form is submitted successfully:
+  setCookie("isRegistered", "true", 30);
+  </script>
+  <script>
+  function getCookie(name) {
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const cookies = decodedCookie.split(';');
+    name = name + "=";
+    for (let i = 0; i < cookies.length; i++) {
+      let c = cookies[i].trim();
+      if (c.indexOf(name) === 0) return c.substring(name.length);
+    }
+    return "";
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const links = document.querySelectorAll('a[href="register.html"]');
+    const isRegistered = getCookie("isRegistered");
+
+    if (isRegistered) {
+      links.forEach(link => {
+        link.textContent = "Loyalty Points";
+      });
+    }
+  });
+  </script>
 
 <!-- Privacy Notice Popup -->
 <div id="privacy-popup">
