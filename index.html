@@ -265,20 +265,7 @@
   toggle.classList.toggle("open", isOpen);
 
   // Prevent scrolling on body when menu is open
-  document.body.style.overflow = isOpen ? "hidden" : "auto";
-    }
-
-    document.addEventListener("click", function (event) {
-      const menu = document.getElementById("dropdown-menu");
-      const toggle = document.getElementById("menuToggle");
-      if (!menu.contains(event.target) && !toggle.contains(event.target)) {
-        if (menu.classList.contains("active")) {
-          menu.classList.remove("active");
-          toggle.textContent = "☰";
-          toggle.classList.remove("open");
-        }
-      }
-    });
+  
   </script>
 
 <!-- Privacy Notice Popup -->
@@ -364,15 +351,26 @@
   position: absolute;
   top: 15px;
   right: 15px;
-  background: none;
+  background: transparent;
   border: none;
-  font-size: 22px;
+  font-size: 28px;
   color: white;
   cursor: pointer;
   z-index: 1100;
+  padding: 10px;
+  border-radius: 50%;
+  transition: transform 0.2s ease, background 0.2s ease;
+  touch-action: manipulation;
 }
+
 #close-drawer:hover {
+  background: rgba(255, 255, 255, 0.1);
   transform: scale(1.2);
+}
+
+#close-drawer:active {
+  transform: scale(0.95);
+  background: rgba(255, 255, 255, 0.2);
 }
   #ad-slider {
   margin-top: 40px;
