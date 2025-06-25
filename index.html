@@ -116,7 +116,6 @@
       padding: 10px;
       border-radius: 50%;
       transition: transform 0.2s ease, background 0.2s ease;
-      touch-action: manipulation;
     }
 
     #close-drawer:hover {
@@ -161,6 +160,20 @@
 
     section h2 { font-size: 1.8em; margin-bottom: 10px; }
 
+    .ad-slider {
+      display: flex;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .ad-slide {
+      min-width: 100%;
+      transition: transform 0.5s ease-in-out;
+      background: #222;
+      color: white;
+      padding: 40px 20px;
+    }
+
     .scroll-dots {
       margin-top: 15px;
       display: flex;
@@ -178,6 +191,53 @@
     }
 
     .scroll-dot.active { background: #333; }
+
+    .products {
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+      padding: 20px;
+    }
+
+    .product {
+      flex: 0 0 auto;
+      width: 150px;
+      background: #eee;
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .product button {
+      margin-top: 10px;
+      padding: 8px 10px;
+      border: none;
+      border-radius: 5px;
+      background: #1e1e2f;
+      color: white;
+      cursor: pointer;
+    }
+
+    .product button:hover {
+      background: #8e2de2;
+    }
+
+    #contact {
+      padding: 40px 20px;
+    }
+
+    .privacy-popup {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      padding: 15px;
+      z-index: 2000;
+      text-align: center;
+    }
 
     #backToTop {
       position: fixed;
@@ -200,8 +260,6 @@
       background: #8e2de2;
       transform: scale(1.1);
     }
-
-    /* Add your other styles like ad-slider, privacy-popup, etc. here */
   </style>
 
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -230,7 +288,46 @@
     </div>
   </nav>
 
-  <!-- Your other sections here (hero, about, ads-slider, etc.) -->
+  <div class="hero">
+    <h1>Welcome to King's Cut</h1>
+    <p>Barbering excellence at your doorstep</p>
+  </div>
+
+  <section id="about">
+    <h2>About Us</h2>
+    <p>We bring the barbershop experience to your home with professional, convenient grooming services.</p>
+  </section>
+
+  <section>
+    <h2>Featured Ads</h2>
+    <div class="ad-slider" id="adSlider">
+      <div class="ad-slide">Ad Slide 1</div>
+      <div class="ad-slide">Ad Slide 2</div>
+      <div class="ad-slide">Ad Slide 3</div>
+    </div>
+    <div class="scroll-dots" id="scrollDots"></div>
+  </section>
+
+  <section>
+    <h2>Our Products</h2>
+    <div class="products">
+      <div class="product" style="background: #e1bee7;">Product 1 <br><button>Buy</button> <button>Learn More</button></div>
+      <div class="product" style="background: #b3e5fc;">Product 2 <br><button>Buy</button> <button>Learn More</button></div>
+      <div class="product" style="background: #c8e6c9;">Product 3 <br><button>Buy</button> <button>Learn More</button></div>
+      <div class="product" style="background: #ffe082;">Product 4 <br><button>Buy</button> <button>Learn More</button></div>
+      <div class="product" style="background: #ffab91;">Product 5 <br><button>Buy</button> <button>Learn More</button></div>
+      <div class="product" style="background: #d7ccc8;">Product 6 <br><button>Buy</button> <button>Learn More</button></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <p>Phone: +27 63 589 2769<br>Email: info@kingscut.co.za</p>
+  </section>
+
+  <div class="privacy-popup" id="privacyPopup">
+    This website uses cookies to enhance your experience.
+  </div>
 
   <button id="backToTop" onclick="scrollToTop()">⬆ Top</button>
 
@@ -252,6 +349,33 @@
     function scrollToTop() {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
+
+    // Slider functionality
+    const slides = document.querySelectorAll(".ad-slide");
+    const dotsContainer = document.getElementById("scrollDots");
+    let current = 0;
+
+    slides.forEach((_, i) => {
+      const dot = document.createElement("div");
+      dot.className = "scroll-dot";
+      dot.addEventListener("click", () => showSlide(i));
+      dotsContainer.appendChild(dot);
+    });
+
+    function showSlide(index) {
+      document.getElementById("adSlider").style.transform = `translateX(-${index * 100}%)`;
+      dotsContainer.querySelectorAll(".scroll-dot").forEach(dot => dot.classList.remove("active"));
+      dotsContainer.children[index].classList.add("active");
+      current = index;
+    }
+
+    function autoSlide() {
+      current = (current + 1) % slides.length;
+      showSlide(current);
+    }
+
+    showSlide(0);
+    setInterval(autoSlide, 5000);
   </script>
 </body>
 </html>
