@@ -184,48 +184,6 @@
   background: #8e2de2;
   transform: scale(1.1);
 }
-    header h1 {
-  font-size: 1.2em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 70%;
-    }
-    header {
-  background: rgba(30, 30, 47, 1);
-  color: white;
-  padding: 20px;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-  transition: background 0.4s ease;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.menu-toggle {
-  position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 26px;
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  z-index: 2000;
-  font-weight: bold;
-}
-
-.header-title {
-  font-size: 1.3em;
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
 
 </style>
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -233,10 +191,11 @@
 </head>
   
   
-<header id="header">
-  <h1 class="header-title">King's Cut Barbershop</h1>
-  <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</button>
-</header>
+<body>
+  <header id="header">
+    <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</button>
+    <h1>King's Cut Barbershop</h1>
+  </header>
 
 
  <nav id="dropdown-menu">
