@@ -402,18 +402,7 @@
       <button onclick="closePasswordModal()" style="flex:1; padding:10px; background:#bbb; border:none; border-radius:5px;">Cancel</button>
     </div>
     <p id="passwordError" style="color:red; font-size:0.9em; display:none; margin-top:10px;">Incorrect password. Try again.</p>
-  </div>
-</div>
-  <!-- Password Prompt Modal -->
-<div id="passwordModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:1000; align-items:center; justify-content:center;">
-  <div style="background:white; padding:20px; border-radius:10px; width:90%; max-width:300px; text-align:center;">
-    <h3>Enter Loyalty Password</h3>
-    <input type="password" id="loyaltyPassword" placeholder="Password" style="width:100%; padding:10px; margin:10px 0;" />
-    <div style="display:flex; justify-content:space-between; gap:10px;">
-      <button onclick="checkPassword()" style="flex:1; padding:10px; background:#222; color:white; border:none; border-radius:5px;">Submit</button>
-      <button onclick="closePasswordModal()" style="flex:1; padding:10px; background:#bbb; border:none; border-radius:5px;">Cancel</button>
-    </div>
-    <p id="passwordError" style="color:red; font-size:0.9em; display:none; margin-top:10px;">Incorrect password. Try again.</p>
+    <button onclick="resetLoyaltyAccess()" style="margin-top:15px; background:none; border:none; color:#007BFF; text-decoration:underline; cursor:pointer; font-size:0.9em;">Forgot Password?</button>
   </div>
 </div>
 </body>
