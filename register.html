@@ -206,6 +206,15 @@
   </div>
 
   <script>
+    function resetLoyaltyAccess() {
+  localStorage.removeItem("loyaltyPassword");
+  localStorage.removeItem("registeredClient");
+  document.cookie = "loyaltyAccess=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  alert("Password reset. Please register again.");
+  document.getElementById("registerSection").style.display = "block";
+  document.getElementById("adsSection").style.display = "none";
+  document.getElementById("registerSection").scrollIntoView({ behavior: "smooth" });
+}
     // Ad Slide Logic
     let currentIndex = 0;
     const totalSlides = 3;
