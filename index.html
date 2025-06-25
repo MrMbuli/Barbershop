@@ -301,25 +301,18 @@
     function toggleMenu() {
   const menu = document.getElementById("dropdown-menu");
   const toggle = document.getElementById("menuToggle");
+  const overlay = document.getElementById("menu-overlay");
   const isOpen = menu.classList.toggle("active");
+
   toggle.textContent = isOpen ? "<" : "☰";
   toggle.classList.toggle("open", isOpen);
 
-  // Prevent scrolling on body when menu is open
+  // Control overlay
+  overlay.classList.toggle("active", isOpen);
+
+  // Lock or unlock scroll
   document.body.style.overflow = isOpen ? "hidden" : "auto";
     }
-
-    document.addEventListener("click", function (event) {
-      const menu = document.getElementById("dropdown-menu");
-      const toggle = document.getElementById("menuToggle");
-      if (!menu.contains(event.target) && !toggle.contains(event.target)) {
-        if (menu.classList.contains("active")) {
-          menu.classList.remove("active");
-          toggle.textContent = "☰";
-          toggle.classList.remove("open");
-        }
-      }
-    });
   </script>
 
 <!-- Privacy Notice Popup -->
@@ -504,6 +497,19 @@
   background: #8e2de2;
   transform: scale(1.1);
 }
+  #menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 900;
+  display: none;
+}
+#menu-overlay.active {
+  display: block;
+}
 
 </style>
 
@@ -656,6 +662,7 @@ window.addEventListener("DOMContentLoaded", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 </script>
+ <div id="menu-overlay"></div> 
 
 </body>
 </html>
