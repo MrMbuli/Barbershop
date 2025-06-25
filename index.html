@@ -409,16 +409,30 @@
   position: absolute;
   top: 15px;
   right: 15px;
-  background: none;
+  background: rgba(255, 255, 255, 0.08);
   border: none;
-  font-size: 22px;
   color: white;
+  font-size: 22px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
   cursor: pointer;
   z-index: 1100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.3s ease, transform 0.3s ease;
 }
+
 #close-drawer:hover {
-  transform: scale(1.2);
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.15);
 }
+
+#close-drawer:active {
+  transform: scale(0.95);
+}
+  <button id="close-drawer" onclick="toggleMenu()" aria-label="Close menu">✖</button>
   #ad-slider {
   margin-top: 40px;
 }
