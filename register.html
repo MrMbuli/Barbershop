@@ -215,10 +215,11 @@
         <button onclick="closePasswordModal()" style="flex:1; padding:10px; background:#bbb; border:none; border-radius:5px;">Cancel</button>
       </div>
       <p id="passwordError" style="color:red; font-size:0.9em; display:none; margin-top:10px;">Incorrect password. Try again.</p>
-      <button onclick="forgotPassword()">Forgot Password?</button>
+      <button onclick="forgotPassword()" style="margin-top:10px; background:none; border:none; color:#007BFF; text-decoration:underline; cursor:pointer;">Forgot Password?</button>
     </div>
   </div>
 
+  <!-- Scripts -->
   <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbzU3AkI7lmwIhIizVY9qJW9KpJJ7kfNRVC-NoFGueQ28H6E7TgTZrtJ9WbwPOjA396KIw/exec";
     const form = document.getElementById("loyaltyForm");
@@ -243,7 +244,6 @@
           alert("Thank you! You are now registered.");
           localStorage.setItem("registeredClient", "yes");
           localStorage.setItem("loyaltyPassword", regPassword);
-          localStorage.setItem("registeredPhone", phone);
           form.reset();
           document.getElementById("registerSection").style.display = "none";
           document.getElementById("adsSection").style.display = "block";
@@ -314,14 +314,24 @@
       document.getElementById("registerSection").scrollIntoView({ behavior: "smooth" });
     }
 
-    function resetLoyaltyAccess() {
-      localStorage.removeItem("loyaltyPassword");
-      localStorage.removeItem("registeredClient");
-      document.cookie = "loyaltyAccess=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      alert("Password reset. Please register again.");
-      document.getElementById("registerSection").style.display = "block";
-      document.getElementById("adsSection").style.display = "none";
-      scrollToRegister();
+    function forgotPassword() {
+      const email = prompt("Enter your email address:");
+      if (!email) return;
+
+      fetch(`${scriptURL}?email=${encodeURIComponent(email)}`)
+        .then(res => res.text())
+        .then(password => {
+          if (password === "Not found") {
+            alert("Email not found.");
+          } else {
+            alert("Your password is: " + password);
+            localStorage.setItem("registeredClient", "yes");
+            localStorage.setItem("loyaltyPassword", password);
+            document.getElementById("registerSection").style.display = "none";
+            document.getElementById("adsSection").style.display = "block";
+          }
+        })
+        .catch(() => alert("Error retrieving password"));
     }
 
     // Ads Slider
@@ -356,29 +366,7 @@
 
     if (!localStorage.getItem("acceptedPrivacy")) {
       document.getElementById("privacyPopup").classList.add("show");
-    <script>
-function forgotPassword() {
-  const email = prompt("Enter your email address:");
-
-  if (!email) return;
-
-  fetch(`${scriptURL}?email=${encodeURIComponent(email)}`)
-    .then(res => res.text())
-    .then(password => {
-      if (password === "Not found") {
-        alert("Email not found.");
-      } else {
-        alert("Your password is: " + password);
-        // Auto re-enable access
-        localStorage.setItem("registeredClient", "yes");
-        localStorage.setItem("loyaltyPassword", password);
-        document.getElementById("registerSection").style.display = "none";
-        document.getElementById("adsSection").style.display = "block";
-      }
-    })
-    .catch(() => alert("Error retrieving password"));
-}
-</script>
+    }
   </script>
 </body>
 </html>
