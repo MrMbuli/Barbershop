@@ -220,7 +220,7 @@
   </div>
 
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycby7lT5Nth0mndPlaFwULx-qhS_I-ejiKk8uPFVTYVUmXazxcCeRp8r1jVr_18wMfffz4Q/exec";
+    const scriptURL = "https://script.google.com/macros/s/AKfycbzU3AkI7lmwIhIizVY9qJW9KpJJ7kfNRVC-NoFGueQ28H6E7TgTZrtJ9WbwPOjA396KIw/exec";
     const form = document.getElementById("loyaltyForm");
 
     // Register client
@@ -356,7 +356,29 @@
 
     if (!localStorage.getItem("acceptedPrivacy")) {
       document.getElementById("privacyPopup").classList.add("show");
-    }
+    <script>
+function forgotPassword() {
+  const email = prompt("Enter your email address:");
+
+  if (!email) return;
+
+  fetch(`${scriptURL}?email=${encodeURIComponent(email)}`)
+    .then(res => res.text())
+    .then(password => {
+      if (password === "Not found") {
+        alert("Email not found.");
+      } else {
+        alert("Your password is: " + password);
+        // Auto re-enable access
+        localStorage.setItem("registeredClient", "yes");
+        localStorage.setItem("loyaltyPassword", password);
+        document.getElementById("registerSection").style.display = "none";
+        document.getElementById("adsSection").style.display = "block";
+      }
+    })
+    .catch(() => alert("Error retrieving password"));
+}
+</script>
   </script>
 </body>
 </html>
