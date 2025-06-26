@@ -215,8 +215,22 @@
         <button onclick="closePasswordModal()" style="flex:1; padding:10px; background:#bbb; border:none; border-radius:5px;">Cancel</button>
       </div>
       <p id="passwordError" style="color:red; font-size:0.9em; display:none; margin-top:10px;">Incorrect password. Try again.</p>
+<p style="margin-top:10px;">
+  <a href="#" onclick="openRecoveryModal()" style="font-size:0.9em; color:#0066cc;">Forgot Password?</a>
+</p>
     </div>
+<!-- Recovery Modal -->
+<div id="recoveryModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:1001; align-items:center; justify-content:center;">
+  <div style="background:white; padding:20px; border-radius:10px; width:90%; max-width:300px; text-align:center;">
+    <h3>Recover Loyalty Password</h3>
+    <input type="email" id="recoveryEmail" placeholder="Enter your registered email" style="width:100%; padding:10px; margin:10px 0;" />
+    <div style="display:flex; justify-content:space-between; gap:10px;">
+      <button onclick="recoverPassword()" style="flex:1; padding:10px; background:#222; color:white; border:none; border-radius:5px;">Recover</button>
+      <button onclick="closeRecoveryModal()" style="flex:1; padding:10px; background:#bbb; border:none; border-radius:5px;">Cancel</button>
+    </div>
+    <p id="recoveryMsg" style="margin-top:10px; font-size:0.9em;"></p>
   </div>
+</div>
 
   <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbxt7vdSQ24rlO5WBMgfzoivMfsopJPdkF2_ne4EHNf8pMlpe5JJfjrHw6TFKEBOn0fHPg/exec";
@@ -344,6 +358,38 @@
     function scrollToRegister() {
       document.getElementById("registerSection").scrollIntoView({ behavior: "smooth" });
     }
+    function openRecoveryModal() {
+  closePasswordModal();
+  document.getElementById("recoveryModal").style.display = "flex";
+  document.getElementById("recoveryEmail").value = "";
+  document.getElementById("recoveryMsg").textContent = "";
+}
+
+function closeRecoveryModal() {
+  document.getElementById("recoveryModal").style.display = "none";
+}
+
+function recoverPassword() {
+  const email = document.getElementById("recoveryEmail").value;
+  if (!email) {
+    document.getElementById("recoveryMsg").textContent = "Please enter your email.";
+    return;
+  }
+
+  fetch(scriptURL + "?action=recover&email=" + encodeURIComponent(email))
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        document.getElementById("recoveryMsg").textContent = "Your password is: " + data.password;
+      } else {
+        document.getElementById("recoveryMsg").textContent = "Email not found.";
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      document.getElementById("recoveryMsg").textContent = "Something went wrong. Try again.";
+    });
+}
   </script>
 </body>
 </html>
