@@ -215,25 +215,26 @@
         <button onclick="closePasswordModal()" style="flex:1; padding:10px; background:#bbb; border:none; border-radius:5px;">Cancel</button>
       </div>
       <p id="passwordError" style="color:red; font-size:0.9em; display:none; margin-top:10px;">Incorrect password. Try again.</p>
-<p style="margin-top:10px;">
-  <a href="#" onclick="openRecoveryModal()" style="font-size:0.9em; color:#0066cc;">Forgot Password?</a>
-</p>
+      <p style="margin-top:10px;">
+        <a href="#" onclick="openRecoveryModal()" style="font-size:0.9em; color:#0066cc;">Forgot Password?</a>
+      </p>
     </div>
-<!-- Recovery Modal -->
-<div id="recoveryModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:1001; align-items:center; justify-content:center;">
-  <div style="background:white; padding:20px; border-radius:10px; width:90%; max-width:300px; text-align:center;">
-    <h3>Recover Loyalty Password</h3>
-    <input type="email" id="recoveryEmail" placeholder="Enter your registered email" style="width:100%; padding:10px; margin:10px 0;" />
-    <div style="display:flex; justify-content:space-between; gap:10px;">
-      <button onclick="recoverPassword()" style="flex:1; padding:10px; background:#222; color:white; border:none; border-radius:5px;">Recover</button>
-      <button onclick="closeRecoveryModal()" style="flex:1; padding:10px; background:#bbb; border:none; border-radius:5px;">Cancel</button>
-    </div>
-    <p id="recoveryMsg" style="margin-top:10px; font-size:0.9em;"></p>
   </div>
-</div>
+
+  <!-- Recovery Modal -->
+  <div id="recoveryModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:1001; align-items:center; justify-content:center;">
+    <div style="background:white; padding:20px; border-radius:10px; width:90%; max-width:300px; text-align:center;">
+      <h3>Recover Loyalty Password</h3>
+      <input type="email" id="recoveryEmail" placeholder="Enter your registered email" style="width:100%; padding:10px; margin:10px 0;" />
+      <div style="display:flex; justify-content:space-between; gap:10px;">
+        <button onclick="recoverPassword()" style="flex:1; padding:10px; background:#222; color:white; border:none; border-radius:5px;">Recover</button>
+        <button onclick="closeRecoveryModal()" style="flex:1; padding:10px; background:#bbb; border:none; border-radius:5px;">Cancel</button>
+      </div>
+      <p id="recoveryMsg" style="margin-top:10px; font-size:0.9em;"></p>
+    </div>
+  </div>
 
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbzU3AkI7lmwIhIizVY9qJW9KpJJ7kfNRVC-NoFGueQ28H6E7TgTZrtJ9WbwPOjA396KIw/exec";
     const form = document.getElementById("loyaltyForm");
 
     form.addEventListener("submit", e => {
@@ -245,29 +246,12 @@
         password: document.getElementById("regPassword").value
       };
 
-      fetch(scriptURL, {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-      .then(response => {
-        if (response.ok) {
-          alert("Thank you! You are now registered.");
-          localStorage.setItem("registeredClient", "yes");
-          localStorage.setItem("loyaltyPassword", data.password);
-          form.reset();
-          document.getElementById("registerSection").style.display = "none";
-          document.getElementById("adsSection").style.display = "block";
-        } else {
-          alert("Error: Registration failed. Try again.");
-        }
-      })
-      .catch(error => {
-        console.error("Error!", error.message);
-        alert("Could not connect. Please try again.");
-      });
+      alert("Thank you! You are now registered.");
+      localStorage.setItem("registeredClient", "yes");
+      localStorage.setItem("loyaltyPassword", data.password);
+      form.reset();
+      document.getElementById("registerSection").style.display = "none";
+      document.getElementById("adsSection").style.display = "block";
     });
 
     if (localStorage.getItem("registeredClient") === "yes") {
@@ -275,7 +259,6 @@
       document.getElementById("adsSection").style.display = "block";
     }
 
-    // Ads slider
     let currentIndex = 0;
     const totalSlides = 3;
     const adsContainer = document.getElementById("adsContainer");
@@ -299,7 +282,6 @@
 
     setInterval(nextSlide, 5000);
 
-    // Privacy popup
     function acceptPrivacy() {
       document.getElementById("privacyPopup").classList.remove("show");
       localStorage.setItem("acceptedPrivacy", "yes");
@@ -309,7 +291,6 @@
       document.getElementById("privacyPopup").classList.add("show");
     }
 
-    // Password Protection Logic
     const cookieName = "loyaltyAccess";
 
     function setCookie(name, value, days) {
@@ -358,38 +339,30 @@
     function scrollToRegister() {
       document.getElementById("registerSection").scrollIntoView({ behavior: "smooth" });
     }
+
     function openRecoveryModal() {
-  closePasswordModal();
-  document.getElementById("recoveryModal").style.display = "flex";
-  document.getElementById("recoveryEmail").value = "";
-  document.getElementById("recoveryMsg").textContent = "";
-}
+      closePasswordModal();
+      document.getElementById("recoveryModal").style.display = "flex";
+      document.getElementById("recoveryEmail").value = "";
+      document.getElementById("recoveryMsg").textContent = "";
+    }
 
-function closeRecoveryModal() {
-  document.getElementById("recoveryModal").style.display = "none";
-}
+    function closeRecoveryModal() {
+      document.getElementById("recoveryModal").style.display = "none";
+    }
 
-function recoverPassword() {
-  const email = document.getElementById("recoveryEmail").value;
-  if (!email) {
-    document.getElementById("recoveryMsg").textContent = "Please enter your email.";
-    return;
-  }
+    function recoverPassword() {
+      const email = document.getElementById("recoveryEmail").value;
+      const saved = localStorage.getItem("loyaltyPassword");
 
-  fetch(scriptURL + "?action=recover&email=" + encodeURIComponent(email))
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        document.getElementById("recoveryMsg").textContent = "Your password is: " + data.password;
+      if (!email) {
+        document.getElementById("recoveryMsg").textContent = "Please enter your email.";
+      } else if (saved) {
+        document.getElementById("recoveryMsg").textContent = "Your password is: " + saved;
       } else {
-        document.getElementById("recoveryMsg").textContent = "Email not found.";
+        document.getElementById("recoveryMsg").textContent = "No password found.";
       }
-    })
-    .catch(err => {
-      console.error(err);
-      document.getElementById("recoveryMsg").textContent = "Something went wrong. Try again.";
-    });
-}
+    }
   </script>
 </body>
 </html>
