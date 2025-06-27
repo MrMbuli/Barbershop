@@ -238,35 +238,26 @@
     const form = document.getElementById("loyaltyForm");
 
     form.addEventListener("submit", e => {
-  e.preventDefault();
+      e.preventDefault();
+      const data = {
+        name: document.getElementById("name").value,
+        phone: document.getElementById("phone").value,
+        email: document.getElementById("email").value,
+        password: document.getElementById("regPassword").value
+      };
 
-  const data = {
-    name: document.getElementById("name").value,
-    phone: document.getElementById("phone").value,
-    email: document.getElementById("email").value,
-    password: document.getElementById("regPassword").value
-  };
+      alert("Thank you! You are now registered.");
+      localStorage.setItem("registeredClient", "yes");
+      localStorage.setItem("loyaltyPassword", data.password);
+      form.reset();
+      document.getElementById("registerSection").style.display = "none";
+      document.getElementById("adsSection").style.display = "block";
+    });
 
-  fetch("https://script.google.com/macros/s/AKfycbxq9Zpzn-FBeY-huq8oJRVUU3uLqUB_TxzcDXJmYr32lIR79w7IU6Xl3cHNTRpWbetx/exec", {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: {
-      "Content-Type": "application/json"
+    if (localStorage.getItem("registeredClient") === "yes") {
+      document.getElementById("registerSection").style.display = "none";
+      document.getElementById("adsSection").style.display = "block";
     }
-  })
-  .then(res => res.text())
-  .then(response => {
-    alert("Thank you! You are now registered.");
-    localStorage.setItem("registeredClient", "yes");
-    form.reset();
-    document.getElementById("registerSection").style.display = "none";
-    document.getElementById("adsSection").style.display = "block";
-  })
-  .catch(error => {
-    console.error("Error!", error.message);
-    alert("Registration failed. Please try again.");
-  });
-});
 
     let currentIndex = 0;
     const totalSlides = 3;
@@ -361,141 +352,17 @@
     }
 
     function recoverPassword() {
-<script>
-  const form = document.getElementById("loyaltyForm");
+      const email = document.getElementById("recoveryEmail").value;
+      const saved = localStorage.getItem("loyaltyPassword");
 
-  form.addEventListener("submit", e => {
-    e.preventDefault();
-
-    const data = {
-      name: document.getElementById("name").value,
-      phone: document.getElementById("phone").value,
-      email: document.getElementById("email").value,
-      password: document.getElementById("regPassword").value
-    };
-
-    fetch("https://script.google.com/macros/s/AKfycbxq9Zpzn-FBeY-huq8oJRVUU3uLqUB_TxzcDXJmYr32lIR79w7IU6Xl3cHNTRpWbetx/exec", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json"
+      if (!email) {
+        document.getElementById("recoveryMsg").textContent = "Please enter your email.";
+      } else if (saved) {
+        document.getElementById("recoveryMsg").textContent = "Your password is: " + saved;
+      } else {
+        document.getElementById("recoveryMsg").textContent = "No password found.";
       }
-    })
-    .then(res => res.text())
-    .then(response => {
-      alert("Thank you! You are now registered.");
-      form.reset();
-      document.getElementById("registerSection").style.display = "none";
-      document.getElementById("adsSection").style.display = "block";
-    })
-    .catch(error => {
-      console.error("Error!", error.message);
-      alert("Registration failed. Please try again.");
-    });
-  });
-
-  let currentIndex = 0;
-  const totalSlides = 3;
-  const adsContainer = document.getElementById("adsContainer");
-  const dots = document.querySelectorAll(".dot");
-
-  function showSlide(index) {
-    adsContainer.style.transform = `translateX(-${index * 100}%)`;
-    dots.forEach(dot => dot.classList.remove("active"));
-    dots[index].classList.add("active");
-  }
-
-  function nextSlide() {
-    currentIndex = (currentIndex + 1) % totalSlides;
-    showSlide(currentIndex);
-  }
-
-  function setSlide(index) {
-    currentIndex = index;
-    showSlide(index);
-  }
-
-  setInterval(nextSlide, 5000);
-
-  function acceptPrivacy() {
-    document.getElementById("privacyPopup").classList.remove("show");
-    // Optional: Use cookies instead of localStorage if needed
-  }
-
-  if (!document.cookie.includes("acceptedPrivacy=true")) {
-    document.getElementById("privacyPopup").classList.add("show");
-  }
-
-  const cookieName = "loyaltyAccess";
-
-  function setCookie(name, value, days) {
-    const d = new Date();
-    d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
-    document.cookie = `${name}=${value};expires=${d.toUTCString()};path=/`;
-  }
-
-  function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    return parts.length === 2 ? parts.pop().split(';').shift() : "";
-  }
-
-  function handleLoyaltyClick() {
-    const hasAccess = getCookie(cookieName);
-    if (hasAccess === "true") {
-      scrollToRegister();
-    } else {
-      openPasswordModal();
     }
-  }
-
-  function openPasswordModal() {
-    document.getElementById("passwordModal").style.display = "flex";
-    document.getElementById("loyaltyPassword").value = "";
-    document.getElementById("passwordError").style.display = "none";
-  }
-
-  function closePasswordModal() {
-    document.getElementById("passwordModal").style.display = "none";
-  }
-
-  function checkPassword() {
-    const input = document.getElementById("loyaltyPassword").value;
-
-    // TEMPORARY STATIC PASSWORD - you can replace with lookup later
-    if (input === "barber123") {
-      setCookie(cookieName, "true", 7);
-      closePasswordModal();
-      scrollToRegister();
-    } else {
-      document.getElementById("passwordError").style.display = "block";
-    }
-  }
-
-  function scrollToRegister() {
-    document.getElementById("registerSection").scrollIntoView({ behavior: "smooth" });
-  }
-
-  function openRecoveryModal() {
-    closePasswordModal();
-    document.getElementById("recoveryModal").style.display = "flex";
-    document.getElementById("recoveryEmail").value = "";
-    document.getElementById("recoveryMsg").textContent = "";
-  }
-
-  function closeRecoveryModal() {
-    document.getElementById("recoveryModal").style.display = "none";
-  }
-
-  function recoverPassword() {
-    const email = document.getElementById("recoveryEmail").value;
-    if (!email) {
-      document.getElementById("recoveryMsg").textContent = "Please enter your email.";
-    } else {
-      // Placeholder - replace with Google Sheets lookup later
-      document.getElementById("recoveryMsg").textContent = "Recovery feature coming soon.";
-    }
-  }
-</script>
+  </script>
 </body>
 </html>
