@@ -240,6 +240,46 @@ button, a {
   to { transform: rotate(360deg); }
   }
     
+    .first-visit-banner {
+  background: #111;
+  color: #fff;
+  text-align: center;
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+.first-visit-banner a {
+  color: #ffcc00;
+  margin-left: 10px;
+  text-decoration: underline;
+}
+@media (max-width: 600px) {
+  .first-visit-banner {
+    font-size: 0.95rem;
+    padding: 10px;
+  }
+}
+    .first-visit-banner {
+  background: #111;
+  color: #fff;
+  text-align: center;
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+.first-visit-banner a {
+  color: #ffcc00;
+  margin-left: 10px;
+  text-decoration: underline;
+}
+@media (max-width: 600px) {
+  .first-visit-banner {
+    font-size: 0.95rem;
+    padding: 10px;
+  }
+}
 
 </style>
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -271,6 +311,10 @@ button, a {
     <a href="https://wa.me/27635892769" class="drawer-btn whatsapp" target="_blank">💬 WhatsApp</a>
     <a href="tel:+27635892769" class="drawer-btn call">📞 Call</a>
   </div>
+   <div id="firstVisitBanner" class="first-visit-banner" style="display: none;">
+  🎉 First Visit? Get 20% OFF your cut!
+  <a href="#loyalty">Claim Now</a>
+</div>
 </nav> 
   <section class="hero" id="home">
     <h1>Personal Barber & House Call Specialist</h1>
@@ -710,6 +754,16 @@ window.addEventListener("DOMContentLoaded", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 </script>
+  <script>
+  const banner = document.getElementById("firstVisitBanner");
+
+  // Check if user is visiting for the first time
+  if (!document.cookie.includes("visited=true")) {
+    banner.style.display = "block";
+    // Set a cookie to remember
+    document.cookie = "visited=true; max-age=31536000; path=/"; // valid for 1 year
+  }
+  </script>
 
 </body>
 </html>
