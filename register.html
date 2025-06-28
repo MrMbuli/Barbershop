@@ -277,6 +277,25 @@
       document.getElementById("registerSection").style.display = "none";
       document.getElementById("adsSection").style.display = "block";
     }
+    <script>
+  // Request user location
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        console.log("Latitude:", lat);
+        console.log("Longitude:", lon);
+        // You can now use the location, e.g., send to server, display on page, etc.
+      },
+      error => {
+        console.warn("Location access denied or failed:", error.message);
+      }
+    );
+  } else {
+    console.warn("Geolocation is not supported by this browser.");
+  }
+</script>
   </script>
 </body>
 </html>
