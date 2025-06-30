@@ -184,8 +184,8 @@
     </form>
   </section>
 
-  <!-- Ads Section (hidden initially) -->
-  <section class="ads" id="adsSection" style="display: none;">
+  <!-- Ads Section -->
+  <section class="ads" id="adsSection">
     <div class="ads-container" id="adsContainer">
       <div class="ad-slide">🔥 20% OFF First Cut</div>
       <div class="ad-slide">💈 Refer a Friend = Free Trim</div>
@@ -239,63 +239,29 @@
       document.getElementById("privacyPopup").classList.add("show");
     }
 
-    // Loyalty Registration via Google Sheets
-    const scriptURL = "https://script.google.com/macros/s/AKfycbxt7vdSQ24rlO5WBMgfzoivMfsopJPdkF2_ne4EHNf8pMlpe5JJfjrHw6TFKEBOn0fHPg/exec";
+    // Prevent form submission (for demo only)
     const form = document.getElementById("loyaltyForm");
-
     form.addEventListener("submit", e => {
       e.preventDefault();
-      const data = {
-        name: document.getElementById("name").value,
-        phone: document.getElementById("phone").value,
-        email: document.getElementById("email").value
-      };
-
-      fetch(scriptURL, {
-        method: "POST",
-        body: JSON.stringify(data),
-      })
-      .then(response => {
-        if (response.ok) {
-          alert("Thank you! You are now registered.");
-          localStorage.setItem("registeredClient", "yes");
-          form.reset();
-          document.getElementById("registerSection").style.display = "none";
-          document.getElementById("adsSection").style.display = "block";
-        } else {
-          alert("Error: Registration failed. Try again.");
-        }
-      })
-      .catch(error => {
-        console.error("Error!", error.message);
-        alert("Could not connect. Please try again.");
-      });
+      alert("This form is currently disabled.");
     });
 
-    // If already registered, show ads
-    if (localStorage.getItem("registeredClient") === "yes") {
-      document.getElementById("registerSection").style.display = "none";
-      document.getElementById("adsSection").style.display = "block";
+    // Request user location
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          console.log("Latitude:", lat);
+          console.log("Longitude:", lon);
+        },
+        error => {
+          console.warn("Location access denied or failed:", error.message);
+        }
+      );
+    } else {
+      console.warn("Geolocation is not supported by this browser.");
     }
-    <script>
-  // Request user location
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      position => {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
-        console.log("Latitude:", lat);
-        console.log("Longitude:", lon);
-        // You can now use the location, e.g., send to server, display on page, etc.
-      },
-      error => {
-        console.warn("Location access denied or failed:", error.message);
-      }
-    );
-  } else {
-    console.warn("Geolocation is not supported by this browser.");
-  }
-</script>
   </script>
 </body>
 </html>
