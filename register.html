@@ -179,7 +179,21 @@
   <form id="loyaltyForm">
     <input type="text" id="name" placeholder="Your Full Name" required />
     <input type="tel" id="phone" placeholder="Phone Number" required />
-    <input type="email" id="email" placeholder="Email Address (optional)" />
+    <input 
+  type="password" 
+  id="password" 
+  placeholder="Create Password" 
+  required 
+  pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$" 
+  title="Password must be at least 6 characters and include letters and numbers." 
+/>
+    <input 
+  type="password" 
+  id="password" 
+  placeholder="Create Password" 
+  required 
+/>
+<small id="strengthMessage" style="display:block; margin-top:5px;"></small>
     <input type="password" id="password" placeholder="Create Password" required />
     <button type="submit">Register</button>
   </form>
@@ -264,5 +278,35 @@
       console.warn("Geolocation is not supported by this browser.");
     }
   </script>
+  const passwordInput = document.getElementById("password");
+const strengthMessage = document.getElementById("strengthMessage");
+
+passwordInput.addEventListener("input", function () {
+  const val = passwordInput.value;
+  let strength = 0;
+
+  if (val.length >= 6) strength++;
+  if (/[A-Za-z]/.test(val) && /\d/.test(val)) strength++;
+  if (/[!@#$%^&*(),.?":{}|<>]/.test(val)) strength++;
+
+  switch (strength) {
+    case 0:
+      strengthMessage.textContent = "";
+      strengthMessage.style.color = "";
+      break;
+    case 1:
+      strengthMessage.textContent = "Weak ❌ (Try adding letters & numbers)";
+      strengthMessage.style.color = "red";
+      break;
+    case 2:
+      strengthMessage.textContent = "Medium ⚠️ (Add special character to strengthen)";
+      strengthMessage.style.color = "orange";
+      break;
+    case 3:
+      strengthMessage.textContent = "Strong ✅";
+      strengthMessage.style.color = "green";
+      break;
+  }
+});
 </body>
 </html>
