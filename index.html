@@ -1,715 +1,814 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta http-equiv="X-Frame-Options" content="DENY" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>King's Cut Barbershop | Personal Barber</title>
+  <meta name="description" content="King’s Cut Barbershop – Professional house call barbering services in Soweto, Roodepoort, and nearby areas. Book a home haircut today." />
+  <meta name="keywords" content="barber, Soweto barber, Roodepoort barber, mobile barber, haircut at home, fade, grooming" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="preload" as="image" href="background.jpg" />
+
   <style>
-    /* Prevent tap highlight on mobile */
-button, a {
-  -webkit-tap-highlight-color: transparent;
-  -webkit-touch-callout: none;
-  outline: none;
-}
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    /* -------------------- Base -------------------- */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f5f5f5;
-      color: #333;
-      line-height: 1.6;
+      font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #0f0f11; /* very dark */
+      color: #e6e6e6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
+      line-height: 1.5;
     }
-    header {
-  background: rgba(30, 30, 47, 1);
-  color: white;
-  padding: 20px;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-  transition: background 0.4s ease;
-  display: flex;
-  justify-content: space-between; /* make space between title and icon */
-  align-items: center;
-  padding-left: 20px;
-  padding-right: 60px; /* create space so icon doesn't crowd text */
-}
-    header.scrolled { background: rgba(30, 30, 47, 0.85); }
-    .menu-toggle {
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; }
+
+    /* ---------- Header (fixed) ---------- */
+    .modern-header {
       position: fixed;
-      top: 25px;
-      right: 20px;
-      font-size: 28px;
+      top: 0; left: 0;
+      width: 100%;
+      padding: 14px 18px;
+      background: linear-gradient(180deg, rgba(18,18,20,0.94), rgba(14,14,16,0.92));
+      color: #f2f2f2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      z-index: 1400;
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .logo-title {
+      font-weight: 700;
+      font-size: 1.08rem;
+      letter-spacing: 0.3px;
+      color: #e6e6e6;
+      display: inline-block;
+      max-width: 72%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .tagline {
+      font-size: 0.78rem;
+      color: #bdbdbd;
+      display: block;
+      margin-top: -2px;
+    }
+
+    /* ---------- Menu Icon ---------- */
+    .menu-icon {
+      width: 38px;
+      height: 26px;
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: space-between;
       background: none;
       border: none;
-      color: black;
+      padding: 0;
       cursor: pointer;
-      z-index: 2000;
-      font-weight: bold;
-      transition: color 0.3s ease;
+      -webkit-tap-highlight-color: transparent;
+      z-index: 1500;
     }
-    .menu-toggle.open { color: white; }
-    #dropdown-menu {
+    .menu-icon .bar {
+      height: 3px;
+      width: 100%;
+      background: #dcdcdc;
+      border-radius: 3px;
+      transition: transform .33s cubic-bezier(.2,.9,.2,1), opacity .2s ease;
+      transform-origin: center;
+    }
+    .menu-icon.active .top { transform: translateY(9px) rotate(45deg); background: #cfcfcf; }
+    .menu-icon.active .middle { opacity: 0; transform: scaleX(.2); }
+    .menu-icon.active .bottom { transform: translateY(-9px) rotate(-45deg); background: #cfcfcf; }
+
+    /* ---------- Overlay & Drawer ---------- */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(3,3,4,0.65);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .26s ease;
+      z-index: 1320;
+      backdrop-filter: blur(2px);
+    }
+    .overlay.active { opacity: 1; visibility: visible; }
+
+    .modern-drawer {
       position: fixed;
       top: 0;
-      right: -250px;
+      right: -320px;
+      width: 320px;
+      max-width: 92%;
       height: 100%;
-      width: 250px;
-      background: #1e1e2f;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      padding-top: 80px;
-      transition: right 0.3s ease;
-      z-index: 1000;
+      background: linear-gradient(180deg, #111215, #17171a);
+      color: #f3f3f3;
+      padding: 86px 20px 22px;
+      transition: right .34s cubic-bezier(.2,.9,.2,1);
+      z-index: 1350;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      border-left: 1px solid rgba(255,255,255,0.02);
     }
-    #close-drawer.spin {
-  animation: spinClose 0.4s ease;
-}
-    #dropdown-menu.active { right: 0; }
-    #dropdown-menu a {
-      color: white;
-      padding: 15px 25px;
-      text-decoration: none;
-      width: 100%;
-      border-bottom: 1px solid #333;
+    .modern-drawer.active { right: 0; }
+
+    .drawer-header h2 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: #e9e9e9;
     }
-    #dropdown-menu a:hover { background: #333; }
-    .drawer-contact-buttons {
-      margin-top: auto;
-      width: 100%;
-      padding: 20px;
+    .modern-drawer ul { list-style: none; padding: 0; margin-top: 6px; }
+    .modern-drawer li { margin: 12px 0; }
+    .modern-drawer a {
+      display: inline-block;
+      padding: 8px 4px;
+      color: #dfe3e8;
+      font-weight: 600;
+      transition: color .16s ease, transform .16s ease;
+    }
+    .modern-drawer a:hover, .modern-drawer a:focus { color: #bfc6cb; transform: translateX(6px); outline: none; }
+
+    .drawer-footer {
+      margin-top: 24px;
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
     .drawer-btn {
-      background: #25d366;
-      color: white;
-      text-align: center;
       padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: 800;
       text-decoration: none;
-      border-radius: 6px;
-      font-weight: bold;
-      transition: background 0.3s ease;
     }
-    .drawer-btn.call { background: #3c3c3c; }
-    .drawer-btn:hover { opacity: 0.9; }
+    .drawer-btn.whatsapp { background: linear-gradient(90deg,#2fbf5e,#1f8f4b); color: #062308; }
+    .drawer-btn.call { background: #222428; color: #eaeaea; border: 1px solid rgba(255,255,255,0.03); }
+
+    /* ---------- Main layout placeholders ---------- */
+    .placeholder-space { height: 72px; } /* spacing for fixed header */
+
     .hero {
-      background: url("background.jpg") center center/cover no-repeat;
-      color: white;
-      padding: 80px 20px 40px;
+      background: linear-gradient(180deg, rgba(9,9,11,0.56), rgba(0,0,0,0.6)), url("background.jpg") center/cover no-repeat;
+      color: #f8f8f8;
+      padding: 96px 18px 40px;
       text-align: center;
+      min-height: 280px;
       position: relative;
-      margin-top: 90px;
     }
-    .hero::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.4);
-      z-index: 1;
-    }
-    .hero * { position: relative; z-index: 2; }
-    .hero h1 { font-size: 2.2em; margin-bottom: 10px; }
-    .hero p { font-size: 1.2em; }
+    .hero h1 { font-size: 2.1rem; letter-spacing: -0.6px; margin-bottom: 10px; }
+    .hero p { font-size: 1.02rem; color: #cfcfcf; }
+
     section {
-      padding: 40px 20px;
-      max-width: 800px;
-      margin: auto;
-      text-align: center;
+      max-width: 920px;
+      margin: 26px auto;
+      padding: 26px 20px;
+      color: #eaeaea;
     }
-    section h2 { font-size: 1.8em; margin-bottom: 10px; }
-    .product-coming-soon {
-      background: url('product-coming.jpg') center center/cover no-repeat;
-      height: 300px;
-      position: relative;
+    section h2 { font-size: 1.5rem; margin-bottom: 10px; color: #f4f4f4; }
+
+    .primary-cta {
+      display:inline-block;
+      background: linear-gradient(90deg,#8e8e93,#bfbfc4);
+      color: #0f0f10;
+      padding: 12px 20px;
       border-radius: 10px;
-      margin-top: 40px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      font-weight: 800;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+    }
+
+    /* ---------- Ad slider ---------- */
+    .ad-slider {
+      display:flex;
+      overflow-x:auto;
+      gap:18px;
+      padding:10px 2px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+    .ad-slide {
+      min-width: 240px;
+      flex: 0 0 auto;
+      height: 170px;
+      border-radius: 12px;
+      padding: 16px;
+      scroll-snap-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+      color: #101010;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      font-weight:800;
+    }
+    .ad-slide small { font-weight:600; opacity:.95; }
+    .ad-slide a { margin-top:8px; display:inline-block; padding:6px 10px; border-radius:8px; font-weight:700; background:rgba(255,255,255,0.14); color:#f8f8f8; }
+
+    .scroll-dots { margin-top: 14px; display:flex; justify-content:center; gap:10px; }
+    .scroll-dot { width:12px; height:12px; border-radius:50%; background:#2c2c2c; cursor:pointer; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.7); }
+    .scroll-dot.active { background:#9fa7ad; }
+
+    /* ---------- Product card ---------- */
+    .product-coming-soon {
+      background: linear-gradient(180deg, #202225, #171719);
+      height: 280px;
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.5);
     }
     .product-coming-soon .overlay {
-      background: rgba(0, 0, 0, 0.5);
-      color: #fff;
       height: 100%;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      border-radius: 10px;
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      color:#dfe6e9;
+      padding:18px;
     }
-    .product-coming-soon h2 { font-size: 1.8em; margin-bottom: 10px; }
-    .product-coming-soon p { font-size: 0.9em; opacity: 0.8; }
+
+    /* ---------- Contact & Footer ---------- */
     footer {
-      background: #1e1e2f;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      font-size: 0.9em;
+      background: linear-gradient(90deg,#0b0b0d,#111214);
+      color:#d9dde0;
+      padding:18px;
+      text-align:center;
+      margin-top:22px;
     }
-    @media (max-width: 600px) {
-      .hero h1 { font-size: 1.6em; }
+
+    /* ---------- Back to top ---------- */
+    #backToTop {
+      position: fixed;
+      bottom: 18px;
+      right: 18px;
+      background: #1b1b1e;
+      color: #eaeaea;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 50px;
+      box-shadow: 0 10px 26px rgba(0,0,0,0.6);
+      display: none;
+      z-index: 1400;
+      font-weight:700;
     }
-  
-.scroll-dots {
-  margin-top: 15px;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-.scroll-dot {
-  width: 12px;
-  height: 12px;
-  background: #ccc;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-.scroll-dot.active {
-  background: #333;
-}
-#backToTop {
-  position: fixed;
-  bottom: 25px;
-  right: 25px;
-  background: #1e1e2f;
-  color: white;
-  border: none;
-  padding: 12px 18px;
-  border-radius: 50px;
-  font-size: 14px;
-  cursor: pointer;
-  display: none;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  z-index: 1000;
-  transition: background 0.3s ease, transform 0.3s ease;
-}
-#backToTop:hover {
-  background: #8e2de2;
-  transform: scale(1.1);
-}
-    header h1 {
-  font-size: 1.2em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 70%;
+    #backToTop:hover { transform: scale(1.03); }
+
+    /* ---------- Forms (registration/login) ---------- */
+    .form-card {
+      background: linear-gradient(180deg,#0e0f11,#131315);
+      border: 1px solid rgba(255,255,255,0.03);
+      padding: 16px;
+      border-radius: 10px;
+      box-shadow: 0 14px 30px rgba(0,0,0,0.6);
+      max-width:420px;
+      margin: 14px auto;
     }
-    header {
-  background: rgba(30, 30, 47, 1);
-  color: white;
-  padding: 20px;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-  transition: background 0.4s ease;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+    .form-row { margin-bottom: 12px; }
+    .form-row label { display:block; font-size:0.92rem; margin-bottom:6px; color:#cfcfcf; font-weight:700; }
+    .form-row input {
+      width: 100%;
+      padding:10px 12px;
+      border-radius:8px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: #0b0b0d;
+      color: #e9e9e9;
+      outline: none;
+    }
+    .form-row input::placeholder { color: #9b9b9b; }
+    .muted { font-size:0.9rem; color:#9ca2a6; }
 
-.menu-toggle {
-  position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 26px;
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  z-index: 2000;
-  font-weight: bold;
-}
-
-.header-title {
-  font-size: 1.3em;
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-    @keyframes spinClose {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-  }
-    
-
-</style>
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    @media (max-width:600px){
+      .hero { padding: 84px 16px 34px; min-height:220px; }
+      .modern-drawer { width: 84%; }
+      .logo-title { font-size: 1rem; }
+    }
+  </style>
 </head>
-  
-  
-<header id="header">
-  <h1 class="header-title">King's Cut Barbershop</h1>
-  <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</button>
-</header>
+<body>
 
+  <!-- ===== HEADER ===== -->
+  <header class="modern-header" role="banner">
+    <div>
+      <div class="logo-title">King's Cut Barbershop</div>
+      <div class="tagline">House-call barbering — Soweto & Roodepoort</div>
+    </div>
 
- <nav id="dropdown-menu">
-  <div class="close-container">
-  <button id="close-drawer" onclick="toggleMenu()" role="button" aria-label="Close Menu">✖</button>
-</div>
-  <button id="close-drawer">✖</button>
-</div>
-  <h2 style="width: 100%; text-align: center; color: white; padding: 15px 0; border-bottom: 1px solid #444; animation: fadeSlideIn 0.6s ease;">Menu</h2>
-  <a href="#about" onclick="toggleMenu()">About</a>
-  <a href="booking.html" onclick="toggleMenu()">Book Now</a>
-  <a href="#contact" onclick="toggleMenu()">Contact</a>
-  <a href="gallery.html" onclick="toggleMenu()">View Our Work</a>
-  <a href="advertising.html" onclick="toggleMenu()">Advertising</a>
-  <a href="privacy.html" onclick="toggleMenu()" style="color: white; padding: 15px 25px; text-decoration: none; width: 100%; border-bottom: 1px solid #333;">Privacy Policy</a>
-  <div class="drawer-contact-buttons">
-    <a href="register.html" onclick="toggleMenu()">Register</a>
-    <a href="https://wa.me/27635892769" class="drawer-btn whatsapp" target="_blank">💬 WhatsApp</a>
-    <a href="tel:+27635892769" class="drawer-btn call">📞 Call</a>
-  </div>
-</nav> 
+    <button class="menu-icon" id="menuButton" aria-expanded="false" aria-controls="modernDrawer" aria-label="Open menu">
+      <span class="bar top"></span>
+      <span class="bar middle"></span>
+      <span class="bar bottom"></span>
+    </button>
+  </header>
+
+  <div class="placeholder-space"></div>
+
+  <!-- ===== OVERLAY + DRAWER ===== -->
+  <div class="overlay" id="menuOverlay" tabindex="-1" aria-hidden="true"></div>
+
+  <nav class="modern-drawer" id="modernDrawer" role="navigation" aria-hidden="true">
+    <div class="drawer-header">
+      <h2>Menu</h2>
+    </div>
+    <ul>
+      <li><a href="#home" onclick="closeMenu()">Home</a></li>
+      <li><a href="#about" onclick="closeMenu()">About</a></li>
+      <li><a href="booking.html" onclick="closeMenu()">Book Now</a></li>
+      <li><a href="gallery.html" onclick="closeMenu()">View Our Work</a></li>
+      <li><a href="advertising.html" onclick="closeMenu()">Advertising</a></li>
+      <li><a href="privacy.html" onclick="closeMenu()">Privacy Policy</a></li>
+      <li><a href="register.html" onclick="closeMenu()" id="registerLink">Register</a></li>
+    </ul>
+
+    <div class="drawer-footer">
+      <a href="https://wa.me/27635892769" class="drawer-btn whatsapp" target="_blank" rel="noopener">💬 WhatsApp</a>
+      <a href="tel:+27635892769" class="drawer-btn call">📞 Call</a>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
   <section class="hero" id="home">
     <h1>Personal Barber & House Call Specialist</h1>
-    <p>Serving Soweto, Roodepoort & surrounding areas.</p>
+    <p>Serving Soweto, Roodepoort & surrounding areas — I come to you for a fresh fade, tidy up or beard work.</p>
   </section>
 
-  <section class="section" id="about">
+  <!-- ===== ABOUT ===== -->
+  <section id="about">
     <h2>About Me</h2>
-    <p>I'm Owethu Mbuli, a personal barber offering professional house call grooming services in Gauteng — especially Soweto, Roodepoort, and nearby areas. Whether it’s a fresh fade or a classic clean-up, I come to you.</p>
+    <p>I'm Owethu Mbuli, a professional house-call barber working across Gauteng. I bring my kit to your doorstep — clean, on-time, professional service.</p>
     <p><strong>Available:</strong> Monday, Tuesday, Wednesday</p>
-    <a href="booking.html" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background: #8e2de2; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; transition: background 0.3s ease;">Book Now</a>
+    <a class="primary-cta" href="booking.html">Book Now</a>
   </section>
 
-  <section class="section" id="ads-slider">
-  <h2>💈 Featured Ads</h2>
-  <div class="ad-slider">
-    <div class="ad-slide" style="background:#e74c3c;"><p>Ad 1</p><a href="#">Learn More</a></div>
-    <div class="ad-slide" style="background:#3498db;"><p>Ad 2</p><a href="#">Learn More</a></div>
-    <div class="ad-slide" style="background:#2ecc71;"><p>Ad 3</p><a href="#">Learn More</a></div>
-    <div class="ad-slide" style="background:#f1c40f;"><p>Ad 4</p><a href="#">Learn More</a></div>
-    <div class="ad-slide" style="background:#9b59b6;"><p>Ad 5</p><a href="#">Learn More</a></div>
-    <div class="ad-slide" style="background:#1abc9c;"><p>Ad 6</p><a href="#">Learn More</a></div>
-  </div>
-<div class="scroll-dots" id="scrollDots"></div>
-</section>
-  <section class="section" id="ads">
+  <!-- ===== REGISTER / LOGIN (Google Sheets integration) ===== -->
+  <section id="account" aria-labelledby="accountTitle">
+    <h2 id="accountTitle">Register / Login</h2>
+
+    <!-- Registration form -->
+    <div class="form-card" id="registerCard" aria-live="polite">
+      <form id="registerForm">
+        <div class="form-row">
+          <label for="regName">Full name</label>
+          <input id="regName" name="name" type="text" placeholder="e.g. Owethu Mbuli" required />
+        </div>
+        <div class="form-row">
+          <label for="regPhone">Phone (WhatsApp)</label>
+          <input id="regPhone" name="phone" type="tel" placeholder="e.g. 0635892769" required />
+        </div>
+        <div class="form-row">
+          <label for="regEmail">Email</label>
+          <input id="regEmail" name="email" type="email" placeholder="you@example.com" />
+        </div>
+        <div class="form-row">
+          <label for="regPassword">Password (create)</label>
+          <input id="regPassword" name="password" type="password" placeholder="Choose a password" required />
+        </div>
+        <div style="display:flex;gap:10px;">
+          <button type="submit" class="primary-cta" style="padding:10px 14px;">Register</button>
+          <button type="button" id="prefillDemo" style="padding:10px 12px;border-radius:8px;background:#222;color:#e6e6e6;border:1px solid rgba(255,255,255,0.04);font-weight:800;">Demo</button>
+        </div>
+        <p class="muted" style="margin-top:10px;">Already registered? Use the login form below.</p>
+        <div id="regMessage" class="muted" style="margin-top:8px;"></div>
+      </form>
+    </div>
+
+    <!-- Login form -->
+    <div class="form-card" id="loginCard">
+      <form id="loginForm">
+        <div class="form-row">
+          <label for="loginPhone">Phone</label>
+          <input id="loginPhone" name="phone" type="tel" placeholder="0635892769" required />
+        </div>
+        <div class="form-row">
+          <label for="loginPassword">Password</label>
+          <input id="loginPassword" name="password" type="password" placeholder="Your password" required />
+        </div>
+        <div style="display:flex;gap:10px;">
+          <button type="submit" class="primary-cta" style="padding:10px 14px;">Login</button>
+          <button id="forgotBtn" type="button" style="padding:10px 12px;border-radius:8px;background:#222;color:#e6e6e6;border:1px solid rgba(255,255,255,0.04);font-weight:800;">Forgot</button>
+        </div>
+        <div id="loginMessage" class="muted" style="margin-top:8px;"></div>
+      </form>
+    </div>
+
+    <!-- Password recovery -->
+    <div class="form-card" id="recoverCard" style="display:none;">
+      <form id="recoverForm">
+        <div class="form-row">
+          <label for="recoverPhone">Enter your phone</label>
+          <input id="recoverPhone" name="phone" type="tel" placeholder="0635892769" required />
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button class="primary-cta" type="submit">Recover</button>
+          <button id="cancelRecover" type="button" style="padding:10px 12px;border-radius:8px;background:#222;color:#e6e6e6;border:1px solid rgba(255,255,255,0.04);font-weight:800;">Cancel</button>
+        </div>
+        <div id="recoverMessage" class="muted" style="margin-top:8px;"></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===== FEATURED ADS ===== -->
+  <section id="ads-slider">
+    <h2>💈 Featured Ads</h2>
+    <div class="ad-slider" id="adSlider" aria-live="polite">
+      <div class="ad-slide" style="background:linear-gradient(180deg,#f5c764,#c9a84a);">
+        <small>Promo</small>
+        <div>Fresh Fade Saturdays</div>
+        <a href="#">Learn More</a>
+      </div>
+      <div class="ad-slide" style="background:linear-gradient(180deg,#86b9d9,#4e8fb2);color:#fff;">
+        <small>Offer</small>
+        <div>Student Discount</div>
+        <a href="#">Learn More</a>
+      </div>
+      <div class="ad-slide" style="background:linear-gradient(180deg,#a7e6c2,#65c08a);">
+        <small>New</small>
+        <div>Product Launch</div>
+        <a href="#">Learn More</a>
+      </div>
+      <div class="ad-slide" style="background:linear-gradient(180deg,#d3d3d8,#9a9aa0);color:#111;">
+        <small>Spotlight</small>
+        <div>Barber Tools</div>
+        <a href="#">Learn More</a>
+      </div>
+    </div>
+    <div class="scroll-dots" id="scrollDots" aria-hidden="false"></div>
+  </section>
+
+  <!-- ===== ADVERTISING INFO ===== -->
+  <section id="ads">
     <h2>Look Out For</h2>
-    <img src="billboard.jpg" alt="Advertising Billboard" style="max-width:100%; height:auto; border-radius:10px; margin:20px 0;">
+    <img src="billboard.jpg" alt="Advertising Billboard" style="max-width:100%;height:auto;border-radius:10px;margin:18px 0;">
     <p>We’ll soon be featuring sponsored products and promotions from brands we trust. Watch this space!</p>
-    <p>If you'd like your product featured here, 
-      <a href="advertising.html" style="color:#8e2de2; font-weight:bold;">click here to advertise</a>.
-    </p>
+    <p>If you'd like your product featured here, <a href="advertising.html" style="color:#bfc6cb;font-weight:800;">click here to advertise</a>.</p>
   </section>
 
-  <section class="section" id="contact">
+  <!-- ===== CONTACT ===== -->
+  <section id="contact">
     <h2>Contact</h2>
     <p>Email: <a href="mailto:owethuandrew10@gmail.com">owethuandrew10@gmail.com</a></p>
     <p>Phone: <a href="tel:+27635892769">063 589 2769</a></p>
   </section>
 
+  <!-- ===== PRODUCT COMING SOON ===== -->
+  <section style="max-width:920px;margin:auto;padding-bottom:22px;">
+    <div class="product-coming-soon" role="img" aria-label="Product coming soon">
+      <div class="overlay">
+        <h2 style="margin-bottom:6px;">New Product Coming Soon</h2>
+        <p style="opacity:0.9;">Exclusive barber products & promos — launching soon.</p>
+      </div>
+    </div>
+  </section>
+
   <footer>
-    &copy; 2025 King's Cut Barbershop. All rights reserved.
+    &copy; 2025 King's Cut Barbershop — Crafted by NextWeb.
   </footer>
 
+  <!-- Back to top -->
+  <button id="backToTop" aria-label="Back to top">⬆</button>
+
+  <!-- Privacy Notice Popup (must accept to close) -->
+  <div id="privacy-popup" role="dialog" aria-modal="true" aria-labelledby="privacyTitle" style="display:none;">
+    <style>
+      #privacy-popup { position: fixed; left:50%; top:50%; transform:translate(-50%,-50%) scale(.98); width:340px; max-width:92%; background:#0f1113; color:#e9e9e9; padding:20px 22px 54px; border-radius:12px; box-shadow:0 18px 40px rgba(0,0,0,0.7); z-index:1600; opacity:0; visibility:hidden; transition:opacity .26s ease, transform .26s ease; }
+      #privacy-popup.show { opacity:1; visibility:visible; transform:translate(-50%,-50%) scale(1); }
+      #privacy-popup h3{ margin-bottom:6px; font-size:1.05rem; }
+      #privacy-popup p{ margin-bottom:12px; color:#bdbdbd; }
+      #privacy-popup a#view-policy-link{ position:absolute; right:12px; bottom:12px; color:#bfc6cb; font-weight:700; }
+      #privacy-popup button#accept-privacy { background:linear-gradient(90deg,#9fa7ad,#cdd2d6); border:none; padding:10px 14px; border-radius:8px; font-weight:800; cursor:pointer; color:#0b0b0b; }
+    </style>
+    <h3 id="privacyTitle">Privacy & Cookies</h3>
+    <p>We respect your privacy. We use cookies to improve the experience and remember your preferences. Please accept our policy to continue.</p>
+    <a id="view-policy-link" href="privacy.html">View Policy</a>
+    <button id="accept-privacy">Accept</button>
+  </div>
+
+  <!-- ========================= SCRIPTS ========================= -->
   <script>
-    function toggleMenu() {
-  const menu = document.getElementById("dropdown-menu");
-  const toggle = document.getElementById("menuToggle");
-  const closeBtn = document.getElementById("close-drawer");
-  const isOpen = menu.classList.toggle("active");
-
-  toggle.textContent = isOpen ? "<" : "☰";
-  toggle.classList.toggle("open", isOpen);
-  document.body.style.overflow = isOpen ? "hidden" : "auto";
-
-  // If menu is closing, animate the X button
-  if (!isOpen && closeBtn) {
-    closeBtn.classList.add("spin");
-    setTimeout(() => {
-      closeBtn.classList.remove("spin");
-    }, 400); // match animation duration
-  }
-}
+    /* ------------------ Config: replace with your Google Apps Script web app URL ------------------
+       The Apps Script endpoint must accept POST requests and handle actions:
+       - action: 'register' with {name, phone, email, password}
+       - action: 'login' with {phone, password}
+       - action: 'recover' with {phone}
+       The endpoint should return JSON { success: true/false, message: "...", data: {...} }
+    --------------------------------------------------------------------------------------------- */
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/REPLACE_WITH_YOUR_SCRIPT_ID/exec";
   </script>
-  <script>
-  // After successful registration
-  function setCookie(name, value, days) {
-    const d = new Date();
-    d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
-    document.cookie = name + "=" + value + ";expires=" + d.toUTCString() + ";path=/";
-  }
 
-  // Call this when the form is submitted successfully:
-  setCookie("isRegistered", "true", 30);
-  </script>
   <script>
-  function getCookie(name) {
-    const decodedCookie = decodeURIComponent(document.cookie);
-    const cookies = decodedCookie.split(';');
-    name = name + "=";
-    for (let i = 0; i < cookies.length; i++) {
-      let c = cookies[i].trim();
-      if (c.indexOf(name) === 0) return c.substring(name.length);
+    /* ------------------ Cookie helpers ------------------ */
+    function setCookie(name, value, days) {
+      const d = new Date();
+      d.setTime(d.getTime() + (days*24*60*60*1000));
+      document.cookie = name + "=" + encodeURIComponent(value) + ";expires=" + d.toUTCString() + ";path=/";
     }
-    return "";
-  }
+    function getCookie(name) {
+      const ca = decodeURIComponent(document.cookie || "").split(';');
+      name = name + "=";
+      for (let c of ca) {
+        c = c.trim();
+        if (c.indexOf(name) === 0) return c.substring(name.length);
+      }
+      return "";
+    }
 
-  window.addEventListener("DOMContentLoaded", () => {
-    const links = document.querySelectorAll('a[href="register.html"]');
-    const isRegistered = getCookie("isRegistered");
+    /* ------------------ Modern Drawer Menu ------------------ */
+    (function(){
+      const menuBtn = document.getElementById('menuButton');
+      const overlay = document.getElementById('menuOverlay');
+      const drawer = document.getElementById('modernDrawer');
 
-    if (isRegistered) {
-      links.forEach(link => {
-        link.textContent = "Loyalty Points";
+      function openMenu(){
+        drawer.classList.add('active');
+        overlay.classList.add('active');
+        menuBtn.classList.add('active');
+        menuBtn.setAttribute('aria-expanded','true');
+        drawer.setAttribute('aria-hidden','false');
+        overlay.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeMenu(){
+        drawer.classList.remove('active');
+        overlay.classList.remove('active');
+        menuBtn.classList.remove('active');
+        menuBtn.setAttribute('aria-expanded','false');
+        drawer.setAttribute('aria-hidden','true');
+        overlay.setAttribute('aria-hidden','true');
+        document.body.style.overflow = 'auto';
+      }
+      window.closeMenu = closeMenu;
+
+      menuBtn.addEventListener('click', function(e){
+        e.stopPropagation();
+        if (drawer.classList.contains('active')) closeMenu(); else openMenu();
       });
-    }
-  });
+      overlay.addEventListener('click', closeMenu);
+
+      // Escape to close
+      document.addEventListener('keydown', function(e){
+        if (e.key === 'Escape' && drawer.classList.contains('active')) closeMenu();
+      });
+
+      // Swipe gestures: open by swiping left from right edge, close by swiping right on drawer
+      let edgeStartX = 0;
+      document.addEventListener('touchstart', function(e){
+        if (!e.touches || e.touches.length === 0) return;
+        const t = e.touches[0];
+        if (t.clientX > window.innerWidth - 22) edgeStartX = t.clientX; else edgeStartX = 0;
+      }, {passive:true});
+      document.addEventListener('touchend', function(e){
+        if (!edgeStartX) return;
+        const t = e.changedTouches[0];
+        const swipe = edgeStartX - t.clientX;
+        if (swipe > 48) openMenu();
+        edgeStartX = 0;
+      }, {passive:true});
+
+      let drawerStartX = 0;
+      drawer.addEventListener('touchstart', function(e){ drawerStartX = e.touches[0].clientX; }, {passive:true});
+      drawer.addEventListener('touchend', function(e){
+        const diff = e.changedTouches[0].clientX - drawerStartX;
+        if (diff > 48) closeMenu();
+        drawerStartX = 0;
+      }, {passive:true});
+
+      // Focus trap (basic)
+      document.addEventListener('focusin', function(e){
+        if (!drawer.classList.contains('active')) return;
+        if (!drawer.contains(e.target) && e.target !== menuBtn) {
+          e.stopPropagation();
+          drawer.querySelector('a,button,input')?.focus();
+        }
+      });
+    })();
   </script>
 
-<!-- Privacy Notice Popup -->
-<div id="privacy-popup">
-  <p>We value your privacy and use your information only to provide better service. By continuing, you accept our Privacy Policy.</p>
-  <a href="privacy.html" id="view-policy-link">View Policy</a>
-  <button id="accept-privacy">Accept</button>
-</div>
+  <script>
+    /* ------------------ Privacy popup (must accept) ------------------ */
+    (function(){
+      const popup = document.getElementById('privacy-popup');
+      const btn = document.getElementById('accept-privacy');
 
-<style>
-  #privacy-popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.95);
-    background: #1e1e2f;
-    color: white;
-    padding: 20px 30px 50px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
-    border-radius: 12px;
-    font-size: 0.95em;
-    z-index: 3000;
-    display: none;
-    max-width: 90%;
-    width: 300px;
-    text-align: center;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    opacity: 0;
-  }
+      function show() {
+        popup.classList.add('show');
+        popup.style.display = 'block';
+      }
+      function hide() {
+        popup.classList.remove('show');
+        setTimeout(()=> popup.style.display = 'none', 260);
+      }
 
-  #privacy-popup.show {
-    display: block;
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-
-  #privacy-popup #view-policy-link {
-    position: absolute;
-    bottom: 10px;
-    right: 15px;
-    font-size: 0.85em;
-    color: #8e2de2;
-    text-decoration: none;
-  }
-
-  #privacy-popup button#accept-privacy {
-    margin-top: 15px;
-    background: none;
-    color: white;
-    border: none;
-    font-weight: bold;
-    font-size: 1em;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-  }
-
-  
-@keyframes bounceIn {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -40%) scale(0.8);
-  }
-  60% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1.05);
-  }
-  80% {
-    transform: translate(-50%, -48%) scale(0.98);
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
-#privacy-popup.show {
-  display: block;
-  animation: bounceIn 0.6s ease forwards;
-}
-
-  #privacy-popup button#accept-privacy:hover {
-    transform: scale(1.2);
-  }
-  #close-drawer {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: none;
-  border: none;
-  font-size: 28px;
-  color: white;
-  cursor: pointer;
-  z-index: 1100;
-  padding: 12px; /* Better mobile hit area */
-  line-height: 1;
-}
-
-#close-drawer:hover {
-  transform: scale(1.2);
-}
-#close-drawer:hover {
-  transform: scale(1.2);
-}
-  #ad-slider {
-  margin-top: 40px;
-}
-
-.ad-slider {
-  display: flex;
-  overflow-x: auto;
-  gap: 20px;
-  scroll-snap-type: x mandatory;
-  padding: 10px 0;
-  -webkit-overflow-scrolling: touch;
-}
-
-.ad-slide {
-  min-width: 240px;
-  flex: 0 0 auto;
-  height: 180px;
-  border-radius: 12px;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 20px;
-  scroll-snap-align: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  transition: transform 0.3s ease;
-}
-
-.ad-slide:hover {
-  transform: scale(1.05);
-}
-
-.ad-slide p {
-  font-size: 1.2em;
-  font-weight: bold;
-}
-
-.ad-slide a {
-  background: rgba(255,255,255,0.2);
-  padding: 6px 12px;
-  border-radius: 8px;
-  color: white;
-  text-decoration: none;
-  font-size: 0.9em;
-  align-self: flex-start;
-  transition: background 0.3s ease;
-}
-
-.ad-slide a:hover {
-  background: rgba(255,255,255,0.35);
-}
-
-.scroll-dots {
-  margin-top: 15px;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-.scroll-dot {
-  width: 12px;
-  height: 12px;
-  background: #ccc;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-.scroll-dot.active {
-  background: #333;
-}
-#backToTop {
-  position: fixed;
-  bottom: 25px;
-  right: 25px;
-  background: #1e1e2f;
-  color: white;
-  border: none;
-  padding: 12px 18px;
-  border-radius: 50px;
-  font-size: 14px;
-  cursor: pointer;
-  display: none;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  z-index: 1000;
-  transition: background 0.3s ease, transform 0.3s ease;
-}
-#backToTop:hover {
-  background: #8e2de2;
-  transform: scale(1.1);
-}
-
-</style>
-
-<script>
-  function setCookie(name, value, days) {
-    const d = new Date();
-    d.setTime(d.getTime() + (days*24*60*60*1000));
-    const expires = "expires=" + d.toUTCString();
-    document.cookie = name + "=" + value + ";" + expires + ";path=/";
-  }
-
-  function getCookie(name) {
-    const decodedCookie = decodeURIComponent(document.cookie);
-    const ca = decodedCookie.split(';');
-    name = name + "=";
-    for(let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) === ' ') c = c.substring(1);
-      if (c.indexOf(name) === 0) return c.substring(name.length, c.length);
-    }
-    return "";
-  }
-
-  window.addEventListener("load", () => {
-    const popup = document.getElementById("privacy-popup");
-    const shown = getCookie("seenPrivacyPopup");
-    if (!shown) {
-      popup.classList.add("show");
-      const closePopup = () => popup.classList.remove("show");
-      setTimeout(closePopup, 5000);
-      document.getElementById("accept-privacy").addEventListener("click", () => {
-        setCookie("seenPrivacyPopup", "true", 4);
-        closePopup();
+      document.addEventListener('DOMContentLoaded', function(){
+        const seen = getCookie('seenPrivacyPopup');
+        if (!seen) setTimeout(show, 560);
       });
-    }
-  });
-</script>
 
+      btn.addEventListener('click', function(){
+        setCookie('seenPrivacyPopup','true',365);
+        hide();
+      });
+    })();
+  </script>
 
-<script>
-  let startX = 0;
-  let endX = 0;
+  <script>
+    /* ------------------ Loyalty label from cookie ------------------ */
+    (function(){
+      function updateRegisterLabel() {
+        const isRegistered = getCookie('isRegistered');
+        const links = document.querySelectorAll('a[href="register.html"], #registerLink');
+        links.forEach(link => { link.textContent = isRegistered ? 'Loyalty Points' : 'Register'; });
+      }
+      document.addEventListener('DOMContentLoaded', updateRegisterLabel);
+    })();
+  </script>
 
-  const menu = document.getElementById("dropdown-menu");
-  const toggle = document.getElementById("menuToggle");
+  <script>
+    /* ------------------ Registration / Login / Recover (fetch to Apps Script) ------------------
+       NOTE: Replace APPS_SCRIPT_URL with your apps script web app URL (see top). The server should
+       return JSON: { success: boolean, message: string, data: {...} }
+    ------------------------------------------------------------------------------ */
 
-  // Swipe on the menu to CLOSE
-  menu.addEventListener("touchstart", (e) => {
-    startX = e.changedTouches[0].screenX;
-  });
+    (function(){
+      const registerForm = document.getElementById('registerForm');
+      const loginForm = document.getElementById('loginForm');
+      const recoverForm = document.getElementById('recoverForm');
 
-  menu.addEventListener("touchend", (e) => {
-    endX = e.changedTouches[0].screenX;
-    const swipeRight = endX - startX;
+      const regMsg = document.getElementById('regMessage');
+      const loginMsg = document.getElementById('loginMessage');
+      const recoverMsg = document.getElementById('recoverMessage');
 
-    if (swipeRight > 50) { // Swiped RIGHT
-      menu.classList.remove("active");
-      toggle.textContent = "☰";
-      toggle.classList.remove("open");
-      document.body.style.overflow = "auto";
-    }
-  });
+      // Basic client validation helper
+      function showMsg(el, txt, ok=true) {
+        el.textContent = txt;
+        el.style.color = ok ? '#bfc6cb' : '#f08b8b';
+      }
 
-  // Swipe on the screen edge to OPEN
-  document.addEventListener("touchstart", (e) => {
-    // Only start tracking if the touch begins on the right edge (within 20px)
-    if (e.touches[0].clientX > window.innerWidth - 20) {
-      startX = e.touches[0].clientX;
-    } else {
-      startX = 0;
-    }
-  });
+      // Demo prefill
+      document.getElementById('prefillDemo').addEventListener('click', () => {
+        document.getElementById('regName').value = "Demo User";
+        document.getElementById('regPhone').value = "0635892769";
+        document.getElementById('regEmail').value = "demo@example.com";
+        document.getElementById('regPassword').value = "demo1234";
+      });
 
-  document.addEventListener("touchend", (e) => {
-    if (!startX) return;
-    endX = e.changedTouches[0].clientX;
-    const swipeLeft = startX - endX;
+      // Register
+      registerForm.addEventListener('submit', function(e){
+        e.preventDefault();
+        const formData = {
+          action: 'register',
+          name: document.getElementById('regName').value.trim(),
+          phone: document.getElementById('regPhone').value.trim(),
+          email: document.getElementById('regEmail').value.trim(),
+          password: document.getElementById('regPassword').value
+        };
+        if (!formData.name || !formData.phone || !formData.password) {
+          showMsg(regMsg, 'Please complete name, phone and password.', false);
+          return;
+        }
+        showMsg(regMsg, 'Registering...');
 
-    if (swipeLeft > 50) { // Swiped LEFT from right edge
-      menu.classList.add("active");
-      toggle.textContent = "✖";
-      toggle.classList.add("open");
-      document.body.style.overflow = "hidden";
-    }
-  });
-</script>
+        // POST to Apps Script
+        fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(formData)
+        }).then(r => r.json())
+        .then(res => {
+          if (res && res.success) {
+            showMsg(regMsg, res.message || 'Registered successfully.');
+            setCookie('isRegistered','true',365);
+            // Optionally store user data in cookie/session for quick UI changes
+            setCookie('kc_user', JSON.stringify(res.data || {phone:formData.phone}), 30);
+            // update label
+            document.querySelectorAll('a[href="register.html"], #registerLink').forEach(l => l.textContent = 'Loyalty Points');
+          } else {
+            showMsg(regMsg, (res && res.message) ? res.message : 'Registration failed. Try again.', false);
+          }
+        }).catch(err => {
+          console.error(err);
+          showMsg(regMsg, 'Network error. Check Apps Script URL or internet.', false);
+        });
+      });
 
+      // Login
+      loginForm.addEventListener('submit', function(e){
+        e.preventDefault();
+        const formData = { action: 'login', phone: document.getElementById('loginPhone').value.trim(), password: document.getElementById('loginPassword').value };
+        if (!formData.phone || !formData.password) { showMsg(loginMsg,'Enter phone & password', false); return; }
+        showMsg(loginMsg, 'Logging in...');
+        fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(formData)
+        }).then(r => r.json())
+        .then(res => {
+          if (res && res.success) {
+            showMsg(loginMsg, res.message || 'Login successful.');
+            setCookie('isRegistered','true',365);
+            setCookie('kc_user', JSON.stringify(res.data || {phone:formData.phone}), 30);
+            // Do a small welcome UI change
+            document.querySelectorAll('a[href="register.html"], #registerLink').forEach(l => l.textContent = 'Loyalty Points');
+          } else {
+            showMsg(loginMsg, (res && res.message) ? res.message : 'Login failed.', false);
+          }
+        }).catch(err => {
+          console.error(err);
+          showMsg(loginMsg, 'Network error. Check Apps Script URL or internet.', false);
+        });
+      });
 
-<script>
-window.addEventListener("DOMContentLoaded", () => {
-  const slider = document.querySelector(".ad-slider");
-  const slides = document.querySelectorAll(".ad-slide");
-  const dotsContainer = document.getElementById("scrollDots");
+      // Forgot -> show recover form
+      document.getElementById('forgotBtn').addEventListener('click', function(){ document.getElementById('recoverCard').style.display = 'block'; });
 
-  let index = 0;
-  let intervalId;
+      document.getElementById('cancelRecover').addEventListener('click', function(){ document.getElementById('recoverCard').style.display = 'none'; });
 
-  // Create scroll dots
-  slides.forEach((_, i) => {
-    const dot = document.createElement("div");
-    dot.classList.add("scroll-dot");
-    if (i === 0) dot.classList.add("active");
-    dot.addEventListener("click", () => {
-      index = i;
-      updateSlider();
-      resetInterval();
-    });
-    dotsContainer.appendChild(dot);
-  });
+      // Recover
+      recoverForm.addEventListener('submit', function(e){
+        e.preventDefault();
+        const phone = document.getElementById('recoverPhone').value.trim();
+        if (!phone) { showMsg(recoverMsg,'Enter phone to recover', false); return; }
+        showMsg(recoverMsg, 'Requesting recovery...');
+        fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ action: 'recover', phone })
+        }).then(r => r.json())
+        .then(res => {
+          if (res && res.success) {
+            showMsg(recoverMsg, res.message || 'Recovery info sent.');
+          } else {
+            showMsg(recoverMsg, (res && res.message) ? res.message : 'No account found.', false);
+          }
+        }).catch(err => {
+          console.error(err);
+          showMsg(recoverMsg, 'Network error. Check Apps Script URL or internet.', false);
+        });
+      });
 
-  const dots = document.querySelectorAll(".scroll-dot");
+    })();
+  </script>
 
-  function updateSlider() {
-    slider.scrollTo({
-      left: index * (slides[0].offsetWidth + 20),
-      behavior: "smooth"
-    });
-    dots.forEach(dot => dot.classList.remove("active"));
-    dots[index].classList.add("active");
-  }
+  <script>
+    /* ------------------ Ad slider with dots & auto-scroll ------------------ */
+    (function(){
+      const slider = document.getElementById('adSlider');
+      const slides = slider ? slider.querySelectorAll('.ad-slide') : [];
+      const dotsContainer = document.getElementById('scrollDots');
+      if (!slider || slides.length === 0 || !dotsContainer) return;
 
-  function autoScroll() {
-    index = (index + 1) % slides.length;
-    updateSlider();
-  }
+      let index = 0;
+      let interval = null;
+      const gap = 18;
 
-  function resetInterval() {
-    clearInterval(intervalId);
-    intervalId = setInterval(autoScroll, 5000); // 5 seconds
-  }
+      slides.forEach((_, i) => {
+        const d = document.createElement('div');
+        d.className = 'scroll-dot' + (i === 0 ? ' active' : '');
+        d.setAttribute('data-index', i);
+        d.addEventListener('click', () => {
+          index = i; move(); restart();
+        });
+        dotsContainer.appendChild(d);
+      });
 
-  resetInterval(); // Start auto scroll
-});
-</script>
+      const dots = dotsContainer.querySelectorAll('.scroll-dot');
 
-<button id="backToTop" onclick="scrollToTop()">⬆ Top</button>
+      function move(){
+        const slideWidth = slides[0].offsetWidth + gap;
+        slider.scrollTo({ left: index * slideWidth, behavior: 'smooth' });
+        dots.forEach(dd => dd.classList.remove('active'));
+        dots[index]?.classList.add('active');
+      }
+      function next(){ index = (index + 1) % slides.length; move(); }
+      function restart(){ clearInterval(interval); interval = setInterval(next, 4800); }
 
-<script>
-  const backToTopBtn = document.getElementById("backToTop");
+      restart();
+      window.addEventListener('resize', move);
+    })();
+  </script>
 
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 300) {
-      backToTopBtn.style.display = "block";
-    } else {
-      backToTopBtn.style.display = "none";
-    }
-  });
+  <script>
+    /* ------------------ Back to top ------------------ */
+    (function(){
+      const btn = document.getElementById('backToTop');
+      window.addEventListener('scroll', () => {
+        btn.style.display = (window.scrollY > 320) ? 'block' : 'none';
+      });
+      btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    })();
+  </script>
 
-  function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-</script>
+  <script>
+    /* ------------------ Small accessibility & misc: close drawer on nav click ------------------ */
+    document.querySelectorAll('.modern-drawer a').forEach(a => a.addEventListener('click', () => {
+      // delay small to allow link navigation to start
+      setTimeout(() => { if (window.closeMenu) window.closeMenu(); }, 120);
+    }));
+  </script>
 
+  <!-- End body -->
 </body>
-</html>
+         </html>
