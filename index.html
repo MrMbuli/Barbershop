@@ -5,25 +5,28 @@
   <meta http-equiv="X-Frame-Options" content="DENY" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>King's Cut Barbershop | Personal Barber</title>
-  <meta name="description" content="Get a cut to remember. King's Cut Barbershop offers premium house-call barbering and loyalty rewards." />
+  <meta name="description" content="Get a cut to remember. King's Cut Barbershop offers premium house-call barbering, loyalty rewards, and great service.">
   <style>
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
       background: #111;
       color: #fff;
+      overflow-x: hidden;
     }
+
     header {
       background: #000;
       color: #e3b04b;
-      padding: 20px;
       text-align: center;
-      font-size: 1.5em;
+      padding: 18px;
       font-weight: bold;
+      font-size: 1.5em;
     }
+
     .hero {
       text-align: center;
-      padding: 80px 20px;
+      padding: 70px 20px;
       background: linear-gradient(to bottom, #000, #222);
     }
     .hero h1 {
@@ -40,6 +43,7 @@
       position: relative;
       overflow: hidden;
       height: 250px;
+      margin-top: 10px;
     }
     .slides {
       display: flex;
@@ -69,7 +73,7 @@
       background: #e3b04b;
     }
 
-    /* Contact section */
+    /* Contact */
     .contact {
       text-align: center;
       padding: 60px 20px;
@@ -77,12 +81,17 @@
     }
     .contact h2 {
       margin-bottom: 15px;
+      color: #e3b04b;
+    }
+    .contact p {
+      color: #ccc;
+      font-size: 1em;
     }
     .contact a {
       display: inline-block;
       background: #e3b04b;
       color: #000;
-      padding: 10px 20px;
+      padding: 12px 24px;
       border-radius: 25px;
       text-decoration: none;
       font-weight: bold;
@@ -93,16 +102,16 @@
       color: #000;
     }
 
-    /* Loyalty section */
+    /* Loyalty Section */
     .loyalty-section {
       text-align: center;
       padding: 60px 20px;
       background: #000;
     }
     .loyalty-section h2 {
+      color: #e3b04b;
       font-size: 1.8em;
       margin-bottom: 10px;
-      color: #e3b04b;
     }
     .loyalty-section p {
       color: #ccc;
@@ -175,15 +184,16 @@
     }
   </style>
 </head>
+
 <body>
   <header>King’s Cut Barbershop</header>
 
   <section class="hero">
     <h1>A Cut to Remember</h1>
-    <p>Professional house-call barbering service tailored for you.</p>
+    <p>Professional house-call barbering service tailored just for you.</p>
   </section>
 
-  <!-- Auto Slider -->
+  <!-- Image Slider -->
   <section class="slider">
     <div class="slides" id="slides">
       <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1621605815971-6b13b6b1eb49?auto=format&fit=crop&w=1200&q=60')"></div>
@@ -197,7 +207,7 @@
     </div>
   </section>
 
-  <!-- Contact -->
+  <!-- Contact Section -->
   <section class="contact">
     <h2>Contact Us</h2>
     <p>House calls and appointments available daily.</p>
@@ -245,7 +255,7 @@
       showSlide(index);
     }, 4000);
 
-    // Back to top button
+    // Back to top
     const backToTop = document.getElementById('backToTop');
     window.addEventListener('scroll', () => {
       backToTop.style.display = window.scrollY > 200 ? 'block' : 'none';
@@ -254,7 +264,7 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // Privacy popup
+    // Privacy Popup
     const privacyPopup = document.getElementById('privacyPopup');
     const acceptPrivacy = document.getElementById('acceptPrivacy');
     if (!localStorage.getItem('privacyAccepted')) {
