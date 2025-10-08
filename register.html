@@ -1,300 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-Frame-Options" content="DENY" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>King's Cut Barbershop | Personal Barber</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: sans-serif;
-    }
-
-    body {
-      background: #f4f4f4;
-      color: #222;
-      overflow-x: hidden;
-    }
-
-    header {
-      background: #111;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-    }
-
-    nav {
-      display: flex;
-      overflow-x: auto;
-      background: #222;
-    }
-
-    nav a {
-      flex: 1 0 auto;
-      padding: 15px;
-      color: #fff;
-      text-decoration: none;
-      text-align: center;
-      white-space: nowrap;
-    }
-
-    nav a:hover {
-      background: #444;
-    }
-
-    .hero {
-      padding: 40px 20px;
-      text-align: center;
-      background: linear-gradient(#222, #333);
-      color: white;
-    }
-
-    .hero h1 {
-      font-size: 2em;
-      margin-bottom: 10px;
-    }
-
-    .hero p {
-      font-size: 1.1em;
-    }
-
-    .ads {
-      position: relative;
-      overflow: hidden;
-      max-width: 100%;
-    }
-
-    .ads-container {
-      display: flex;
-      transition: transform 0.5s ease-in-out;
-      width: 300%;
-    }
-
-    .ad-slide {
-      min-width: 100%;
-      padding: 40px 20px;
-      background: #ddd;
-      text-align: center;
-    }
-
-    .dots {
-      display: flex;
-      justify-content: center;
-      margin: 10px 0;
-    }
-
-    .dot {
-      height: 12px;
-      width: 12px;
-      margin: 0 5px;
-      background-color: #bbb;
-      border-radius: 50%;
-      display: inline-block;
-      cursor: pointer;
-    }
-
-    .dot.active {
-      background-color: #333;
-    }
-
-    .register {
-      padding: 30px 20px;
-      background: #fff;
-    }
-
-    .register h2 {
-      margin-bottom: 20px;
-    }
-
-    .register input {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    .register button {
-      padding: 12px;
-      width: 100%;
-      background: #222;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 1em;
-    }
-
-    .privacy-popup {
-      position: fixed;
-      bottom: 10px;
-      left: 10px;
-      right: 10px;
-      background: #222;
-      color: white;
-      padding: 15px;
-      border-radius: 8px;
-      z-index: 999;
-      display: none;
-    }
-
-    .privacy-popup.show {
-      display: block;
-    }
-
-    .privacy-popup button {
-      background: #fff;
-      color: #222;
-      border: none;
-      padding: 5px 10px;
-      margin-left: 10px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Loyalty Points | King's Cut</title>
+<link rel="manifest" href="data:application/manifest+json,{&quot;name&quot;:&quot;King's Cut Loyalty&quot;,&quot;short_name&quot;:&quot;Loyalty&quot;,&quot;start_url&quot;:&quot;./register.html&quot;,&quot;display&quot;:&quot;standalone&quot;,&quot;background_color&quot;:&quot;#0f0f11&quot;,&quot;theme_color&quot;:&quot;#0f0f11&quot;}">
+<style>
+body{font-family:"Segoe UI",sans-serif;background:#0f0f11;color:#eaeaea;line-height:1.5;padding:20px}
+a{text-decoration:none;color:#bfc6cb}
+header{display:flex;justify-content:space-between;align-items:center;background:#111;padding:14px 18px;position:fixed;top:0;left:0;right:0;z-index:10}
+.logo-title{font-weight:700}
+section{max-width:420px;margin:100px auto 30px;padding:20px;background:#131315;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,0.6)}
+input{width:100%;padding:10px;margin-top:6px;border-radius:6px;border:1px solid #333;background:#0b0b0d;color:#eaeaea}
+button{padding:10px 14px;border:none;border-radius:8px;background:linear-gradient(90deg,#999,#ccc);font-weight:700;margin-top:10px;width:100%}
+footer{text-align:center;padding:20px;background:#111;color:#aaa;margin-top:30px}
+</style>
 </head>
 <body>
-  <header>
-    <h1>King's Cut Barbershop</h1>
-    <p>Your Personal Barber, Anytime</p>
-  </header>
+<header>
+  <div class="logo-title">Loyalty Points</div>
+  <a href="index.html">🏠 Home</a>
+</header>
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="#register">Promos</a>
-    <a href="#register">Loyalty</a>
-    <a href="#contact">Contact</a>
-  </nav>
+<section id="registerSection">
+  <h2>Create Account</h2>
+  <input id="regName" placeholder="Full Name">
+  <input id="regPhone" placeholder="Phone (WhatsApp)">
+  <input id="regPass" type="password" placeholder="Password">
+  <button onclick="register()">Register</button>
+  <p id="regMsg"></p>
+  <p style="margin-top:10px">Already registered? <a href="#" onclick="showLogin()">Login</a></p>
+</section>
 
-  <section class="hero" id="hero">
-    <h1>Fresh Cuts Delivered</h1>
-    <p>We come to you — mobile barber services at your convenience.</p>
-  </section>
+<section id="loginSection" style="display:none">
+  <h2>Login</h2>
+  <input id="loginPhone" placeholder="Phone">
+  <input id="loginPass" type="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+  <p id="loginMsg"></p>
+  <p style="margin-top:10px"><a href="#" onclick="showRecover()">Forgot Password?</a></p>
+  <p><a href="#" onclick="showRegister()">New? Register</a></p>
+</section>
 
-<!-- Registration Form -->
-<section class="register" id="registerSection">
-  <h2>Loyalty Points Registration</h2>
-  <form id="loyaltyForm">
-  <input type="text" id="name" placeholder="Your Full Name" required />
-  <input type="tel" id="phone" placeholder="Phone Number" required />
-  <input type="email" id="email" placeholder="Email Address (optional)" />
-  <input 
-  type="password" 
-  id="password" 
-  placeholder="Create Password" 
-  required 
-/>
-<small id="strengthMessage" style="display:block; margin-top:5px;"></small>
-<small id="strengthMessage" style="display:block; margin-top:5px;"></small>
-  <button type="submit">Register</button>
-</form>
+<section id="recoverSection" style="display:none">
+  <h2>Password Recovery</h2>
+  <input id="recoverPhone" placeholder="Phone">
+  <button onclick="recover()">Recover</button>
+  <p id="recoverMsg"></p>
+  <p><a href="#" onclick="showLogin()">Back to Login</a></p>
+</section>
 
-  <!-- Ads Section -->
-  <section class="ads" id="adsSection">
-    <div class="ads-container" id="adsContainer">
-      <div class="ad-slide">🔥 20% OFF First Cut</div>
-      <div class="ad-slide">💈 Refer a Friend = Free Trim</div>
-      <div class="ad-slide">🎉 Loyalty Points = Rewards</div>
-    </div>
-    <div class="dots">
-      <span class="dot active" onclick="setSlide(0)"></span>
-      <span class="dot" onclick="setSlide(1)"></span>
-      <span class="dot" onclick="setSlide(2)"></span>
-    </div>
-  </section>
+<footer>
+  &copy; 2025 King's Cut Barbershop — Crafted by NextWeb.
+</footer>
 
-  <!-- Privacy Popup -->
-  <div class="privacy-popup" id="privacyPopup">
-    We use cookies to improve your experience.
-    <button onclick="acceptPrivacy()">Accept</button>
-  </div>
-  <div style="position: relative;">
-  <input 
-    type="password" 
-    id="password" 
-    placeholder="Create Password" 
-    required 
-    style="padding-right: 40px;" 
-  />
-  <button 
-    type="button" 
-    onclick="togglePassword()" 
-    style="
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 1.2em;
-      color: #555;
-    "
-  >👁️</button>
-</div>
-<small id="strengthMessage" style="display:block; margin-top:5px;"></small>
+<script>
+function showRegister(){toggle('registerSection')}
+function showLogin(){toggle('loginSection')}
+function showRecover(){toggle('recoverSection')}
+function toggle(id){['registerSection','loginSection','recoverSection'].forEach(s=>document.getElementById(s).style.display=(s===id?'block':'none'))}
 
-  <script>
-    // Ad Slide Logic
-    let currentIndex = 0;
-    const totalSlides = 3;
-    const adsContainer = document.getElementById("adsContainer");
-    const dots = document.querySelectorAll(".dot");
-
-    function showSlide(index) {
-      adsContainer.style.transform = `translateX(-${index * 100}%)`;
-      dots.forEach(dot => dot.classList.remove("active"));
-      dots[index].classList.add("active");
-    }
-
-    function nextSlide() {
-      currentIndex = (currentIndex + 1) % totalSlides;
-      showSlide(currentIndex);
-    }
-
-    function setSlide(index) {
-      currentIndex = index;
-      showSlide(index);
-    }
-
-    setInterval(nextSlide, 8000);
-
-    // Privacy popup logic
-    function acceptPrivacy() {
-      document.getElementById("privacyPopup").classList.remove("show");
-      localStorage.setItem("acceptedPrivacy", "yes");
-    }
-
-    if (!localStorage.getItem("acceptedPrivacy")) {
-      document.getElementById("privacyPopup").classList.add("show");
-    }
-
-    // Prevent form submission (for demo only)
-    const form = document.getElementById("loyaltyForm");
-    form.addEventListener("submit", e => {
-      e.preventDefault();
-      alert("This form is currently disabled.");
-    });
-
-    // Request user location
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        position => {
-          const lat = position.coords.latitude;
-          const lon = position.coords.longitude;
-          console.log("Latitude:", lat);
-          console.log("Longitude:", lon);
-        },
-        error => {
-          console.warn("Location access denied or failed:", error.message);
-        }
-      );
-    } else {
-      console.warn("Geolocation is not supported by this browser
-  </script>
-  
-  
-</body>
-</html>
+function
