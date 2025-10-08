@@ -60,4 +60,35 @@ function showLogin(){toggle('loginSection')}
 function showRecover(){toggle('recoverSection')}
 function toggle(id){['registerSection','loginSection','recoverSection'].forEach(s=>document.getElementById(s).style.display=(s===id?'block':'none'))}
 
-function
+function register(){
+  const n=regName.value.trim(),p=regPhone.value.trim(),pw=regPass.value;
+  if(!n||!p||!pw)return regMsg.textContent='Please fill all fields.';
+  const users=JSON.parse(localStorage.getItem('kc_users')||'{}');
+  if(users[p])return regMsg.textContent='Phone already registered.';
+  users[p]={name:n,password:pw};
+  localStorage.setItem('kc_users',JSON.stringify(users));
+  localStorage.setItem('kc_logged',p);
+  regMsg.textContent='Registered successfully!';
+}
+
+function login(){
+  const p=loginPhone.value.trim(),pw=loginPass.value;
+  const users=JSON.parse(localStorage.getItem('kc_users')||'{}');
+  if(users[p]&&users[p].password===pw){
+    localStorage.setItem('kc_logged',p);
+    loginMsg.textContent='Login successful!';
+    setTimeout(()=>location.href='index.html',800);
+  }else loginMsg.textContent='Invalid phone or password.';
+}
+
+function recover(){
+  const p=recoverPhone.value.trim();
+  const users=JSON.parse(localStorage.getItem('kc_users')||'{}');
+  if(users[p])recoverMsg.textContent='Your password: '+users[p].password;
+  else recoverMsg.textContent='No account found.';
+}
+
+if('serviceWorker' in navigator){navigator.serviceWorker.register('data:application/javascript,self.addEventListener("install",e=>e.waitUntil(caches.open(\\"kc-loyalty-v1\\").then(c=>c.addAll([\\"./register.html\\"])))));self.addEventListener("fetch",e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)))));')}
+</script>
+</body>
+       </html>
