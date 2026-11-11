@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Customer Login | Next Level Grooming Lounge</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 *{box-sizing:border-box}
 body{
@@ -39,6 +40,7 @@ a{color:#d5ad58}
 #message{text-align:center;margin-top:18px;line-height:1.5}
 </style>
 </head>
+
 <body>
 <div class="container">
   <h1>Next Level Grooming Lounge</h1>
@@ -80,6 +82,22 @@ const form = document.getElementById("loginForm");
 const message = document.getElementById("message");
 const button = document.getElementById("loginButton");
 
+// Only allow the two intended booking destinations.
+// If login was opened directly, send the customer to account.html.
+function getPostLoginDestination() {
+  const params = new URLSearchParams(window.location.search);
+  const next = params.get("next");
+
+  if (
+    next === "booking.html?type=shop" ||
+    next === "booking.html?type=housecall"
+  ) {
+    return next;
+  }
+
+  return "account.html";
+}
+
 form.addEventListener("submit", async function(event) {
   event.preventDefault();
 
@@ -99,13 +117,14 @@ form.addEventListener("submit", async function(event) {
 
     if (error) throw error;
 
-    message.textContent = "Login successful! Opening your account...";
+    message.textContent = "Login successful! Redirecting...";
 
-    window.location.href = "account.html";
+    const destination = getPostLoginDestination();
+
+    window.location.replace(destination);
 
   } catch (error) {
     message.textContent = error.message;
-  } finally {
     button.disabled = false;
     button.textContent = "LOG IN";
   }
