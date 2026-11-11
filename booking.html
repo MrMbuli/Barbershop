@@ -1,226 +1,241 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Book a Cut | Owethu Mbuli</title>
-  <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
-
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: url('images (12).jpg') no-repeat center center fixed;
-      background-size: cover;
-      background-attachment: fixed;
-      background-position: center;
-      background-repeat: no-repeat;
-      color: #fff;
-    }
-
-    .wrapper {
-      height: 100%;
-      overflow-y: auto;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-
-    h1 {
-      text-align: center;
-      color: #ffffff;
-      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
-    }
-
-    form {
-      max-width: 500px;
-      margin: auto;
-      background: rgba(0, 0, 0, 0.75);
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    }
-
-    label {
-      display: block;
-      margin: 15px 0 5px;
-      color: #fff;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
-      border: none;
-      border-radius: 6px;
-    }
-
-    button {
-      background: #8e2de2;
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #4a00e0;
-    }
-
-    .map-button {
-      display: inline-block;
-      margin-bottom: 10px;
-      color: #8e2de2;
-      text-decoration: underline;
-    }
-
-    #bottom-section {
-      display: none;
-      text-align: center;
-      margin-top: 20px;
-    }
-
-    #bottom-section button {
-      padding: 12px 24px;
-      background: #8e2de2;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    #bottom-section button:hover {
-      background: #4a00e0;
-    }
-
-    #loading-overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.85);
-      z-index: 9999;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .loader {
-      width: 60px;
-      height: 60px;
-      border: 6px solid #ffffff;
-      border-top: 6px solid transparent;
-      border-radius: 50%;
-      animation: spin 1s linear infinite, scratch 0.3s infinite alternate;
-      box-shadow: 0 0 8px #fff, inset 0 0 10px #fff;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    @keyframes scratch {
-      0% { box-shadow: 0 0 8px #fff, inset 0 0 5px #fff; }
-      100% { box-shadow: 0 0 12px #fff, inset 0 0 15px #fff; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book an Appointment | Next Level Grooming Lounge</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;padding:20px;min-height:100vh;
+ background:#101010;color:white;
+ font-family:Arial,sans-serif
+}
+.container{max-width:600px;margin:25px auto}
+.card{
+ background:#1b1b1b;border:1px solid #b58b36;
+ border-radius:14px;padding:25px
+}
+h1,h2{color:#d5ad58}
+h1{text-align:center;font-size:26px}
+.subtitle{text-align:center;color:#bbb;margin-bottom:30px}
+label{display:block;margin:17px 0 7px}
+input,select,textarea{
+ width:100%;padding:13px;background:#292929;
+ color:white;border:1px solid #555;
+ border-radius:7px;font-size:16px
+}
+textarea{min-height:90px;resize:vertical}
+button,.choice{
+ display:block;width:100%;padding:15px;margin-top:17px;
+ border:1px solid #b58b36;border-radius:8px;
+ background:#292929;color:#fff;font-weight:bold;
+ font-size:15px;cursor:pointer;text-align:center
+}
+.choice.active{background:#c49a45;color:#111}
+#submitButton{
+ background:#c49a45;color:#111;border:0
+}
+button:disabled{opacity:.6}
+.hidden{display:none}
+#message{margin-top:18px;text-align:center;line-height:1.6}
+a{color:#d5ad58}
+.links{text-align:center;margin-top:22px}
+.small{font-size:13px;color:#aaa;line-height:1.5}
+</style>
 </head>
 <body>
-  <div class="wrapper">
-    <h1>Book Your Haircut</h1>
+<div class="container">
+ <h1>Next Level Grooming Lounge</h1>
+ <p class="subtitle">Confidence Starts Here</p>
 
-    <form id="bookingForm" action="https://formsubmit.co/owethuandrew10@gmail.com" method="POST" onsubmit="return submitWithLoading()">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_next" value="about:blank">
+ <div class="card" id="bookingCard">
+  <h2>Book Your Service</h2>
+  <p class="small">Choose where you would like to receive your service.</p>
 
-      <label for="name">Full Name:</label>
-      <input type="text" id="name" name="name" required>
+  <button type="button" class="choice active" id="loungeChoice">
+   BOOK AT THE LOUNGE
+  </button>
 
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required>
+  <button type="button" class="choice" id="houseChoice">
+   REQUEST A HOUSE CALL
+  </button>
 
-      <label for="phone">Phone Number:</label>
-      <input type="tel" id="phone" name="phone" required>
+  <form id="bookingForm">
 
-      <label for="service">Select Service:</label>
-      <select id="service" name="service" required>
-        <option value="">-- Select --</option>
-        <option value="Haircut">Haircut</option>
-        <option value="Beard Trim">Beard Trim</option>
-        <option value="Shave">Shave</option>
-        <option value="Haircut + Beard">Haircut + Beard Combo</option>
-      </select>
+   <label for="category">Service category</label>
+   <select id="category" required>
+    <option value="">Choose a category</option>
+    <option value="Barbering">Barbering</option>
+    <option value="Hair salon">Hair salon</option>
+    <option value="Nail services">Nail services</option>
+   </select>
 
-      <label for="day">Preferred Day:</label>
-      <select id="day" name="preferred_day" required>
-        <option value="">-- Select --</option>
-        <option value="Monday">Monday</option>
-        <option value="Tuesday">Tuesday</option>
-        <option value="Wednesday">Wednesday</option>
-      </select>
+   <label for="service">Service required</label>
+   <input id="service" type="text" required
+    placeholder="e.g. Haircut, braiding, gel overlay">
 
-      <label for="time">Preferred Time:</label>
-      <input type="time" id="time" name="preferred_time" required>
+   <label for="date">Preferred date</label>
+   <input id="date" type="date" required>
 
-      <label for="location">Location:</label>
-      <p>
-        <a href="https://www.google.com/maps" target="_blank" class="map-button">
-          📍 Open Google Maps to Select Location
-        </a>
-      </p>
-      <button type="button" onclick="getLocation()">📍 Use My Current Location</button>
-      <input type="url" id="location" name="location" placeholder="Paste your Google Maps location URL here" required>
+   <label for="time">Preferred time</label>
+   <input id="time" type="time" required>
 
-      <button type="submit">Submit Booking</button>
-    </form>
+   <div id="houseFields" class="hidden">
+    <h2>House Call Details</h2>
 
-    <!-- Back to Home button (hidden until submitted) -->
-    <div id="bottom-section">
-      <a href="index.html">
-        <button>← Back to Home</button>
-      </a>
-    </div>
-  </div>
+    <label for="area">Your area / suburb</label>
+    <input id="area" type="text"
+     placeholder="e.g. Roodepoort or Soweto">
 
-  <!-- Loading Spinner Overlay -->
-  <div id="loading-overlay">
-    <div class="loader"></div>
-  </div>
+    <label for="address">House call address</label>
+    <textarea id="address"
+     placeholder="Enter your street address and any directions"></textarea>
+   </div>
 
-  <script>
-    function getLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          const lat = position.coords.latitude;
-          const lon = position.coords.longitude;
-          const mapsLink = `https://www.google.com/maps?q=${lat},${lon}`;
-          document.getElementById('location').value = mapsLink;
-        }, function() {
-          alert("Unable to retrieve your location.");
-        });
-      } else {
-        alert("Geolocation is not supported.");
-      }
-    }
+   <label for="notes">Additional instructions (optional)</label>
+   <textarea id="notes"
+    placeholder="Anything we should know before your appointment?"></textarea>
 
-    function submitWithLoading() {
-      const form = document.getElementById('bookingForm');
-      document.getElementById('loading-overlay').style.display = 'flex';
+   <button type="submit" id="submitButton">
+    SUBMIT BOOKING REQUEST
+   </button>
+  </form>
 
-      // Simulate loading before showing confirmation
-      setTimeout(() => {
-        document.getElementById('loading-overlay').style.display = 'none';
-        form.reset();
-        document.getElementById('bottom-section').style.display = 'block';
-      }, 2000);
+  <div id="message" role="status"></div>
+ </div>
 
-      return true; // Let FormSubmit proceed with submission
-    }
-  </script>
+ <div class="links">
+  <a href="account.html">Back to My Account</a>
+  <br><br>
+  <a href="index.html">Back to Home</a>
+ </div>
+</div>
+
+<script>
+const SUPABASE_URL = "https://teimbezoinfqlrxczafj.supabase.co";
+const SUPABASE_KEY = "sb_publishable_3lJOm65rVFwElFqLN-Gxzw_LdYacHZP";
+
+const db = window.supabase.createClient(
+ SUPABASE_URL, SUPABASE_KEY
+);
+
+let bookingType = "In Lounge";
+
+const loungeChoice = document.getElementById("loungeChoice");
+const houseChoice = document.getElementById("houseChoice");
+const houseFields = document.getElementById("houseFields");
+const areaInput = document.getElementById("area");
+const addressInput = document.getElementById("address");
+const message = document.getElementById("message");
+const submitButton = document.getElementById("submitButton");
+const form = document.getElementById("bookingForm");
+
+function chooseBookingType(type){
+ bookingType = type;
+
+ loungeChoice.classList.toggle("active", type === "In Lounge");
+ houseChoice.classList.toggle("active", type === "House Call");
+
+ const isHouseCall = type === "House Call";
+ houseFields.classList.toggle("hidden", !isHouseCall);
+ areaInput.required = isHouseCall;
+ addressInput.required = isHouseCall;
+}
+
+loungeChoice.addEventListener("click", () =>
+ chooseBookingType("In Lounge")
+);
+
+houseChoice.addEventListener("click", () =>
+ chooseBookingType("House Call")
+);
+
+// Prevent customers from choosing a date in the past.
+const today = new Date();
+const localToday = [
+ today.getFullYear(),
+ String(today.getMonth()+1).padStart(2,"0"),
+ String(today.getDate()).padStart(2,"0")
+].join("-");
+document.getElementById("date").min = localToday;
+
+async function checkCustomer(){
+ const {data,error} = await db.auth.getUser();
+
+ if(error || !data.user){
+  window.location.href = "login.html";
+  return false;
+ }
+ return true;
+}
+
+form.addEventListener("submit", async function(event){
+ event.preventDefault();
+ message.textContent = "";
+
+ submitButton.disabled = true;
+ submitButton.textContent = "SUBMITTING REQUEST...";
+
+ try{
+  const {data:authData,error:authError} =
+   await db.auth.getUser();
+
+  if(authError) throw authError;
+  if(!authData.user){
+   window.location.href = "login.html";
+   return;
+  }
+
+  const category = document.getElementById("category").value;
+  const service = document.getElementById("service").value.trim();
+  const date = document.getElementById("date").value;
+  const time = document.getElementById("time").value;
+  const area = areaInput.value.trim();
+  const address = addressInput.value.trim();
+  const notes = document.getElementById("notes").value.trim();
+
+  if(bookingType === "House Call" && (!area || !address)){
+   throw new Error("Please enter your area and house call address.");
+  }
+
+  const booking = {
+   customer_id: authData.user.id,
+   service_category: category,
+   service_name: service,
+   booking_type: bookingType,
+   preferred_date: date,
+   preferred_time: time,
+   area: bookingType === "House Call" ? area : null,
+   address: bookingType === "House Call" ? address : null,
+   notes: notes || null
+  };
+
+  const {error} = await db
+   .from("bookings")
+   .insert([booking]);
+
+  if(error) throw error;
+
+  form.reset();
+  chooseBookingType("In Lounge");
+
+  message.textContent =
+   "Your booking request has been submitted successfully! " +
+   "It is PENDING until the lounge confirms your appointment. " +
+   "Please check My Account for updates.";
+
+ }catch(error){
+  message.textContent = "Booking error: " + error.message;
+ }finally{
+  submitButton.disabled = false;
+  submitButton.textContent = "SUBMIT BOOKING REQUEST";
+ }
+});
+
+checkCustomer();
+</script>
 </body>
 </html>
