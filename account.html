@@ -5,37 +5,128 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Account | Next Level Grooming Lounge</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 *{box-sizing:border-box}
+
 body{
-  margin:0;min-height:100vh;padding:20px;
-  background:#101010;color:white;
+  margin:0;
+  min-height:100vh;
+  padding:20px;
+  background:#101010;
+  color:white;
   font-family:Arial,sans-serif
 }
+
 .container{max-width:650px;margin:40px auto}
+
 .header{text-align:center;margin-bottom:30px}
+
 .header h1{color:#d5ad58}
+
 .header p{color:#bbb}
+
 .card{
-  background:#1b1b1b;border:1px solid #b58b36;
-  border-radius:12px;padding:25px;margin-bottom:20px
+  background:#1b1b1b;
+  border:1px solid #b58b36;
+  border-radius:12px;
+  padding:25px;
+  margin-bottom:20px
 }
+
 h2{color:#d5ad58}
-.detail{padding:13px 0;border-bottom:1px solid #393939}
-.detail:last-child{border:0}
-.label{color:#aaa;font-size:13px;margin-bottom:6px}
-.value{font-size:17px;overflow-wrap:anywhere}
-button{
-  width:100%;padding:14px;background:#c49a45;
-  color:#111;border:0;border-radius:7px;
-  font-weight:bold;font-size:16px;cursor:pointer
+
+.detail{
+  padding:13px 0;
+  border-bottom:1px solid #393939
 }
+
+.detail:last-child{border:0}
+
+.label{
+  color:#aaa;
+  font-size:13px;
+  margin-bottom:6px
+}
+
+.value{
+  font-size:17px;
+  overflow-wrap:anywhere
+}
+
+button,.action-link{
+  display:block;
+  width:100%;
+  padding:14px;
+  background:#c49a45;
+  color:#111;
+  border:0;
+  border-radius:7px;
+  font-weight:bold;
+  font-size:15px;
+  cursor:pointer;
+  text-align:center;
+  text-decoration:none;
+  margin-top:12px
+}
+
+button:hover,.action-link:hover{background:#e0b75f}
+
+.logout{background:#842d2d;color:white}
+
+.logout:hover{background:#a63b3b}
+
 a{color:#d5ad58}
-#message{text-align:center;color:#ddd;padding:15px}
+
+#message{
+  text-align:center;
+  color:#ddd;
+  padding:15px;
+  overflow-wrap:anywhere
+}
+
+.booking{
+  background:#252525;
+  border-left:4px solid #c49a45;
+  border-radius:7px;
+  padding:16px;
+  margin-top:15px
+}
+
+.booking h3{color:#d5ad58;margin-top:0}
+
+.booking p{
+  color:#ddd;
+  font-size:14px;
+  line-height:1.5;
+  overflow-wrap:anywhere
+}
+
+.status{
+  display:inline-block;
+  padding:7px 12px;
+  background:#514321;
+  color:#ffd477;
+  border-radius:20px;
+  font-size:13px
+}
+
+.empty{
+  color:#aaa;
+  line-height:1.6
+}
+
+@media(max-width:480px){
+  .container{margin:15px auto}
+  .card{padding:18px}
+}
 </style>
 </head>
+
 <body>
+
 <div class="container">
 
   <div class="header">
@@ -45,9 +136,11 @@ a{color:#d5ad58}
 
   <div class="card">
     <h2>My Customer Account</h2>
+
     <div id="message">Loading your account...</div>
 
     <div id="profile" hidden>
+
       <div class="detail">
         <div class="label">Full name</div>
         <div class="value" id="fullName"></div>
@@ -62,7 +155,13 @@ a{color:#d5ad58}
         <div class="label">Email address</div>
         <div class="value" id="email"></div>
       </div>
+
     </div>
+
+    <a href="booking.html" class="action-link">
+      BOOK AN APPOINTMENT
+    </a>
+
   </div>
 
   <div class="card">
@@ -72,31 +171,164 @@ a{color:#d5ad58}
 
   <div class="card">
     <h2>My Bookings</h2>
-    <p>Your appointment history will appear here.</p>
+    <p>Your appointment and house-call requests will appear here.</p>
+
+    <div id="bookingsList">
+      Loading your bookings...
+    </div>
   </div>
 
-  <button id="logoutButton" hidden>LOG OUT</button>
+  <button id="logoutButton" class="logout" hidden>
+    LOG OUT
+  </button>
 
   <p style="text-align:center;margin-top:25px">
     <a href="index.html">Back to Home</a>
   </p>
+
 </div>
 
 <script>
-const SUPABASE_URL = "https://teimbezoinfqlrxczafj.supabase.co";
-const SUPABASE_KEY = "sb_publishable_3lJOm65rVFwElFqLN-Gxzw_LdYacHZP";
+const SUPABASE_URL =
+  "https://teimbezoinfqlrxczafj.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_3lJOm65rVFwElFqLN-Gxzw_LdYacHZP";
 
 const supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
 
+// Display text safely
+function addText(parent, tag, value, className){
+  const element = document.createElement(tag);
+  element.textContent = value;
+
+  if(className){
+    element.className = className;
+  }
+
+  parent.appendChild(element);
+  return element;
+}
+
+// Load customer bookings
+async function loadBookings(userId){
+
+  const bookingsList =
+    document.getElementById("bookingsList");
+
+  bookingsList.textContent = "Loading your bookings...";
+
+  const {data, error} = await supabaseClient
+    .from("bookings")
+    .select("*")
+    .eq("customer_id", userId)
+    .order("created_at", {ascending:false});
+
+  if(error){
+    console.error("Booking loading error:", error);
+
+    bookingsList.textContent =
+      "Unable to load your bookings. Please refresh the page.";
+
+    return;
+  }
+
+  bookingsList.replaceChildren();
+
+  if(!data || data.length === 0){
+
+    addText(
+      bookingsList,
+      "p",
+      "You have no bookings yet. Book your first appointment today.",
+      "empty"
+    );
+
+    return;
+  }
+
+  data.forEach(function(booking){
+
+    const card = document.createElement("div");
+    card.className = "booking";
+
+    addText(
+      card,
+      "h3",
+      booking.service_name || "Appointment"
+    );
+
+    addText(
+      card,
+      "p",
+      "Category: " + (booking.service_category || "Not specified")
+    );
+
+    addText(
+      card,
+      "p",
+      "Booking type: " + (booking.booking_type || "Not specified")
+    );
+
+    addText(
+      card,
+      "p",
+      "Date: " + (booking.preferred_date || "Not specified")
+    );
+
+    addText(
+      card,
+      "p",
+      "Time: " + (booking.preferred_time || "Not specified")
+    );
+
+    if(booking.booking_type === "House Call"){
+
+      addText(
+        card,
+        "p",
+        "Area: " + (booking.area || "Not provided")
+      );
+
+      addText(
+        card,
+        "p",
+        "Address: " + (booking.address || "Not provided")
+      );
+    }
+
+    if(booking.notes){
+      addText(
+        card,
+        "p",
+        "Notes: " + booking.notes
+      );
+    }
+
+    addText(
+      card,
+      "span",
+      "Status: " + (booking.status || "Pending"),
+      "status"
+    );
+
+    bookingsList.appendChild(card);
+
+  });
+}
+
+// Load account
 async function loadAccount(){
+
   const message = document.getElementById("message");
   const profile = document.getElementById("profile");
   const logoutButton = document.getElementById("logoutButton");
 
-  try {
+  try{
+
     const {data: {user}, error: authError} =
       await supabaseClient.auth.getUser();
 
@@ -111,41 +343,59 @@ async function loadAccount(){
       .from("customer_profiles")
       .select("full_name, phone")
       .eq("id", user.id)
-      .single();
+      .maybeSingle();
 
     if(error) throw error;
 
+    const metadata = user.user_metadata || {};
+
     document.getElementById("fullName").textContent =
-      data.full_name || "Not provided";
+      data?.full_name || metadata.full_name || "Not provided";
 
     document.getElementById("phone").textContent =
-      data.phone || "Not provided";
+      data?.phone || metadata.phone || "Not provided";
 
     document.getElementById("email").textContent =
       user.email || "Not available";
 
     message.textContent = "Welcome to your account!";
+
     profile.hidden = false;
     logoutButton.hidden = false;
 
-  } catch(error) {
-    message.textContent = "Unable to load your account: " + error.message;
+    await loadBookings(user.id);
+
+  }catch(error){
+
+    console.error("Account error:", error);
+
+    message.textContent =
+      "Unable to load your account: " + error.message;
+
+    document.getElementById("bookingsList").textContent =
+      "Your bookings could not be loaded.";
   }
 }
 
+// Logout
 document.getElementById("logoutButton")
 .addEventListener("click", async function(){
+
   const {error} = await supabaseClient.auth.signOut();
 
   if(error){
-    document.getElementById("message").textContent = error.message;
+    document.getElementById("message").textContent =
+      error.message;
     return;
   }
 
   window.location.href = "login.html";
 });
 
+// Start account
 loadAccount();
+
 </script>
+
 </body>
 </html>
