@@ -5,544 +5,365 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Dashboard | Next Level Grooming Lounge</title>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
 *{box-sizing:border-box}
-
-body{
-  margin:0;
-  padding:18px;
-  background:#101010;
-  color:white;
-  font-family:Arial,sans-serif;
-}
-
-.container{
-  max-width:1000px;
-  margin:25px auto;
-}
-
-header{
-  text-align:center;
-  margin-bottom:25px;
-}
-
-header h1{color:#d5ad58}
+body{margin:0;padding:18px;background:#101010;color:white;font-family:Arial,sans-serif}
+.container{max-width:1000px;margin:25px auto}
+header{text-align:center;margin-bottom:25px}
+header h1,h2,.booking h3{color:#d5ad58}
 header p{color:#aaa}
-
-.card{
-  background:#1b1b1b;
-  border:1px solid #b58b36;
-  border-radius:12px;
-  padding:20px;
-  margin-bottom:18px;
-}
-
-h2{color:#d5ad58;margin-top:0}
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
-  margin-bottom:20px;
-}
-
-.stat{
-  background:#242424;
-  border:1px solid #444;
-  border-radius:9px;
-  padding:15px 8px;
-  text-align:center;
-}
-
-.stat strong{
-  display:block;
-  color:#d5ad58;
-  font-size:25px;
-  margin-bottom:5px;
-}
-
+.card{background:#1b1b1b;border:1px solid #b58b36;border-radius:12px;padding:20px;margin-bottom:18px}
+h2{margin-top:0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.stat{background:#242424;border:1px solid #444;border-radius:9px;padding:15px 8px;text-align:center}
+.stat strong{display:block;color:#d5ad58;font-size:25px;margin-bottom:5px}
 .stat span{font-size:12px;color:#bbb}
-
-.filters{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-bottom:15px;
-}
-
-select,button{
-  padding:12px;
-  border-radius:7px;
-  border:1px solid #555;
-  font-size:14px;
-}
-
-select{
-  background:#292929;
-  color:white;
-  width:100%;
-}
-
-button{
-  background:#c49a45;
-  color:#111;
-  border:0;
-  font-weight:bold;
-  cursor:pointer;
-}
-
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}
+select,button,textarea{padding:12px;border-radius:7px;border:1px solid #555;font-size:14px}
+select,textarea{background:#292929;color:white;width:100%}
+button{background:#c49a45;color:#111;border:0;font-weight:bold;cursor:pointer}
 button:hover{background:#e0b75f}
-
+button:disabled{opacity:.5;cursor:not-allowed}
 .logout{background:#842d2d;color:white}
 .whatsapp{background:#168b52;color:white}
-
-.booking{
-  background:#252525;
-  border:1px solid #444;
-  border-left:4px solid #c49a45;
-  border-radius:9px;
-  padding:17px;
-  margin-bottom:15px;
-}
-
-.booking h3{
-  color:#d5ad58;
-  margin-top:0;
-}
-
-.booking p{
-  color:#ddd;
-  font-size:14px;
-  line-height:1.5;
-  overflow-wrap:anywhere;
-}
-
-.status{
-  display:inline-block;
-  padding:6px 10px;
-  background:#514321;
-  color:#ffd477;
-  border-radius:20px;
-  font-size:12px;
-  margin-bottom:12px;
-}
-
-.booking-actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  margin-top:12px;
-}
-
+.booking{background:#252525;border:1px solid #444;border-left:4px solid #c49a45;border-radius:9px;padding:17px;margin-bottom:15px}
+.booking h3{margin-top:0}
+.booking p{color:#ddd;font-size:14px;line-height:1.5;overflow-wrap:anywhere}
+.status{display:inline-block;padding:6px 10px;background:#514321;color:#ffd477;border-radius:20px;font-size:12px;margin-bottom:12px}
+.booking-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
 .booking-actions button{width:100%}
-
-.message{
-  text-align:center;
-  color:#ccc;
-  padding:15px;
-  line-height:1.5;
-}
-
+.message{text-align:center;color:#ccc;padding:15px;line-height:1.5}
 .error{color:#ff7777}
-
-@media(max-width:600px){
-  .stats{grid-template-columns:repeat(2,1fr)}
-  .booking-actions{grid-template-columns:1fr}
-}
+.reason{margin-top:12px}
+.reason label{display:block;color:#d5ad58;margin-bottom:7px;font-size:14px}
+.reason textarea{min-height:75px;resize:vertical}
+@media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr)}.booking-actions{grid-template-columns:1fr}}
 </style>
 </head>
-
 <body>
-
 <div class="container">
-
 <header>
-  <h1>NEXT LEVEL GROOMING LOUNGE</h1>
-  <p>ADMINISTRATION DASHBOARD</p>
-  <p>Confidence Starts Here.</p>
+<h1>NEXT LEVEL GROOMING LOUNGE</h1>
+<p>ADMINISTRATION DASHBOARD</p>
+<p>Confidence Starts Here.</p>
 </header>
 
-<div id="mainMessage" class="card message">
-  Checking administrator access...
-</div>
+<div id="mainMessage" class="card message">Checking administrator access...</div>
 
 <div id="dashboard" hidden>
-
-  <div class="card">
-    <h2>Booking Overview</h2>
-
-    <div class="stats">
-      <div class="stat">
-        <strong id="totalCount">0</strong>
-        <span>Total bookings</span>
-      </div>
-
-      <div class="stat">
-        <strong id="pendingCount">0</strong>
-        <span>Pending</span>
-      </div>
-
-      <div class="stat">
-        <strong id="confirmedCount">0</strong>
-        <span>Confirmed</span>
-      </div>
-
-      <div class="stat">
-        <strong id="completedCount">0</strong>
-        <span>Completed</span>
-      </div>
-    </div>
-
-    <button id="refreshButton">REFRESH BOOKINGS</button>
-    <button id="logoutButton" class="logout">LOG OUT</button>
-  </div>
-
-  <div class="card">
-    <h2>Customer Bookings</h2>
-
-    <div class="filters">
-      <select id="statusFilter">
-        <option value="All">All bookings</option>
-        <option value="Pending">Pending</option>
-        <option value="Confirmed">Confirmed</option>
-        <option value="Completed">Completed</option>
-        <option value="Cancelled">Cancelled</option>
-      </select>
-    </div>
-
-    <div id="bookingsList" class="message">
-      Loading bookings...
-    </div>
-  </div>
-
+<div class="card">
+<h2>Booking Overview</h2>
+<div class="stats">
+<div class="stat"><strong id="totalCount">0</strong><span>Total bookings</span></div>
+<div class="stat"><strong id="pendingCount">0</strong><span>Pending</span></div>
+<div class="stat"><strong id="confirmedCount">0</strong><span>Confirmed</span></div>
+<div class="stat"><strong id="completedCount">0</strong><span>Completed</span></div>
+</div>
+<button id="refreshButton">REFRESH BOOKINGS</button>
+<button id="logoutButton" class="logout">LOG OUT</button>
 </div>
 
+<div class="card">
+<h2>Customer Bookings</h2>
+<div class="filters">
+<select id="statusFilter">
+<option value="All">All bookings</option>
+<option value="Pending">Pending</option>
+<option value="Confirmed">Confirmed</option>
+<option value="Completed">Completed</option>
+<option value="Cancelled">Cancelled</option>
+</select>
+</div>
+<div id="bookingsList" class="message">Loading bookings...</div>
+</div>
+</div>
 </div>
 
 <script>
-const SUPABASE_URL =
-  "https://teimbezoinfqlrxczafj.supabase.co";
+const SUPABASE_URL="https://teimbezoinfqlrxczafj.supabase.co";
+const SUPABASE_KEY="sb_publishable_3lJOm65rVFwElFqLN-Gxzw_LdYacHZP";
+const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
-const SUPABASE_KEY =
-  "sb_publishable_3lJOm65rVFwElFqLN-Gxzw_LdYacHZP";
+const MANAGER_WHATSAPP="27635892769";
+const HIDE_AFTER_MS=3*60*1000;
 
-const supabaseClient = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+let allBookings=[];
+let customerProfiles={};
 
-let allBookings = [];
-let customerProfiles = {};
+const mainMessage=document.getElementById("mainMessage");
+const dashboard=document.getElementById("dashboard");
+const bookingsList=document.getElementById("bookingsList");
 
-const mainMessage = document.getElementById("mainMessage");
-const dashboard = document.getElementById("dashboard");
-const bookingsList = document.getElementById("bookingsList");
-
-// Safely display text
-function addText(parent, tag, value, className){
-  const element = document.createElement(tag);
-  element.textContent = value;
-
-  if(className) element.className = className;
-
+function addText(parent,tag,value,className){
+  const element=document.createElement(tag);
+  element.textContent=value;
+  if(className) element.className=className;
   parent.appendChild(element);
   return element;
 }
 
-// Format phone number for South African WhatsApp numbers
 function whatsappNumber(phone){
-  let number = String(phone || "").replace(/\D/g, "");
-
-  if(number.startsWith("0")){
-    number = "27" + number.substring(1);
-  }else if(number.length === 9){
-    number = "27" + number;
-  }
-
+  let number=String(phone||"").replace(/\D/g,"");
+  if(number.startsWith("0")) number="27"+number.substring(1);
+  else if(number.length===9) number="27"+number;
   return number;
 }
 
-// Load all bookings and customer profiles
+// Hide completed appointments after three minutes.
+// Cancelled appointments remain until the customer acknowledges them.
+function shouldShowBooking(booking){
+  if(booking.status==="Completed"){
+    if(!booking.status_updated_at) return true;
+    const elapsed=Date.now()-new Date(booking.status_updated_at).getTime();
+    return elapsed<HIDE_AFTER_MS;
+  }
+
+  if(booking.status==="Cancelled" && booking.cancellation_seen_at){
+    return false;
+  }
+
+  return true;
+}
+
 async function loadBookings(){
+  bookingsList.textContent="Loading bookings...";
 
-  bookingsList.textContent = "Loading bookings...";
-
-  const {data: bookings, error: bookingError} =
-    await supabaseClient
-      .from("bookings")
-      .select("*")
-      .order("created_at", {ascending:false});
+  const {data:bookings,error:bookingError}=await supabaseClient
+    .from("bookings")
+    .select("*")
+    .order("created_at",{ascending:false});
 
   if(bookingError){
     console.error(bookingError);
-    bookingsList.textContent =
-      "Unable to load bookings: " + bookingError.message;
+    bookingsList.textContent="Unable to load bookings: "+bookingError.message;
     return;
   }
 
-  const {data: profiles, error: profileError} =
-    await supabaseClient
-      .from("customer_profiles")
-      .select("id, full_name, phone");
+  const {data:profiles,error:profileError}=await supabaseClient
+    .from("customer_profiles")
+    .select("id,full_name,phone");
 
   if(profileError){
     console.error(profileError);
-    bookingsList.textContent =
-      "Unable to load customer details: " + profileError.message;
+    bookingsList.textContent="Unable to load customer details: "+profileError.message;
     return;
   }
 
-  customerProfiles = {};
-
-  (profiles || []).forEach(function(profile){
-    customerProfiles[profile.id] = profile;
+  customerProfiles={};
+  (profiles||[]).forEach(profile=>{
+    customerProfiles[profile.id]=profile;
   });
 
-  allBookings = bookings || [];
-
+  allBookings=bookings||[];
   updateStats();
   displayBookings();
 }
 
-// Update overview numbers
 function updateStats(){
-
-  document.getElementById("totalCount").textContent =
-    allBookings.length;
-
-  document.getElementById("pendingCount").textContent =
-    allBookings.filter(b => b.status === "Pending").length;
-
-  document.getElementById("confirmedCount").textContent =
-    allBookings.filter(b => b.status === "Confirmed").length;
-
-  document.getElementById("completedCount").textContent =
-    allBookings.filter(b => b.status === "Completed").length;
+  const visible=allBookings.filter(shouldShowBooking);
+  document.getElementById("totalCount").textContent=visible.length;
+  document.getElementById("pendingCount").textContent=visible.filter(b=>b.status==="Pending").length;
+  document.getElementById("confirmedCount").textContent=visible.filter(b=>b.status==="Confirmed").length;
+  document.getElementById("completedCount").textContent=visible.filter(b=>b.status==="Completed").length;
 }
 
-// Display bookings
 function displayBookings(){
-
   bookingsList.replaceChildren();
 
-  const filter = document.getElementById("statusFilter").value;
+  const filter=document.getElementById("statusFilter").value;
+  const filtered=allBookings.filter(booking=>
+    shouldShowBooking(booking) &&
+    (filter==="All" || booking.status===filter)
+  );
 
-  const filtered = allBookings.filter(function(booking){
-    return filter === "All" || booking.status === filter;
-  });
-
-  if(filtered.length === 0){
-    addText(
-      bookingsList,
-      "p",
-      "No bookings found in this category."
-    );
+  if(filtered.length===0){
+    addText(bookingsList,"p","No bookings found in this category.");
+    updateStats();
     return;
   }
 
-  filtered.forEach(function(booking){
+  filtered.forEach(booking=>{
+    const profile=customerProfiles[booking.customer_id]||{};
+    const card=document.createElement("div");
+    card.className="booking";
 
-    const profile = customerProfiles[booking.customer_id] || {};
+    addText(card,"h3",profile.full_name||"Customer");
+    addText(card,"p","Phone: "+(profile.phone||"Not provided"));
+    addText(card,"p","Service: "+booking.service_name);
+    addText(card,"p","Category: "+booking.service_category);
+    addText(card,"p","Booking type: "+booking.booking_type);
+    addText(card,"p","Date: "+booking.preferred_date);
+    addText(card,"p","Time: "+booking.preferred_time);
 
-    const card = document.createElement("div");
-    card.className = "booking";
-
-    addText(
-      card,
-      "h3",
-      profile.full_name || "Customer"
-    );
-
-    addText(card, "p", "Phone: " + (profile.phone || "Not provided"));
-    addText(card, "p", "Customer ID: " + booking.customer_id);
-    addText(card, "p", "Service: " + booking.service_name);
-    addText(card, "p", "Category: " + booking.service_category);
-    addText(card, "p", "Booking type: " + booking.booking_type);
-    addText(card, "p", "Date: " + booking.preferred_date);
-    addText(card, "p", "Time: " + booking.preferred_time);
-
-    if(booking.booking_type === "House Call"){
-      addText(card, "p", "Area: " + (booking.area || "Not provided"));
-      addText(card, "p", "Address: " + (booking.address || "Not provided"));
+    if(booking.booking_type==="House Call"){
+      addText(card,"p","Area: "+(booking.area||"Not provided"));
+      addText(card,"p","Address: "+(booking.address||"Not provided"));
     }
 
-    if(booking.notes){
-      addText(card, "p", "Notes: " + booking.notes);
+    if(booking.notes) addText(card,"p","Notes: "+booking.notes);
+
+    addText(card,"span","Current status: "+booking.status,"status");
+
+    if(booking.status==="Cancelled" && booking.cancellation_reason){
+      addText(card,"p","Cancellation reason: "+booking.cancellation_reason);
+      addText(card,"p",booking.cancellation_seen_at?
+        "Customer has acknowledged this cancellation.":
+        "Waiting for customer to acknowledge cancellation.");
     }
 
-    addText(
-      card,
-      "span",
-      "Current status: " + booking.status,
-      "status"
-    );
-
-    const statusSelect = document.createElement("select");
-
-    ["Pending","Confirmed","Completed","Cancelled"].forEach(function(status){
-      const option = document.createElement("option");
-      option.value = status;
-      option.textContent = status;
+    const statusSelect=document.createElement("select");
+    ["Pending","Confirmed","Completed","Cancelled"].forEach(status=>{
+      const option=document.createElement("option");
+      option.value=status;
+      option.textContent=status;
       statusSelect.appendChild(option);
     });
-
-    statusSelect.value = booking.status;
+    statusSelect.value=booking.status;
     card.appendChild(statusSelect);
 
-    const actions = document.createElement("div");
-    actions.className = "booking-actions";
+    const reasonBox=document.createElement("div");
+    reasonBox.className="reason";
+    const reasonLabel=document.createElement("label");
+    reasonLabel.textContent="Cancellation reason (required when cancelling)";
+    reasonBox.appendChild(reasonLabel);
 
-    const saveButton = document.createElement("button");
-    saveButton.textContent = "SAVE STATUS";
+    const reasonInput=document.createElement("textarea");
+    reasonInput.placeholder="Explain why this appointment is being cancelled...";
+    reasonInput.value=booking.cancellation_reason||"";
+    reasonBox.appendChild(reasonInput);
+    reasonBox.hidden=statusSelect.value!=="Cancelled";
+    card.appendChild(reasonBox);
 
-    saveButton.addEventListener("click", async function(){
+    statusSelect.addEventListener("change",()=>{
+      reasonBox.hidden=statusSelect.value!=="Cancelled";
+    });
+
+    const actions=document.createElement("div");
+    actions.className="booking-actions";
+
+    const saveButton=document.createElement("button");
+    saveButton.textContent="SAVE STATUS";
+    saveButton.addEventListener("click",async()=>{
+      const newStatus=statusSelect.value;
+      const reason=reasonInput.value.trim();
+
+      if(newStatus==="Cancelled" && !reason){
+        alert("Please enter a cancellation reason before saving.");
+        reasonInput.focus();
+        return;
+      }
+
       await updateBookingStatus(
         booking.id,
-        statusSelect.value,
+        newStatus,
+        reason,
         saveButton
       );
     });
-
     actions.appendChild(saveButton);
 
-    const phone = whatsappNumber(profile.phone);
+    const customerPhone=whatsappNumber(profile.phone);
+    const customerButton=document.createElement("button");
+    customerButton.textContent="CONTACT CUSTOMER";
+    customerButton.className="whatsapp";
 
-    const whatsappButton = document.createElement("button");
-    whatsappButton.textContent = "CONTACT ON WHATSAPP";
-    whatsappButton.className = "whatsapp";
-
-    if(phone){
-      whatsappButton.addEventListener("click", function(){
-
-        const customerName = profile.full_name || "there";
-
-        const text =
-          "Hello " + customerName +
-          ", this is Next Level Grooming Lounge. " +
-          "We are contacting you about your " +
-          booking.service_name +
-          " booking for " +
-          booking.preferred_date +
-          " at " +
-          booking.preferred_time +
-          ". Your current booking status is " +
-          booking.status +
-          ". Thank you!";
-
-        const url =
-          "https://wa.me/" + phone +
-          "?text=" + encodeURIComponent(text);
-
-        window.open(url, "_blank");
+    if(customerPhone){
+      customerButton.addEventListener("click",()=>{
+        const message="Hello "+(profile.full_name||"there")+
+          ", this is Next Level Grooming Lounge. We are contacting you about your "+
+          booking.service_name+" appointment on "+booking.preferred_date+
+          ". Current status: "+booking.status+".";
+        window.open("https://wa.me/"+customerPhone+"?text="+encodeURIComponent(message),"_blank");
       });
     }else{
-      whatsappButton.disabled = true;
-      whatsappButton.textContent = "NO CUSTOMER PHONE";
+      customerButton.disabled=true;
+      customerButton.textContent="NO CUSTOMER PHONE";
     }
 
-    actions.appendChild(whatsappButton);
+    actions.appendChild(customerButton);
     card.appendChild(actions);
-
     bookingsList.appendChild(card);
   });
+
+  updateStats();
 }
 
-// Change booking status
-async function updateBookingStatus(id, status, button){
+async function updateBookingStatus(id,status,reason,button){
+  button.disabled=true;
+  button.textContent="SAVING...";
 
-  button.disabled = true;
-  button.textContent = "SAVING...";
+  const changes={status:status};
 
-  const {error} = await supabaseClient
+  if(status==="Cancelled"){
+    changes.cancellation_reason=reason;
+  }
+
+  const {error}=await supabaseClient
     .from("bookings")
-    .update({status:status})
-    .eq("id", id);
+    .update(changes)
+    .eq("id",id);
 
   if(error){
-    alert("Could not update booking: " + error.message);
-    button.disabled = false;
-    button.textContent = "SAVE STATUS";
+    alert("Could not update booking: "+error.message);
+    button.disabled=false;
+    button.textContent="SAVE STATUS";
     return;
   }
 
   alert("Booking status updated successfully.");
-
   await loadBookings();
 }
 
-// Check administrator access
 async function checkAdmin(){
-
   try{
-
-    const {data: {user}, error: authError} =
-      await supabaseClient.auth.getUser();
-
+    const {data:{user},error:authError}=await supabaseClient.auth.getUser();
     if(authError) throw authError;
 
     if(!user){
-      window.location.href = "login.html";
+      window.location.href="login.html";
       return;
     }
 
-    const {data: role, error: roleError} =
-      await supabaseClient
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", user.id)
-        .maybeSingle();
+    const {data:role,error:roleError}=await supabaseClient
+      .from("user_roles")
+      .select("role")
+      .eq("user_id",user.id)
+      .maybeSingle();
 
     if(roleError) throw roleError;
 
-    if(!role || role.role !== "admin"){
-      mainMessage.textContent =
-        "Access denied. This account does not have administrator permissions.";
+    if(!role || role.role!=="admin"){
+      mainMessage.textContent="Access denied. This account does not have administrator permissions.";
       return;
     }
 
-    mainMessage.hidden = true;
-    dashboard.hidden = false;
-
+    mainMessage.hidden=true;
+    dashboard.hidden=false;
     await loadBookings();
 
   }catch(error){
-
     console.error(error);
-
-    mainMessage.textContent =
-      "Unable to verify administrator access: " + error.message;
+    mainMessage.textContent="Unable to verify administrator access: "+error.message;
   }
 }
 
-// Refresh
-document.getElementById("refreshButton")
-.addEventListener("click", loadBookings);
+document.getElementById("refreshButton").addEventListener("click",loadBookings);
+document.getElementById("statusFilter").addEventListener("change",displayBookings);
 
-// Filter
-document.getElementById("statusFilter")
-.addEventListener("change", displayBookings);
-
-// Logout
-document.getElementById("logoutButton")
-.addEventListener("click", async function(){
-
-  const {error} = await supabaseClient.auth.signOut();
-
-  if(error){
-    alert(error.message);
-    return;
-  }
-
-  window.location.href = "login.html";
+document.getElementById("logoutButton").addEventListener("click",async()=>{
+  const {error}=await supabaseClient.auth.signOut();
+  if(error){alert(error.message);return;}
+  window.location.href="login.html";
 });
 
-// Start
+// Refresh the display automatically so completed bookings disappear on time.
+setInterval(()=>{
+  updateStats();
+  displayBookings();
+},5000);
+
 checkAdmin();
-
 </script>
-
 </body>
 </html>
