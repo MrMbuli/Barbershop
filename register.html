@@ -1,94 +1,153 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Loyalty Points | King's Cut</title>
-<link rel="manifest" href="data:application/manifest+json,{&quot;name&quot;:&quot;King's Cut Loyalty&quot;,&quot;short_name&quot;:&quot;Loyalty&quot;,&quot;start_url&quot;:&quot;./register.html&quot;,&quot;display&quot;:&quot;standalone&quot;,&quot;background_color&quot;:&quot;#0f0f11&quot;,&quot;theme_color&quot;:&quot;#0f0f11&quot;}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Account | Next Level Grooming Lounge</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-body{font-family:"Segoe UI",sans-serif;background:#0f0f11;color:#eaeaea;line-height:1.5;padding:20px}
-a{text-decoration:none;color:#bfc6cb}
-header{display:flex;justify-content:space-between;align-items:center;background:#111;padding:14px 18px;position:fixed;top:0;left:0;right:0;z-index:10}
-.logo-title{font-weight:700}
-section{max-width:420px;margin:100px auto 30px;padding:20px;background:#131315;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,0.6)}
-input{width:100%;padding:10px;margin-top:6px;border-radius:6px;border:1px solid #333;background:#0b0b0d;color:#eaeaea}
-button{padding:10px 14px;border:none;border-radius:8px;background:linear-gradient(90deg,#999,#ccc);font-weight:700;margin-top:10px;width:100%}
-footer{text-align:center;padding:20px;background:#111;color:#aaa;margin-top:30px}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:#101010;
+  color:#fff;
+  font-family:Arial,sans-serif
+}
+.container{
+  width:100%;
+  max-width:430px;
+  padding:30px;
+  background:#1b1b1b;
+  border:1px solid #b58b36;
+  border-radius:14px
+}
+h1{text-align:center;color:#d5ad58;font-size:25px}
+.subtitle{text-align:center;color:#bbb;margin-bottom:25px}
+label{display:block;margin:14px 0 7px}
+input{
+  width:100%;padding:13px;
+  border:1px solid #555;border-radius:7px;
+  background:#292929;color:white;font-size:16px
+}
+button{
+  width:100%;padding:14px;margin-top:22px;
+  background:#c49a45;color:#111;
+  border:0;border-radius:7px;
+  font-size:16px;font-weight:bold;cursor:pointer
+}
+button:disabled{opacity:.6}
+a{color:#d5ad58}
+.links{text-align:center;margin-top:20px;color:#bbb}
+#message{margin-top:17px;text-align:center;line-height:1.5}
 </style>
 </head>
 <body>
-<header>
-  <div class="logo-title">Loyalty Points</div>
-  <a href="index.html">🏠 Home</a>
-</header>
+<div class="container">
+  <h1>Next Level Grooming Lounge</h1>
+  <p class="subtitle">Confidence Starts Here</p>
 
-<section id="registerSection">
-  <h2>Create Account</h2>
-  <input id="regName" placeholder="Full Name">
-  <input id="regPhone" placeholder="Phone (WhatsApp)">
-  <input id="regPass" type="password" placeholder="Password">
-  <button onclick="register()">Register</button>
-  <p id="regMsg"></p>
-  <p style="margin-top:10px">Already registered? <a href="#" onclick="showLogin()">Login</a></p>
-</section>
+  <h2>Create Your Account</h2>
 
-<section id="loginSection" style="display:none">
-  <h2>Login</h2>
-  <input id="loginPhone" placeholder="Phone">
-  <input id="loginPass" type="password" placeholder="Password">
-  <button onclick="login()">Login</button>
-  <p id="loginMsg"></p>
-  <p style="margin-top:10px"><a href="#" onclick="showRecover()">Forgot Password?</a></p>
-  <p><a href="#" onclick="showRegister()">New? Register</a></p>
-</section>
+  <form id="registerForm">
+    <label for="fullName">Full name</label>
+    <input id="fullName" type="text" required
+      autocomplete="name" placeholder="Your full name">
 
-<section id="recoverSection" style="display:none">
-  <h2>Password Recovery</h2>
-  <input id="recoverPhone" placeholder="Phone">
-  <button onclick="recover()">Recover</button>
-  <p id="recoverMsg"></p>
-  <p><a href="#" onclick="showLogin()">Back to Login</a></p>
-</section>
+    <label for="phone">Phone number</label>
+    <input id="phone" type="tel" required
+      autocomplete="tel" placeholder="e.g. 0712345678">
 
-<footer>
-  &copy; 2025 King's Cut Barbershop — Crafted by NextWeb.
-</footer>
+    <label for="email">Email address</label>
+    <input id="email" type="email" required
+      autocomplete="email" placeholder="you@example.com">
+
+    <label for="password">Password</label>
+    <input id="password" type="password" required
+      minlength="8" autocomplete="new-password"
+      placeholder="At least 8 characters">
+
+    <button id="registerButton" type="submit">
+      CREATE ACCOUNT
+    </button>
+  </form>
+
+  <div id="message" role="status"></div>
+
+  <div class="links">
+    Already have an account?
+    <a href="login.html">Log in</a>
+    <br><br>
+    <a href="index.html">Back to Home</a>
+  </div>
+</div>
 
 <script>
-function showRegister(){toggle('registerSection')}
-function showLogin(){toggle('loginSection')}
-function showRecover(){toggle('recoverSection')}
-function toggle(id){['registerSection','loginSection','recoverSection'].forEach(s=>document.getElementById(s).style.display=(s===id?'block':'none'))}
+const SUPABASE_URL = "https://teimbezoinfqlrxczafj.supabase.co";
+const SUPABASE_KEY = "sb_publishable_3lJOm65rVFwElFqLN-Gxzw_LdYacHZP";
 
-function register(){
-  const n=regName.value.trim(),p=regPhone.value.trim(),pw=regPass.value;
-  if(!n||!p||!pw)return regMsg.textContent='Please fill all fields.';
-  const users=JSON.parse(localStorage.getItem('kc_users')||'{}');
-  if(users[p])return regMsg.textContent='Phone already registered.';
-  users[p]={name:n,password:pw};
-  localStorage.setItem('kc_users',JSON.stringify(users));
-  localStorage.setItem('kc_logged',p);
-  regMsg.textContent='Registered successfully!';
-}
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 
-function login(){
-  const p=loginPhone.value.trim(),pw=loginPass.value;
-  const users=JSON.parse(localStorage.getItem('kc_users')||'{}');
-  if(users[p]&&users[p].password===pw){
-    localStorage.setItem('kc_logged',p);
-    loginMsg.textContent='Login successful!';
-    setTimeout(()=>location.href='index.html',800);
-  }else loginMsg.textContent='Invalid phone or password.';
-}
+const form = document.getElementById("registerForm");
+const message = document.getElementById("message");
+const button = document.getElementById("registerButton");
 
-function recover(){
-  const p=recoverPhone.value.trim();
-  const users=JSON.parse(localStorage.getItem('kc_users')||'{}');
-  if(users[p])recoverMsg.textContent='Your password: '+users[p].password;
-  else recoverMsg.textContent='No account found.';
-}
+form.addEventListener("submit", async function(event) {
+  event.preventDefault();
 
-if('serviceWorker' in navigator){navigator.serviceWorker.register('data:application/javascript,self.addEventListener("install",e=>e.waitUntil(caches.open(\\"kc-loyalty-v1\\").then(c=>c.addAll([\\"./register.html\\"])))));self.addEventListener("fetch",e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)))));')}
+  const fullName = document.getElementById("fullName").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  if (password.length < 8) {
+    message.textContent = "Your password must have at least 8 characters.";
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = "CREATING ACCOUNT...";
+  message.textContent = "";
+
+  try {
+    const { data, error } = await supabaseClient.auth.signUp({
+      email: email,
+      password: password,
+      options: {
+        data: {
+          full_name: fullName,
+          phone: phone
+        }
+      }
+    });
+
+    if (error) throw error;
+
+    if (data.session) {
+      message.textContent =
+        "Your account has been created successfully. You can now log in.";
+    } else {
+      message.textContent =
+        "Registration successful! Please check your email and confirm your account before logging in.";
+    }
+
+    form.reset();
+
+  } catch (error) {
+    message.textContent = error.message;
+  } finally {
+    button.disabled = false;
+    button.textContent = "CREATE ACCOUNT";
+  }
+});
 </script>
 </body>
-       </html>
+</html>
