@@ -358,10 +358,25 @@ document.getElementById("logoutButton").addEventListener("click",async()=>{
 });
 
 // Refresh the display automatically so completed bookings disappear on time.
-setInterval(()=>{
+setInterval(() => {
   updateStats();
+
+  const active = document.activeElement;
+
+  // Do not rebuild appointment cards while admin is editing
+  if (
+    active &&
+    (
+      active.tagName === "SELECT" ||
+      active.tagName === "TEXTAREA" ||
+      active.tagName === "INPUT"
+    )
+  ) {
+    return;
+  }
+
   displayBookings();
-},5000);
+}, 5000);
 
 checkAdmin();
 </script>
