@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Book an Appointment | Next Level Grooming Lounge</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 *{box-sizing:border-box}
 body{
@@ -46,12 +47,13 @@ a{color:#d5ad58}
 .small{font-size:13px;color:#aaa;line-height:1.5}
 </style>
 </head>
+
 <body>
 <div class="container">
  <h1>Next Level Grooming Lounge</h1>
  <p class="subtitle">Confidence Starts Here</p>
 
- <div class="card" id="bookingCard">
+ <div class="card" id="bookingCard" style="visibility:hidden">
   <h2>Book Your Service</h2>
   <p class="small">Choose where you would like to receive your service.</p>
 
@@ -122,6 +124,9 @@ const db = window.supabase.createClient(
  SUPABASE_URL, SUPABASE_KEY
 );
 
+const params = new URLSearchParams(window.location.search);
+const requestedType = params.get("type");
+
 let bookingType = "In Lounge";
 
 const loungeChoice = document.getElementById("loungeChoice");
@@ -132,6 +137,21 @@ const addressInput = document.getElementById("address");
 const message = document.getElementById("message");
 const submitButton = document.getElementById("submitButton");
 const form = document.getElementById("bookingForm");
+const bookingCard = document.getElementById("bookingCard");
+
+// Remember the selected booking type when sending the customer to login.
+function getBookingDestination(){
+ const type = bookingType === "House Call" ? "housecall" : "shop";
+ return "booking.html?type=" + type;
+}
+
+function redirectToLogin(){
+ const destination = getBookingDestination();
+
+ window.location.replace(
+  "login.html?next=" + encodeURIComponent(destination)
+ );
+}
 
 function chooseBookingType(type){
  bookingType = type;
@@ -140,6 +160,7 @@ function chooseBookingType(type){
  houseChoice.classList.toggle("active", type === "House Call");
 
  const isHouseCall = type === "House Call";
+
  houseFields.classList.toggle("hidden", !isHouseCall);
  areaInput.required = isHouseCall;
  addressInput.required = isHouseCall;
@@ -153,23 +174,42 @@ houseChoice.addEventListener("click", () =>
  chooseBookingType("House Call")
 );
 
+// Read the booking type selected on the homepage.
+if(requestedType === "housecall"){
+ chooseBookingType("House Call");
+}else{
+ chooseBookingType("In Lounge");
+}
+
 // Prevent customers from choosing a date in the past.
 const today = new Date();
+
 const localToday = [
  today.getFullYear(),
  String(today.getMonth()+1).padStart(2,"0"),
  String(today.getDate()).padStart(2,"0")
 ].join("-");
+
 document.getElementById("date").min = localToday;
 
+// Verify login before showing the booking form.
 async function checkCustomer(){
- const {data,error} = await db.auth.getUser();
+ try{
+  const {data,error} = await db.auth.getUser();
 
- if(error || !data.user){
-  window.location.href = "login.html";
-  return false;
+  if(error || !data.user){
+   redirectToLogin();
+   return;
+  }
+
+  bookingCard.style.visibility = "visible";
+
+ }catch(error){
+  message.textContent =
+   "Unable to verify your login. Please try again.";
+
+  bookingCard.style.visibility = "visible";
  }
- return true;
 }
 
 form.addEventListener("submit", async function(event){
@@ -184,8 +224,9 @@ form.addEventListener("submit", async function(event){
    await db.auth.getUser();
 
   if(authError) throw authError;
+
   if(!authData.user){
-   window.location.href = "login.html";
+   redirectToLogin();
    return;
   }
 
@@ -198,7 +239,9 @@ form.addEventListener("submit", async function(event){
   const notes = document.getElementById("notes").value.trim();
 
   if(bookingType === "House Call" && (!area || !address)){
-   throw new Error("Please enter your area and house call address.");
+   throw new Error(
+    "Please enter your area and house call address."
+   );
   }
 
   const booking = {
@@ -235,6 +278,7 @@ form.addEventListener("submit", async function(event){
  }
 });
 
+// Start the login check.
 checkCustomer();
 </script>
 </body>
