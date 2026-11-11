@@ -9,82 +9,97 @@
 <style>
 *{box-sizing:border-box}
 body{
-  margin:0;
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  background:#101010;
-  color:#fff;
-  font-family:Arial,sans-serif
+ margin:0;min-height:100vh;display:flex;
+ align-items:center;justify-content:center;padding:20px;
+ background:#101010;color:#fff;font-family:Arial,sans-serif
 }
 .container{
-  width:100%;
-  max-width:430px;
-  padding:30px;
-  background:#1b1b1b;
-  border:1px solid #b58b36;
-  border-radius:14px
+ width:100%;max-width:430px;padding:30px;
+ background:#1b1b1b;border:1px solid #b58b36;
+ border-radius:14px
 }
 h1{text-align:center;color:#d5ad58;font-size:25px}
 .subtitle{text-align:center;color:#bbb;margin-bottom:25px}
 label{display:block;margin:14px 0 7px}
 input{
-  width:100%;padding:13px;
-  border:1px solid #555;border-radius:7px;
-  background:#292929;color:white;font-size:16px
+ width:100%;padding:13px;border:1px solid #555;
+ border-radius:7px;background:#292929;color:white;font-size:16px
 }
-button{
-  width:100%;padding:14px;margin-top:22px;
-  background:#c49a45;color:#111;
-  border:0;border-radius:7px;
-  font-size:16px;font-weight:bold;cursor:pointer
+button,.button{
+ display:block;width:100%;padding:14px;margin-top:20px;
+ background:#c49a45;color:#111;border:0;border-radius:7px;
+ font-size:16px;font-weight:bold;text-align:center;
+ text-decoration:none;cursor:pointer
 }
 button:disabled{opacity:.6}
 a{color:#d5ad58}
 .links{text-align:center;margin-top:20px;color:#bbb}
-#message{margin-top:17px;text-align:center;line-height:1.5}
+#message{text-align:center;margin-top:17px;line-height:1.6}
+#success{display:none;text-align:center;line-height:1.6}
+#success h2{color:#d5ad58}
+.small{font-size:13px;color:#aaa;margin-top:15px}
 </style>
 </head>
 <body>
 <div class="container">
-  <h1>Next Level Grooming Lounge</h1>
-  <p class="subtitle">Confidence Starts Here</p>
 
+ <h1>Next Level Grooming Lounge</h1>
+ <p class="subtitle">Confidence Starts Here</p>
+
+ <div id="registration">
   <h2>Create Your Account</h2>
 
   <form id="registerForm">
-    <label for="fullName">Full name</label>
-    <input id="fullName" type="text" required
-      autocomplete="name" placeholder="Your full name">
+   <label for="fullName">Full name</label>
+   <input id="fullName" type="text" required
+    autocomplete="name" placeholder="Your full name">
 
-    <label for="phone">Phone number</label>
-    <input id="phone" type="tel" required
-      autocomplete="tel" placeholder="e.g. 0712345678">
+   <label for="phone">Phone number</label>
+   <input id="phone" type="tel" required
+    autocomplete="tel" placeholder="e.g. 0712345678">
 
-    <label for="email">Email address</label>
-    <input id="email" type="email" required
-      autocomplete="email" placeholder="you@example.com">
+   <label for="email">Email address</label>
+   <input id="email" type="email" required
+    autocomplete="email" placeholder="you@example.com">
 
-    <label for="password">Password</label>
-    <input id="password" type="password" required
-      minlength="8" autocomplete="new-password"
-      placeholder="At least 8 characters">
+   <label for="password">Password</label>
+   <input id="password" type="password" required
+    minlength="8" autocomplete="new-password"
+    placeholder="At least 8 characters">
 
-    <button id="registerButton" type="submit">
-      CREATE ACCOUNT
-    </button>
+   <button id="registerButton" type="submit">
+    CREATE ACCOUNT
+   </button>
   </form>
-
   <div id="message" role="status"></div>
+ </div>
 
-  <div class="links">
-    Already have an account?
-    <a href="login.html">Log in</a>
-    <br><br>
-    <a href="index.html">Back to Home</a>
-  </div>
+ <div id="success">
+  <h2>Account Created!</h2>
+  <p>Your registration was successful.</p>
+  <p>We've sent a confirmation email to:</p>
+  <strong id="registeredEmail"></strong>
+  <p>Please open the email and tap the confirmation link.</p>
+
+  <a class="button"
+   href="https://mail.google.com/mail/u/0/#inbox"
+   target="_blank" rel="noopener">
+   OPEN MY EMAIL
+  </a>
+
+  <p class="small">
+   If you use another email provider, open its app and check
+   your inbox or spam folder.
+  </p>
+  <p>After confirming, you'll be redirected to the login page.</p>
+ </div>
+
+ <div class="links">
+  Already have an account?
+  <a href="login.html">Log in</a>
+  <br><br>
+  <a href="index.html">Back to Home</a>
+ </div>
 </div>
 
 <script>
@@ -92,61 +107,64 @@ const SUPABASE_URL = "https://teimbezoinfqlrxczafj.supabase.co";
 const SUPABASE_KEY = "sb_publishable_3lJOm65rVFwElFqLN-Gxzw_LdYacHZP";
 
 const supabaseClient = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
+ SUPABASE_URL,
+ SUPABASE_KEY
 );
 
 const form = document.getElementById("registerForm");
 const message = document.getElementById("message");
 const button = document.getElementById("registerButton");
 
-form.addEventListener("submit", async function(event) {
-  event.preventDefault();
+form.addEventListener("submit", async function(event){
+ event.preventDefault();
 
-  const fullName = document.getElementById("fullName").value.trim();
-  const phone = document.getElementById("phone").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
+ const fullName = document.getElementById("fullName").value.trim();
+ const phone = document.getElementById("phone").value.trim();
+ const email = document.getElementById("email").value.trim();
+ const password = document.getElementById("password").value;
 
-  if (password.length < 8) {
-    message.textContent = "Your password must have at least 8 characters.";
-    return;
+ if(password.length < 8){
+  message.textContent = "Password must have at least 8 characters.";
+  return;
+ }
+
+ button.disabled = true;
+ button.textContent = "CREATING YOUR ACCOUNT...";
+ message.textContent = "Please wait. Do not close this page.";
+
+ try{
+  const {data,error} = await supabaseClient.auth.signUp({
+   email,
+   password,
+   options:{
+    data:{
+     full_name:fullName,
+     phone:phone
+    },
+    emailRedirectTo:
+     "https://mrmbuli.github.io/Barbershop/login.html"
+   }
+  });
+
+  if(error) throw error;
+
+  if(data.session){
+   message.textContent = "Account created. Taking you to login...";
+   setTimeout(function(){
+    window.location.href = "login.html";
+   },1500);
+   return;
   }
 
-  button.disabled = true;
-  button.textContent = "CREATING ACCOUNT...";
-  message.textContent = "";
+  document.getElementById("registeredEmail").textContent = email;
+  document.getElementById("registration").style.display = "none";
+  document.getElementById("success").style.display = "block";
 
-  try {
-    const { data, error } = await supabaseClient.auth.signUp({
-      email: email,
-      password: password,
-      options: {
-        data: {
-          full_name: fullName,
-          phone: phone
-        }
-      }
-    });
-
-    if (error) throw error;
-
-    if (data.session) {
-      message.textContent =
-        "Your account has been created successfully. You can now log in.";
-    } else {
-      message.textContent =
-        "Registration successful! Please check your email and confirm your account before logging in.";
-    }
-
-    form.reset();
-
-  } catch (error) {
-    message.textContent = error.message;
-  } finally {
-    button.disabled = false;
-    button.textContent = "CREATE ACCOUNT";
-  }
+ }catch(error){
+  message.textContent = error.message;
+  button.disabled = false;
+  button.textContent = "CREATE ACCOUNT";
+ }
 });
 </script>
 </body>
