@@ -5,397 +5,269 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Account | Next Level Grooming Lounge</title>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
 *{box-sizing:border-box}
-
-body{
-  margin:0;
-  min-height:100vh;
-  padding:20px;
-  background:#101010;
-  color:white;
-  font-family:Arial,sans-serif
-}
-
-.container{max-width:650px;margin:40px auto}
-
-.header{text-align:center;margin-bottom:30px}
-
-.header h1{color:#d5ad58}
-
-.header p{color:#bbb}
-
-.card{
-  background:#1b1b1b;
-  border:1px solid #b58b36;
-  border-radius:12px;
-  padding:25px;
-  margin-bottom:20px
-}
-
-h2{color:#d5ad58}
-
-.detail{
-  padding:13px 0;
-  border-bottom:1px solid #393939
-}
-
-.detail:last-child{border:0}
-
-.label{
-  color:#aaa;
-  font-size:13px;
-  margin-bottom:6px
-}
-
-.value{
-  font-size:17px;
-  overflow-wrap:anywhere
-}
-
-button,.action-link{
-  display:block;
-  width:100%;
-  padding:14px;
-  background:#c49a45;
-  color:#111;
-  border:0;
-  border-radius:7px;
-  font-weight:bold;
-  font-size:15px;
-  cursor:pointer;
-  text-align:center;
-  text-decoration:none;
-  margin-top:12px
-}
-
-button:hover,.action-link:hover{background:#e0b75f}
-
+body{margin:0;padding:18px;background:#101010;color:white;font-family:Arial,sans-serif}
+.container{max-width:850px;margin:25px auto}
+header{text-align:center;margin-bottom:25px}
+header h1{color:#d5ad58}
+header p{color:#aaa}
+.card{background:#1b1b1b;border:1px solid #b58b36;border-radius:12px;padding:20px;margin-bottom:18px}
+h2,h3{color:#d5ad58}
+p{color:#ddd;line-height:1.5;overflow-wrap:anywhere}
+button{padding:13px;border:0;border-radius:7px;background:#c49a45;color:#111;font-weight:bold;cursor:pointer;width:100%;margin-top:10px}
+button:hover{background:#e0b75f}
+.whatsapp{background:#168b52;color:white}
 .logout{background:#842d2d;color:white}
-
-.logout:hover{background:#a63b3b}
-
-a{color:#d5ad58}
-
-#message{
-  text-align:center;
-  color:#ddd;
-  padding:15px;
-  overflow-wrap:anywhere
-}
-
-.booking{
-  background:#252525;
-  border-left:4px solid #c49a45;
-  border-radius:7px;
-  padding:16px;
-  margin-top:15px
-}
-
-.booking h3{color:#d5ad58;margin-top:0}
-
-.booking p{
-  color:#ddd;
-  font-size:14px;
-  line-height:1.5;
-  overflow-wrap:anywhere
-}
-
-.status{
-  display:inline-block;
-  padding:7px 12px;
-  background:#514321;
-  color:#ffd477;
-  border-radius:20px;
-  font-size:13px
-}
-
-.empty{
-  color:#aaa;
-  line-height:1.6
-}
-
-@media(max-width:480px){
-  .container{margin:15px auto}
-  .card{padding:18px}
-}
+.booking{background:#252525;border:1px solid #444;border-radius:9px;padding:16px;margin-top:14px}
+.status{display:inline-block;padding:6px 10px;background:#514321;color:#ffd477;border-radius:20px;font-size:12px}
+.cancelled{background:#642c2c;color:#ffaaaa}
+.completed{background:#23553a;color:#a9f0be}
+.reason{border:1px solid #a34b4b;border-radius:8px;padding:14px;margin-top:14px;background:#301d1d}
+.notice{color:#e9bd69;font-size:13px}
+.message{text-align:center;color:#ccc;padding:15px}
 </style>
 </head>
-
 <body>
-
 <div class="container">
+<header>
+<h1>NEXT LEVEL GROOMING LOUNGE</h1>
+<p>MY CUSTOMER ACCOUNT</p>
+<p>Confidence Starts Here.</p>
+</header>
 
-  <div class="header">
-    <h1>Next Level Grooming Lounge</h1>
-    <p>Confidence Starts Here</p>
-  </div>
+<div id="message" class="card message">Loading your account...</div>
 
-  <div class="card">
-    <h2>My Customer Account</h2>
+<div id="account" hidden>
+<div class="card">
+<h2>My Profile</h2>
+<p><strong>Name:</strong> <span id="customerName"></span></p>
+<p><strong>Phone:</strong> <span id="customerPhone"></span></p>
+<p><strong>Email:</strong> <span id="customerEmail"></span></p>
+<button onclick="window.location.href='booking.html'">BOOK AN APPOINTMENT</button>
+</div>
 
-    <div id="message">Loading your account...</div>
+<div class="card">
+<h2>My Appointments</h2>
+<div id="bookingsList" class="message">Loading appointments...</div>
+</div>
 
-    <div id="profile" hidden>
-
-      <div class="detail">
-        <div class="label">Full name</div>
-        <div class="value" id="fullName"></div>
-      </div>
-
-      <div class="detail">
-        <div class="label">Phone number</div>
-        <div class="value" id="phone"></div>
-      </div>
-
-      <div class="detail">
-        <div class="label">Email address</div>
-        <div class="value" id="email"></div>
-      </div>
-
-    </div>
-
-    <a href="booking.html" class="action-link">
-      BOOK AN APPOINTMENT
-    </a>
-
-  </div>
-
-  <div class="card">
-    <h2>Loyalty Rewards</h2>
-    <p>Your loyalty points and rewards will appear here.</p>
-  </div>
-
-  <div class="card">
-    <h2>My Bookings</h2>
-    <p>Your appointment and house-call requests will appear here.</p>
-
-    <div id="bookingsList">
-      Loading your bookings...
-    </div>
-  </div>
-
-  <button id="logoutButton" class="logout" hidden>
-    LOG OUT
-  </button>
-
-  <p style="text-align:center;margin-top:25px">
-    <a href="index.html">Back to Home</a>
-  </p>
-
+<div class="card">
+<button id="logoutButton" class="logout">LOG OUT</button>
+</div>
+</div>
 </div>
 
 <script>
-const SUPABASE_URL =
-  "https://teimbezoinfqlrxczafj.supabase.co";
+const SUPABASE_URL="https://teimbezoinfqlrxczafj.supabase.co";
+const SUPABASE_KEY="sb_publishable_3lJOm65rVFwElFqLN-Gxzw_LdYacHZP";
+const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
-const SUPABASE_KEY =
-  "sb_publishable_3lJOm65rVFwElFqLN-Gxzw_LdYacHZP";
+const MANAGER_WHATSAPP="27635892769";
+const HIDE_AFTER_MS=3*60*1000;
 
-const supabaseClient = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+let currentUser=null;
+let allBookings=[];
 
-// Display text safely
-function addText(parent, tag, value, className){
-  const element = document.createElement(tag);
-  element.textContent = value;
+const message=document.getElementById("message");
+const account=document.getElementById("account");
+const bookingsList=document.getElementById("bookingsList");
 
-  if(className){
-    element.className = className;
-  }
-
-  parent.appendChild(element);
-  return element;
+function addText(parent,tag,value,className){
+  const el=document.createElement(tag);
+  el.textContent=value;
+  if(className) el.className=className;
+  parent.appendChild(el);
+  return el;
 }
 
-// Load customer bookings
-async function loadBookings(userId){
-
-  const bookingsList =
-    document.getElementById("bookingsList");
-
-  bookingsList.textContent = "Loading your bookings...";
-
-  const {data, error} = await supabaseClient
-    .from("bookings")
-    .select("*")
-    .eq("customer_id", userId)
-    .order("created_at", {ascending:false});
-
-  if(error){
-    console.error("Booking loading error:", error);
-
-    bookingsList.textContent =
-      "Unable to load your bookings. Please refresh the page.";
-
-    return;
+function shouldShowBooking(booking){
+  if(booking.status==="Completed"){
+    if(!booking.status_updated_at) return true;
+    const elapsed=Date.now()-new Date(booking.status_updated_at).getTime();
+    return elapsed<HIDE_AFTER_MS;
   }
 
+  if(booking.status==="Cancelled" && booking.cancellation_seen_at){
+    return false;
+  }
+
+  return true;
+}
+
+function displayBookings(){
   bookingsList.replaceChildren();
 
-  if(!data || data.length === 0){
+  const visible=allBookings.filter(shouldShowBooking);
 
-    addText(
-      bookingsList,
-      "p",
-      "You have no bookings yet. Book your first appointment today.",
-      "empty"
-    );
-
+  if(visible.length===0){
+    addText(bookingsList,"p","You currently have no visible appointments.");
     return;
   }
 
-  data.forEach(function(booking){
+  visible.forEach(booking=>{
+    const card=document.createElement("div");
+    card.className="booking";
 
-    const card = document.createElement("div");
-    card.className = "booking";
+    addText(card,"h3",booking.service_name);
+    addText(card,"p","Category: "+booking.service_category);
+    addText(card,"p","Booking type: "+booking.booking_type);
+    addText(card,"p","Date: "+booking.preferred_date);
+    addText(card,"p","Time: "+booking.preferred_time);
 
-    addText(
-      card,
-      "h3",
-      booking.service_name || "Appointment"
-    );
-
-    addText(
-      card,
-      "p",
-      "Category: " + (booking.service_category || "Not specified")
-    );
-
-    addText(
-      card,
-      "p",
-      "Booking type: " + (booking.booking_type || "Not specified")
-    );
-
-    addText(
-      card,
-      "p",
-      "Date: " + (booking.preferred_date || "Not specified")
-    );
-
-    addText(
-      card,
-      "p",
-      "Time: " + (booking.preferred_time || "Not specified")
-    );
-
-    if(booking.booking_type === "House Call"){
-
-      addText(
-        card,
-        "p",
-        "Area: " + (booking.area || "Not provided")
-      );
-
-      addText(
-        card,
-        "p",
-        "Address: " + (booking.address || "Not provided")
-      );
+    if(booking.booking_type==="House Call"){
+      addText(card,"p","Area: "+(booking.area||"Not provided"));
+      addText(card,"p","Address: "+(booking.address||"Not provided"));
     }
 
-    if(booking.notes){
-      addText(
-        card,
-        "p",
-        "Notes: " + booking.notes
-      );
-    }
+    if(booking.notes) addText(card,"p","Notes: "+booking.notes);
 
-    addText(
-      card,
-      "span",
-      "Status: " + (booking.status || "Pending"),
-      "status"
-    );
+    let statusClass="status";
+    if(booking.status==="Cancelled") statusClass+=" cancelled";
+    if(booking.status==="Completed") statusClass+=" completed";
+
+    addText(card,"span","Status: "+booking.status,statusClass);
+
+    if(booking.status==="Cancelled"){
+      const reasonBox=document.createElement("div");
+      reasonBox.className="reason";
+
+      addText(reasonBox,"h3","Appointment Cancelled");
+
+      addText(reasonBox,"p",
+        booking.cancellation_reason||
+        "Management has cancelled this appointment. Please contact us for more information."
+      );
+
+      addText(reasonBox,"p",
+        "If you have questions about this cancellation, please contact the manager."
+      ,"notice");
+
+      const contactButton=document.createElement("button");
+      contactButton.className="whatsapp";
+      contactButton.textContent="CONTACT MANAGER ON WHATSAPP";
+
+      contactButton.addEventListener("click",()=>{
+        const text="Hello Next Level Grooming Lounge. I have seen that my "+
+          booking.service_name+" appointment on "+booking.preferred_date+
+          " was cancelled. I would like more information about the reason.";
+        window.open(
+          "https://wa.me/"+MANAGER_WHATSAPP+"?text="+encodeURIComponent(text),
+          "_blank"
+        );
+      });
+
+      reasonBox.appendChild(contactButton);
+
+      const acknowledgeButton=document.createElement("button");
+      acknowledgeButton.textContent="I UNDERSTAND — DISMISS";
+
+      acknowledgeButton.addEventListener("click",async()=>{
+        if(!confirm("Have you read the cancellation reason? This will remove the appointment from your booking history.")){
+          return;
+        }
+
+        acknowledgeButton.disabled=true;
+        acknowledgeButton.textContent="SAVING...";
+
+        const {error}=await supabaseClient
+          .from("bookings")
+          .update({cancellation_seen_at:new Date().toISOString()})
+          .eq("id",booking.id)
+          .eq("customer_id",currentUser.id)
+          .eq("status","Cancelled");
+
+        if(error){
+          alert("Unable to acknowledge cancellation: "+error.message);
+          acknowledgeButton.disabled=false;
+          acknowledgeButton.textContent="I UNDERSTAND — DISMISS";
+          return;
+        }
+
+        allBookings=allBookings.filter(item=>item.id!==booking.id);
+        displayBookings();
+      });
+
+      reasonBox.appendChild(acknowledgeButton);
+      card.appendChild(reasonBox);
+    }
 
     bookingsList.appendChild(card);
-
   });
 }
 
-// Load account
-async function loadAccount(){
+async function loadBookings(){
+  bookingsList.textContent="Loading appointments...";
 
-  const message = document.getElementById("message");
-  const profile = document.getElementById("profile");
-  const logoutButton = document.getElementById("logoutButton");
-
-  try{
-
-    const {data: {user}, error: authError} =
-      await supabaseClient.auth.getUser();
-
-    if(authError) throw authError;
-
-    if(!user){
-      window.location.href = "login.html";
-      return;
-    }
-
-    const {data, error} = await supabaseClient
-      .from("customer_profiles")
-      .select("full_name, phone")
-      .eq("id", user.id)
-      .maybeSingle();
-
-    if(error) throw error;
-
-    const metadata = user.user_metadata || {};
-
-    document.getElementById("fullName").textContent =
-      data?.full_name || metadata.full_name || "Not provided";
-
-    document.getElementById("phone").textContent =
-      data?.phone || metadata.phone || "Not provided";
-
-    document.getElementById("email").textContent =
-      user.email || "Not available";
-
-    message.textContent = "Welcome to your account!";
-
-    profile.hidden = false;
-    logoutButton.hidden = false;
-
-    await loadBookings(user.id);
-
-  }catch(error){
-
-    console.error("Account error:", error);
-
-    message.textContent =
-      "Unable to load your account: " + error.message;
-
-    document.getElementById("bookingsList").textContent =
-      "Your bookings could not be loaded.";
-  }
-}
-
-// Logout
-document.getElementById("logoutButton")
-.addEventListener("click", async function(){
-
-  const {error} = await supabaseClient.auth.signOut();
+  const {data,error}=await supabaseClient
+    .from("bookings")
+    .select("*")
+    .eq("customer_id",currentUser.id)
+    .order("created_at",{ascending:false});
 
   if(error){
-    document.getElementById("message").textContent =
-      error.message;
+    bookingsList.textContent="Unable to load appointments: "+error.message;
     return;
   }
 
-  window.location.href = "login.html";
+  allBookings=data||[];
+  displayBookings();
+}
+
+async function loadAccount(){
+  try{
+    const {data:{user},error}=await supabaseClient.auth.getUser();
+
+    if(error) throw error;
+
+    if(!user){
+      window.location.href="login.html";
+      return;
+    }
+
+    currentUser=user;
+
+    const {data:profile, error:profileError}=await supabaseClient
+      .from("customer_profiles")
+      .select("full_name,phone")
+      .eq("id",user.id)
+      .maybeSingle();
+
+    if(profileError) throw profileError;
+
+    document.getElementById("customerName").textContent=profile?.full_name||"Not provided";
+    document.getElementById("customerPhone").textContent=profile?.phone||"Not provided";
+    document.getElementById("customerEmail").textContent=user.email||"Not provided";
+
+    message.hidden=true;
+    account.hidden=false;
+
+    await loadBookings();
+
+  }catch(error){
+    console.error(error);
+    message.textContent="Unable to load your account: "+error.message;
+  }
+}
+
+document.getElementById("logoutButton").addEventListener("click",async()=>{
+  const {error}=await supabaseClient.auth.signOut();
+  if(error){alert(error.message);return;}
+  window.location.href="login.html";
 });
 
-// Start account
+// Refresh booking visibility every five seconds.
+setInterval(()=>{
+  if(currentUser) displayBookings();
+},5000);
+
+// Refresh data when the customer returns to this page.
+document.addEventListener("visibilitychange",()=>{
+  if(!document.hidden && currentUser) loadBookings();
+});
+
 loadAccount();
-
 </script>
-
 </body>
 </html>
