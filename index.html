@@ -2,641 +2,936 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#111111">
-  <meta name="description" content="Next Level Grooming Lounge. Premium barbering, hairstyling and personal house-call grooming services.">
-  <title>Next Level Grooming Lounge | Confidence Starts Here</title>
-
-  <style>
-    :root {
-      --black: #111111;
-      --dark: #1b1b1b;
-      --gold: #c49a50;
-      --light-gold: #e2c17e;
-      --white: #ffffff;
-      --grey: #eeeeee;
-      --muted: #aaaaaa;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: #f5f5f5;
-      color: #222;
-      overflow-x: hidden;
-    }
-
-    a { text-decoration: none; color: inherit; }
-
-    header {
-      background: var(--black);
-      color: white;
-      padding: 18px 6%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      border-bottom: 1px solid #383838;
-    }
-
-    .brand {
-      color: var(--gold);
-      font-size: 19px;
-      font-weight: bold;
-      letter-spacing: 1.5px;
-    }
-
-    .brand span {
-      display: block;
-      color: white;
-      font-size: 10px;
-      letter-spacing: 4px;
-      margin-top: 5px;
-    }
-
-    nav {
-      display: flex;
-      gap: 25px;
-      align-items: center;
-    }
-
-    nav a {
-      color: white;
-      font-size: 13px;
-      transition: 0.3s;
-    }
-
-    nav a:hover { color: var(--gold); }
-
-    .nav-book {
-      background: var(--gold);
-      color: black;
-      padding: 11px 18px;
-      border-radius: 3px;
-      font-weight: bold;
-    }
-
-    .menu-btn {
-      display: none;
-      color: white;
-      background: none;
-      border: none;
-      font-size: 27px;
-      cursor: pointer;
-    }
-
-    .hero {
-      min-height: 570px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 70px 20px;
-      color: white;
-      background:
-        linear-gradient(rgba(0,0,0,0.78), rgba(0,0,0,0.85)),
-        url("https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1800&q=85")
-        center/cover no-repeat;
-    }
-
-    .hero-content { max-width: 800px; }
-
-    .hero-label {
-      color: var(--light-gold);
-      letter-spacing: 5px;
-      font-size: 12px;
-      margin-bottom: 20px;
-    }
-
-    .hero h1 {
-      font-size: clamp(35px, 6vw, 65px);
-      line-height: 1.15;
-      margin-bottom: 20px;
-    }
-
-    .hero h1 span { color: var(--gold); }
-
-    .hero p {
-      color: #ddd;
-      font-size: 17px;
-      line-height: 1.7;
-      margin-bottom: 30px;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 14px 25px;
-      background: var(--gold);
-      color: #111;
-      font-weight: bold;
-      border-radius: 3px;
-      margin: 5px;
-      transition: 0.3s;
-    }
-
-    .btn:hover {
-      background: var(--light-gold);
-      transform: translateY(-2px);
-    }
-
-    .btn-outline {
-      border: 1px solid var(--gold);
-      color: white;
-      background: transparent;
-    }
-
-    .btn-outline:hover { color: black; }
-
-    .promotions {
-      background: var(--dark);
-      color: white;
-      overflow: hidden;
-    }
-
-    .ads-container {
-      display: flex;
-      width: 300%;
-      transition: transform 1.5s ease-in-out;
-    }
-
-    .ad-slide {
-      width: 33.3333%;
-      flex-shrink: 0;
-      padding: 32px 15px;
-      text-align: center;
-      color: var(--light-gold);
-      font-size: 17px;
-      font-weight: bold;
-    }
-
-    .dots {
-      display: flex;
-      justify-content: center;
-      padding: 0 0 18px;
-      gap: 10px;
-    }
-
-    .dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: #666;
-      border: none;
-      cursor: pointer;
-    }
-
-    .dot.active { background: var(--gold); }
-
-    section.content-section { padding: 75px 7%; }
-
-    .section-heading {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-
-    .section-heading small {
-      color: #a17b39;
-      letter-spacing: 4px;
-      font-weight: bold;
-    }
-
-    .section-heading h2 {
-      font-size: 32px;
-      margin: 12px 0;
-    }
-
-    .section-heading p {
-      color: #666;
-      line-height: 1.6;
-    }
-
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-    }
-
-    .service-card {
-      background: white;
-      border: 1px solid #e5e5e5;
-      transition: 0.3s;
-      overflow: hidden;
-    }
-
-    .service-card:hover {
-      transform: translateY(-5px);
-      border-color: var(--gold);
-    }
-
-    .service-card img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .service-info { padding: 25px; }
-
-    .service-info h3 {
-      margin-bottom: 12px;
-      color: #171717;
-    }
-
-    .service-info p {
-      color: #666;
-      line-height: 1.6;
-      font-size: 14px;
-    }
-
-    .house-call {
-      background: var(--black);
-      color: white;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      gap: 40px;
-    }
-
-    .house-call img {
-      width: 100%;
-      max-height: 380px;
-      object-fit: cover;
-    }
-
-    .house-call h2 {
-      font-size: 34px;
-      color: var(--gold);
-      margin: 15px 0;
-    }
-
-    .house-call p {
-      color: #ccc;
-      line-height: 1.8;
-      margin-bottom: 20px;
-    }
-
-    .house-call small {
-      letter-spacing: 3px;
-      color: var(--light-gold);
-    }
-
-    .about {
-      text-align: center;
-      background: white;
-    }
-
-    .about-text {
-      max-width: 750px;
-      margin: auto;
-      line-height: 1.9;
-      color: #555;
-    }
-
-    .loyalty {
-      background: #eee8dc;
-      text-align: center;
-    }
-
-    .loyalty h2 {
-      font-size: 30px;
-      margin-bottom: 15px;
-    }
-
-    .loyalty p {
-      color: #555;
-      margin-bottom: 20px;
-      line-height: 1.7;
-    }
-
-    .contact {
-      background: #171717;
-      color: white;
-      text-align: center;
-    }
-
-    .contact h2 {
-      color: var(--gold);
-      margin-bottom: 20px;
-      font-size: 32px;
-    }
-
-    .contact p {
-      color: #ccc;
-      line-height: 1.8;
-    }
-
-    footer {
-      background: #090909;
-      color: #999;
-      text-align: center;
-      padding: 25px 15px;
-      font-size: 12px;
-    }
-
-    footer strong { color: var(--gold); }
-
-    @media (max-width: 768px) {
-      header { padding: 15px 5%; }
-
-      .menu-btn { display: block; }
-
-      nav {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background: #151515;
-        flex-direction: column;
-        padding: 20px;
-        gap: 0;
-      }
-
-      nav.active { display: flex; }
-
-      nav a {
-        width: 100%;
-        padding: 15px;
-        text-align: center;
-        border-bottom: 1px solid #333;
-      }
-
-      .hero { min-height: 500px; }
-
-      .hero p { font-size: 15px; }
-
-      .services-grid { grid-template-columns: 1fr; }
-
-      .house-call { grid-template-columns: 1fr; }
-
-      section.content-section { padding: 55px 6%; }
-
-      .section-heading h2 { font-size: 27px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101010">
+<meta name="description" content="Next Level Grooming Lounge. Professional barbering, hairstyling and personal house-call grooming services.">
+<title>Next Level Grooming Lounge | Confidence Starts Here</title>
+
+<style>
+:root {
+  --black:#101010;
+  --dark:#171717;
+  --panel:#202020;
+  --gold:#c49a50;
+  --light-gold:#e5c17e;
+  --white:#fff;
+  --muted:#aaa;
+}
+
+* {
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
+
+html { scroll-behavior:smooth; }
+
+body {
+  background:var(--black);
+  color:white;
+  overflow-x:hidden;
+}
+
+a { color:inherit;text-decoration:none; }
+
+button { font:inherit; }
+
+header {
+  position:sticky;
+  top:0;
+  z-index:1000;
+  min-height:78px;
+  padding:15px 6%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:rgba(12,12,12,.96);
+  border-bottom:1px solid rgba(196,154,80,.25);
+  backdrop-filter:blur(15px);
+}
+
+.brand {
+  color:var(--gold);
+  font-size:21px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+
+.brand span {
+  display:block;
+  color:white;
+  font-size:9px;
+  letter-spacing:5px;
+  margin-top:5px;
+}
+
+nav {
+  display:flex;
+  align-items:center;
+  gap:26px;
+}
+
+nav a {
+  color:#ddd;
+  font-size:13px;
+  transition:.25s;
+}
+
+nav a:hover { color:var(--light-gold); }
+
+.nav-book {
+  background:var(--gold);
+  color:#111;
+  padding:12px 19px;
+  font-weight:bold;
+  border-radius:3px;
+}
+
+.menu-btn {
+  display:none;
+  color:white;
+  background:none;
+  border:0;
+  font-size:28px;
+  cursor:pointer;
+  padding:5px 8px;
+}
+
+/* HERO */
+
+.hero {
+  min-height:660px;
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  padding:90px 8%;
+  background:
+    radial-gradient(ellipse at 78% 45%,rgba(196,154,80,.17),transparent 35%),
+    linear-gradient(100deg,#090909 5%,rgba(10,10,10,.94) 48%,rgba(10,10,10,.65)),
+    url("https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=1800&q=85")
+    center/cover no-repeat;
+}
+
+.hero:before {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg,rgba(0,0,0,.4),transparent 75%);
+  pointer-events:none;
+}
+
+.hero:after {
+  content:"";
+  position:absolute;
+  width:430px;
+  height:430px;
+  right:7%;
+  top:50%;
+  transform:translateY(-50%);
+  border:1px solid rgba(229,193,126,.2);
+  border-radius:50%;
+  box-shadow:0 0 0 35px rgba(196,154,80,.025),
+             0 0 0 75px rgba(196,154,80,.02);
+  pointer-events:none;
+}
+
+.hero-content {
+  position:relative;
+  z-index:2;
+  max-width:720px;
+}
+
+.hero-label,.eyebrow {
+  color:var(--light-gold);
+  font-size:11px;
+  letter-spacing:5px;
+  font-weight:bold;
+}
+
+.hero h1 {
+  font-size:clamp(42px,7vw,82px);
+  line-height:1.04;
+  letter-spacing:-2px;
+  margin:25px 0;
+}
+
+.hero h1 span { color:var(--gold); }
+
+.hero p {
+  color:#ccc;
+  font-size:16px;
+  line-height:1.8;
+  max-width:540px;
+  margin-bottom:28px;
+}
+
+.hero-slogan {
+  color:var(--light-gold);
+  font-size:12px;
+  letter-spacing:3px;
+  margin-top:30px;
+  min-height:18px;
+  animation:sloganFade 4s infinite;
+}
+
+@keyframes sloganFade {
+  0%,100% { opacity:.45; }
+  50% { opacity:1; }
+}
+
+.hero-tools {
+  position:absolute;
+  z-index:1;
+  right:9%;
+  bottom:11%;
+  color:rgba(229,193,126,.22);
+  font-size:clamp(75px,13vw,160px);
+  letter-spacing:12px;
+  transform:rotate(-12deg);
+  pointer-events:none;
+  text-shadow:0 0 35px rgba(196,154,80,.16);
+}
+
+.hero-tools span {
+  display:block;
+  font-size:clamp(30px,5vw,55px);
+  letter-spacing:8px;
+  text-align:center;
+  margin-top:5px;
+}
+
+.btn {
+  display:inline-block;
+  padding:15px 25px;
+  margin:5px 7px 5px 0;
+  background:var(--gold);
+  color:#111;
+  font-weight:bold;
+  font-size:13px;
+  border:1px solid var(--gold);
+  border-radius:3px;
+  transition:.3s;
+}
+
+.btn:hover {
+  background:var(--light-gold);
+  transform:translateY(-3px);
+}
+
+.btn-outline {
+  background:transparent;
+  color:white;
+}
+
+.btn-outline:hover { color:#111; }
+
+/* PROMOTIONS */
+
+.promotions {
+  background:#1c1c1c;
+  border-top:1px solid #393027;
+  border-bottom:1px solid #393027;
+  overflow:hidden;
+}
+
+.ads-container {
+  display:flex;
+  width:300%;
+  transition:transform .8s ease;
+}
+
+.ad-slide {
+  width:33.3333%;
+  flex-shrink:0;
+  padding:27px 15px;
+  text-align:center;
+  color:var(--light-gold);
+  font-size:14px;
+  font-weight:bold;
+  letter-spacing:2px;
+}
+
+.dots {
+  display:flex;
+  justify-content:center;
+  gap:9px;
+  padding-bottom:15px;
+}
+
+.dot {
+  width:8px;
+  height:8px;
+  border:0;
+  border-radius:50%;
+  background:#666;
+  cursor:pointer;
+}
+
+.dot.active { background:var(--gold); }
+
+/* GENERAL SECTIONS */
+
+section.content-section { padding:85px 7%; }
+
+.section-heading {
+  text-align:center;
+  margin-bottom:45px;
+}
+
+.section-heading small {
+  color:var(--gold);
+  font-size:11px;
+  letter-spacing:4px;
+  font-weight:bold;
+}
+
+.section-heading h2 {
+  font-size:clamp(27px,4vw,42px);
+  margin:15px 0;
+  letter-spacing:-1px;
+}
+
+.section-heading p {
+  color:#aaa;
+  line-height:1.7;
+  font-size:14px;
+}
+
+/* SERVICES */
+
+.services-section { background:#111; }
+
+.services-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:22px;
+}
+
+.service-card {
+  display:block;
+  position:relative;
+  overflow:hidden;
+  background:#1d1d1d;
+  border:1px solid #333;
+  transition:.35s;
+  min-width:0;
+}
+
+.service-card:hover {
+  transform:translateY(-7px);
+  border-color:var(--gold);
+  box-shadow:0 15px 35px rgba(0,0,0,.3);
+}
+
+.service-card img {
+  width:100%;
+  height:220px;
+  display:block;
+  object-fit:cover;
+  filter:brightness(.8);
+  transition:.5s;
+}
+
+.service-card:hover img {
+  transform:scale(1.04);
+  filter:brightness(1);
+}
+
+.service-info { padding:25px; }
+
+.service-info h3 {
+  color:var(--light-gold);
+  font-size:19px;
+  margin-bottom:12px;
+}
+
+.service-info p {
+  color:#aaa;
+  font-size:13px;
+  line-height:1.8;
+}
+
+.service-link {
+  display:inline-block;
+  margin-top:19px;
+  padding:11px 15px;
+  color:#111;
+  background:var(--gold);
+  font-size:11px;
+  font-weight:bold;
+  letter-spacing:1px;
+}
+
+/* TOOL STRIP */
+
+.tool-strip {
+  background:#1a1a1a;
+  padding:45px 7%;
+  text-align:center;
+  border-top:1px solid #30291e;
+  border-bottom:1px solid #30291e;
+}
+
+.tool-strip .tools {
+  color:var(--light-gold);
+  font-size:clamp(25px,5vw,42px);
+  letter-spacing:12px;
+  margin:17px 0;
+}
+
+.tool-strip p {
+  color:#999;
+  font-size:12px;
+  letter-spacing:3px;
+}
+
+/* HOUSE CALL */
+
+.house-call {
+  background:
+    radial-gradient(circle at 85% 50%,rgba(196,154,80,.12),transparent 35%),
+    #151515;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  gap:55px;
+}
+
+.house-call h2 {
+  color:var(--gold);
+  font-size:clamp(30px,4vw,43px);
+  line-height:1.2;
+  margin:18px 0;
+}
+
+.house-call p {
+  color:#bbb;
+  line-height:1.9;
+  font-size:14px;
+  margin-bottom:17px;
+}
+
+.house-call img {
+  width:100%;
+  max-height:390px;
+  object-fit:cover;
+  border:1px solid rgba(196,154,80,.4);
+  filter:brightness(.8);
+}
+
+/* ABOUT */
+
+.about {
+  background:#eeeae2;
+  color:#171717;
+  text-align:center;
+}
+
+.about .section-heading p { color:#555; }
+.about .section-heading small { color:#9b7333; }
+
+.about-text {
+  max-width:780px;
+  margin:auto;
+  color:#555;
+  font-size:14px;
+  line-height:2;
+}
+
+.about-text p { margin-bottom:15px; }
+
+/* LOYALTY */
+
+.loyalty {
+  background:#171717;
+  text-align:center;
+}
+
+.loyalty p {
+  color:#bbb;
+  line-height:1.8;
+  font-size:14px;
+  max-width:620px;
+  margin:0 auto 20px;
+}
+
+/* CONTACT */
+
+.contact {
+  text-align:center;
+  background:#0d0d0d;
+  border-top:1px solid #29231b;
+}
+
+.contact h2 {
+  color:var(--gold);
+  font-size:clamp(28px,4vw,40px);
+  margin-bottom:20px;
+}
+
+.contact p {
+  color:#bbb;
+  line-height:1.9;
+  font-size:14px;
+}
+
+/* FOOTER */
+
+footer {
+  background:#080808;
+  color:#888;
+  text-align:center;
+  padding:30px 15px;
+  font-size:12px;
+  line-height:2;
+  border-top:1px solid #28231b;
+}
+
+footer strong { color:var(--gold); }
+
+@media(max-width:900px) {
+  nav { gap:15px; }
+  nav a { font-size:12px; }
+  .hero-tools { right:3%;opacity:.7; }
+}
+
+@media(max-width:768px) {
+  header { padding:14px 5%; }
+
+  .menu-btn {
+    display:block;
+    position:relative;
+    z-index:1002;
+  }
+
+  nav {
+    display:none;
+    position:absolute;
+    top:100%;
+    left:0;
+    width:100%;
+    padding:12px 18px 20px;
+    background:rgba(15,15,15,.99);
+    border-top:1px solid #383027;
+    border-bottom:1px solid var(--gold);
+    flex-direction:column;
+    align-items:stretch;
+    gap:0;
+    box-shadow:0 15px 25px rgba(0,0,0,.4);
+  }
+
+  nav.active { display:flex; }
+
+  nav a {
+    width:100%;
+    padding:16px 12px;
+    border-bottom:1px solid #303030;
+    text-align:center;
+    font-size:14px;
+  }
+
+  nav .nav-book {
+    margin-top:12px;
+    border:0;
+  }
+
+  .hero {
+    min-height:590px;
+    padding:75px 7%;
+    background-position:58% center;
+  }
+
+  .hero:after {
+    width:260px;
+    height:260px;
+    right:-100px;
+    top:70%;
+  }
+
+  .hero-tools {
+    right:2%;
+    bottom:5%;
+    font-size:75px;
+    opacity:.55;
+  }
+
+  .hero-tools span { font-size:25px; }
+
+  .hero h1 { font-size:clamp(40px,12vw,62px); }
+  .hero p { font-size:14px; }
+
+  .services-grid { grid-template-columns:1fr; }
+  .service-card img { height:230px; }
+
+  .house-call {
+    grid-template-columns:1fr;
+    gap:30px;
+  }
+
+  .house-call img { max-height:280px; }
+
+  section.content-section { padding:60px 6%; }
+  .section-heading { margin-bottom:32px; }
+
+  .ad-slide {
+    font-size:12px;
+    letter-spacing:1px;
+    padding:24px 10px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after {
+    scroll-behavior:auto!important;
+    animation:none!important;
+    transition:none!important;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <header>
-    <a href="#home" class="brand">
-      NEXT LEVEL
-      <span>GROOMING LOUNGE</span>
+<header id="siteHeader">
+  <a href="#home" class="brand">
+    NEXT LEVEL
+    <span>GROOMING LOUNGE</span>
+  </a>
+
+  <button class="menu-btn" id="menuButton"
+    type="button" aria-label="Open navigation"
+    aria-expanded="false" aria-controls="navigation">
+    ☰
+  </button>
+
+  <nav id="navigation">
+    <a href="#home">Home</a>
+    <a href="#services">Services</a>
+    <a href="#housecall">House Calls</a>
+    <a href="#about">About</a>
+    <a href="#loyalty">Loyalty</a>
+    <a href="#contact">Contact</a>
+    <a href="booking.html?type=shop" class="nav-book">Book Now</a>
+  </nav>
+</header>
+
+<main>
+
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="hero-label">THE ART OF GROOMING</div>
+
+    <h1>
+      YOUR STYLE.<br>
+      YOUR STANDARD.<br>
+      <span>NEXT LEVEL.</span>
+    </h1>
+
+    <p>
+      Professional barbering, hairstyling and grooming
+      services designed to bring out your confidence.
+      Quality starts with the details.
+    </p>
+
+    <a href="booking.html?type=shop" class="btn">
+      BOOK AN APPOINTMENT
     </a>
 
-    <button class="menu-btn"
-      onclick="toggleMenu()"
-      aria-label="Toggle navigation"
-      aria-expanded="false"
-      id="menuButton">
-      ☰
-    </button>
+    <a href="booking.html?type=housecall" class="btn btn-outline">
+      REQUEST A HOUSE CALL
+    </a>
 
-    <nav id="navigation">
-      <a href="#home">Home</a>
-      <a href="#services">Services</a>
-      <a href="#housecall">House Calls</a>
-      <a href="#about">About</a>
-      <a href="#loyalty">Loyalty</a>
-      <a href="#contact">Contact</a>
-      <a href="booking.html?type=shop" class="nav-book">Book Now</a>
-    </nav>
-  </header>
-
-  <section class="hero" id="home">
-    <div class="hero-content">
-      <div class="hero-label">PREMIUM GROOMING EXPERIENCE</div>
-
-      <h1>
-        LOOK GOOD.<br>
-        FEEL GOOD.<br>
-        <span>BE NEXT LEVEL.</span>
-      </h1>
-
-      <p>
-        Welcome to Next Level Grooming Lounge.
-        Professional barbering, hairstyling and grooming
-        services designed around you.
-      </p>
-
-      <a href="booking.html?type=shop" class="btn">
-        Book An Appointment
-      </a>
-
-      <a href="booking.html?type=housecall" class="btn btn-outline">
-        House Call Services
-      </a>
+    <div class="hero-slogan" id="heroSlogan">
+      CONFIDENCE STARTS HERE.
     </div>
-  </section>
-
-  <section class="promotions" id="promotions">
-    <div class="ads-container" id="adsContainer">
-      <div class="ad-slide">🔥 SPECIAL OFFERS COMING SOON</div>
-      <div class="ad-slide">💈 REFER A FRIEND AND ENJOY REWARDS</div>
-      <div class="ad-slide">🎉 JOIN OUR LOYALTY PROGRAMME</div>
-    </div>
-
-    <div class="dots">
-      <button class="dot active" onclick="setSlide(0)" aria-label="Promotion 1"></button>
-      <button class="dot" onclick="setSlide(1)" aria-label="Promotion 2"></button>
-      <button class="dot" onclick="setSlide(2)" aria-label="Promotion 3"></button>
-    </div>
-  </section>
-
-  <section class="content-section" id="services">
-    <div class="section-heading">
-      <small>WHAT WE OFFER</small>
-      <h2>Our Grooming Services</h2>
-      <p>Quality, style and confidence in every service.</p>
-    </div>
-
-    <div class="services-grid">
-      <a href="barbering.html" class="service-card">
-  <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=900&q=80" alt="Professional barber haircut">
-
-  <div class="service-info">
-    <h3>Professional Barbering</h3>
-    <p>Fresh fades, haircuts, beard grooming, line-ups and personalised styles.</p>
-
-    <span style="display:inline-block;margin-top:15px;background:#c49a50;color:#111;padding:11px 18px;font-weight:bold;border-radius:3px;">
-      VIEW BARBERING SERVICES →
-    </span>
   </div>
-      </a>
 
-      <div class="service-card">
-        <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=900&q=80" alt="Professional hair salon">
-        <div class="service-info">
-          <h3>Hair Salon</h3>
-          <p>Professional hairstyling, washing, treatments and hair care services.</p>
-        </div>
+  <div class="hero-tools" aria-hidden="true">
+    ✂
+    <span>✦ 〰 ✦</span>
+  </div>
+</section>
+
+<section class="promotions" id="promotions">
+  <div class="ads-container" id="adsContainer">
+    <div class="ad-slide">SPECIAL OFFERS COMING SOON</div>
+    <div class="ad-slide">REFER A FRIEND AND ENJOY REWARDS</div>
+    <div class="ad-slide">JOIN THE NEXT LEVEL FAMILY</div>
+  </div>
+
+  <div class="dots">
+    <button class="dot active" onclick="setSlide(0)" aria-label="Promotion 1"></button>
+    <button class="dot" onclick="setSlide(1)" aria-label="Promotion 2"></button>
+    <button class="dot" onclick="setSlide(2)" aria-label="Promotion 3"></button>
+  </div>
+</section>
+
+<section class="content-section services-section" id="services">
+  <div class="section-heading">
+    <small>WHAT WE OFFER</small>
+    <h2>Our Grooming Services</h2>
+    <p>Precision, creativity and confidence in every detail.</p>
+  </div>
+
+  <div class="services-grid">
+
+    <a href="barbering.html" class="service-card">
+      <img
+        src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=900&q=80"
+        alt="Close-up professional barbering tools">
+      <div class="service-info">
+        <h3>Professional Barbering</h3>
+        <p>Fresh fades, haircuts, beard grooming, line-ups and personalised styles.</p>
+        <span class="service-link">VIEW BARBERING SERVICES →</span>
       </div>
-
-      <div class="service-card">
-        <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=900&q=80" alt="Nail grooming">
-        <div class="service-info">
-          <h3>Nail Grooming</h3>
-          <p>Beautiful nail finishes, manicures, gel overlays and nail care.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="content-section house-call" id="housecall">
-    <div>
-      <small>PERSONAL BARBER SERVICE</small>
-      <h2>Your Personal Barber, Anytime.</h2>
-
-      <p>
-        Can't make it to the lounge?
-        We bring professional grooming services
-        directly to your home or preferred location.
-      </p>
-
-      <p>
-        Enjoy convenient personal barber services
-        around Soweto, Roodepoort and surrounding
-        Gauteng areas, subject to availability.
-      </p>
-
-      <a href="booking.html?type=housecall" class="btn">
-        Request A House Call
-      </a>
-    </div>
-
-    <img
-      src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=1100&q=85"
-      alt="Barber providing a professional haircut">
-  </section>
-
-  <section class="content-section about" id="about">
-    <div class="section-heading">
-      <small>OUR IDENTITY</small>
-      <h2>Confidence Starts Here.</h2>
-    </div>
-
-    <div class="about-text">
-      <p>
-        Next Level Grooming Lounge is built around
-        professional grooming, personal service
-        and helping every customer look and feel
-        their best.
-      </p>
-
-      <p>
-        Growing from the personal barber concept
-        of King's Cut Barbershop, our vision is to
-        bring barbering, hairstyling and grooming
-        together under one brand.
-      </p>
-
-      <p>
-        Whether you visit us or request a house call,
-        our goal is to deliver quality and confidence
-        every time.
-      </p>
-    </div>
-  </section>
-
-  <section class="content-section loyalty" id="loyalty">
-    <div class="section-heading">
-      <small>REWARDS FOR OUR CUSTOMERS</small>
-      <h2>Join Our Loyalty Family</h2>
-    </div>
-
-    <p>
-      Become part of the Next Level family.
-      Stay updated with promotions and future
-      loyalty rewards.
-    </p>
-
-    <a href="register.html" class="btn">Register Your Account</a>
-  </section>
-
-  <section class="content-section contact" id="contact">
-    <h2>Let's Get You Looking Fresh.</h2>
-
-    <p>Ready for your next grooming experience?</p>
-
-    <p>
-      Contact Next Level Grooming Lounge
-      to enquire about appointments and house calls.
-    </p>
-
-    <a href="https://wa.me/27635892769" class="btn" target="_blank" rel="noopener">
-      Contact Us on WhatsApp
     </a>
-  </section>
 
-  <footer>
+    <div class="service-card">
+      <img
+        src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=900&q=80"
+        alt="Professional hair styling">
+      <div class="service-info">
+        <h3>Hair Salon</h3>
+        <p>Professional hairstyling, washing, treatments and hair care services.</p>
+        <span class="service-link">EXPLORE OUR SERVICES</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <img
+        src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=900&q=80"
+        alt="Nail grooming and nail care">
+      <div class="service-info">
+        <h3>Nail Grooming</h3>
+        <p>Beautiful nail finishes, manicures, gel overlays and nail care.</p>
+        <span class="service-link">EXPLORE OUR SERVICES</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="tool-strip">
+  <div class="eyebrow">THE DETAILS MAKE THE DIFFERENCE</div>
+  <div class="tools" aria-label="Scissors, comb and grooming tools">
+    ✂ &nbsp; ⌁ &nbsp; ⚒ &nbsp; ✦
+  </div>
+  <p>PRECISION · CRAFT · CONFIDENCE</p>
+</section>
+
+<section class="content-section house-call" id="housecall">
+  <div>
+    <small class="eyebrow">PERSONAL BARBER SERVICE</small>
+    <h2>Your Grooming.<br>Your Location.</h2>
+
     <p>
-      © <span id="year"></span>
-      <strong>Next Level Grooming Lounge</strong>.
-      All Rights Reserved.
+      Can't make it to the lounge?
+      We bring professional grooming services
+      directly to your home or preferred location.
     </p>
-    <p>Confidence Starts Here.</p>
-  </footer>
 
-  <script>
-    // MOBILE MENU
-    function toggleMenu() {
-      const nav = document.getElementById("navigation");
-      const button = document.getElementById("menuButton");
+    <p>
+      Enjoy convenient personal barber services
+      around Soweto, Roodepoort and surrounding
+      Gauteng areas, subject to availability.
+    </p>
 
-      nav.classList.toggle("active");
+    <a href="booking.html?type=housecall" class="btn">
+      REQUEST A HOUSE CALL
+    </a>
+  </div>
 
-      button.setAttribute(
-        "aria-expanded",
-        nav.classList.contains("active")
-      );
-    }
+  <img
+    src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=1100&q=85"
+    alt="Close-up barbering detail">
+</section>
 
-    document.querySelectorAll("#navigation a").forEach(link => {
-      link.addEventListener("click", () => {
-        document.getElementById("navigation").classList.remove("active");
-        document.getElementById("menuButton").setAttribute("aria-expanded", "false");
-      });
-    });
+<section class="content-section about" id="about">
+  <div class="section-heading">
+    <small>OUR IDENTITY</small>
+    <h2>Confidence Starts Here.</h2>
+  </div>
 
-    // AD SLIDER
-    let currentIndex = 0;
-    const totalSlides = 3;
-    const adsContainer = document.getElementById("adsContainer");
-    const dots = document.querySelectorAll(".dot");
+  <div class="about-text">
+    <p>
+      Next Level Grooming Lounge is built around
+      professional grooming, personal service
+      and helping every customer look and feel
+      their best.
+    </p>
 
-    function showSlide(index) {
-      currentIndex = index;
-      adsContainer.style.transform =
-        `translateX(-${index * 33.333333}%)`;
+    <p>
+      Growing from the personal barber concept
+      of King's Cut Barbershop, our vision is to
+      bring barbering, hairstyling and grooming
+      together under one brand.
+    </p>
 
-      dots.forEach(dot => dot.classList.remove("active"));
-      dots[index].classList.add("active");
-    }
+    <p>
+      Whether you visit us or request a house call,
+      our goal is to deliver quality and confidence
+      every time.
+    </p>
+  </div>
+</section>
 
-    function nextSlide() {
-      showSlide((currentIndex + 1) % totalSlides);
-    }
+<section class="content-section loyalty" id="loyalty">
+  <div class="section-heading">
+    <small>REWARDS FOR OUR CUSTOMERS</small>
+    <h2>Join Our Loyalty Family</h2>
+  </div>
 
-    function setSlide(index) {
-      showSlide(index);
-    }
+  <p>
+    Become part of the Next Level family.
+    Stay updated with promotions and future
+    loyalty rewards.
+  </p>
 
-    setInterval(nextSlide, 12000);
+  <a href="register.html" class="btn">REGISTER YOUR ACCOUNT</a>
+</section>
 
-    // FOOTER YEAR
-    document.getElementById("year").textContent =
-      new Date().getFullYear();
-  </script>
+<section class="content-section contact" id="contact">
+  <h2>Let's Get You Looking Fresh.</h2>
+
+  <p>Ready for your next grooming experience?</p>
+
+  <p>
+    Contact Next Level Grooming Lounge
+    to enquire about appointments and house calls.
+  </p>
+
+  <a href="https://wa.me/27635892769"
+     class="btn" target="_blank" rel="noopener">
+    CONTACT US ON WHATSAPP
+  </a>
+</section>
+
+</main>
+
+<footer>
+  <p>
+    © <span id="year"></span>
+    <strong>Next Level Grooming Lounge</strong>.
+    All Rights Reserved.
+  </p>
+  <p>Confidence Starts Here.</p>
+</footer>
+
+<script>
+// MOBILE NAVIGATION
+const menuButton = document.getElementById("menuButton");
+const navigation = document.getElementById("navigation");
+const siteHeader = document.getElementById("siteHeader");
+
+function closeMenu() {
+  navigation.classList.remove("active");
+  menuButton.setAttribute("aria-expanded", "false");
+  menuButton.setAttribute("aria-label", "Open navigation");
+  menuButton.textContent = "☰";
+}
+
+function openMenu() {
+  navigation.classList.add("active");
+  menuButton.setAttribute("aria-expanded", "true");
+  menuButton.setAttribute("aria-label", "Close navigation");
+  menuButton.textContent = "✕";
+}
+
+menuButton.addEventListener("click", function(event) {
+  event.stopPropagation();
+
+  if (navigation.classList.contains("active")) {
+    closeMenu();
+  } else {
+    openMenu();
+  }
+});
+
+// Close when the user taps anywhere outside the menu/header.
+document.addEventListener("pointerdown", function(event) {
+  if (
+    navigation.classList.contains("active") &&
+    !siteHeader.contains(event.target)
+  ) {
+    closeMenu();
+  }
+});
+
+// Close after selecting a navigation link.
+navigation.querySelectorAll("a").forEach(function(link) {
+  link.addEventListener("click", function() {
+    closeMenu();
+  });
+});
+
+// Close with Escape.
+document.addEventListener("keydown", function(event) {
+  if (event.key === "Escape") {
+    closeMenu();
+  }
+});
+
+// Close if the screen changes to desktop size.
+window.addEventListener("resize", function() {
+  if (window.innerWidth > 768) {
+    closeMenu();
+  }
+});
+
+// PROMOTION SLIDER
+let currentIndex = 0;
+const totalSlides = 3;
+const adsContainer = document.getElementById("adsContainer");
+const dots = document.querySelectorAll(".dot");
+
+function showSlide(index) {
+  currentIndex = index;
+
+  adsContainer.style.transform =
+    `translateX(-${index * 33.333333}%)`;
+
+  dots.forEach(dot => dot.classList.remove("active"));
+
+  if (dots[index]) {
+    dots[index].classList.add("active");
+  }
+}
+
+function nextSlide() {
+  showSlide((currentIndex + 1) % totalSlides);
+}
+
+function setSlide(index) {
+  if (index >= 0 && index < totalSlides) {
+    showSlide(index);
+  }
+}
+
+setInterval(nextSlide, 12000);
+
+// ROTATING HERO SLOGANS
+const slogans = [
+  "CONFIDENCE STARTS HERE.",
+  "PRECISION IN EVERY DETAIL.",
+  "YOUR STYLE. YOUR STANDARD.",
+  "LOOK GOOD. FEEL NEXT LEVEL."
+];
+
+let sloganIndex = 0;
+const heroSlogan = document.getElementById("heroSlogan");
+
+setInterval(function() {
+  sloganIndex = (sloganIndex + 1) % slogans.length;
+  heroSlogan.textContent = slogans[sloganIndex];
+}, 4000);
+
+// FOOTER YEAR
+document.getElementById("year").textContent =
+  new Date().getFullYear();
+</script>
 
 </body>
 </html>
