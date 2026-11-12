@@ -4,59 +4,231 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101010">
 <title>Book an Appointment | Next Level Grooming Lounge</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 *{box-sizing:border-box}
+
 body{
- margin:0;padding:20px;min-height:100vh;
- background:#101010;color:white;
- font-family:Arial,sans-serif
+ margin:0;
+ padding:20px;
+ min-height:100vh;
+ background:#101010;
+ color:white;
+ font-family:Arial,sans-serif;
+ position:relative;
 }
-.container{max-width:600px;margin:25px auto}
+
+body:before{
+ content:"";
+ position:fixed;
+ inset:0;
+ background:
+ linear-gradient(rgba(10,10,10,.84),rgba(10,10,10,.94)),
+ url("https://www.academiaotronivel.com/images/barber-tools.jpg")
+ center/cover no-repeat;
+ z-index:-1;
+}
+
+.container{
+ max-width:680px;
+ margin:20px auto;
+}
+
+.brand{
+ text-align:center;
+ margin-bottom:20px;
+}
+
+.brand h1{
+ color:#d5ad58;
+ font-size:29px;
+ letter-spacing:1px;
+ margin-bottom:8px;
+}
+
+.subtitle{
+ color:#c7a45c;
+ letter-spacing:3px;
+ font-size:12px;
+ text-transform:uppercase;
+}
+
+.tool-gallery{
+ display:grid;
+ grid-template-columns:1.3fr 1fr 1fr;
+ gap:9px;
+ margin:25px 0;
+}
+
+.tool-gallery img{
+ width:100%;
+ height:125px;
+ object-fit:cover;
+ border-radius:9px;
+ border:1px solid #8d6a2e;
+ filter:brightness(.82);
+ transition:.3s;
+}
+
+.tool-gallery img:hover{
+ filter:brightness(1);
+ transform:scale(1.02);
+}
+
 .card{
- background:#1b1b1b;border:1px solid #b58b36;
- border-radius:14px;padding:25px
+ background:rgba(24,24,24,.96);
+ border:1px solid #b58b36;
+ border-radius:14px;
+ padding:25px;
+ box-shadow:0 15px 45px rgba(0,0,0,.55);
 }
-h1,h2{color:#d5ad58}
-h1{text-align:center;font-size:26px}
-.subtitle{text-align:center;color:#bbb;margin-bottom:30px}
-label{display:block;margin:17px 0 7px}
+
+h2{
+ color:#d5ad58;
+ margin-top:5px;
+}
+
+.section-intro{
+ color:#aaa;
+ font-size:13px;
+ line-height:1.6;
+}
+
+label{
+ display:block;
+ margin:19px 0 7px;
+ color:#e4c783;
+ font-size:14px;
+}
+
 input,select,textarea{
- width:100%;padding:13px;background:#292929;
- color:white;border:1px solid #555;
- border-radius:7px;font-size:16px
+ width:100%;
+ padding:14px;
+ background:#292929;
+ color:white;
+ border:1px solid #555;
+ border-radius:7px;
+ font-size:16px;
 }
-select option{background:#292929;color:white}
-textarea{min-height:90px;resize:vertical}
+
+select option{
+ background:#292929;
+ color:white;
+}
+
+textarea{
+ min-height:90px;
+ resize:vertical;
+}
+
 button,.choice{
- display:block;width:100%;padding:15px;margin-top:17px;
- border:1px solid #b58b36;border-radius:8px;
- background:#292929;color:#fff;font-weight:bold;
- font-size:15px;cursor:pointer;text-align:center
+ display:block;
+ width:100%;
+ padding:15px;
+ margin-top:14px;
+ border:1px solid #b58b36;
+ border-radius:8px;
+ background:#292929;
+ color:#fff;
+ font-weight:bold;
+ font-size:14px;
+ cursor:pointer;
+ transition:.25s;
 }
-.choice.active{background:#c49a45;color:#111}
+
+.choice.active{
+ background:#c49a45;
+ color:#111;
+}
+
+button:hover{
+ border-color:#edc56d;
+}
+
 #submitButton{
- background:#c49a45;color:#111;border:0
+ background:linear-gradient(135deg,#d5ad58,#a77b2d);
+ color:#111;
+ border:0;
+ margin-top:25px;
 }
-button:disabled{opacity:.6;cursor:not-allowed}
+
+button:disabled{
+ opacity:.6;
+ cursor:not-allowed;
+}
+
 .hidden{display:none}
-#message{margin-top:18px;text-align:center;line-height:1.6}
+
+#message{
+ margin-top:18px;
+ text-align:center;
+ line-height:1.6;
+}
+
 a{color:#d5ad58}
-.links{text-align:center;margin-top:22px}
-.small{font-size:13px;color:#aaa;line-height:1.5}
+
+.links{
+ text-align:center;
+ margin-top:24px;
+ line-height:1.8;
+}
+
+.small{
+ font-size:13px;
+ color:#aaa;
+ line-height:1.5;
+}
+
+.gold-line{
+ width:65px;
+ height:2px;
+ background:#b58b36;
+ margin:12px auto 22px;
+}
+
+@media(max-width:480px){
+ body{padding:13px}
+ .card{padding:19px}
+ .brand h1{font-size:24px}
+ .tool-gallery img{height:95px}
+}
 </style>
 </head>
 
 <body>
 <div class="container">
- <h1>Next Level Grooming Lounge</h1>
- <p class="subtitle">Confidence Starts Here</p>
+
+ <header class="brand">
+  <h1>Next Level Grooming Lounge</h1>
+  <div class="subtitle">Confidence Starts Here</div>
+  <div class="gold-line"></div>
+ </header>
+
+ <div class="tool-gallery">
+  <img
+   src="https://www.academiaotronivel.com/images/barber-tools.jpg"
+   alt="Professional clippers and barber scissors"
+  >
+  <img
+   src="https://cdn-shopkit.com/usercontent/glammis/media/images/64c991c-181130-tesoura-profissional-barbeiro-corte-desbastejpg.png"
+   alt="Barber scissors and shaving tools"
+  >
+  <img
+   src="https://cuervo.oneframelabs.com/img/herramientas.png"
+   alt="Professional barber combs and razor"
+  >
+ </div>
 
  <div class="card" id="bookingCard" style="visibility:hidden">
+
   <h2>Book Your Service</h2>
-  <p class="small">Choose where you would like to receive your service.</p>
+  <p class="section-intro">
+   Choose your service, preferred professional and appointment details.
+   We'll contact you to confirm your booking.
+  </p>
 
   <button type="button" class="choice active" id="loungeChoice">
    BOOK AT THE LOUNGE
@@ -80,13 +252,13 @@ a{color:#d5ad58}
    <input id="service" type="text" required
     placeholder="e.g. Haircut, braiding, gel overlay">
 
-   <label for="staffMember">Choose your preferred professional</label>
+   <label for="staffMember">Preferred professional</label>
    <select id="staffMember" required disabled>
     <option value="">Select a service category first</option>
    </select>
+
    <p class="small">
-    You can select a specific professional or choose
-    Any Available Professional.
+    Choose your preferred professional or select Any Available Professional.
    </p>
 
    <label for="date">Preferred date</label>
@@ -104,7 +276,7 @@ a{color:#d5ad58}
 
     <label for="address">House call address</label>
     <textarea id="address"
-     placeholder="Enter your street address and any directions"></textarea>
+     placeholder="Enter your street address and directions"></textarea>
    </div>
 
    <label for="notes">Additional instructions (optional)</label>
@@ -114,6 +286,7 @@ a{color:#d5ad58}
    <button type="submit" id="submitButton">
     SUBMIT BOOKING REQUEST
    </button>
+
   </form>
 
   <div id="message" role="status"></div>
@@ -121,9 +294,10 @@ a{color:#d5ad58}
 
  <div class="links">
   <a href="account.html">Back to My Account</a>
-  <br><br>
+  <br>
   <a href="index.html">Back to Home</a>
  </div>
+
 </div>
 
 <script>
@@ -151,7 +325,6 @@ const bookingCard = document.getElementById("bookingCard");
 const categorySelect = document.getElementById("category");
 const staffSelect = document.getElementById("staffMember");
 
-// Remember the selected booking type when sending the customer to login.
 function getBookingDestination(){
  const type = bookingType === "House Call" ? "housecall" : "shop";
  return "booking.html?type=" + type;
@@ -165,7 +338,6 @@ function redirectToLogin(){
  );
 }
 
-// Show staff options according to the selected service category.
 function updateStaffOptions(){
  const category = categorySelect.value;
 
@@ -207,7 +379,7 @@ function updateStaffOptions(){
  }
 
  professionals.forEach(function(name){
-  staffSelect.add(new Option(name, name));
+  staffSelect.add(new Option(name,name));
  });
 
  staffSelect.add(new Option(
@@ -216,37 +388,35 @@ function updateStaffOptions(){
  ));
 }
 
-categorySelect.addEventListener("change", updateStaffOptions);
+categorySelect.addEventListener("change",updateStaffOptions);
 
 function chooseBookingType(type){
  bookingType = type;
 
- loungeChoice.classList.toggle("active", type === "In Lounge");
- houseChoice.classList.toggle("active", type === "House Call");
+ loungeChoice.classList.toggle("active",type === "In Lounge");
+ houseChoice.classList.toggle("active",type === "House Call");
 
  const isHouseCall = type === "House Call";
 
- houseFields.classList.toggle("hidden", !isHouseCall);
+ houseFields.classList.toggle("hidden",!isHouseCall);
  areaInput.required = isHouseCall;
  addressInput.required = isHouseCall;
 }
 
-loungeChoice.addEventListener("click", () =>
+loungeChoice.addEventListener("click",() =>
  chooseBookingType("In Lounge")
 );
 
-houseChoice.addEventListener("click", () =>
+houseChoice.addEventListener("click",() =>
  chooseBookingType("House Call")
 );
 
-// Read the booking type selected on the homepage.
 if(requestedType === "housecall"){
  chooseBookingType("House Call");
 }else{
  chooseBookingType("In Lounge");
 }
 
-// Prevent customers from choosing a date in the past.
 const today = new Date();
 
 const localToday = [
@@ -257,7 +427,6 @@ const localToday = [
 
 document.getElementById("date").min = localToday;
 
-// Verify login before showing the booking form.
 async function checkCustomer(){
  try{
   const {data,error} = await db.auth.getUser();
@@ -277,7 +446,7 @@ async function checkCustomer(){
  }
 }
 
-form.addEventListener("submit", async function(event){
+form.addEventListener("submit",async function(event){
  event.preventDefault();
  message.textContent = "";
 
@@ -352,7 +521,6 @@ form.addEventListener("submit", async function(event){
  }
 });
 
-// Start the login check.
 updateStaffOptions();
 checkCustomer();
 </script>
