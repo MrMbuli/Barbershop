@@ -10,9 +10,9 @@
 <style>
 *{box-sizing:border-box}
 body{margin:0;padding:18px;background:#101010;color:white;font-family:Arial,sans-serif}
-.container{max-width:1000px;margin:25px auto}
-header{text-align:center;margin-bottom:25px}
-header h1,h2,.booking h3{color:#d5ad58}
+.container{max-width:1100px;margin:25px auto}
+header{text-align:center;margin-bottom:25px;position:relative}
+header h1,h2,.booking h3,.client-name{color:#d5ad58}
 header p{color:#aaa}
 .card{background:#1b1b1b;border:1px solid #b58b36;border-radius:12px;padding:20px;margin-bottom:18px}
 h2{margin-top:0}
@@ -21,8 +21,8 @@ h2{margin-top:0}
 .stat strong{display:block;color:#d5ad58;font-size:25px;margin-bottom:5px}
 .stat span{font-size:12px;color:#bbb}
 .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}
-select,button,textarea{padding:12px;border-radius:7px;border:1px solid #555;font-size:14px}
-select,textarea{background:#292929;color:white;width:100%}
+select,button,textarea,input{padding:12px;border-radius:7px;border:1px solid #555;font-size:14px}
+select,textarea,input{background:#292929;color:white;width:100%}
 button{background:#c49a45;color:#111;border:0;font-weight:bold;cursor:pointer}
 button:hover{background:#e0b75f}
 button:disabled{opacity:.5;cursor:not-allowed}
@@ -51,18 +51,92 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .reason label,.response-label{
   display:block;color:#d5ad58;margin-bottom:7px;font-size:14px
 }
-.reason textarea,.request-response{
-  min-height:75px;resize:vertical
-}
+.reason textarea,.request-response{min-height:75px;resize:vertical}
 .request-response{margin-top:8px}
 .request-card .request-type{color:#d5ad58;font-weight:bold}
 .request-card .request-date{color:#fff}
 .request-card .history-status{margin-top:8px}
 .section-note{color:#aaa;font-size:13px;line-height:1.5}
 hr{border:0;border-top:1px solid #444;margin:15px 0}
+[hidden]{display:none!important}
+
+/* TOP MENU */
+.top-menu{position:absolute;right:0;top:0;z-index:20}
+.menu-button{background:#242424;color:#d5ad58;border:1px solid #b58b36}
+.menu-dropdown{
+  position:absolute;right:0;top:48px;width:220px;
+  background:#202020;border:1px solid #b58b36;
+  border-radius:10px;padding:8px;
+  box-shadow:0 8px 25px #000;display:none
+}
+.menu-dropdown.open{display:block}
+.menu-dropdown button{
+  display:block;width:100%;text-align:left;
+  background:transparent;color:white;margin:3px 0
+}
+.menu-dropdown button:hover{background:#393020;color:#e6bd68}
+.menu-dropdown .menu-logout{color:#ff8888}
+
+/* CLIENT DIRECTORY */
+.client-search{margin-bottom:15px}
+.client-card{
+  display:flex;align-items:center;gap:14px;
+  background:#252525;border:1px solid #444;
+  border-left:4px solid #c49a45;border-radius:9px;
+  padding:13px;margin-bottom:10px;cursor:pointer
+}
+.client-card:hover{border-color:#d5ad58;background:#2d2d2d}
+.client-avatar{
+  width:58px;height:58px;min-width:58px;
+  border-radius:50%;object-fit:cover;
+  border:2px solid #c49a45;background:#333
+}
+.client-info{min-width:0;flex:1}
+.client-name{font-weight:bold;margin-bottom:5px;overflow-wrap:anywhere}
+.client-info p{font-size:13px;color:#bbb;margin:4px 0;overflow-wrap:anywhere}
+.last-seen{color:#d5ad58!important;font-size:12px!important}
+.client-arrow{color:#d5ad58;font-size:23px}
+
+/* CUSTOMER PROFILE */
+.profile-top{display:flex;align-items:center;gap:18px;margin-bottom:20px}
+.profile-avatar{
+  width:105px;height:105px;min-width:105px;
+  border-radius:50%;object-fit:cover;
+  border:3px solid #c49a45;background:#333
+}
+.profile-heading h2{margin:0 0 7px}
+.profile-heading p{color:#aaa;margin:0;font-size:13px}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.detail{
+  background:#252525;border:1px solid #444;
+  border-radius:8px;padding:12px;overflow-wrap:anywhere
+}
+.detail span{display:block;color:#aaa;font-size:12px;margin-bottom:6px}
+.detail strong{font-size:14px;color:white;overflow-wrap:anywhere}
+.eligibility{padding:14px;background:#252525;border:1px solid #555;border-radius:9px;margin-top:15px}
+.eligibility h3{color:#d5ad58;margin-top:0}
+.eligibility p{font-size:13px;color:#ddd;margin:8px 0}
+.eligible{color:#65d99b!important}
+.not-eligible{color:#ff8888!important}
+.history-item{
+  background:#252525;border:1px solid #444;
+  border-radius:8px;padding:13px;margin-bottom:9px
+}
+.history-item p{font-size:13px;color:#ddd;line-height:1.5;margin:5px 0}
+.back-button{background:#333;color:white;border:1px solid #666;margin-bottom:15px}
+.small-note{color:#aaa;font-size:12px;line-height:1.5}
+
 @media(max-width:600px){
+  body{padding:12px}
+  .container{margin:15px auto}
+  header{padding-top:48px}
   .stats{grid-template-columns:repeat(2,1fr)}
   .booking-actions,.request-actions{grid-template-columns:1fr}
+  .detail-grid{grid-template-columns:1fr}
+  .profile-top{align-items:flex-start}
+  .profile-avatar{width:82px;height:82px;min-width:82px}
+  .client-card{gap:10px;padding:10px}
+  .client-avatar{width:48px;height:48px;min-width:48px}
 }
 </style>
 </head>
@@ -71,69 +145,109 @@ hr{border:0;border-top:1px solid #444;margin:15px 0}
 <div class="container">
 
 <header>
-<h1>NEXT LEVEL GROOMING LOUNGE</h1>
-<p>ADMINISTRATION DASHBOARD</p>
-<p>Confidence Starts Here.</p>
+  <div class="top-menu">
+    <button class="menu-button" id="menuButton">☰ MENU</button>
+    <div class="menu-dropdown" id="menuDropdown">
+      <button data-page="overviewSection">Booking Overview</button>
+      <button data-page="requestsSection">Appointment Requests</button>
+      <button data-page="clientsSection">Clients List</button>
+      <button class="menu-logout" id="menuLogout">Log Out</button>
+    </div>
+  </div>
+
+  <h1>NEXT LEVEL GROOMING LOUNGE</h1>
+  <p>ADMINISTRATION DASHBOARD</p>
+  <p>Confidence Starts Here.</p>
 </header>
 
 <div id="mainMessage" class="card message">
-Checking administrator access...
+  Checking administrator access...
 </div>
 
 <div id="dashboard" hidden>
 
-<div class="card">
-<h2>Booking Overview</h2>
+<!-- BOOKING OVERVIEW -->
+<section id="overviewSection">
+  <div class="card">
+    <h2>Booking Overview</h2>
 
-<div class="stats">
-<div class="stat"><strong id="totalCount">0</strong><span>Total bookings</span></div>
-<div class="stat"><strong id="pendingCount">0</strong><span>Pending</span></div>
-<div class="stat"><strong id="confirmedCount">0</strong><span>Confirmed</span></div>
-<div class="stat"><strong id="completedCount">0</strong><span>Completed</span></div>
-</div>
+    <div class="stats">
+      <div class="stat"><strong id="totalCount">0</strong><span>Total bookings</span></div>
+      <div class="stat"><strong id="pendingCount">0</strong><span>Pending</span></div>
+      <div class="stat"><strong id="confirmedCount">0</strong><span>Confirmed</span></div>
+      <div class="stat"><strong id="completedCount">0</strong><span>Completed</span></div>
+    </div>
 
-<button id="refreshButton">REFRESH DASHBOARD</button>
-<button id="logoutButton" class="logout">LOG OUT</button>
-</div>
+    <button id="refreshButton">REFRESH DASHBOARD</button>
+    <button id="logoutButton" class="logout">LOG OUT</button>
+  </div>
 
-<!-- APPOINTMENT REQUEST MANAGEMENT -->
-<div class="card">
-<h2>Appointment Requests</h2>
-<p class="section-note">
-Manage customer requests to reschedule or cancel appointments.
-Customers will see your decision and response in their account.
-</p>
+  <div class="card">
+    <h2>Customer Bookings</h2>
+    <div class="filters">
+      <select id="statusFilter">
+        <option value="All">All bookings</option>
+        <option value="Pending">Pending</option>
+        <option value="Confirmed">Confirmed</option>
+        <option value="Completed">Completed</option>
+        <option value="Cancelled">Cancelled</option>
+      </select>
+    </div>
+    <div id="bookingsList" class="message">Loading bookings...</div>
+  </div>
+</section>
 
-<div class="filters">
-<select id="requestFilter">
-<option value="All">All requests</option>
-<option value="Pending">Pending requests</option>
-<option value="Approved">Approved requests</option>
-<option value="Declined">Declined requests</option>
-</select>
-</div>
+<!-- APPOINTMENT REQUESTS -->
+<section id="requestsSection" hidden>
+  <div class="card">
+    <h2>Appointment Requests</h2>
+    <p class="section-note">
+      Manage customer requests to reschedule or cancel appointments.
+      Customers will see your decision and response in their account.
+    </p>
 
-<div id="requestsList" class="message">
-Loading appointment requests...
-</div>
-</div>
+    <div class="filters">
+      <select id="requestFilter">
+        <option value="All">All requests</option>
+        <option value="Pending">Pending requests</option>
+        <option value="Approved">Approved requests</option>
+        <option value="Declined">Declined requests</option>
+      </select>
+    </div>
 
-<!-- CUSTOMER BOOKINGS -->
-<div class="card">
-<h2>Customer Bookings</h2>
+    <div id="requestsList" class="message">Loading appointment requests...</div>
+  </div>
+</section>
 
-<div class="filters">
-<select id="statusFilter">
-<option value="All">All bookings</option>
-<option value="Pending">Pending</option>
-<option value="Confirmed">Confirmed</option>
-<option value="Completed">Completed</option>
-<option value="Cancelled">Cancelled</option>
-</select>
-</div>
+<!-- CLIENT DIRECTORY -->
+<section id="clientsSection" hidden>
+  <div class="card">
+    <h2>Clients List</h2>
+    <p class="section-note">
+      All registered customer accounts. Select a customer to view their full profile and appointment history.
+    </p>
 
-<div id="bookingsList" class="message">Loading bookings...</div>
-</div>
+    <input
+      id="clientSearch"
+      class="client-search"
+      type="search"
+      placeholder="Search name, phone number or email..."
+    >
+
+    <div id="clientsList" class="message">Loading registered clients...</div>
+  </div>
+</section>
+
+<!-- FULL CUSTOMER PROFILE -->
+<section id="profileSection" hidden>
+  <div class="card">
+    <button class="back-button" id="backToClients">← BACK TO CLIENTS</button>
+
+    <div id="profileContent">
+      <p class="message">Loading customer profile...</p>
+    </div>
+  </div>
+</section>
 
 </div>
 </div>
@@ -149,17 +263,23 @@ const supabaseClient=window.supabase.createClient(
 
 const MANAGER_WHATSAPP="27635892769";
 const HIDE_AFTER_MS=3*60*1000;
+const PROFILE_BUCKET="customer-profile-pictures";
 
 let allBookings=[];
 let customerProfiles={};
 let allRequests=[];
+let allClients=[];
 let dashboardLoading=false;
 let requestLoading=false;
+let clientLoading=false;
+let selectedClientId=null;
 
 const mainMessage=document.getElementById("mainMessage");
 const dashboard=document.getElementById("dashboard");
 const bookingsList=document.getElementById("bookingsList");
 const requestsList=document.getElementById("requestsList");
+const clientsList=document.getElementById("clientsList");
+const profileContent=document.getElementById("profileContent");
 
 function addText(parent,tag,value,className){
   const element=document.createElement(tag);
@@ -167,6 +287,14 @@ function addText(parent,tag,value,className){
   if(className) element.className=className;
   parent.appendChild(element);
   return element;
+}
+
+function addDetail(parent,label,value){
+  const box=document.createElement("div");
+  box.className="detail";
+  addText(box,"span",label);
+  addText(box,"strong",value||"Not provided");
+  parent.appendChild(box);
 }
 
 function whatsappNumber(phone){
@@ -205,8 +333,79 @@ function formatDate(value){
   });
 }
 
-// Completed appointments disappear after three minutes.
-// Cancelled appointments remain until the customer acknowledges them.
+function formatDateTime(value){
+  if(!value) return "Not available";
+
+  const date=new Date(value);
+
+  if(isNaN(date.getTime())) return "Not available";
+
+  return date.toLocaleString("en-ZA");
+}
+
+function relativeLastSeen(value){
+  if(!value) return "No completed visits yet";
+
+  const date=new Date(value);
+
+  if(isNaN(date.getTime())) return "No completed visits yet";
+
+  const now=new Date();
+  const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  const visitDay=new Date(date.getFullYear(),date.getMonth(),date.getDate());
+  const days=Math.floor((today-visitDay)/86400000);
+
+  if(days===0) return "Last seen today";
+  if(days===1) return "Last seen yesterday";
+  if(days<7) return "Last seen "+days+" days ago";
+
+  return "Last seen "+date.toLocaleDateString("en-ZA",{
+    day:"numeric",
+    month:"short",
+    year:"numeric"
+  });
+}
+
+function getLastCompletedVisit(customerId){
+  return allBookings
+    .filter(booking=>
+      booking.customer_id===customerId &&
+      booking.status==="Completed"
+    )
+    .sort((a,b)=>{
+      const dateA=new Date(
+        a.status_updated_at||a.preferred_date||a.created_at||0
+      ).getTime();
+
+      const dateB=new Date(
+        b.status_updated_at||b.preferred_date||b.created_at||0
+      ).getTime();
+
+      return dateB-dateA;
+    })[0]||null;
+}
+
+function visitType(booking){
+  if(!booking) return "";
+
+  return String(booking.booking_type||"").toLowerCase().includes("house")
+    ? "House call"
+    : "Lounge";
+}
+
+/*
+ Completed appointments disappear after three minutes.
+ Cancelled appointments normally remain until the customer acknowledges them.
+ An approved cancellation is hidden from the admin booking list immediately.
+*/
+function isApprovedCancellation(booking){
+  return allRequests.some(request=>
+    request.booking_id===booking.id &&
+    request.request_type==="Cancellation" &&
+    request.status==="Approved"
+  );
+}
+
 function shouldShowBooking(booking){
   if(booking.status==="Completed"){
     if(!booking.status_updated_at) return true;
@@ -217,7 +416,10 @@ function shouldShowBooking(booking){
     return elapsed<HIDE_AFTER_MS;
   }
 
-  if(booking.status==="Cancelled" && booking.cancellation_seen_at){
+  if(
+    booking.status==="Cancelled" &&
+    (booking.cancellation_seen_at || isApprovedCancellation(booking))
+  ){
     return false;
   }
 
@@ -243,7 +445,7 @@ async function loadBookings(showLoading=true){
 
     const {data:profiles,error:profileError}=await supabaseClient
       .from("customer_profiles")
-      .select("id,full_name,phone");
+      .select("*");
 
     if(profileError) throw profileError;
 
@@ -308,7 +510,7 @@ function displayBookings(){
     addText(card,"p","Date: "+formatDate(booking.preferred_date));
     addText(card,"p","Time: "+(booking.preferred_time||"Not provided"));
 
-    if(booking.booking_type==="House Call"){
+    if(String(booking.booking_type||"").toLowerCase().includes("house")){
       addText(card,"p","Area: "+(booking.area||"Not provided"));
       addText(card,"p","Address: "+(booking.address||"Not provided"));
     }
@@ -447,7 +649,7 @@ async function updateBookingStatus(id,status,reason,button){
   await loadBookings();
 }
 
-// LOAD CUSTOMER APPOINTMENT REQUESTS
+// APPOINTMENT REQUESTS
 async function loadAppointmentRequests(showLoading=true){
   if(requestLoading) return;
 
@@ -467,13 +669,12 @@ async function loadAppointmentRequests(showLoading=true){
 
     allRequests=data||[];
     displayRequests();
+    displayBookings();
 
   }catch(error){
     console.error(error);
-
     requestsList.textContent=
       "Unable to load appointment requests: "+error.message;
-
   }finally{
     requestLoading=false;
   }
@@ -526,7 +727,7 @@ function displayRequests(){
       " at "+(booking.preferred_time||"Not provided")
     );
 
-    if(booking.booking_type==="House Call"){
+    if(String(booking.booking_type||"").toLowerCase().includes("house")){
       addText(card,"p","Area: "+(booking.area||"Not provided"));
       addText(card,"p","Address: "+(booking.address||"Not provided"));
     }
@@ -556,10 +757,7 @@ function displayRequests(){
     addText(
       card,
       "p",
-      "Request submitted: "+
-      (request.created_at
-        ? new Date(request.created_at).toLocaleString("en-ZA")
-        : "Not available")
+      "Request submitted: "+formatDateTime(request.created_at)
     );
 
     addText(card,"span","Request status: "+request.status,"status");
@@ -590,11 +788,7 @@ function displayRequests(){
 
       approveButton.addEventListener("click",async()=>{
         await respondToRequest(
-          request,
-          "Approved",
-          responseInput,
-          approveButton,
-          card
+          request,"Approved",responseInput,approveButton,card
         );
       });
 
@@ -604,11 +798,7 @@ function displayRequests(){
 
       declineButton.addEventListener("click",async()=>{
         await respondToRequest(
-          request,
-          "Declined",
-          responseInput,
-          declineButton,
-          card
+          request,"Declined",responseInput,declineButton,card
         );
       });
 
@@ -627,10 +817,7 @@ function displayRequests(){
       addText(
         card,
         "p",
-        "Responded: "+
-        (request.responded_at
-          ? new Date(request.responded_at).toLocaleString("en-ZA")
-          : "Not available"),
+        "Responded: "+formatDateTime(request.responded_at),
         "history-status"
       );
     }
@@ -640,13 +827,9 @@ function displayRequests(){
   });
 }
 
-// ADMIN APPROVES OR DECLINES A CUSTOMER REQUEST
+// APPROVE OR DECLINE CUSTOMER REQUEST
 async function respondToRequest(
-  request,
-  decision,
-  responseInput,
-  button,
-  card
+  request,decision,responseInput,button,card
 ){
   const response=responseInput.value.trim();
 
@@ -665,10 +848,7 @@ async function respondToRequest(
 
   if(decision==="Approved"){
     if(!["Pending","Confirmed"].includes(booking.status)){
-      alert(
-        "This appointment is no longer active. "+
-        "You cannot approve this request."
-      );
+      alert("This appointment is no longer active. You cannot approve this request.");
       return;
     }
 
@@ -682,12 +862,10 @@ async function respondToRequest(
   }
 
   const buttons=card.querySelectorAll("button");
-
   buttons.forEach(item=>item.disabled=true);
   button.textContent="PROCESSING...";
 
   try{
-    // Apply the approved change to the actual booking first.
     if(decision==="Approved"){
       let bookingChanges={};
 
@@ -753,8 +931,7 @@ async function respondToRequest(
 
     if(!updatedRequest){
       throw new Error(
-        "The request was not updated. It may already have been handled. "+
-        "Refresh the dashboard to check its status."
+        "The request was not updated. It may already have been handled. Refresh the dashboard."
       );
     }
 
@@ -772,8 +949,7 @@ async function respondToRequest(
 
     alert(
       "Unable to complete the request: "+error.message+
-      "\n\nIf the booking was already changed, refresh the dashboard "+
-      "and check the request before trying again."
+      "\n\nIf the booking was already changed, refresh the dashboard and check the request."
     );
 
     buttons.forEach(item=>item.disabled=false);
@@ -786,6 +962,369 @@ async function respondToRequest(
         : "DECLINE REQUEST";
   }
 }
+
+// LOAD ALL REGISTERED CLIENTS
+async function loadClients(showLoading=true){
+  if(clientLoading) return;
+
+  clientLoading=true;
+
+  if(showLoading){
+    clientsList.textContent="Loading registered clients...";
+  }
+
+  try{
+    const {data,error}=await supabaseClient
+      .from("customer_profiles")
+      .select("*")
+      .order("created_at",{ascending:false});
+
+    if(error) throw error;
+
+    allClients=data||[];
+
+    allClients.forEach(profile=>{
+      customerProfiles[profile.id]=profile;
+    });
+
+    displayClients();
+
+  }catch(error){
+    console.error(error);
+    clientsList.textContent="Unable to load clients: "+error.message;
+  }finally{
+    clientLoading=false;
+  }
+}
+
+function displayClients(){
+  clientsList.replaceChildren();
+
+  const search=document.getElementById("clientSearch")
+    .value.trim().toLowerCase();
+
+  const filtered=allClients.filter(profile=>{
+    const searchable=[
+      profile.full_name,
+      profile.phone,
+      profile.email
+    ].join(" ").toLowerCase();
+
+    return searchable.includes(search);
+  });
+
+  if(filtered.length===0){
+    addText(
+      clientsList,
+      "p",
+      search ? "No customers match your search." : "No registered clients found."
+    );
+    return;
+  }
+
+  filtered.forEach(profile=>{
+    const card=document.createElement("div");
+    card.className="client-card";
+    card.setAttribute("role","button");
+    card.tabIndex=0;
+
+    const avatar=document.createElement("img");
+    avatar.className="client-avatar";
+    avatar.alt="Customer profile picture";
+    avatar.src="data:image/svg+xml,"+encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#333"/><circle cx="50" cy="36" r="19" fill="#888"/><path d="M15 100c2-25 16-38 35-38s33 13 35 38" fill="#888"/></svg>'
+    );
+    card.appendChild(avatar);
+
+    const info=document.createElement("div");
+    info.className="client-info";
+
+    addText(info,"div",profile.full_name||"Customer","client-name");
+    addText(info,"p","Phone: "+(profile.phone||"Not provided"));
+    addText(info,"p",relativeLastSeen(
+      (()=> {
+        const last=getLastCompletedVisit(profile.id);
+        return last
+          ? (last.status_updated_at||last.preferred_date||last.created_at)
+          : null;
+      })()
+    ),"last-seen");
+
+    card.appendChild(info);
+    addText(card,"span","›","client-arrow");
+
+    const openProfile=()=>showClientProfile(profile.id);
+
+    card.addEventListener("click",openProfile);
+    card.addEventListener("keydown",event=>{
+      if(event.key==="Enter" || event.key===" "){
+        event.preventDefault();
+        openProfile();
+      }
+    });
+
+    clientsList.appendChild(card);
+  });
+}
+
+// OPEN FULL CLIENT PROFILE
+async function showClientProfile(customerId){
+  selectedClientId=customerId;
+
+  document.getElementById("overviewSection").hidden=true;
+  document.getElementById("requestsSection").hidden=true;
+  document.getElementById("clientsSection").hidden=true;
+  document.getElementById("profileSection").hidden=false;
+
+  profileContent.replaceChildren();
+  addText(profileContent,"p","Loading customer profile...","message");
+
+  const profile=allClients.find(item=>item.id===customerId)||
+    customerProfiles[customerId];
+
+  if(!profile){
+    profileContent.textContent="Customer profile could not be found.";
+    return;
+  }
+
+  try{
+    const top=document.createElement("div");
+    top.className="profile-top";
+
+    const avatar=document.createElement("img");
+    avatar.className="profile-avatar";
+    avatar.alt="Customer profile picture";
+    avatar.src="data:image/svg+xml,"+encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#333"/><circle cx="50" cy="36" r="19" fill="#888"/><path d="M15 100c2-25 16-38 35-38s33 13 35 38" fill="#888"/></svg>'
+    );
+
+    if(profile.avatar_path){
+      const {data,error}=await supabaseClient.storage
+        .from(PROFILE_BUCKET)
+        .createSignedUrl(profile.avatar_path,3600);
+
+      if(!error && data && data.signedUrl){
+        avatar.src=data.signedUrl;
+      }else{
+        console.warn("Could not load customer picture:",error);
+      }
+    }
+
+    top.appendChild(avatar);
+
+    const heading=document.createElement("div");
+    heading.className="profile-heading";
+    addText(heading,"h2",profile.full_name||"Customer");
+    addText(heading,"p","Registered customer profile");
+    top.appendChild(heading);
+    profileContent.appendChild(top);
+
+    addText(profileContent,"h3","Personal Information","client-name");
+
+    const details=document.createElement("div");
+    details.className="detail-grid";
+
+    addDetail(details,"Full name",profile.full_name);
+    addDetail(details,"Mobile number",profile.phone);
+    addDetail(details,"Email address",profile.email);
+    addDetail(details,"Date of birth",formatDate(profile.date_of_birth));
+    addDetail(details,"Registration date",formatDateTime(profile.created_at));
+    addDetail(details,"Province",profile.province);
+    addDetail(details,"City",profile.city);
+    addDetail(details,"Suburb",profile.suburb);
+    addDetail(details,"Street address",profile.street_address);
+    addDetail(details,"Complex / building",profile.complex_name);
+    addDetail(details,"Postal code",profile.postal_code);
+
+    profileContent.appendChild(details);
+
+    // LOYALTY ELIGIBILITY
+    const checks=[
+      {label:"Full name provided",ok:!!profile.full_name},
+      {label:"Mobile number provided",ok:!!profile.phone},
+      {label:"Email address recorded",ok:!!profile.email},
+      {label:"Date of birth provided",ok:!!profile.date_of_birth},
+      {label:"Profile picture uploaded",ok:!!profile.avatar_path}
+    ];
+
+    const eligible=checks.every(check=>check.ok);
+
+    const eligibility=document.createElement("div");
+    eligibility.className="eligibility";
+
+    addText(eligibility,"h3","Loyalty Programme Eligibility");
+
+    addText(
+      eligibility,
+      "p",
+      eligible
+        ? "Customer meets the profile completion requirements."
+        : "Customer's profile is not yet complete."
+    ,eligible?"eligible":"not-eligible");
+
+    checks.forEach(check=>{
+      addText(
+        eligibility,
+        "p",
+        (check.ok?"✓ ":"✗ ")+check.label,
+        check.ok?"eligible":"not-eligible"
+      );
+    });
+
+    addText(
+      eligibility,
+      "p",
+      "This checks profile completion only. It does not confirm loyalty points or rewards earned."
+    ,"small-note");
+
+    profileContent.appendChild(eligibility);
+
+    // LAST COMPLETED VISIT
+    const lastVisit=getLastCompletedVisit(customerId);
+
+    addText(profileContent,"h3","Last Seen","client-name");
+
+    const lastBox=document.createElement("div");
+    lastBox.className="detail";
+
+    if(lastVisit){
+      const lastDate=lastVisit.status_updated_at||
+        lastVisit.preferred_date||lastVisit.created_at;
+
+      addText(lastBox,"strong",relativeLastSeen(lastDate));
+      addText(
+        lastBox,
+        "p",
+        "Last service: "+visitType(lastVisit)
+      );
+      addText(
+        lastBox,
+        "p",
+        "Date: "+formatDate(lastVisit.preferred_date)
+      );
+      addText(
+        lastBox,
+        "p",
+        "Service: "+(lastVisit.service_name||"Not provided")
+      );
+    }else{
+      addText(lastBox,"strong","No completed visits yet");
+    }
+
+    profileContent.appendChild(lastBox);
+
+    // APPOINTMENT HISTORY
+    addText(profileContent,"h3","Appointment History","client-name");
+
+    const history=allBookings
+      .filter(booking=>booking.customer_id===customerId)
+      .sort((a,b)=>
+        new Date(b.created_at||0)-new Date(a.created_at||0)
+      );
+
+    if(history.length===0){
+      addText(profileContent,"p","This customer has not booked an appointment yet.","message");
+    }else{
+      history.forEach(booking=>{
+        const item=document.createElement("div");
+        item.className="history-item";
+
+        addText(item,"strong",booking.service_name||"Service");
+        addText(item,"p","Status: "+booking.status);
+        addText(item,"p","Booking type: "+(booking.booking_type||"Not provided"));
+        addText(item,"p","Date: "+formatDate(booking.preferred_date));
+        addText(item,"p","Time: "+(booking.preferred_time||"Not provided"));
+
+        if(String(booking.booking_type||"").toLowerCase().includes("house")){
+          addText(item,"p","Area: "+(booking.area||"Not provided"));
+          addText(item,"p","Address: "+(booking.address||"Not provided"));
+        }
+
+        if(booking.notes){
+          addText(item,"p","Notes: "+booking.notes);
+        }
+
+        addText(item,"p","Booked on: "+formatDateTime(booking.created_at));
+
+        profileContent.appendChild(item);
+      });
+    }
+
+    // CONTACT CUSTOMER
+    const phone=whatsappNumber(profile.phone);
+
+    if(phone){
+      const contact=document.createElement("button");
+      contact.className="whatsapp";
+      contact.textContent="CONTACT CUSTOMER ON WHATSAPP";
+      contact.style.width="100%";
+      contact.style.marginTop="15px";
+
+      contact.addEventListener("click",()=>{
+        window.open(
+          "https://wa.me/"+phone+
+          "?text="+encodeURIComponent(
+            "Hello "+(profile.full_name||"there")+
+            ", this is Next Level Grooming Lounge."
+          ),
+          "_blank"
+        );
+      });
+
+      profileContent.appendChild(contact);
+    }
+
+  }catch(error){
+    console.error(error);
+    profileContent.replaceChildren();
+    addText(
+      profileContent,
+      "p",
+      "Unable to load this customer's full profile: "+error.message,
+      "error"
+    );
+  }
+}
+
+// NAVIGATION
+function showPage(pageId){
+  [
+    "overviewSection",
+    "requestsSection",
+    "clientsSection",
+    "profileSection"
+  ].forEach(id=>{
+    document.getElementById(id).hidden=id!==pageId;
+  });
+
+  document.getElementById("menuDropdown").classList.remove("open");
+
+  if(pageId==="clientsSection"){
+    loadClients();
+  }
+
+  if(pageId==="requestsSection"){
+    loadAppointmentRequests();
+  }
+}
+
+document.getElementById("menuButton").addEventListener("click",()=>{
+  document.getElementById("menuDropdown").classList.toggle("open");
+});
+
+document.querySelectorAll("[data-page]").forEach(button=>{
+  button.addEventListener("click",()=>{
+    showPage(button.dataset.page);
+  });
+});
+
+document.getElementById("backToClients").addEventListener("click",()=>{
+  showPage("clientsSection");
+});
+
+document.getElementById("clientSearch").addEventListener("input",()=>{
+  displayClients();
+});
 
 // VERIFY ADMINISTRATOR
 async function checkAdmin(){
@@ -822,7 +1361,6 @@ async function checkAdmin(){
 
   }catch(error){
     console.error(error);
-
     mainMessage.textContent=
       "Unable to verify administrator access: "+error.message;
   }
@@ -832,34 +1370,32 @@ async function checkAdmin(){
 document.getElementById("refreshButton").addEventListener("click",async()=>{
   await loadBookings();
   await loadAppointmentRequests();
+  await loadClients(false);
 });
 
 document.getElementById("statusFilter").addEventListener(
-  "change",
-  displayBookings
+  "change",displayBookings
 );
 
 document.getElementById("requestFilter").addEventListener(
-  "change",
-  displayRequests
+  "change",displayRequests
 );
 
-document.getElementById("logoutButton").addEventListener(
-  "click",
-  async()=>{
-    const {error}=await supabaseClient.auth.signOut();
+async function logout(){
+  const {error}=await supabaseClient.auth.signOut();
 
-    if(error){
-      alert(error.message);
-      return;
-    }
-
-    window.location.href="login.html";
+  if(error){
+    alert(error.message);
+    return;
   }
-);
+
+  window.location.href="login.html";
+}
+
+document.getElementById("logoutButton").addEventListener("click",logout);
+document.getElementById("menuLogout").addEventListener("click",logout);
 
 // Keep completed-booking visibility accurate.
-// Do not rebuild cards while the administrator is editing.
 setInterval(()=>{
   updateStats();
 
@@ -868,12 +1404,22 @@ setInterval(()=>{
   }
 },5000);
 
-// Refresh requests every 15 seconds without interrupting editing.
+// Refresh requests periodically.
 setInterval(()=>{
   if(!isAdminEditing()){
     loadAppointmentRequests(false);
   }
 },15000);
+
+// Refresh client data periodically when directory is open.
+setInterval(()=>{
+  if(
+    !document.getElementById("clientsSection").hidden &&
+    !isAdminEditing()
+  ){
+    loadClients(false);
+  }
+},30000);
 
 checkAdmin();
 </script>
