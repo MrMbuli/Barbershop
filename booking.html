@@ -28,6 +28,7 @@ input,select,textarea{
  color:white;border:1px solid #555;
  border-radius:7px;font-size:16px
 }
+select option{background:#292929;color:white}
 textarea{min-height:90px;resize:vertical}
 button,.choice{
  display:block;width:100%;padding:15px;margin-top:17px;
@@ -39,7 +40,7 @@ button,.choice{
 #submitButton{
  background:#c49a45;color:#111;border:0
 }
-button:disabled{opacity:.6}
+button:disabled{opacity:.6;cursor:not-allowed}
 .hidden{display:none}
 #message{margin-top:18px;text-align:center;line-height:1.6}
 a{color:#d5ad58}
@@ -78,6 +79,15 @@ a{color:#d5ad58}
    <label for="service">Service required</label>
    <input id="service" type="text" required
     placeholder="e.g. Haircut, braiding, gel overlay">
+
+   <label for="staffMember">Choose your preferred professional</label>
+   <select id="staffMember" required disabled>
+    <option value="">Select a service category first</option>
+   </select>
+   <p class="small">
+    You can select a specific professional or choose
+    Any Available Professional.
+   </p>
 
    <label for="date">Preferred date</label>
    <input id="date" type="date" required>
@@ -138,6 +148,8 @@ const message = document.getElementById("message");
 const submitButton = document.getElementById("submitButton");
 const form = document.getElementById("bookingForm");
 const bookingCard = document.getElementById("bookingCard");
+const categorySelect = document.getElementById("category");
+const staffSelect = document.getElementById("staffMember");
 
 // Remember the selected booking type when sending the customer to login.
 function getBookingDestination(){
@@ -152,6 +164,59 @@ function redirectToLogin(){
   "login.html?next=" + encodeURIComponent(destination)
  );
 }
+
+// Show staff options according to the selected service category.
+function updateStaffOptions(){
+ const category = categorySelect.value;
+
+ staffSelect.innerHTML = "";
+
+ if(!category){
+  staffSelect.add(new Option(
+   "Select a service category first", ""
+  ));
+  staffSelect.disabled = true;
+  return;
+ }
+
+ staffSelect.disabled = false;
+
+ staffSelect.add(new Option(
+  "Choose your preferred professional", ""
+ ));
+
+ let professionals = [];
+
+ if(category === "Barbering"){
+  professionals = [
+   "Barber 1",
+   "Barber 2",
+   "Barber 3",
+   "Barber 4"
+  ];
+ }else if(
+  category === "Hair salon" ||
+  category === "Nail services"
+ ){
+  professionals = [
+   "Stylist 1",
+   "Stylist 2",
+   "Stylist 3",
+   "Stylist 4"
+  ];
+ }
+
+ professionals.forEach(function(name){
+  staffSelect.add(new Option(name, name));
+ });
+
+ staffSelect.add(new Option(
+  "Any Available Professional",
+  "Any Available Professional"
+ ));
+}
+
+categorySelect.addEventListener("change", updateStaffOptions);
 
 function chooseBookingType(type){
  bookingType = type;
@@ -230,13 +295,20 @@ form.addEventListener("submit", async function(event){
    return;
   }
 
-  const category = document.getElementById("category").value;
+  const category = categorySelect.value;
   const service = document.getElementById("service").value.trim();
+  const staffMember = staffSelect.value;
   const date = document.getElementById("date").value;
   const time = document.getElementById("time").value;
   const area = areaInput.value.trim();
   const address = addressInput.value.trim();
   const notes = document.getElementById("notes").value.trim();
+
+  if(!staffMember){
+   throw new Error(
+    "Please select a professional or Any Available Professional."
+   );
+  }
 
   if(bookingType === "House Call" && (!area || !address)){
    throw new Error(
@@ -248,6 +320,7 @@ form.addEventListener("submit", async function(event){
    customer_id: authData.user.id,
    service_category: category,
    service_name: service,
+   staff_member: staffMember,
    booking_type: bookingType,
    preferred_date: date,
    preferred_time: time,
@@ -263,6 +336,7 @@ form.addEventListener("submit", async function(event){
   if(error) throw error;
 
   form.reset();
+  updateStaffOptions();
   chooseBookingType("In Lounge");
 
   message.textContent =
@@ -279,6 +353,7 @@ form.addEventListener("submit", async function(event){
 });
 
 // Start the login check.
+updateStaffOptions();
 checkCustomer();
 </script>
 </body>
