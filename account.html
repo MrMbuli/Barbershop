@@ -11,9 +11,35 @@
 *{box-sizing:border-box}
 body{margin:0;padding:18px;background:#101010;color:white;font-family:Arial,sans-serif}
 .container{max-width:850px;margin:25px auto}
-header{text-align:center;margin-bottom:25px}
+header{text-align:center;margin-bottom:25px;position:relative;padding-top:42px}
 header h1{color:#d5ad58}
 header p{color:#aaa}
+
+.top-menu{
+position:absolute;right:0;top:0;z-index:100;
+}
+.top-menu summary{
+list-style:none;cursor:pointer;
+background:#242424;border:1px solid #b58b36;
+color:#d5ad58;border-radius:8px;
+padding:11px 15px;font-weight:bold;
+}
+.top-menu summary::-webkit-details-marker{display:none}
+.top-menu summary:after{content:" ☰";font-size:17px}
+.top-menu[open] summary:after{content:" ✕"}
+.menu-content{
+position:absolute;right:0;top:48px;width:190px;
+background:#1b1b1b;border:1px solid #b58b36;
+border-radius:9px;padding:8px;
+box-shadow:0 8px 20px #0009;
+}
+.menu-content button{
+width:100%;margin:4px 0;text-align:left;
+background:#292929;color:#e5bd70;
+border:1px solid #514321;
+}
+.menu-content button:hover{background:#3a3020}
+
 .card{background:#1b1b1b;border:1px solid #b58b36;border-radius:12px;padding:20px;margin-bottom:18px}
 h2,h3{color:#d5ad58}
 p{color:#ddd;line-height:1.5;overflow-wrap:anywhere}
@@ -39,7 +65,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .profile-status,.request-message{font-size:14px;text-align:center;margin-top:12px;line-height:1.5}
 .success{color:#9be3ad}
 .error{color:#ff9999}
-.countdown{color:#f0d49a;font-weight:bold}
+.countdown{color:#f0d49a;font-weight:bold;margin-top:10px}
 .manage-menu{margin-top:15px;border:1px solid #80632e;border-radius:8px;background:#1b1b1b;overflow:hidden}
 .manage-menu summary{padding:14px;color:#e4bd70;font-weight:bold;cursor:pointer;list-style:none}
 .manage-menu summary::-webkit-details-marker{display:none}
@@ -56,10 +82,20 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .request-status.approved{color:#9be3ad}
 .request-status.declined{color:#ff9999}
 .small-note{font-size:12px;color:#aaa}
+.profile-details{background:#252525;border:1px solid #444;border-radius:9px;padding:15px;margin-top:15px}
+.profile-details p{margin:13px 0}
+.profile-divider{border:0;border-top:1px solid #514321;margin:22px 0}
+.profile-bottom{margin-top:25px;padding-top:10px}
+.back-button{background:#444;color:white}
+.page-heading{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.page-heading h2{margin-top:0}
+[hidden]{display:none!important}
+
 @media(max-width:500px){
  body{padding:10px}
  .card{padding:15px}
  header h1{font-size:23px}
+ header{padding-top:48px}
 }
 </style>
 </head>
@@ -68,6 +104,16 @@ button:disabled{opacity:.5;cursor:not-allowed}
 <div class="container">
 
 <header>
+
+<details class="top-menu" id="topMenu">
+<summary>MENU</summary>
+<div class="menu-content">
+<button type="button" id="menuAppointments">MY APPOINTMENTS</button>
+<button type="button" id="menuProfile">MY PROFILE</button>
+<button type="button" id="menuLogout" class="logout">LOG OUT</button>
+</div>
+</details>
+
 <h1>NEXT LEVEL GROOMING LOUNGE</h1>
 <p>MY CUSTOMER ACCOUNT</p>
 <p>Confidence Starts Here.</p>
@@ -77,18 +123,54 @@ button:disabled{opacity:.5;cursor:not-allowed}
 
 <div id="account" hidden>
 
-<div class="card">
-<h2>My Profile</h2>
+<!-- MAIN CUSTOMER PAGE: APPOINTMENTS STAY HERE -->
+<div id="appointmentsPage">
 
-<p><strong>Name:</strong> <span id="customerName"></span></p>
-<p><strong>Phone:</strong> <span id="customerPhone"></span></p>
-<p><strong>Email:</strong> <span id="customerEmail"></span></p>
+<div class="card">
+<h2>Welcome</h2>
+<p>Hello, <strong id="welcomeName">Customer</strong>.</p>
+<p>Manage your appointments and book your next visit below.</p>
+
+<button id="bookAppointmentButton">BOOK AN APPOINTMENT</button>
+</div>
+
+<div class="card">
+<h2>My Appointments</h2>
+<div id="bookingsList" class="message">Loading appointments...</div>
+</div>
+
+</div>
+
+<!-- SEPARATE MY PROFILE VIEW -->
+<div id="profilePage" hidden>
+
+<div class="card">
+
+<div class="page-heading">
+<h2>My Profile</h2>
+</div>
+
+<p>View your registered customer information below.</p>
+
+<div class="profile-details">
+<p><strong>Full Name:</strong> <span id="customerName"></span></p>
+<p><strong>Phone Number:</strong> <span id="customerPhone"></span></p>
+<p><strong>Email Address:</strong> <span id="customerEmail"></span></p>
+</div>
+
+<div class="profile-bottom">
+<hr class="profile-divider">
+
+<h3>Profile Settings</h3>
+<p>Need to change your registered name or phone number? Use the option below.</p>
 
 <button id="editProfileButton">EDIT PROFILE DETAILS</button>
 
 <div id="profileEditor" hidden>
+
 <div class="profile-notice">
 <strong>IMPORTANT: PROFILE EDITING RESTRICTION</strong><br><br>
+
 You can only update your name and phone number once every
 <strong>48 hours (2 days)</strong>.
 
@@ -100,6 +182,7 @@ Once you successfully update your details, you must wait another
 </div>
 
 <div class="profile-form">
+
 <label for="editName">Full Name</label>
 <input id="editName" type="text" maxlength="100" placeholder="Enter your full name">
 
@@ -108,22 +191,16 @@ Once you successfully update your details, you must wait another
 
 <button id="saveProfileButton">SAVE PROFILE CHANGES</button>
 <button id="cancelEditButton" class="secondary">CANCEL</button>
+
 <div id="profileStatus" class="profile-status" aria-live="polite"></div>
+
+</div>
 </div>
 </div>
 
-<button onclick="window.location.href='booking.html'">
-BOOK AN APPOINTMENT
-</button>
-</div>
+<button id="backToAppointments" class="back-button">BACK TO MY APPOINTMENTS</button>
 
-<div class="card">
-<h2>My Appointments</h2>
-<div id="bookingsList" class="message">Loading appointments...</div>
 </div>
-
-<div class="card">
-<button id="logoutButton" class="logout">LOG OUT</button>
 </div>
 
 </div>
@@ -155,6 +232,10 @@ const cancelEditButton=document.getElementById("cancelEditButton");
 const profileStatus=document.getElementById("profileStatus");
 const cooldownMessage=document.getElementById("cooldownMessage");
 
+const appointmentsPage=document.getElementById("appointmentsPage");
+const profilePage=document.getElementById("profilePage");
+const topMenu=document.getElementById("topMenu");
+
 function addText(parent,tag,value,className){
   const el=document.createElement(tag);
   el.textContent=value??"";
@@ -171,6 +252,28 @@ function makeButton(parent,label,callback,className){
   parent.appendChild(button);
   return button;
 }
+
+/* PAGE NAVIGATION */
+
+function showAppointmentsPage(){
+  profilePage.hidden=true;
+  appointmentsPage.hidden=false;
+  topMenu.open=false;
+}
+
+function showProfilePage(){
+  appointmentsPage.hidden=true;
+  profilePage.hidden=false;
+  topMenu.open=false;
+}
+
+document.getElementById("menuAppointments").addEventListener("click",showAppointmentsPage);
+document.getElementById("menuProfile").addEventListener("click",showProfilePage);
+document.getElementById("backToAppointments").addEventListener("click",showAppointmentsPage);
+
+document.getElementById("bookAppointmentButton").addEventListener("click",()=>{
+  window.location.href="booking.html";
+});
 
 /* PROFILE EDITING */
 
@@ -207,6 +310,7 @@ function updateCooldownDisplay(){
     document.getElementById("editPhone").disabled=true;
     saveProfileButton.disabled=true;
     editProfileButton.textContent="PROFILE EDITING LOCKED";
+
   }else{
     cooldownMessage.textContent=
       "You may edit your profile now. After saving, another edit will only be available after 48 hours.";
@@ -311,6 +415,8 @@ saveProfileButton.addEventListener("click",async()=>{
 
     document.getElementById("customerName").textContent=data.full_name||"Not provided";
     document.getElementById("customerPhone").textContent=data.phone||"Not provided";
+    document.getElementById("welcomeName").textContent=data.full_name||"Customer";
+
     profileLastEditedAt=data.profile_last_edited_at;
 
     profileStatus.textContent="Your profile has been updated successfully. Your next edit will be available after 48 hours.";
@@ -728,7 +834,6 @@ async function loadBookings(){
 async function refreshBookingsQuietly(){
   if(!currentUser || bookingsRefreshInProgress) return;
 
-  // Keep the existing appointment cards intact while a menu or form is open.
   const menuOpen=bookingsList.querySelector(".manage-menu[open]");
   const formOpen=bookingsList.querySelector(".request-form:not([hidden])");
 
@@ -782,6 +887,7 @@ async function loadAccount(){
     document.getElementById("customerName").textContent=profile?.full_name||"Not provided";
     document.getElementById("customerPhone").textContent=profile?.phone||"Not provided";
     document.getElementById("customerEmail").textContent=user.email||"Not provided";
+    document.getElementById("welcomeName").textContent=profile?.full_name||"Customer";
 
     profileLastEditedAt=profile?.profile_last_edited_at||null;
 
@@ -798,7 +904,7 @@ async function loadAccount(){
 
 /* LOGOUT */
 
-document.getElementById("logoutButton").addEventListener("click",async()=>{
+async function logoutCustomer(){
   const {error}=await supabaseClient.auth.signOut();
 
   if(error){
@@ -807,7 +913,9 @@ document.getElementById("logoutButton").addEventListener("click",async()=>{
   }
 
   window.location.href="login.html";
-});
+}
+
+document.getElementById("menuLogout").addEventListener("click",logoutCustomer);
 
 /* SAFE AUTOMATIC REFRESH */
 
