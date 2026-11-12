@@ -142,6 +142,7 @@ let currentUser=null;
 let allBookings=[];
 let profileLastEditedAt=null;
 let cooldownInterval=null;
+let bookingsRefreshInProgress=false;
 
 const message=document.getElementById("message");
 const account=document.getElementById("account");
@@ -357,66 +358,59 @@ function createRequestForm(booking,type,container){
 
   addText(form,"h3",isReschedule?"Request a Reschedule":"Request Cancellation");
 
+  let dateInput=null;
+  let timeInput=null;
+  let reasonInput=null;
+
   if(isReschedule){
     addText(form,"p","Choose your preferred new appointment date and time. Management must approve the request.");
 
     const dateLabel=addText(form,"label","Preferred new date");
-    const dateInput=document.createElement("input");
+    dateInput=document.createElement("input");
     dateInput.type="date";
     dateInput.min=new Date().toLocaleDateString("en-CA");
     dateLabel.appendChild(dateInput);
 
     const timeLabel=addText(form,"label","Preferred new time");
-    const timeInput=document.createElement("input");
+    timeInput=document.createElement("input");
     timeInput.type="time";
     timeLabel.appendChild(timeInput);
 
-    form.appendChild(dateLabel);
-    form.appendChild(timeLabel);
-
     const reasonLabel=addText(form,"label","Additional information (optional)");
-    const reasonInput=document.createElement("textarea");
+    reasonInput=document.createElement("textarea");
     reasonInput.maxLength=500;
     reasonInput.placeholder="Tell us why you need to reschedule...";
     reasonLabel.appendChild(reasonInput);
-    form.appendChild(reasonLabel);
-
-    makeButton(form,"SUBMIT RESCHEDULE REQUEST",async()=>{
-      if(!dateInput.value||!timeInput.value){
-        status.textContent="Please select a new date and time.";
-        status.className="request-message error";
-        return;
-      }
-
-      if(dateInput.value<new Date().toLocaleDateString("en-CA")){
-        status.textContent="Please choose a future date.";
-        status.className="request-message error";
-        return;
-      }
-
-      await submitAppointmentRequest({
-        booking,
-        type,
-        requested_date:dateInput.value,
-        requested_time:timeInput.value,
-        reason:reasonInput.value.trim(),
-        button:submitButton,
-        status
-      });
-    });
 
   }else{
     addText(form,"p","Please explain why you need to cancel. Management will review your request.");
 
     const reasonLabel=addText(form,"label","Cancellation reason");
-    const reasonInput=document.createElement("textarea");
+    reasonInput=document.createElement("textarea");
     reasonInput.maxLength=500;
     reasonInput.placeholder="Enter your cancellation reason...";
     reasonLabel.appendChild(reasonInput);
-    form.appendChild(reasonLabel);
+  }
 
-    makeButton(form,"SUBMIT CANCELLATION REQUEST",async()=>{
-      if(!reasonInput.value.trim()){
+  const status=addText(form,"div","","request-message");
+
+  const submitButton=makeButton(
+    form,
+    isReschedule?"SUBMIT RESCHEDULE REQUEST":"SUBMIT CANCELLATION REQUEST",
+    async()=>{
+      if(isReschedule){
+        if(!dateInput.value||!timeInput.value){
+          status.textContent="Please select a new date and time.";
+          status.className="request-message error";
+          return;
+        }
+
+        if(dateInput.value<new Date().toLocaleDateString("en-CA")){
+          status.textContent="Please choose a future date.";
+          status.className="request-message error";
+          return;
+        }
+      }else if(!reasonInput.value.trim()){
         status.textContent="Please provide a cancellation reason.";
         status.className="request-message error";
         return;
@@ -425,16 +419,18 @@ function createRequestForm(booking,type,container){
       await submitAppointmentRequest({
         booking,
         type,
+        requested_date:dateInput?.value,
+        requested_time:timeInput?.value,
         reason:reasonInput.value.trim(),
         button:submitButton,
         status
       });
-    });
-  }
+    }
+  );
 
-  const submitButton=form.querySelector("button");
-  const status=addText(form,"div","","request-message");
-  makeButton(form,"CLOSE",()=>{form.hidden=true;},"secondary");
+  makeButton(form,"CLOSE",()=>{
+    form.hidden=true;
+  },"secondary");
 
   container.appendChild(form);
   return form;
@@ -707,6 +703,8 @@ function displayBookings(){
   });
 }
 
+/* INITIAL APPOINTMENT LOAD */
+
 async function loadBookings(){
   bookingsList.textContent="Loading appointments...";
 
@@ -723,6 +721,39 @@ async function loadBookings(){
 
   allBookings=data||[];
   displayBookings();
+}
+
+/* SAFE BACKGROUND REFRESH */
+
+async function refreshBookingsQuietly(){
+  if(!currentUser || bookingsRefreshInProgress) return;
+
+  // Keep the existing appointment cards intact while a menu or form is open.
+  const menuOpen=bookingsList.querySelector(".manage-menu[open]");
+  const formOpen=bookingsList.querySelector(".request-form:not([hidden])");
+
+  if(menuOpen || formOpen) return;
+
+  bookingsRefreshInProgress=true;
+
+  try{
+    const {data,error}=await supabaseClient
+      .from("bookings")
+      .select("*")
+      .eq("customer_id",currentUser.id)
+      .order("created_at",{ascending:false});
+
+    if(error){
+      console.error("Background appointment refresh:",error);
+      return;
+    }
+
+    allBookings=data||[];
+    displayBookings();
+
+  }finally{
+    bookingsRefreshInProgress=false;
+  }
 }
 
 /* LOAD ACCOUNT */
@@ -778,14 +809,16 @@ document.getElementById("logoutButton").addEventListener("click",async()=>{
   window.location.href="login.html";
 });
 
-/* EXISTING REFRESH BEHAVIOUR */
+/* SAFE AUTOMATIC REFRESH */
 
 setInterval(()=>{
-  if(currentUser) displayBookings();
+  refreshBookingsQuietly();
 },5000);
 
 document.addEventListener("visibilitychange",()=>{
-  if(!document.hidden && currentUser) loadBookings();
+  if(!document.hidden && currentUser){
+    refreshBookingsQuietly();
+  }
 });
 
 loadAccount();
