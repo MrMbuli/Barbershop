@@ -20,24 +20,16 @@
 }
 body{
  margin:0;
- background:
- radial-gradient(ellipse at 15% 0%,rgba(116,83,34,.13),transparent 35%),
- #0b0b0b;
- color:#f5f1e8;
- font-family:Arial,sans-serif;
- padding-bottom:95px;
+ background:radial-gradient(ellipse at 15% 0%,rgba(116,83,34,.13),transparent 35%),#0b0b0b;
+ color:#f5f1e8;font-family:Arial,sans-serif;padding-bottom:95px;
 }
 button,input,textarea{font-family:inherit}
 button{cursor:pointer}
 [hidden]{display:none!important}
-
 .container{max-width:1450px;margin:auto;padding:20px 25px}
-
 header{
- display:flex;align-items:center;justify-content:space-between;
- gap:15px;padding:12px 0 25px;
- border-bottom:1px solid rgba(216,180,103,.15);
- margin-bottom:25px;
+ display:flex;align-items:center;justify-content:space-between;gap:15px;
+ padding:12px 0 25px;border-bottom:1px solid rgba(216,180,103,.15);margin-bottom:25px;
 }
 .brand h1{
  font-size:21px;letter-spacing:2px;margin:0;
@@ -46,12 +38,10 @@ header{
 }
 .brand p{color:#aaa;font-size:11px;margin:7px 0 0;letter-spacing:3px}
 .header-label{color:#aaa;font-size:10px;text-align:right;letter-spacing:2px;line-height:1.8}
-
 .app-nav{
  position:fixed;z-index:100;left:0;top:0;bottom:0;width:225px;
- padding:125px 15px 25px;margin:0;
- border:0;border-right:1px solid var(--border);border-radius:0;
- background:linear-gradient(180deg,#171717,#0c0c0c);
+ padding:125px 15px 25px;margin:0;border:0;border-right:1px solid var(--border);
+ border-radius:0;background:linear-gradient(180deg,#171717,#0c0c0c);
  display:flex;flex-direction:column;justify-content:flex-start;gap:9px;
 }
 .app-nav:before{
@@ -59,10 +49,9 @@ header{
  color:var(--gold);font-size:16px;font-weight:bold;letter-spacing:3px;
 }
 .nav-item{
- flex:none;width:100%;text-align:left;padding:15px 13px;
- border-radius:9px;display:flex;align-items:center;gap:13px;
- background:transparent;color:#aaa;border:0;
- font-size:11px;letter-spacing:1px;font-weight:bold;transition:.25s;
+ flex:none;width:100%;text-align:left;padding:15px 13px;border-radius:9px;
+ display:flex;align-items:center;gap:13px;background:transparent;color:#aaa;
+ border:0;font-size:11px;letter-spacing:1px;font-weight:bold;transition:.25s;
 }
 .nav-item .nav-icon{display:inline-block;width:24px;margin:0;font-size:20px;text-align:center}
 .nav-item.active{
@@ -70,99 +59,65 @@ header{
  color:var(--gold);border-left:3px solid var(--gold);
 }
 .nav-item:hover{background:rgba(216,180,103,.1);color:var(--gold)}
-
 #account>section{animation:pageReveal .3s ease}
-@keyframes pageReveal{
- from{opacity:0;transform:translateY(8px)}
- to{opacity:1;transform:translateY(0)}
-}
-
+@keyframes pageReveal{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .page-title{margin:0 0 18px}
 .page-title h2{color:var(--gold);margin:0 0 7px;font-size:26px;letter-spacing:.3px}
 .page-title p{color:#aaa;margin:0;font-size:14px;line-height:1.5}
-
 .card{
  background:linear-gradient(145deg,#1b1b1b,#131313);
- border:1px solid var(--border);border-radius:16px;
- padding:24px;margin-bottom:18px;
+ border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:18px;
  box-shadow:0 10px 30px rgba(0,0,0,.16);
 }
 h2,h3{color:var(--gold)}
 p{color:#ddd;line-height:1.55;overflow-wrap:anywhere}
-
 button.primary{
- background:linear-gradient(110deg,#e3c47e,#b78d42);
- color:#17120a;border:0;border-radius:9px;
- padding:13px;font-weight:bold;width:100%;margin-top:10px;
+ background:linear-gradient(110deg,#e3c47e,#b78d42);color:#17120a;border:0;
+ border-radius:9px;padding:13px;font-weight:bold;width:100%;margin-top:10px;
  font-size:12px;letter-spacing:1px;transition:.2s;
 }
 button.primary:hover{filter:brightness(1.12);transform:translateY(-1px)}
-button.secondary{
- background:#444;color:white;border:0;border-radius:9px;
- padding:12px;width:100%;margin-top:10px;
-}
-button.logout{
- background:#842d2d;color:white;border:0;border-radius:9px;
- padding:12px;width:100%;margin-top:10px;
-}
-button.whatsapp{
- background:#168b52;color:white;border:0;border-radius:9px;
- padding:12px;width:100%;margin-top:10px;
-}
+button.secondary{background:#444;color:white;border:0;border-radius:9px;padding:12px;width:100%;margin-top:10px}
+button.logout{background:#842d2d;color:white;border:0;border-radius:9px;padding:12px;width:100%;margin-top:10px}
+button.whatsapp{background:#168b52;color:white;border:0;border-radius:9px;padding:12px;width:100%;margin-top:10px}
 button:disabled{opacity:.5;cursor:not-allowed}
-
 .hero{
- position:relative;overflow:hidden;min-height:225px;padding:36px;
- border-radius:18px;border:1px solid rgba(216,180,103,.42);
- background:
- radial-gradient(circle at 85% 20%,rgba(216,180,103,.18),transparent 35%),
- linear-gradient(115deg,#302516,#191714 55%,#111);
- box-shadow:0 15px 40px rgba(0,0,0,.25);
- margin-bottom:18px;
+ position:relative;overflow:hidden;min-height:225px;padding:36px;border-radius:18px;
+ border:1px solid rgba(216,180,103,.42);
+ background:radial-gradient(circle at 85% 20%,rgba(216,180,103,.18),transparent 35%),linear-gradient(115deg,#302516,#191714 55%,#111);
+ box-shadow:0 15px 40px rgba(0,0,0,.25);margin-bottom:18px;
 }
 .hero:after{
- content:"NL";position:absolute;right:30px;bottom:-65px;
- font-size:190px;font-weight:bold;letter-spacing:-15px;
- color:rgba(216,180,103,.055);pointer-events:none;
+ content:"NL";position:absolute;right:30px;bottom:-65px;font-size:190px;
+ font-weight:bold;letter-spacing:-15px;color:rgba(216,180,103,.055);pointer-events:none;
 }
 .hero .eyebrow{color:var(--gold);font-size:11px;letter-spacing:2px;font-weight:bold}
 .hero h2{font-size:31px;margin:12px 0 5px;letter-spacing:-.5px}
 .hero p{color:#c4bba9;margin:5px 0;max-width:550px}
 .hero button{max-width:240px;position:relative;z-index:2}
-
 .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:18px}
 .stat-card{
- background:linear-gradient(145deg,#202020,#151515);
- border:1px solid var(--border);border-radius:15px;padding:21px;transition:.25s;
+ background:linear-gradient(145deg,#202020,#151515);border:1px solid var(--border);
+ border-radius:15px;padding:21px;transition:.25s;
 }
 .stat-card:hover{transform:translateY(-3px);border-color:var(--gold)}
 .stat-card span{display:block;color:#aaa;font-size:12px;letter-spacing:1.2px}
 .stat-card strong{display:block;color:var(--gold);font-size:30px;margin-top:8px}
-
 .quick-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
 .quick-card{
- background:linear-gradient(145deg,#222,#151515);
- border:1px solid var(--border);border-radius:15px;
- padding:22px;cursor:pointer;transition:.25s;
+ background:linear-gradient(145deg,#222,#151515);border:1px solid var(--border);
+ border-radius:15px;padding:22px;cursor:pointer;transition:.25s;
 }
-.quick-card:hover{
- transform:translateY(-4px);border-color:var(--gold);
- box-shadow:0 12px 25px rgba(0,0,0,.25);
-}
+.quick-card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 12px 25px rgba(0,0,0,.25)}
 .quick-card .quick-icon{font-size:28px;color:var(--gold)}
 .quick-card h3{font-size:15px;margin:10px 0 5px}
 .quick-card p{font-size:12px;color:#aaa;margin:0}
-
 .booking{
- background:linear-gradient(145deg,#202020,#151515);
- border:1px solid var(--border);border-radius:14px;padding:20px;margin-top:14px;
+ background:linear-gradient(145deg,#202020,#151515);border:1px solid var(--border);
+ border-radius:14px;padding:20px;margin-top:14px;
 }
 .booking h3{margin-top:0;font-size:19px}
-.status{
- display:inline-block;padding:7px 11px;
- background:#514321;color:#ffd477;border-radius:20px;
- font-size:12px;border:1px solid rgba(216,180,103,.25);
-}
+.status{display:inline-block;padding:7px 11px;background:#514321;color:#ffd477;border-radius:20px;font-size:12px;border:1px solid rgba(216,180,103,.25)}
 .cancelled{background:#642c2c;color:#ffaaaa}
 .completed{background:#23553a;color:#a9f0be}
 .reason{border:1px solid #a34b4b;border-radius:8px;padding:14px;margin-top:14px;background:#301d1d}
@@ -173,7 +128,6 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .error{color:#ff9999}
 .small-note{font-size:12px;color:#aaa}
 .countdown{color:#f0d49a;font-weight:bold;margin-top:10px}
-
 .avatar-wrap{text-align:center;margin:5px auto 20px}
 .avatar-circle{
  width:115px;height:115px;border-radius:50%;border:3px solid var(--gold);
@@ -185,7 +139,6 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .avatar-caption{font-size:12px;color:#aaa;margin-top:9px}
 .upload-button{max-width:230px;margin:10px auto 0;display:block}
 #avatarInput{display:none}
-
 .profile-details,.completion-box{
  background:linear-gradient(145deg,#202020,#151515);
  border:1px solid var(--border);border-radius:14px;padding:17px;margin-top:16px;
@@ -205,7 +158,6 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .profile-section{margin-top:20px;padding-top:12px;border-top:1px solid var(--border)}
 .profile-section h3{margin-bottom:8px}
 input[type="date"]{color-scheme:dark}
-
 .progress-track{height:12px;background:#333;border-radius:20px;overflow:hidden;margin:12px 0}
 .progress-fill{height:100%;width:0;background:linear-gradient(90deg,#a77b34,#f0d18a);transition:width .3s}
 .requirement{padding:10px 0;border-bottom:1px solid #444;color:#ddd;font-size:14px}
@@ -216,7 +168,6 @@ input[type="date"]{color-scheme:dark}
 .loyalty-status{padding:14px;border-radius:8px;text-align:center;margin-top:14px;font-weight:bold;font-size:13px}
 .loyalty-eligible{background:#20452e;color:#a9f0be}
 .loyalty-pending{background:#3b301c;color:#f0d49a}
-
 .manage-menu{margin-top:15px;border:1px solid var(--border);border-radius:8px;background:#1b1b1b;overflow:hidden}
 .manage-menu summary{padding:14px;color:#e4bd70;font-weight:bold;cursor:pointer;list-style:none;letter-spacing:.5px}
 .manage-menu summary::-webkit-details-marker{display:none}
@@ -237,24 +188,126 @@ input[type="date"]{color-scheme:dark}
 .empty-next{color:#aaa;font-size:14px;padding:12px 0}
 .footer{text-align:center;color:#777;font-size:11px;padding:25px 0;border-top:1px solid rgba(216,180,103,.12);margin-top:35px;letter-spacing:1px}
 
+/* MODERN PROFILE DESIGN */
+.profile-cover{
+ position:relative;min-height:190px;overflow:hidden;border-radius:18px;
+ border:1px solid rgba(216,180,103,.35);
+ background:
+ radial-gradient(circle at 80% 20%,rgba(216,180,103,.3),transparent 35%),
+ linear-gradient(120deg,#49391f,#211c14 48%,#101010);
+}
+.profile-cover:before{
+ content:"NL";position:absolute;right:25px;bottom:-68px;
+ font-size:190px;font-weight:900;letter-spacing:-15px;
+ color:rgba(255,255,255,.055);pointer-events:none;
+}
+.profile-cover-content{position:relative;z-index:1;padding:25px}
+.profile-cover-tag{font-size:10px;letter-spacing:3px;color:#f1d99f;font-weight:bold}
+.profile-cover h2{font-size:25px;margin:12px 0 5px;color:#f5e6c4}
+.profile-cover p{font-size:13px;color:#d1c5ad;margin:0}
+.profile-identity{
+ position:relative;margin-top:-47px;padding:0 22px 20px;
+ display:flex;align-items:flex-end;gap:17px;
+}
+.profile-avatar-frame{position:relative;flex:none}
+.profile-avatar-frame .avatar-circle{
+ width:112px;height:112px;border:4px solid #171717;
+ box-shadow:0 0 0 2px var(--gold),0 8px 25px #000;
+}
+.avatar-camera{
+ position:absolute;right:0;bottom:3px;width:34px;height:34px;
+ border-radius:50%;border:2px solid #171717;background:var(--gold);
+ color:#17120a;font-size:16px;font-weight:bold;
+ display:flex;align-items:center;justify-content:center;
+}
+.profile-identity-info{padding-bottom:7px;min-width:0}
+.profile-identity-info h2{font-size:20px;color:#fff;margin:0 0 5px;overflow-wrap:anywhere}
+.profile-identity-info p{font-size:12px;color:#aaa;margin:0}
+.member-tag{
+ display:inline-block;margin-top:8px;padding:5px 9px;border-radius:20px;
+ background:rgba(216,180,103,.13);border:1px solid rgba(216,180,103,.28);
+ color:#e6c982;font-size:9px;font-weight:bold;letter-spacing:1px;
+}
+.profile-tabs{
+ display:flex;gap:5px;border-bottom:1px solid rgba(216,180,103,.2);
+ margin:0 0 18px;overflow-x:auto;
+}
+.profile-tab{
+ flex:1;min-width:105px;background:transparent;color:#999;border:0;
+ border-bottom:2px solid transparent;padding:14px 10px;
+ font-size:11px;font-weight:bold;letter-spacing:.7px;white-space:nowrap;
+}
+.profile-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.profile-tab:hover{color:#fff}
+.profile-tab-panel{animation:pageReveal .25s ease}
+.profile-panel-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px}
+.profile-panel-heading h3{margin:0;font-size:17px}
+.profile-panel-heading p{margin:5px 0 0;color:#999;font-size:12px}
+.profile-action-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
+.profile-action-row button{flex:1;min-width:140px;margin-top:0}
+.profile-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.profile-info-item{
+ min-width:0;padding:15px;border-radius:12px;
+ background:linear-gradient(145deg,#222,#171717);
+ border:1px solid rgba(216,180,103,.15);
+}
+.profile-info-item .info-label{
+ color:#999;font-size:10px;letter-spacing:1.3px;text-transform:uppercase;
+ margin-bottom:8px;
+}
+.profile-info-item .info-value{
+ color:#f5f1e8;font-size:14px;font-weight:bold;overflow-wrap:anywhere;
+}
+.profile-progress-card{
+ margin-top:15px;padding:17px;border-radius:13px;
+ background:linear-gradient(120deg,rgba(216,180,103,.12),rgba(216,180,103,.025));
+ border:1px solid rgba(216,180,103,.25);
+}
+.profile-progress-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.profile-progress-top strong{font-size:13px;color:#eee}
+.profile-progress-top span{font-size:20px;font-weight:bold;color:var(--gold)}
+.profile-progress-card p{font-size:12px;color:#aaa;margin:8px 0 0}
+.profile-address-note{
+ padding:13px;border-radius:10px;background:#242016;
+ border:1px solid rgba(216,180,103,.2);color:#d8c69d;
+ font-size:12px;line-height:1.6;margin-bottom:16px;
+}
+.profile-empty-value{color:#777!important;font-weight:normal!important}
+.profile-section-card{
+ padding:18px;border:1px solid rgba(216,180,103,.18);
+ background:linear-gradient(145deg,#1d1d1d,#141414);
+ border-radius:14px;margin-top:15px;
+}
+.profile-section-card h3{font-size:15px;margin:0 0 6px}
+.profile-section-card>p{font-size:12px;color:#999;margin:0 0 12px}
+.profile-field-hint{font-size:11px;color:#888;margin-top:6px}
+.profile-save-row{display:flex;gap:10px;flex-wrap:wrap}
+.profile-save-row button{flex:1;min-width:140px}
+.profile-back-link{
+ display:inline-flex;align-items:center;gap:7px;color:var(--gold);
+ background:transparent;border:0;padding:8px 0;font-size:12px;font-weight:bold;
+}
+#profilePage .card{padding:18px}
+#profilePage .profile-form input{background:#222;border-color:#444}
+#profilePage .profile-form input:focus{
+ outline:none;border-color:var(--gold);
+ box-shadow:0 0 0 3px rgba(216,180,103,.1);
+}
+.profile-address-summary{font-size:13px;color:#ddd;line-height:1.7}
+.profile-address-summary strong{color:var(--gold)}
 @media(min-width:900px){
  body{padding-bottom:0}
- .container{
-  margin-left:225px;width:calc(100% - 225px);
-  max-width:1450px;padding:28px 38px;
- }
+ .container{margin-left:225px;width:calc(100% - 225px);max-width:1450px;padding:28px 38px}
  .app-nav{width:225px}
  .stats-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
  .quick-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
  .quick-card{min-height:155px}
 }
-
 @media(max-width:899px){
  .container{padding:15px}
  header{padding:10px 0 20px}
  .app-nav{
-  position:fixed;top:auto;left:0;right:0;bottom:0;
-  width:100%;height:auto;
+  position:fixed;top:auto;left:0;right:0;bottom:0;width:100%;height:auto;
   padding:8px 5px calc(8px + env(safe-area-inset-bottom));
   border:1px solid var(--border);border-bottom:0;border-radius:17px 17px 0 0;
   background:rgba(17,17,17,.96);backdrop-filter:blur(16px);
@@ -263,8 +316,8 @@ input[type="date"]{color-scheme:dark}
  .app-nav:before{display:none}
  .nav-item{
   flex:1;width:auto;padding:7px 2px;flex-direction:column;
-  justify-content:center;text-align:center;gap:4px;
-  font-size:9px;letter-spacing:0;border-left:0;border-top:2px solid transparent;
+  justify-content:center;text-align:center;gap:4px;font-size:9px;
+  letter-spacing:0;border-left:0;border-top:2px solid transparent;
  }
  .nav-item .nav-icon{width:auto;font-size:19px}
  .nav-item.active{border-left:0;border-top:2px solid var(--gold);border-radius:8px}
@@ -279,12 +332,26 @@ input[type="date"]{color-scheme:dark}
  .quick-card{padding:16px}
  .quick-card h3{font-size:14px}
  .address-grid{grid-template-columns:1fr}
+ .profile-cover{min-height:165px}
+ .profile-cover-content{padding:20px}
+ .profile-cover h2{font-size:22px}
+ .profile-identity{padding:0 14px 18px;gap:13px}
+ .profile-avatar-frame .avatar-circle{width:94px;height:94px}
+ .profile-identity-info h2{font-size:17px}
+ #profilePage .card{padding:13px}
+ .profile-info-grid{gap:8px}
+ .profile-info-item{padding:12px}
+ .profile-info-item .info-value{font-size:13px}
 }
 @media(max-width:380px){
  .nav-item{font-size:8px}
  .nav-item .nav-icon{font-size:17px}
  .brand h1{font-size:15px}
  .header-label{font-size:9px}
+ .profile-identity-info h2{font-size:15px}
+ .profile-avatar-frame .avatar-circle{width:82px;height:82px}
+ .profile-identity{margin-top:-38px}
+ .profile-info-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -319,105 +386,186 @@ input[type="date"]{color-scheme:dark}
   <p>Look good. Feel confident. Stay on your level.</p>
   <button class="primary" id="bookAppointmentButton">BOOK AN APPOINTMENT</button>
  </div>
-
  <div class="stats-grid">
   <div class="stat-card"><span>ALL APPOINTMENTS</span><strong id="totalBookings">0</strong></div>
   <div class="stat-card"><span>UPCOMING</span><strong id="upcomingBookings">0</strong></div>
   <div class="stat-card"><span>COMPLETED</span><strong id="completedBookings">0</strong></div>
  </div>
-
  <div class="card">
-  <div class="page-title">
-   <h2>Next Appointment</h2>
-   <p>Your next scheduled grooming session.</p>
-  </div>
+  <div class="page-title"><h2>Next Appointment</h2><p>Your next scheduled grooming session.</p></div>
   <div id="nextAppointment" class="empty-next">Checking your appointments...</div>
  </div>
-
  <div class="section-label">QUICK ACCESS</div>
  <div class="quick-grid">
-  <div class="quick-card" data-go="appointmentsPage">
-   <div class="quick-icon">▣</div><h3>My Appointments</h3>
-   <p>View and manage your bookings.</p>
-  </div>
-  <div class="quick-card" data-go="profilePage">
-   <div class="quick-icon">♙</div><h3>My Profile</h3>
-   <p>Update your personal information.</p>
-  </div>
-  <div class="quick-card" data-go="loyaltyPage">
-   <div class="quick-icon">★</div><h3>Loyalty Programme</h3>
-   <p>Check your profile completion.</p>
-  </div>
-  <div class="quick-card" data-go="settingsPage">
-   <div class="quick-icon">⚙</div><h3>Account Settings</h3>
-   <p>Manage your account preferences.</p>
-  </div>
+  <div class="quick-card" data-go="appointmentsPage"><div class="quick-icon">▣</div><h3>My Appointments</h3><p>View and manage your bookings.</p></div>
+  <div class="quick-card" data-go="profilePage"><div class="quick-icon">♙</div><h3>My Profile</h3><p>Update your personal information.</p></div>
+  <div class="quick-card" data-go="loyaltyPage"><div class="quick-icon">★</div><h3>Loyalty Programme</h3><p>Check your profile completion.</p></div>
+  <div class="quick-card" data-go="settingsPage"><div class="quick-icon">⚙</div><h3>Account Settings</h3><p>Manage your account preferences.</p></div>
  </div>
 </section>
 
 <section id="appointmentsPage" hidden>
- <div class="page-title">
-  <h2>My Appointments</h2>
-  <p>Keep track of your grooming bookings and requests.</p>
- </div>
+ <div class="page-title"><h2>My Appointments</h2><p>Keep track of your grooming bookings and requests.</p></div>
  <div class="card">
   <button class="primary" id="bookAnotherButton">BOOK AN APPOINTMENT</button>
   <div id="bookingsList" class="message">Loading appointments...</div>
  </div>
 </section>
 
+<!-- MODERN PROFILE PAGE -->
 <section id="profilePage" hidden>
  <div class="page-title">
   <h2>My Profile</h2>
-  <p>Your personal information and contact details.</p>
+  <p>Manage your identity, personal information and home address.</p>
  </div>
 
  <div class="card">
-  <div class="avatar-wrap">
-   <div class="avatar-circle" id="avatarCircle"><span class="avatar-placeholder">♙</span></div>
-   <div class="avatar-caption">Your profile selfie</div>
-   <input type="file" id="avatarInput" accept="image/jpeg,image/png,image/webp" capture="user">
-   <button type="button" class="primary upload-button" id="uploadAvatarButton">UPLOAD / CHANGE SELFIE</button>
-   <div id="avatarStatus" class="profile-status" aria-live="polite"></div>
+  <div class="profile-cover">
+   <div class="profile-cover-content">
+    <div class="profile-cover-tag">YOUR NEXT LEVEL PROFILE</div>
+    <h2>Your identity. Your details.</h2>
+    <p>Keep your information up to date for a better grooming experience.</p>
+   </div>
   </div>
 
-  <div class="profile-details">
-   <h3>Registered Details</h3>
-   <p><strong>Full Name:</strong> <span id="customerName"></span></p>
-   <p><strong>Phone Number:</strong> <span id="customerPhone"></span></p>
-   <p><strong>Email Address:</strong> <span id="customerEmail"></span></p>
-   <p><strong>Date of Birth:</strong> <span id="customerDOB">Not provided</span></p>
+  <div class="profile-identity">
+   <div class="profile-avatar-frame">
+    <div class="avatar-circle" id="avatarCircle"><span class="avatar-placeholder">♙</span></div>
+    <button type="button" class="avatar-camera" id="uploadAvatarButton" aria-label="Change profile selfie">📷</button>
+   </div>
+   <div class="profile-identity-info">
+    <h2 id="profileDisplayName">Customer</h2>
+    <p id="profileDisplayEmail">Loading email...</p>
+    <span class="member-tag">NEXT LEVEL MEMBER</span>
+   </div>
   </div>
 
-  <div class="profile-section">
-   <h3>Additional Profile Details</h3>
-   <p>Your home address can help us prepare future house-call bookings.</p>
-   <div class="profile-form">
-    <label for="profileDOB">Date of Birth</label>
-    <input type="date" id="profileDOB">
-    <h3>Home Address <span class="optional-label">(Optional)</span></h3>
-    <div class="address-grid">
-     <div><label for="profileProvince">Province</label><input id="profileProvince" maxlength="80" placeholder="e.g. Gauteng"></div>
-     <div><label for="profileCity">City / Town</label><input id="profileCity" maxlength="100" placeholder="e.g. Johannesburg"></div>
-     <div><label for="profileSuburb">Suburb</label><input id="profileSuburb" maxlength="100" placeholder="Your suburb"></div>
-     <div><label for="profilePostal">Postal Code</label><input id="profilePostal" maxlength="15" placeholder="Postal code"></div>
+  <input type="file" id="avatarInput" accept="image/jpeg,image/png,image/webp" capture="user">
+  <div id="avatarStatus" class="profile-status" aria-live="polite"></div>
+
+  <div class="profile-tabs" role="tablist" aria-label="Profile sections">
+   <button type="button" class="profile-tab active" data-profile-tab="overviewPanel">OVERVIEW</button>
+   <button type="button" class="profile-tab" data-profile-tab="personalPanel">PERSONAL DETAILS</button>
+   <button type="button" class="profile-tab" data-profile-tab="addressPanel">HOME ADDRESS</button>
+  </div>
+
+  <!-- OVERVIEW TAB -->
+  <div id="overviewPanel" class="profile-tab-panel">
+   <div class="profile-panel-heading">
+    <div><h3>Profile Overview</h3><p>Your registered customer information at a glance.</p></div>
+   </div>
+
+   <div class="profile-info-grid">
+    <div class="profile-info-item">
+     <div class="info-label">Full name</div>
+     <div class="info-value" id="overviewName">Not provided</div>
     </div>
-    <label for="profileStreet">Street Address and House Number</label>
-    <input id="profileStreet" maxlength="200" placeholder="Street name and house number">
-    <label for="profileComplex">Complex / Building Name <span class="optional-label">(Optional)</span></label>
-    <input id="profileComplex" maxlength="150" placeholder="Complex or building name">
-    <button class="primary" id="saveAdditionalDetails">SAVE ADDITIONAL DETAILS</button>
-    <div id="additionalStatus" class="profile-status" aria-live="polite"></div>
+    <div class="profile-info-item">
+     <div class="info-label">Phone number</div>
+     <div class="info-value" id="overviewPhone">Not provided</div>
+    </div>
+    <div class="profile-info-item">
+     <div class="info-label">Email address</div>
+     <div class="info-value" id="overviewEmail">Not provided</div>
+    </div>
+    <div class="profile-info-item">
+     <div class="info-label">Date of birth</div>
+     <div class="info-value" id="overviewDOB">Not provided</div>
+    </div>
+   </div>
+
+   <div class="profile-progress-card">
+    <div class="profile-progress-top">
+     <strong>PROFILE COMPLETION</strong>
+     <span id="profileCompletionPercent">0%</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="profileCompletionBar"></div></div>
+    <p id="profileCompletionHint">Complete your profile to qualify for loyalty benefits.</p>
+   </div>
+
+   <div class="profile-action-row">
+    <button type="button" class="primary" id="overviewEditButton">EDIT PERSONAL DETAILS</button>
+    <button type="button" class="secondary" id="overviewAddressButton">MANAGE HOME ADDRESS</button>
+   </div>
+  </div>
+
+  <!-- PERSONAL DETAILS TAB -->
+  <div id="personalPanel" class="profile-tab-panel" hidden>
+   <div class="profile-panel-heading">
+    <div><h3>Personal Details</h3><p>Your registered contact information and birthday.</p></div>
+   </div>
+
+   <div class="profile-info-grid">
+    <div class="profile-info-item">
+     <div class="info-label">Registered full name</div>
+     <div class="info-value" id="customerName">Not provided</div>
+    </div>
+    <div class="profile-info-item">
+     <div class="info-label">Phone number</div>
+     <div class="info-value" id="customerPhone">Not provided</div>
+    </div>
+    <div class="profile-info-item" style="grid-column:1/-1">
+     <div class="info-label">Email address</div>
+     <div class="info-value" id="customerEmail">Not provided</div>
+    </div>
+   </div>
+
+   <div class="profile-section-card">
+    <h3>Date of Birth</h3>
+    <p>Add your birthday to complete your loyalty profile.</p>
+    <div class="profile-form">
+     <label for="profileDOB">Date of Birth</label>
+     <input type="date" id="profileDOB">
+     <div class="profile-field-hint">Your birthday is used for your customer profile and loyalty eligibility.</div>
+     <button class="primary" id="saveDOBButton">SAVE DATE OF BIRTH</button>
+     <div id="dobStatus" class="profile-status" aria-live="polite"></div>
+    </div>
+   </div>
+
+   <div class="profile-action-row">
+    <button type="button" class="primary" id="personalEditButton">EDIT NAME / PHONE</button>
+    <button type="button" class="secondary" id="personalSelfieButton">CHANGE PROFILE SELFIE</button>
+   </div>
+  </div>
+
+  <!-- HOME ADDRESS TAB -->
+  <div id="addressPanel" class="profile-tab-panel" hidden>
+   <div class="profile-panel-heading">
+    <div><h3>Home Address</h3><p>Save your address for convenient house-call bookings.</p></div>
+   </div>
+
+   <div class="profile-address-note">
+    Your home address is optional. Adding it can make future house-call bookings easier. Please make sure your details are accurate.
+   </div>
+
+   <div class="profile-section-card" style="margin-top:0">
+    <div class="profile-form">
+     <div class="address-grid">
+      <div><label for="profileProvince">Province</label><input id="profileProvince" maxlength="80" placeholder="e.g. Gauteng"></div>
+      <div><label for="profileCity">City / Town</label><input id="profileCity" maxlength="100" placeholder="e.g. Johannesburg"></div>
+      <div><label for="profileSuburb">Suburb</label><input id="profileSuburb" maxlength="100" placeholder="Your suburb"></div>
+      <div><label for="profilePostal">Postal Code</label><input id="profilePostal" maxlength="15" placeholder="Postal code"></div>
+     </div>
+     <label for="profileStreet">Street Address and House Number</label>
+     <input id="profileStreet" maxlength="200" placeholder="Street name and house number">
+     <label for="profileComplex">Complex / Building Name <span class="optional-label">(Optional)</span></label>
+     <input id="profileComplex" maxlength="150" placeholder="Complex or building name">
+     <button class="primary" id="saveAdditionalDetails">SAVE HOME ADDRESS</button>
+     <div id="additionalStatus" class="profile-status" aria-live="polite"></div>
+    </div>
+   </div>
+
+   <div class="profile-section-card">
+    <h3>Address Preview</h3>
+    <p>This is the address currently saved to your customer profile.</p>
+    <div id="profileAddressPreview" class="profile-address-summary">No home address saved yet.</div>
    </div>
   </div>
  </div>
 </section>
 
 <section id="loyaltyPage" hidden>
- <div class="page-title">
-  <h2>Loyalty Rewards</h2>
-  <p>Your journey towards becoming a Next Level regular.</p>
- </div>
+ <div class="page-title"><h2>Loyalty Rewards</h2><p>Your journey towards becoming a Next Level regular.</p></div>
  <div class="hero">
   <div class="eyebrow">NEXT LEVEL CUSTOMER REWARDS</div>
   <h2>Every detail matters.</h2>
@@ -443,10 +591,7 @@ input[type="date"]{color-scheme:dark}
 </section>
 
 <section id="settingsPage" hidden>
- <div class="page-title">
-  <h2>Account Settings</h2>
-  <p>Manage your registered information and account access.</p>
- </div>
+ <div class="page-title"><h2>Account Settings</h2><p>Manage your registered information and account access.</p></div>
  <div class="card">
   <h3>Personal Information</h3>
   <p>Need to change your registered name or phone number?</p>
@@ -526,13 +671,12 @@ function makeButton(parent,label,callback,className){
 function showPage(pageId){
  const pageIds=["dashboardPage","appointmentsPage","profilePage","loyaltyPage","settingsPage"];
  if(!pageIds.includes(pageId))return;
- pageIds.forEach(id=>{
-  document.getElementById(id).hidden=id!==pageId;
- });
+ pageIds.forEach(id=>{document.getElementById(id).hidden=id!==pageId});
  document.querySelectorAll(".nav-item").forEach(button=>{
   button.classList.toggle("active",button.dataset.page===pageId);
  });
  if(pageId==="dashboardPage")updateDashboard();
+ if(pageId==="profilePage")refreshProfileDisplay();
  window.scrollTo({top:0,behavior:"smooth"});
 }
 document.querySelectorAll(".nav-item").forEach(button=>{
@@ -541,23 +685,72 @@ document.querySelectorAll(".nav-item").forEach(button=>{
 document.querySelectorAll("[data-go]").forEach(button=>{
  button.addEventListener("click",()=>showPage(button.dataset.go));
 });
-document.getElementById("bookAppointmentButton").addEventListener("click",()=>{
- window.location.href="booking.html";
+document.getElementById("bookAppointmentButton").addEventListener("click",()=>{window.location.href="booking.html"});
+document.getElementById("bookAnotherButton").addEventListener("click",()=>{window.location.href="booking.html"});
+document.getElementById("goAppointmentsButton").addEventListener("click",()=>showPage("appointmentsPage"));
+
+/* PROFILE TABS */
+function openProfileTab(tabId){
+ const allowed=["overviewPanel","personalPanel","addressPanel"];
+ if(!allowed.includes(tabId))return;
+
+ allowed.forEach(id=>{
+  document.getElementById(id).hidden=id!==tabId;
+ });
+ document.querySelectorAll(".profile-tab").forEach(button=>{
+  button.classList.toggle("active",button.dataset.profileTab===tabId);
+ });
+}
+document.querySelectorAll(".profile-tab").forEach(button=>{
+ button.addEventListener("click",()=>openProfileTab(button.dataset.profileTab));
 });
-document.getElementById("bookAnotherButton").addEventListener("click",()=>{
- window.location.href="booking.html";
-});
-document.getElementById("goAppointmentsButton").addEventListener("click",()=>{
- showPage("appointmentsPage");
-});
+
+function refreshProfileDisplay(){
+ const name=customerProfile.full_name||"Not provided";
+ const phone=customerProfile.phone||"Not provided";
+ const email=currentUser?.email||"Not provided";
+ const dob=customerProfile.date_of_birth||"Not provided";
+
+ document.getElementById("profileDisplayName").textContent=
+  name==="Not provided"?"Customer":name;
+ document.getElementById("profileDisplayEmail").textContent=email;
+ document.getElementById("overviewName").textContent=name;
+ document.getElementById("overviewPhone").textContent=phone;
+ document.getElementById("overviewEmail").textContent=email;
+ document.getElementById("overviewDOB").textContent=dob;
+ document.getElementById("customerName").textContent=name;
+ document.getElementById("customerPhone").textContent=phone;
+ document.getElementById("customerEmail").textContent=email;
+ document.getElementById("customerDOB")?.textContent=dob;
+
+ const addressParts=[
+  customerProfile.street_address,
+  customerProfile.complex_name,
+  customerProfile.suburb,
+  customerProfile.city,
+  customerProfile.province,
+  customerProfile.postal_code
+ ].filter(Boolean);
+
+ const preview=document.getElementById("profileAddressPreview");
+ preview.replaceChildren();
+ if(addressParts.length){
+  addressParts.forEach((part,index)=>{
+   if(index>0)preview.appendChild(document.createElement("br"));
+   preview.appendChild(document.createTextNode(part));
+  });
+ }else{
+  preview.textContent="No home address saved yet.";
+ }
+
+ updateCompletion();
+}
 
 /* PROFILE COMPLETION */
 function updateCompletion(){
- const name=!!(customerProfile.full_name||"").trim() &&
-  (customerProfile.full_name||"").trim().length>=2;
+ const name=!!(customerProfile.full_name||"").trim()&&(customerProfile.full_name||"").trim().length>=2;
  const phone=!!(customerProfile.phone||"").trim();
- const email=!!(currentUser?.email||"").trim() &&
-  !!currentUser?.email_confirmed_at;
+ const email=!!(currentUser?.email||"").trim()&&!!currentUser?.email_confirmed_at;
  const dob=!!customerProfile.date_of_birth;
  const selfie=!!customerProfile.avatar_path;
 
@@ -574,20 +767,25 @@ function updateCompletion(){
  document.getElementById("completionText").textContent=percentage+"% complete";
  document.getElementById("progressFill").style.width=percentage+"%";
 
+ const percent=document.getElementById("profileCompletionPercent");
+ const bar=document.getElementById("profileCompletionBar");
+ const hint=document.getElementById("profileCompletionHint");
+ if(percent)percent.textContent=percentage+"%";
+ if(bar)bar.style.width=percentage+"%";
+ if(hint){
+  hint.textContent=percentage===100
+   ?"Your profile is complete. You meet the profile requirements for loyalty eligibility."
+   :completed+" of 5 profile requirements completed. Finish the remaining details to qualify.";
+ }
+
  const list=document.getElementById("requirementsList");
  list.replaceChildren();
-
  checks.forEach(([label,done])=>{
-  const row=document.createElement("div");
-  row.className="requirement";
-  const left=document.createElement("span");
-  left.textContent=label;
-  left.style.float="none";
-  const right=document.createElement("span");
-  right.className=done?"done":"missing";
+  const row=document.createElement("div");row.className="requirement";
+  const left=document.createElement("span");left.textContent=label;left.style.float="none";
+  const right=document.createElement("span");right.className=done?"done":"missing";
   right.textContent=done?"✓ COMPLETE":"○ REQUIRED";
-  row.append(left,right);
-  list.appendChild(row);
+  row.append(left,right);list.appendChild(row);
  });
 
  const status=document.getElementById("loyaltyStatus");
@@ -604,10 +802,7 @@ function updateCompletion(){
 function updateDashboard(){
  const visible=allBookings.filter(shouldShowBooking);
  const today=new Date().toLocaleDateString("en-CA");
- const upcoming=visible.filter(b=>
-  ["Pending","Confirmed"].includes(b.status) &&
-  b.preferred_date>=today
- );
+ const upcoming=visible.filter(b=>["Pending","Confirmed"].includes(b.status)&&b.preferred_date>=today);
  const completed=visible.filter(b=>b.status==="Completed");
 
  document.getElementById("totalBookings").textContent=visible.length;
@@ -616,31 +811,26 @@ function updateDashboard(){
 
  const nextBox=document.getElementById("nextAppointment");
  nextBox.replaceChildren();
-
- upcoming.sort((a,b)=>
-  (a.preferred_date+" "+a.preferred_time).localeCompare(b.preferred_date+" "+b.preferred_time)
- );
+ upcoming.sort((a,b)=>(a.preferred_date+" "+a.preferred_time).localeCompare(b.preferred_date+" "+b.preferred_time));
 
  if(!upcoming.length){
   addText(nextBox,"p","You don't have an upcoming appointment yet.","empty-next");
-  makeButton(nextBox,"BOOK YOUR NEXT VISIT",()=>{
-   window.location.href="booking.html";
-  },"primary");
+  makeButton(nextBox,"BOOK YOUR NEXT VISIT",()=>{window.location.href="booking.html"},"primary");
   return;
  }
-
  const next=upcoming[0];
  addText(nextBox,"h3",next.service_name);
  addText(nextBox,"p","Date: "+next.preferred_date);
  addText(nextBox,"p","Time: "+next.preferred_time);
  addText(nextBox,"p","Status: "+next.status);
- makeButton(nextBox,"VIEW ALL APPOINTMENTS",()=>{
-  showPage("appointmentsPage");
- },"secondary");
+ makeButton(nextBox,"VIEW ALL APPOINTMENTS",()=>showPage("appointmentsPage"),"secondary");
 }
 
 /* SELFIE UPLOAD */
 document.getElementById("uploadAvatarButton").addEventListener("click",()=>{
+ document.getElementById("avatarInput").click();
+});
+document.getElementById("personalSelfieButton").addEventListener("click",()=>{
  document.getElementById("avatarInput").click();
 });
 
@@ -650,19 +840,16 @@ async function displayAvatar(){
 
  if(!customerProfile.avatar_path){
   addText(circle,"span","♙","avatar-placeholder");
-  updateCompletion();
-  return;
+  updateCompletion();return;
  }
 
- const {data,error}=await supabaseClient.storage
-  .from(PROFILE_BUCKET)
+ const {data,error}=await supabaseClient.storage.from(PROFILE_BUCKET)
   .createSignedUrl(customerProfile.avatar_path,3600);
 
  if(error){
   console.error("Selfie display error:",error);
   addText(circle,"span","♙","avatar-placeholder");
-  updateCompletion();
-  return;
+  updateCompletion();return;
  }
 
  const img=document.createElement("img");
@@ -683,15 +870,11 @@ document.getElementById("avatarInput").addEventListener("change",async(event)=>{
 
  if(!["image/jpeg","image/png","image/webp"].includes(file.type)){
   status.textContent="Please select a JPG, PNG or WEBP image.";
-  status.className="profile-status error";
-  event.target.value="";
-  return;
+  status.className="profile-status error";event.target.value="";return;
  }
  if(file.size>5*1024*1024){
   status.textContent="Your selfie must be smaller than 5 MB.";
-  status.className="profile-status error";
-  event.target.value="";
-  return;
+  status.className="profile-status error";event.target.value="";return;
  }
 
  status.textContent="Uploading your selfie...";
@@ -700,17 +883,13 @@ document.getElementById("avatarInput").addEventListener("change",async(event)=>{
 
  try{
   const path=currentUser.id+"/selfie";
-  const {error:uploadError}=await supabaseClient.storage
-   .from(PROFILE_BUCKET)
+  const {error:uploadError}=await supabaseClient.storage.from(PROFILE_BUCKET)
    .upload(path,file,{upsert:true,contentType:file.type});
   if(uploadError)throw uploadError;
 
-  const {data,error:updateError}=await supabaseClient
-   .from("customer_profiles")
-   .update({avatar_path:path})
-   .eq("id",currentUser.id)
-   .select("avatar_path")
-   .single();
+  const {data,error:updateError}=await supabaseClient.from("customer_profiles")
+   .update({avatar_path:path}).eq("id",currentUser.id)
+   .select("avatar_path").single();
   if(updateError)throw updateError;
 
   customerProfile.avatar_path=data.avatar_path;
@@ -736,25 +915,50 @@ function fillAdditionalFields(){
  document.getElementById("profileStreet").value=customerProfile.street_address||"";
  document.getElementById("profileComplex").value=customerProfile.complex_name||"";
  document.getElementById("profilePostal").value=customerProfile.postal_code||"";
- document.getElementById("customerDOB").textContent=customerProfile.date_of_birth||"Not provided";
 }
 
-document.getElementById("saveAdditionalDetails").addEventListener("click",async()=>{
- const button=document.getElementById("saveAdditionalDetails");
- const status=document.getElementById("additionalStatus");
+document.getElementById("saveDOBButton").addEventListener("click",async()=>{
+ const button=document.getElementById("saveDOBButton");
+ const status=document.getElementById("dobStatus");
  const dob=document.getElementById("profileDOB").value;
 
  if(dob){
   const birth=new Date(dob+"T00:00:00");
-  const today=new Date();
-  if(Number.isNaN(birth.getTime())||birth>today){
+  if(Number.isNaN(birth.getTime())||birth>new Date()){
    status.textContent="Please enter a valid date of birth that is not in the future.";
    status.className="profile-status error";return;
   }
  }
 
+ button.disabled=true;
+ status.textContent="Saving your date of birth...";
+ status.className="profile-status";
+
+ try{
+  const {data,error}=await supabaseClient.from("customer_profiles")
+   .update({date_of_birth:dob||null})
+   .eq("id",currentUser.id)
+   .select("date_of_birth").single();
+  if(error)throw error;
+
+  customerProfile.date_of_birth=data.date_of_birth;
+  refreshProfileDisplay();
+  status.textContent="Your date of birth has been saved successfully.";
+  status.className="profile-status success";
+ }catch(error){
+  console.error(error);
+  status.textContent="Unable to save date of birth: "+error.message;
+  status.className="profile-status error";
+ }finally{
+  button.disabled=false;
+ }
+});
+
+document.getElementById("saveAdditionalDetails").addEventListener("click",async()=>{
+ const button=document.getElementById("saveAdditionalDetails");
+ const status=document.getElementById("additionalStatus");
+
  const updates={
-  date_of_birth:dob||null,
   province:document.getElementById("profileProvince").value.trim()||null,
   city:document.getElementById("profileCity").value.trim()||null,
   suburb:document.getElementById("profileSuburb").value.trim()||null,
@@ -764,27 +968,38 @@ document.getElementById("saveAdditionalDetails").addEventListener("click",async(
  };
 
  button.disabled=true;
- status.textContent="Saving your details...";
+ status.textContent="Saving your home address...";
  status.className="profile-status";
 
  try{
   const {data,error}=await supabaseClient.from("customer_profiles")
    .update(updates).eq("id",currentUser.id)
-   .select("date_of_birth,province,city,suburb,street_address,complex_name,postal_code").single();
+   .select("province,city,suburb,street_address,complex_name,postal_code").single();
   if(error)throw error;
 
   Object.assign(customerProfile,data);
-  fillAdditionalFields();
-  updateCompletion();
-  status.textContent="Your additional profile details have been saved successfully.";
+  refreshProfileDisplay();
+  status.textContent="Your home address has been saved successfully.";
   status.className="profile-status success";
  }catch(error){
   console.error(error);
-  status.textContent="Unable to save details: "+error.message;
+  status.textContent="Unable to save address: "+error.message;
   status.className="profile-status error";
  }finally{
   button.disabled=false;
  }
+});
+
+/* PROFILE EDIT SHORTCUTS */
+function openPersonalEditor(){
+ showPage("settingsPage");
+ if(profileEditor.hidden)showProfileEditor();
+}
+document.getElementById("overviewEditButton").addEventListener("click",openPersonalEditor);
+document.getElementById("personalEditButton").addEventListener("click",openPersonalEditor);
+document.getElementById("overviewAddressButton").addEventListener("click",()=>{
+ openProfileTab("addressPanel");
+ document.getElementById("profileProvince").focus({preventScroll:true});
 });
 
 /* NAME AND PHONE EDITING */
@@ -838,10 +1053,8 @@ function showProfileEditor(){
  profileEditor.hidden=false;
  profileStatus.textContent="";
  profileStatus.className="profile-status";
- document.getElementById("editName").value=
-  document.getElementById("customerName").textContent==="Not provided"?"":document.getElementById("customerName").textContent;
- document.getElementById("editPhone").value=
-  document.getElementById("customerPhone").textContent==="Not provided"?"":document.getElementById("customerPhone").textContent;
+ document.getElementById("editName").value=customerProfile.full_name||"";
+ document.getElementById("editPhone").value=customerProfile.phone||"";
  startCooldownDisplay();
 }
 function hideProfileEditor(){
@@ -875,8 +1088,8 @@ saveProfileButton.addEventListener("click",async()=>{
   profileStatus.className="profile-status error";return;
  }
 
- const oldName=document.getElementById("customerName").textContent;
- const oldPhone=document.getElementById("customerPhone").textContent;
+ const oldName=customerProfile.full_name||"";
+ const oldPhone=customerProfile.phone||"";
  if(fullName===oldName&&phone===oldPhone){
   profileStatus.textContent="You have not made any changes.";
   profileStatus.className="profile-status error";return;
@@ -896,11 +1109,9 @@ saveProfileButton.addEventListener("click",async()=>{
 
   customerProfile.full_name=data.full_name;
   customerProfile.phone=data.phone;
-  document.getElementById("customerName").textContent=data.full_name||"Not provided";
-  document.getElementById("customerPhone").textContent=data.phone||"Not provided";
-  document.getElementById("welcomeName").textContent=data.full_name||"Customer";
   profileLastEditedAt=data.profile_last_edited_at;
-  updateCompletion();
+  refreshProfileDisplay();
+  document.getElementById("welcomeName").textContent=data.full_name||"Customer";
 
   profileStatus.textContent="Your profile has been updated successfully. Your next edit will be available after 48 hours.";
   profileStatus.className="profile-status success";
@@ -1117,8 +1328,7 @@ function displayBookings(){
 
  if(visible.length===0){
   addText(bookingsList,"p","You currently have no visible appointments.");
-  updateDashboard();
-  return;
+  updateDashboard();return;
  }
 
  visible.forEach(booking=>{
@@ -1234,8 +1444,7 @@ async function loadAccount(){
   const {data:{user},error}=await supabaseClient.auth.getUser();
   if(error)throw error;
   if(!user){
-   window.location.href="login.html";
-   return;
+   window.location.href="login.html";return;
   }
   currentUser=user;
 
@@ -1247,15 +1456,13 @@ async function loadAccount(){
   if(profileError)throw profileError;
 
   customerProfile=profile||{};
-  document.getElementById("customerName").textContent=profile?.full_name||"Not provided";
-  document.getElementById("customerPhone").textContent=profile?.phone||"Not provided";
-  document.getElementById("customerEmail").textContent=user.email||"Not provided";
-  document.getElementById("welcomeName").textContent=profile?.full_name||"Customer";
   profileLastEditedAt=profile?.profile_last_edited_at||null;
 
   fillAdditionalFields();
-  updateCompletion();
+  refreshProfileDisplay();
   await displayAvatar();
+
+  document.getElementById("welcomeName").textContent=profile?.full_name||"Customer";
 
   message.hidden=true;
   account.hidden=false;
@@ -1275,7 +1482,7 @@ async function logoutCustomer(){
 }
 document.getElementById("menuLogout").addEventListener("click",logoutCustomer);
 
-setInterval(()=>{refreshBookingsQuietly();},5000);
+setInterval(()=>{refreshBookingsQuietly()},5000);
 document.addEventListener("visibilitychange",()=>{
  if(!document.hidden&&currentUser)refreshBookingsQuietly();
 });
