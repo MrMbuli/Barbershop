@@ -31,14 +31,31 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .message{text-align:center;color:#ccc;padding:15px}
 .profile-notice{background:#302719;border:1px solid #b58b36;border-radius:8px;padding:14px;margin:14px 0;color:#f0d49a;line-height:1.5;font-size:14px}
 .profile-form{margin-top:15px}
-.profile-form label{display:block;color:#d5ad58;margin-top:14px;font-weight:bold}
-.profile-form input{width:100%;padding:13px;margin-top:7px;border-radius:7px;border:1px solid #777;background:#292929;color:white;font-size:16px}
+.profile-form label,.request-form label{display:block;color:#d5ad58;margin-top:14px;font-weight:bold}
+.profile-form input,.request-form input,.request-form textarea{width:100%;padding:13px;margin-top:7px;border-radius:7px;border:1px solid #777;background:#292929;color:white;font-size:16px}
 .profile-form input:disabled{opacity:.55}
+.request-form textarea{min-height:90px;resize:vertical}
 .secondary{background:#444;color:white}
-.profile-status{font-size:14px;text-align:center;margin-top:12px;line-height:1.5}
+.profile-status,.request-message{font-size:14px;text-align:center;margin-top:12px;line-height:1.5}
 .success{color:#9be3ad}
 .error{color:#ff9999}
 .countdown{color:#f0d49a;font-weight:bold}
+.manage-menu{margin-top:15px;border:1px solid #80632e;border-radius:8px;background:#1b1b1b;overflow:hidden}
+.manage-menu summary{padding:14px;color:#e4bd70;font-weight:bold;cursor:pointer;list-style:none}
+.manage-menu summary::-webkit-details-marker{display:none}
+.manage-menu summary:after{content:"＋";float:right}
+.manage-menu[open] summary:after{content:"−"}
+.manage-content{padding:12px;border-top:1px solid #514321}
+.manage-content button{margin-top:8px}
+.request-form{border:1px solid #555;border-radius:8px;padding:13px;margin-top:12px}
+.request-form h3{margin-top:5px}
+.request-form[hidden],.manage-panel[hidden]{display:none}
+.request-item{background:#292929;border:1px solid #555;border-radius:8px;padding:12px;margin-top:10px}
+.request-item p{margin:7px 0}
+.request-status{font-weight:bold;color:#e9bd69}
+.request-status.approved{color:#9be3ad}
+.request-status.declined{color:#ff9999}
+.small-note{font-size:12px;color:#aaa}
 @media(max-width:500px){
  body{padding:10px}
  .card{padding:15px}
@@ -70,31 +87,27 @@ button:disabled{opacity:.5;cursor:not-allowed}
 <button id="editProfileButton">EDIT PROFILE DETAILS</button>
 
 <div id="profileEditor" hidden>
-
 <div class="profile-notice">
 <strong>IMPORTANT: PROFILE EDITING RESTRICTION</strong><br><br>
 You can only update your name and phone number once every
 <strong>48 hours (2 days)</strong>.
 
 Please check your details carefully before saving.
-Once you successfully update your details, you must wait
-another 48 hours before making another change.
+Once you successfully update your details, you must wait another
+48 hours before making another change.
 
 <div id="cooldownMessage" class="countdown"></div>
 </div>
 
 <div class="profile-form">
 <label for="editName">Full Name</label>
-<input id="editName" type="text" maxlength="100"
-placeholder="Enter your full name" autocomplete="name">
+<input id="editName" type="text" maxlength="100" placeholder="Enter your full name">
 
 <label for="editPhone">Phone Number</label>
-<input id="editPhone" type="tel" maxlength="20"
-placeholder="Enter your phone number" autocomplete="tel">
+<input id="editPhone" type="tel" maxlength="20" placeholder="Enter your phone number">
 
 <button id="saveProfileButton">SAVE PROFILE CHANGES</button>
 <button id="cancelEditButton" class="secondary">CANCEL</button>
-
 <div id="profileStatus" class="profile-status" aria-live="polite"></div>
 </div>
 </div>
@@ -143,19 +156,27 @@ const cooldownMessage=document.getElementById("cooldownMessage");
 
 function addText(parent,tag,value,className){
   const el=document.createElement(tag);
-  el.textContent=value;
+  el.textContent=value??"";
   if(className) el.className=className;
   parent.appendChild(el);
   return el;
 }
 
+function makeButton(parent,label,callback,className){
+  const button=document.createElement("button");
+  button.textContent=label;
+  if(className) button.className=className;
+  button.addEventListener("click",callback);
+  parent.appendChild(button);
+  return button;
+}
+
+/* PROFILE EDITING */
+
 function getNextEditTime(){
   if(!profileLastEditedAt) return null;
-
   const lastEdit=new Date(profileLastEditedAt).getTime();
-
   if(!Number.isFinite(lastEdit)) return null;
-
   return lastEdit+PROFILE_COOLDOWN_MS;
 }
 
@@ -170,16 +191,15 @@ function updateCooldownDisplay(){
 
   if(locked){
     const remaining=nextEdit-Date.now();
-
-    const days=Math.floor(remaining/(24*60*60*1000));
-    const hours=Math.floor((remaining%(24*60*60*1000))/(60*60*1000));
-    const minutes=Math.floor((remaining%(60*60*1000))/(60*1000));
-    const seconds=Math.floor((remaining%(60*1000))/1000);
+    const days=Math.floor(remaining/86400000);
+    const hours=Math.floor((remaining%86400000)/3600000);
+    const minutes=Math.floor((remaining%3600000)/60000);
+    const seconds=Math.floor((remaining%60000)/1000);
 
     cooldownMessage.textContent=
       "Your next profile edit will be available in: "+
-      days+" days, "+hours+" hours, "+minutes+" minutes and "+
-      seconds+" seconds. Next available: "+
+      days+" days, "+hours+" hours, "+minutes+
+      " minutes and "+seconds+" seconds. Next available: "+
       new Date(nextEdit).toLocaleString();
 
     document.getElementById("editName").disabled=true;
@@ -188,7 +208,7 @@ function updateCooldownDisplay(){
     editProfileButton.textContent="PROFILE EDITING LOCKED";
   }else{
     cooldownMessage.textContent=
-      "You are currently allowed to update your profile. Your next edit will be locked for 48 hours after a successful change.";
+      "You may edit your profile now. After saving, another edit will only be available after 48 hours.";
 
     document.getElementById("editName").disabled=false;
     document.getElementById("editPhone").disabled=false;
@@ -199,13 +219,10 @@ function updateCooldownDisplay(){
 
 function startCooldownDisplay(){
   if(cooldownInterval) clearInterval(cooldownInterval);
-
   updateCooldownDisplay();
 
   cooldownInterval=setInterval(()=>{
-    if(!profileEditor.hidden){
-      updateCooldownDisplay();
-    }
+    if(!profileEditor.hidden) updateCooldownDisplay();
   },1000);
 }
 
@@ -216,13 +233,11 @@ function showProfileEditor(){
 
   document.getElementById("editName").value=
     document.getElementById("customerName").textContent==="Not provided"
-    ? ""
-    : document.getElementById("customerName").textContent;
+    ? "" : document.getElementById("customerName").textContent;
 
   document.getElementById("editPhone").value=
     document.getElementById("customerPhone").textContent==="Not provided"
-    ? ""
-    : document.getElementById("customerPhone").textContent;
+    ? "" : document.getElementById("customerPhone").textContent;
 
   startCooldownDisplay();
 }
@@ -230,7 +245,6 @@ function showProfileEditor(){
 function hideProfileEditor(){
   profileEditor.hidden=true;
   profileStatus.textContent="";
-  profileStatus.className="profile-status";
 
   if(cooldownInterval){
     clearInterval(cooldownInterval);
@@ -239,23 +253,17 @@ function hideProfileEditor(){
 }
 
 editProfileButton.addEventListener("click",()=>{
-  if(profileEditor.hidden){
-    showProfileEditor();
-  }else{
-    hideProfileEditor();
-  }
+  if(profileEditor.hidden) showProfileEditor();
+  else hideProfileEditor();
 });
 
-cancelEditButton.addEventListener("click",()=>{
-  hideProfileEditor();
-});
+cancelEditButton.addEventListener("click",hideProfileEditor);
 
 saveProfileButton.addEventListener("click",async()=>{
   if(!currentUser) return;
 
   if(isProfileLocked()){
-    profileStatus.textContent=
-      "Your profile is locked. You can only make another change after 48 hours.";
+    profileStatus.textContent="Your profile is locked. Please wait until the 48-hour period has passed.";
     profileStatus.className="profile-status error";
     updateCooldownDisplay();
     return;
@@ -264,20 +272,14 @@ saveProfileButton.addEventListener("click",async()=>{
   const fullName=document.getElementById("editName").value.trim();
   const phone=document.getElementById("editPhone").value.trim();
 
-  if(!fullName){
-    profileStatus.textContent="Please enter your full name.";
+  if(fullName.length<2){
+    profileStatus.textContent="Please enter your full name (at least 2 characters).";
     profileStatus.className="profile-status error";
     return;
   }
 
   if(!phone){
     profileStatus.textContent="Please enter your phone number.";
-    profileStatus.className="profile-status error";
-    return;
-  }
-
-  if(fullName.length<2){
-    profileStatus.textContent="Your name must contain at least 2 characters.";
     profileStatus.className="profile-status error";
     return;
   }
@@ -299,32 +301,21 @@ saveProfileButton.addEventListener("click",async()=>{
   try{
     const {data,error}=await supabaseClient
       .from("customer_profiles")
-      .update({
-        full_name:fullName,
-        phone:phone
-      })
+      .update({full_name:fullName,phone:phone})
       .eq("id",currentUser.id)
       .select("full_name,phone,profile_last_edited_at")
       .single();
 
     if(error) throw error;
 
-    document.getElementById("customerName").textContent=
-      data.full_name||"Not provided";
-
-    document.getElementById("customerPhone").textContent=
-      data.phone||"Not provided";
-
+    document.getElementById("customerName").textContent=data.full_name||"Not provided";
+    document.getElementById("customerPhone").textContent=data.phone||"Not provided";
     profileLastEditedAt=data.profile_last_edited_at;
 
-    profileStatus.textContent=
-      "Your profile has been updated successfully. You can edit your details again after 48 hours.";
-
+    profileStatus.textContent="Your profile has been updated successfully. Your next edit will be available after 48 hours.";
     profileStatus.className="profile-status success";
 
     startCooldownDisplay();
-
-    saveProfileButton.disabled=true;
     cancelEditButton.disabled=false;
 
   }catch(error){
@@ -332,20 +323,18 @@ saveProfileButton.addEventListener("click",async()=>{
 
     profileStatus.textContent=
       error.message&&error.message.includes("48 hours")
-      ? "Your profile cannot be changed yet. You must wait until the 48-hour period has passed."
+      ? "Your profile cannot be changed yet. Please wait until the 48-hour period has passed."
       : "Unable to update your profile: "+error.message;
 
     profileStatus.className="profile-status error";
-
     updateCooldownDisplay();
 
-    if(!isProfileLocked()){
-      saveProfileButton.disabled=false;
-    }
-
+    if(!isProfileLocked()) saveProfileButton.disabled=false;
     cancelEditButton.disabled=false;
   }
 });
+
+/* APPOINTMENT VISIBILITY */
 
 function shouldShowBooking(booking){
   if(booking.status==="Completed"){
@@ -354,12 +343,267 @@ function shouldShowBooking(booking){
     return elapsed<HIDE_AFTER_MS;
   }
 
-  if(booking.status==="Cancelled" && booking.cancellation_seen_at){
-    return false;
-  }
-
+  if(booking.status==="Cancelled" && booking.cancellation_seen_at) return false;
   return true;
 }
+
+/* APPOINTMENT REQUESTS */
+
+function createRequestForm(booking,type,container){
+  const form=document.createElement("div");
+  form.className="request-form";
+
+  const isReschedule=type==="Reschedule";
+
+  addText(form,"h3",isReschedule?"Request a Reschedule":"Request Cancellation");
+
+  if(isReschedule){
+    addText(form,"p","Choose your preferred new appointment date and time. Management must approve the request.");
+
+    const dateLabel=addText(form,"label","Preferred new date");
+    const dateInput=document.createElement("input");
+    dateInput.type="date";
+    dateInput.min=new Date().toLocaleDateString("en-CA");
+    dateLabel.appendChild(dateInput);
+
+    const timeLabel=addText(form,"label","Preferred new time");
+    const timeInput=document.createElement("input");
+    timeInput.type="time";
+    timeLabel.appendChild(timeInput);
+
+    form.appendChild(dateLabel);
+    form.appendChild(timeLabel);
+
+    const reasonLabel=addText(form,"label","Additional information (optional)");
+    const reasonInput=document.createElement("textarea");
+    reasonInput.maxLength=500;
+    reasonInput.placeholder="Tell us why you need to reschedule...";
+    reasonLabel.appendChild(reasonInput);
+    form.appendChild(reasonLabel);
+
+    makeButton(form,"SUBMIT RESCHEDULE REQUEST",async()=>{
+      if(!dateInput.value||!timeInput.value){
+        status.textContent="Please select a new date and time.";
+        status.className="request-message error";
+        return;
+      }
+
+      if(dateInput.value<new Date().toLocaleDateString("en-CA")){
+        status.textContent="Please choose a future date.";
+        status.className="request-message error";
+        return;
+      }
+
+      await submitAppointmentRequest({
+        booking,
+        type,
+        requested_date:dateInput.value,
+        requested_time:timeInput.value,
+        reason:reasonInput.value.trim(),
+        button:submitButton,
+        status
+      });
+    });
+
+  }else{
+    addText(form,"p","Please explain why you need to cancel. Management will review your request.");
+
+    const reasonLabel=addText(form,"label","Cancellation reason");
+    const reasonInput=document.createElement("textarea");
+    reasonInput.maxLength=500;
+    reasonInput.placeholder="Enter your cancellation reason...";
+    reasonLabel.appendChild(reasonInput);
+    form.appendChild(reasonLabel);
+
+    makeButton(form,"SUBMIT CANCELLATION REQUEST",async()=>{
+      if(!reasonInput.value.trim()){
+        status.textContent="Please provide a cancellation reason.";
+        status.className="request-message error";
+        return;
+      }
+
+      await submitAppointmentRequest({
+        booking,
+        type,
+        reason:reasonInput.value.trim(),
+        button:submitButton,
+        status
+      });
+    });
+  }
+
+  const submitButton=form.querySelector("button");
+  const status=addText(form,"div","","request-message");
+  makeButton(form,"CLOSE",()=>{form.hidden=true;},"secondary");
+
+  container.appendChild(form);
+  return form;
+}
+
+async function submitAppointmentRequest(details){
+  const {booking,type,requested_date,requested_time,reason,button,status}=details;
+
+  if(!currentUser) return;
+
+  button.disabled=true;
+  status.textContent="Submitting your request...";
+  status.className="request-message";
+
+  const request={
+    booking_id:booking.id,
+    customer_id:currentUser.id,
+    request_type:type,
+    reason:reason||null
+  };
+
+  if(type==="Reschedule"){
+    request.requested_date=requested_date;
+    request.requested_time=requested_time;
+  }
+
+  try{
+    const {error}=await supabaseClient
+      .from("appointment_requests")
+      .insert(request);
+
+    if(error) throw error;
+
+    status.textContent="Your request has been submitted successfully. It is now waiting for management's review.";
+    status.className="request-message success";
+
+    const menu=button.closest("details");
+    if(menu){
+      await loadAppointmentRequests(booking.id,menu.querySelector(".request-history"));
+    }
+
+    button.disabled=true;
+
+  }catch(error){
+    console.error("Appointment request error:",error);
+
+    status.textContent=
+      error.code==="23505"
+      ? "You already have a pending request for this appointment."
+      : "Unable to submit your request: "+error.message;
+
+    status.className="request-message error";
+    button.disabled=false;
+  }
+}
+
+async function loadAppointmentRequests(bookingId,historyContainer){
+  if(!historyContainer) return;
+
+  historyContainer.textContent="Loading request history...";
+
+  const {data,error}=await supabaseClient
+    .from("appointment_requests")
+    .select("id,request_type,requested_date,requested_time,reason,status,admin_response,created_at,responded_at")
+    .eq("booking_id",bookingId)
+    .eq("customer_id",currentUser.id)
+    .order("created_at",{ascending:false});
+
+  historyContainer.replaceChildren();
+
+  if(error){
+    addText(historyContainer,"p","Unable to load requests: "+error.message,"error");
+    return;
+  }
+
+  if(!data||data.length===0){
+    addText(historyContainer,"p","You have not submitted any requests for this appointment.");
+    return;
+  }
+
+  data.forEach(request=>{
+    const item=document.createElement("div");
+    item.className="request-item";
+
+    addText(item,"h3",request.request_type+" Request");
+
+    let statusClass="request-status";
+    if(request.status==="Approved") statusClass+=" approved";
+    if(request.status==="Declined") statusClass+=" declined";
+
+    addText(item,"p","Status: "+request.status,statusClass);
+    addText(item,"p","Submitted: "+new Date(request.created_at).toLocaleString());
+
+    if(request.requested_date){
+      addText(item,"p","Requested date: "+request.requested_date);
+    }
+
+    if(request.requested_time){
+      addText(item,"p","Requested time: "+request.requested_time);
+    }
+
+    if(request.reason){
+      addText(item,"p","Your reason: "+request.reason);
+    }
+
+    if(request.admin_response){
+      addText(item,"p","Management response: "+request.admin_response);
+    }
+
+    if(request.responded_at){
+      addText(item,"p","Response date: "+new Date(request.responded_at).toLocaleString(),"small-note");
+    }
+
+    historyContainer.appendChild(item);
+  });
+}
+
+function createManageMenu(booking,card){
+  if(!["Pending","Confirmed"].includes(booking.status)) return;
+
+  const details=document.createElement("details");
+  details.className="manage-menu";
+
+  const summary=document.createElement("summary");
+  summary.textContent="MANAGE APPOINTMENT";
+  details.appendChild(summary);
+
+  const content=document.createElement("div");
+  content.className="manage-content";
+
+  addText(content,"p","Choose an option below. All changes require management approval.");
+
+  const history=document.createElement("div");
+  history.className="request-history";
+
+  const rescheduleForm=createRequestForm(booking,"Reschedule",content);
+  rescheduleForm.hidden=true;
+
+  const cancellationForm=createRequestForm(booking,"Cancellation",content);
+  cancellationForm.hidden=true;
+
+  makeButton(content,"REQUEST A RESCHEDULE",()=>{
+    rescheduleForm.hidden=!rescheduleForm.hidden;
+    cancellationForm.hidden=true;
+  },"secondary");
+
+  makeButton(content,"REQUEST CANCELLATION",()=>{
+    cancellationForm.hidden=!cancellationForm.hidden;
+    rescheduleForm.hidden=true;
+  },"secondary");
+
+  makeButton(content,"VIEW REQUEST STATUS",async()=>{
+    await loadAppointmentRequests(booking.id,history);
+  },"secondary");
+
+  content.appendChild(history);
+  details.appendChild(content);
+
+  details.addEventListener("toggle",()=>{
+    if(details.open && !details.dataset.loaded){
+      details.dataset.loaded="yes";
+      loadAppointmentRequests(booking.id,history);
+    }
+  });
+
+  card.appendChild(details);
+}
+
+/* DISPLAY APPOINTMENTS */
 
 function displayBookings(){
   bookingsList.replaceChildren();
@@ -406,8 +650,9 @@ function displayBookings(){
       );
 
       addText(reasonBox,"p",
-        "If you have questions about this cancellation, please contact the manager."
-      ,"notice");
+        "If you have questions about this cancellation, please contact the manager.",
+        "notice"
+      );
 
       const contactButton=document.createElement("button");
       contactButton.className="whatsapp";
@@ -430,9 +675,7 @@ function displayBookings(){
       acknowledgeButton.textContent="I UNDERSTAND — DISMISS";
 
       acknowledgeButton.addEventListener("click",async()=>{
-        if(!confirm("Have you read the cancellation reason? This will remove the appointment from your booking history.")){
-          return;
-        }
+        if(!confirm("Have you read the cancellation reason? This will remove the appointment from your booking history.")) return;
 
         acknowledgeButton.disabled=true;
         acknowledgeButton.textContent="SAVING...";
@@ -459,6 +702,7 @@ function displayBookings(){
       card.appendChild(reasonBox);
     }
 
+    createManageMenu(booking,card);
     bookingsList.appendChild(card);
   });
 }
@@ -481,6 +725,8 @@ async function loadBookings(){
   displayBookings();
 }
 
+/* LOAD ACCOUNT */
+
 async function loadAccount(){
   try{
     const {data:{user},error}=await supabaseClient.auth.getUser();
@@ -502,14 +748,9 @@ async function loadAccount(){
 
     if(profileError) throw profileError;
 
-    document.getElementById("customerName").textContent=
-      profile?.full_name||"Not provided";
-
-    document.getElementById("customerPhone").textContent=
-      profile?.phone||"Not provided";
-
-    document.getElementById("customerEmail").textContent=
-      user.email||"Not provided";
+    document.getElementById("customerName").textContent=profile?.full_name||"Not provided";
+    document.getElementById("customerPhone").textContent=profile?.phone||"Not provided";
+    document.getElementById("customerEmail").textContent=user.email||"Not provided";
 
     profileLastEditedAt=profile?.profile_last_edited_at||null;
 
@@ -524,6 +765,8 @@ async function loadAccount(){
   }
 }
 
+/* LOGOUT */
+
 document.getElementById("logoutButton").addEventListener("click",async()=>{
   const {error}=await supabaseClient.auth.signOut();
 
@@ -535,12 +778,12 @@ document.getElementById("logoutButton").addEventListener("click",async()=>{
   window.location.href="login.html";
 });
 
-// Refresh booking visibility every five seconds.
+/* EXISTING REFRESH BEHAVIOUR */
+
 setInterval(()=>{
   if(currentUser) displayBookings();
 },5000);
 
-// Refresh bookings when the customer returns to this page.
 document.addEventListener("visibilitychange",()=>{
   if(!document.hidden && currentUser) loadBookings();
 });
