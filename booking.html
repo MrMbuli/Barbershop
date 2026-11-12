@@ -11,6 +11,8 @@
 <style>
 *{box-sizing:border-box}
 
+html{scroll-behavior:smooth}
+
 body{
  margin:0;
  padding:20px;
@@ -26,7 +28,7 @@ body:before{
  position:fixed;
  inset:0;
  background:
- linear-gradient(rgba(10,10,10,.84),rgba(10,10,10,.94)),
+ linear-gradient(rgba(10,10,10,.88),rgba(10,10,10,.96)),
  url("https://www.academiaotronivel.com/images/barber-tools.jpg")
  center/cover no-repeat;
  z-index:-1;
@@ -56,27 +58,219 @@ body:before{
  text-transform:uppercase;
 }
 
-.tool-gallery{
- display:grid;
- grid-template-columns:1.3fr 1fr 1fr;
- gap:9px;
- margin:25px 0;
+.gold-line{
+ width:65px;
+ height:2px;
+ background:#b58b36;
+ margin:12px auto 22px;
 }
 
-.tool-gallery img{
+/* SPECIALS SECTION */
+
+.specials-section{
+ margin:25px 0 30px;
+}
+
+.specials-heading{
+ text-align:center;
+ margin-bottom:17px;
+}
+
+.specials-heading span{
+ color:#c49a45;
+ font-size:11px;
+ letter-spacing:3px;
+}
+
+.specials-heading h2{
+ color:#d5ad58;
+ margin:9px 0;
+ font-size:25px;
+}
+
+.specials-heading p{
+ color:#aaa;
+ font-size:13px;
+}
+
+.special-preview{
+ height:190px;
+ position:relative;
+ overflow:hidden;
+ border-radius:14px;
+ border:1px solid #b58b36;
+ cursor:pointer;
+ background:#171717;
+ box-shadow:0 12px 30px rgba(0,0,0,.4);
+}
+
+.special-preview img{
  width:100%;
- height:125px;
+ height:100%;
  object-fit:cover;
- border-radius:9px;
- border:1px solid #8d6a2e;
- filter:brightness(.82);
- transition:.3s;
+ filter:brightness(.57);
+ transition:transform .5s,filter .5s;
 }
 
-.tool-gallery img:hover{
- filter:brightness(1);
- transform:scale(1.02);
+.special-preview:hover img{
+ transform:scale(1.06);
+ filter:brightness(.75);
 }
+
+.preview-overlay{
+ position:absolute;
+ inset:0;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ text-align:center;
+ padding:15px;
+ pointer-events:none;
+}
+
+.preview-overlay span{
+ color:#e4c783;
+ font-size:11px;
+ letter-spacing:3px;
+}
+
+.preview-overlay h3{
+ color:white;
+ font-size:24px;
+ margin:10px 0;
+}
+
+.preview-overlay p{
+ color:#ddd;
+ font-size:13px;
+ margin:0;
+}
+
+/* EXPANDING SPECIAL CARD */
+
+.special-backdrop{
+ position:fixed;
+ inset:0;
+ z-index:9999;
+ background:rgba(0,0,0,.84);
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:18px;
+ opacity:0;
+ visibility:hidden;
+ pointer-events:none;
+ transition:opacity .3s,visibility .3s;
+ perspective:1200px;
+}
+
+.special-backdrop.open{
+ opacity:1;
+ visibility:visible;
+ pointer-events:auto;
+}
+
+.special-detail{
+ width:min(100%,390px);
+ min-height:430px;
+ position:relative;
+ border:1px solid #c49a45;
+ border-radius:20px;
+ overflow:hidden;
+ background:
+ linear-gradient(
+  rgba(0,0,0,.38),
+  rgba(0,0,0,.94)
+ ),
+ url("https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1000")
+ center/cover no-repeat;
+ box-shadow:0 20px 65px rgba(0,0,0,.75);
+ transform:rotateY(85deg) scale(.55);
+ opacity:0;
+ transition:
+ transform .55s cubic-bezier(.2,.8,.2,1),
+ opacity .35s;
+}
+
+.special-backdrop.open .special-detail{
+ transform:rotateY(0) scale(1);
+ opacity:1;
+}
+
+.special-close{
+ position:absolute;
+ top:12px;
+ right:12px;
+ width:39px;
+ height:39px;
+ padding:0;
+ margin:0;
+ border:1px solid #d5ad58;
+ border-radius:50%;
+ background:rgba(0,0,0,.8);
+ color:white;
+ font-size:27px;
+ line-height:1;
+ cursor:pointer;
+ z-index:3;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+}
+
+.special-close:hover{
+ background:#c49a45;
+ color:#111;
+}
+
+.special-detail-content{
+ min-height:430px;
+ padding:65px 25px 30px;
+ display:flex;
+ flex-direction:column;
+ justify-content:flex-end;
+}
+
+.special-tag{
+ display:inline-block;
+ color:#e4c783;
+ font-size:11px;
+ letter-spacing:2px;
+ margin-bottom:12px;
+}
+
+.special-detail-content h2{
+ color:#e4c783;
+ font-size:27px;
+ margin:0 0 12px;
+}
+
+.special-detail-content p{
+ color:white;
+ font-size:14px;
+ line-height:1.7;
+}
+
+.special-detail-content a{
+ display:inline-block;
+ width:max-content;
+ margin-top:18px;
+ padding:13px 0;
+ color:#e4c783;
+ font-size:13px;
+ font-weight:bold;
+ letter-spacing:1px;
+ text-decoration:none;
+ border-bottom:1px solid #d5ad58;
+}
+
+.special-detail-content a:hover{
+ color:white;
+ border-color:white;
+}
+
+/* BOOKING FORM */
 
 .card{
  background:rgba(24,24,24,.96);
@@ -84,6 +278,7 @@ body:before{
  border-radius:14px;
  padding:25px;
  box-shadow:0 15px 45px rgba(0,0,0,.55);
+ scroll-margin-top:20px;
 }
 
 h2{
@@ -182,23 +377,24 @@ a{color:#d5ad58}
  line-height:1.5;
 }
 
-.gold-line{
- width:65px;
- height:2px;
- background:#b58b36;
- margin:12px auto 22px;
+body.special-open{
+ overflow:hidden;
 }
 
 @media(max-width:480px){
  body{padding:13px}
  .card{padding:19px}
  .brand h1{font-size:24px}
- .tool-gallery img{height:95px}
+ .special-preview{height:165px}
+ .preview-overlay h3{font-size:21px}
+ .special-detail{min-height:400px}
+ .special-detail-content{min-height:400px}
 }
 </style>
 </head>
 
 <body>
+
 <div class="container">
 
  <header class="brand">
@@ -207,24 +403,83 @@ a{color:#d5ad58}
   <div class="gold-line"></div>
  </header>
 
- <div class="tool-gallery">
-  <img
-   src="https://www.academiaotronivel.com/images/barber-tools.jpg"
-   alt="Professional clippers and barber scissors"
+ <!-- SPECIALS DISPLAY -->
+
+ <section class="specials-section">
+
+  <div class="specials-heading">
+   <span>EXCLUSIVE OFFERS</span>
+   <h2>Our Specials</h2>
+   <p>Discover something special at Next Level Grooming Lounge.</p>
+  </div>
+
+  <div
+   class="special-preview"
+   id="specialPreview"
+   role="button"
+   tabindex="0"
+   aria-label="View our special offer"
   >
-  <img
-   src="https://cdn-shopkit.com/usercontent/glammis/media/images/64c991c-181130-tesoura-profissional-barbeiro-corte-desbastejpg.png"
-   alt="Barber scissors and shaving tools"
+   <img
+    src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1000"
+    alt="Professional barber tools and grooming station"
+   >
+
+   <div class="preview-overlay">
+    <span>EXCLUSIVE OFFER</span>
+    <h3>Discover Our Latest Special</h3>
+    <p>Tap to reveal the offer</p>
+   </div>
+  </div>
+
+ </section>
+
+ <!-- EXPANDED SPECIAL CARD -->
+
+ <div class="special-backdrop" id="specialBackdrop">
+
+  <div
+   class="special-detail"
+   id="specialDetail"
+   role="dialog"
+   aria-modal="true"
+   aria-labelledby="specialTitle"
   >
-  <img
-   src="https://cuervo.oneframelabs.com/img/herramientas.png"
-   alt="Professional barber combs and razor"
-  >
+
+   <button
+    type="button"
+    class="special-close"
+    id="specialClose"
+    aria-label="Close special"
+   >&times;</button>
+
+   <div class="special-detail-content">
+
+    <span class="special-tag">LIMITED SPECIAL</span>
+
+    <h2 id="specialTitle">Fresh Look Special</h2>
+
+    <p id="specialDescription">
+     Treat yourself to a fresh new look at Next Level Grooming Lounge.
+     Discover our grooming offers and book your next appointment.
+    </p>
+
+    <a href="#bookingCard" id="addSpecialToBooking">
+     ADD TO BOOKING →
+    </a>
+
+   </div>
+
+  </div>
+
  </div>
+
+ <!-- BOOKING FORM -->
 
  <div class="card" id="bookingCard" style="visibility:hidden">
 
   <h2>Book Your Service</h2>
+
   <p class="section-intro">
    Choose your service, preferred professional and appointment details.
    We'll contact you to confirm your booking.
@@ -241,6 +496,7 @@ a{color:#d5ad58}
   <form id="bookingForm">
 
    <label for="category">Service category</label>
+
    <select id="category" required>
     <option value="">Choose a category</option>
     <option value="Barbering">Barbering</option>
@@ -249,10 +505,16 @@ a{color:#d5ad58}
    </select>
 
    <label for="service">Service required</label>
-   <input id="service" type="text" required
-    placeholder="e.g. Haircut, braiding, gel overlay">
+
+   <input
+    id="service"
+    type="text"
+    required
+    placeholder="e.g. Haircut, braiding, gel overlay"
+   >
 
    <label for="staffMember">Preferred professional</label>
+
    <select id="staffMember" required disabled>
     <option value="">Select a service category first</option>
    </select>
@@ -268,20 +530,32 @@ a{color:#d5ad58}
    <input id="time" type="time" required>
 
    <div id="houseFields" class="hidden">
+
     <h2>House Call Details</h2>
 
     <label for="area">Your area / suburb</label>
-    <input id="area" type="text"
-     placeholder="e.g. Roodepoort or Soweto">
+
+    <input
+     id="area"
+     type="text"
+     placeholder="e.g. Roodepoort or Soweto"
+    >
 
     <label for="address">House call address</label>
-    <textarea id="address"
-     placeholder="Enter your street address and directions"></textarea>
+
+    <textarea
+     id="address"
+     placeholder="Enter your street address and directions"
+    ></textarea>
+
    </div>
 
    <label for="notes">Additional instructions (optional)</label>
-   <textarea id="notes"
-    placeholder="Anything we should know before your appointment?"></textarea>
+
+   <textarea
+    id="notes"
+    placeholder="Anything we should know before your appointment?"
+   ></textarea>
 
    <button type="submit" id="submitButton">
     SUBMIT BOOKING REQUEST
@@ -290,6 +564,7 @@ a{color:#d5ad58}
   </form>
 
   <div id="message" role="status"></div>
+
  </div>
 
  <div class="links">
@@ -305,7 +580,8 @@ const SUPABASE_URL = "https://teimbezoinfqlrxczafj.supabase.co";
 const SUPABASE_KEY = "sb_publishable_3lJOm65rVFwElFqLN-Gxzw_LdYacHZP";
 
 const db = window.supabase.createClient(
- SUPABASE_URL, SUPABASE_KEY
+ SUPABASE_URL,
+ SUPABASE_KEY
 );
 
 const params = new URLSearchParams(window.location.search);
@@ -325,8 +601,99 @@ const bookingCard = document.getElementById("bookingCard");
 const categorySelect = document.getElementById("category");
 const staffSelect = document.getElementById("staffMember");
 
+// SPECIAL CARD ELEMENTS
+
+const specialPreview = document.getElementById("specialPreview");
+const specialBackdrop = document.getElementById("specialBackdrop");
+const specialClose = document.getElementById("specialClose");
+const addSpecialToBooking = document.getElementById("addSpecialToBooking");
+
+// Open the special card.
+
+function openSpecial(){
+ specialBackdrop.classList.add("open");
+ document.body.classList.add("special-open");
+ specialClose.focus();
+}
+
+// Close the special card.
+
+function closeSpecial(){
+ specialBackdrop.classList.remove("open");
+ document.body.classList.remove("special-open");
+}
+
+// Click the promotional picture.
+
+specialPreview.addEventListener("click",openSpecial);
+
+// Allow keyboard access.
+
+specialPreview.addEventListener("keydown",function(event){
+ if(event.key === "Enter" || event.key === " "){
+  event.preventDefault();
+  openSpecial();
+ }
+});
+
+// Close using X.
+
+specialClose.addEventListener("click",closeSpecial);
+
+// Close when clicking outside the card.
+
+specialBackdrop.addEventListener("click",function(event){
+ if(event.target === specialBackdrop){
+  closeSpecial();
+ }
+});
+
+// Escape key also closes the card.
+
+document.addEventListener("keydown",function(event){
+ if(event.key === "Escape"){
+  closeSpecial();
+ }
+});
+
+// ADD SPECIAL TO BOOKING
+
+addSpecialToBooking.addEventListener("click",function(event){
+
+ event.preventDefault();
+
+ // Automatically choose the correct service category.
+ categorySelect.value = "Barbering";
+
+ // Refresh the professional list.
+ updateStaffOptions();
+
+ // Automatically enter the special service.
+ document.getElementById("service").value =
+  "Fresh Look Special";
+
+ // Select any available professional.
+ staffSelect.value = "Any Available Professional";
+
+ // Clear previous booking message.
+ message.textContent = "";
+
+ // Close the special card.
+ closeSpecial();
+
+ // Scroll to the booking form.
+ bookingCard.scrollIntoView({
+  behavior:"smooth",
+  block:"start"
+ });
+
+});
+
+// Remember the selected booking type when sending the customer to login.
+
 function getBookingDestination(){
  const type = bookingType === "House Call" ? "housecall" : "shop";
+
  return "booking.html?type=" + type;
 }
 
@@ -338,15 +705,20 @@ function redirectToLogin(){
  );
 }
 
+// Show staff options according to the selected service category.
+
 function updateStaffOptions(){
+
  const category = categorySelect.value;
 
  staffSelect.innerHTML = "";
 
  if(!category){
+
   staffSelect.add(new Option(
-   "Select a service category first", ""
+   "Select a service category first",""
   ));
+
   staffSelect.disabled = true;
   return;
  }
@@ -354,28 +726,32 @@ function updateStaffOptions(){
  staffSelect.disabled = false;
 
  staffSelect.add(new Option(
-  "Choose your preferred professional", ""
+  "Choose your preferred professional",""
  ));
 
  let professionals = [];
 
  if(category === "Barbering"){
+
   professionals = [
    "Barber 1",
    "Barber 2",
    "Barber 3",
    "Barber 4"
   ];
+
  }else if(
   category === "Hair salon" ||
   category === "Nail services"
  ){
+
   professionals = [
    "Stylist 1",
    "Stylist 2",
    "Stylist 3",
    "Stylist 4"
   ];
+
  }
 
  professionals.forEach(function(name){
@@ -386,36 +762,59 @@ function updateStaffOptions(){
   "Any Available Professional",
   "Any Available Professional"
  ));
+
 }
 
-categorySelect.addEventListener("change",updateStaffOptions);
+categorySelect.addEventListener(
+ "change",
+ updateStaffOptions
+);
+
+// Lounge and house-call selection.
 
 function chooseBookingType(type){
+
  bookingType = type;
 
- loungeChoice.classList.toggle("active",type === "In Lounge");
- houseChoice.classList.toggle("active",type === "House Call");
+ loungeChoice.classList.toggle(
+  "active",
+  type === "In Lounge"
+ );
+
+ houseChoice.classList.toggle(
+  "active",
+  type === "House Call"
+ );
 
  const isHouseCall = type === "House Call";
 
- houseFields.classList.toggle("hidden",!isHouseCall);
+ houseFields.classList.toggle(
+  "hidden",
+  !isHouseCall
+ );
+
  areaInput.required = isHouseCall;
  addressInput.required = isHouseCall;
+
 }
 
-loungeChoice.addEventListener("click",() =>
- chooseBookingType("In Lounge")
-);
+loungeChoice.addEventListener("click",function(){
+ chooseBookingType("In Lounge");
+});
 
-houseChoice.addEventListener("click",() =>
- chooseBookingType("House Call")
-);
+houseChoice.addEventListener("click",function(){
+ chooseBookingType("House Call");
+});
+
+// Read the booking type selected on the homepage.
 
 if(requestedType === "housecall"){
  chooseBookingType("House Call");
 }else{
  chooseBookingType("In Lounge");
 }
+
+// Prevent customers from choosing a date in the past.
 
 const today = new Date();
 
@@ -427,8 +826,12 @@ const localToday = [
 
 document.getElementById("date").min = localToday;
 
+// Verify login before showing the booking form.
+
 async function checkCustomer(){
+
  try{
+
   const {data,error} = await db.auth.getUser();
 
   if(error || !data.user){
@@ -439,21 +842,29 @@ async function checkCustomer(){
   bookingCard.style.visibility = "visible";
 
  }catch(error){
+
   message.textContent =
    "Unable to verify your login. Please try again.";
 
   bookingCard.style.visibility = "visible";
+
  }
+
 }
 
+// SUBMIT BOOKING
+
 form.addEventListener("submit",async function(event){
+
  event.preventDefault();
+
  message.textContent = "";
 
  submitButton.disabled = true;
  submitButton.textContent = "SUBMITTING REQUEST...";
 
  try{
+
   const {data:authData,error:authError} =
    await db.auth.getUser();
 
@@ -465,13 +876,24 @@ form.addEventListener("submit",async function(event){
   }
 
   const category = categorySelect.value;
-  const service = document.getElementById("service").value.trim();
+
+  const service =
+   document.getElementById("service").value.trim();
+
   const staffMember = staffSelect.value;
-  const date = document.getElementById("date").value;
-  const time = document.getElementById("time").value;
+
+  const date =
+   document.getElementById("date").value;
+
+  const time =
+   document.getElementById("time").value;
+
   const area = areaInput.value.trim();
+
   const address = addressInput.value.trim();
-  const notes = document.getElementById("notes").value.trim();
+
+  const notes =
+   document.getElementById("notes").value.trim();
 
   if(!staffMember){
    throw new Error(
@@ -479,23 +901,37 @@ form.addEventListener("submit",async function(event){
    );
   }
 
-  if(bookingType === "House Call" && (!area || !address)){
+  if(
+   bookingType === "House Call" &&
+   (!area || !address)
+  ){
    throw new Error(
     "Please enter your area and house call address."
    );
   }
 
   const booking = {
-   customer_id: authData.user.id,
-   service_category: category,
-   service_name: service,
-   staff_member: staffMember,
-   booking_type: bookingType,
-   preferred_date: date,
-   preferred_time: time,
-   area: bookingType === "House Call" ? area : null,
-   address: bookingType === "House Call" ? address : null,
-   notes: notes || null
+
+   customer_id:authData.user.id,
+
+   service_category:category,
+
+   service_name:service,
+
+   staff_member:staffMember,
+
+   booking_type:bookingType,
+
+   preferred_date:date,
+
+   preferred_time:time,
+
+   area:bookingType === "House Call" ? area : null,
+
+   address:bookingType === "House Call" ? address : null,
+
+   notes:notes || null
+
   };
 
   const {error} = await db
@@ -505,7 +941,9 @@ form.addEventListener("submit",async function(event){
   if(error) throw error;
 
   form.reset();
+
   updateStaffOptions();
+
   chooseBookingType("In Lounge");
 
   message.textContent =
@@ -514,15 +952,27 @@ form.addEventListener("submit",async function(event){
    "Please check My Account for updates.";
 
  }catch(error){
-  message.textContent = "Booking error: " + error.message;
+
+  message.textContent =
+   "Booking error: " + error.message;
+
  }finally{
+
   submitButton.disabled = false;
-  submitButton.textContent = "SUBMIT BOOKING REQUEST";
+
+  submitButton.textContent =
+   "SUBMIT BOOKING REQUEST";
+
  }
+
 });
+
+// START PAGE
 
 updateStaffOptions();
 checkCustomer();
+
 </script>
+
 </body>
 </html>
