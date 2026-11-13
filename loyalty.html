@@ -304,7 +304,6 @@ button:disabled{opacity:.5;cursor:not-allowed}
     <div class="preview-hint">TAP TO OPEN YOUR VIRTUAL MEMBERSHIP CARD</div>
    </section>
 
-   <!-- REFERRAL DASHBOARD -->
    <section class="referral-card">
     <div class="referral-heading">
      <div class="referral-symbol">♧</div>
@@ -382,7 +381,6 @@ button:disabled{opacity:.5;cursor:not-allowed}
  <div id="errorScreen" class="hidden"></div>
 </main>
 
-<!-- MEMBERSHIP CARD MODAL -->
 <div id="membershipModal" class="card-modal hidden" onclick="closeMembershipCard(event)">
  <div class="modal-content">
   <div class="modal-heading">YOUR NEXT LEVEL MEMBERSHIP</div>
@@ -438,11 +436,18 @@ button:disabled{opacity:.5;cursor:not-allowed}
 </div>
 
 <script>
+/* SUPABASE CONFIGURATION */
 const SUPABASE_URL = "https://teimbezoinfqlrxczafj.supabase.co";
-const SUPABASE_KEY = "sb_publishable_3lJOm65rVFwElFqLN-Gxzw_LdYacHZ";
+
+/* Corrected publishable key: final P restored */
+const SUPABASE_KEY = "sb_publishable_3lJOm65rVFwElFqLN-Gxzw_LdYacHZP";
+
 const PROFILE_BUCKET = "customer-profile-pictures";
 
-const supabaseClient = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const supabaseClient = window.supabase.createClient(
+ SUPABASE_URL,
+ SUPABASE_KEY
+);
 
 let currentUser = null;
 let currentBalance = 0;
@@ -550,11 +555,7 @@ async function loadMemberPhoto(avatarPath){
  }
 }
 
-/*
- IMPORTANT:
- Always call the activation RPC, even if the membership already exists.
- The updated SQL function checks and awards the welcome bonus once.
-*/
+/* ACTIVATE OR LOAD MEMBERSHIP */
 async function activateAndLoadMembership(){
  const {data:activationData,error:activationError}=await supabaseClient.rpc(
   "activate_loyalty_membership"
@@ -609,7 +610,6 @@ async function loadRewards(){
  updateCardRewardMessage();
 }
 
-/* DISPLAY REWARDS */
 function renderRewards(){
  const list=document.getElementById("rewardList");
  list.replaceChildren();
@@ -935,8 +935,9 @@ function shareReferralWhatsApp(){
  }
 
  const message=
-  "Join me at Next Level Grooming Lounge! Register and use my referral code "+
-  currentReferralCode+
+  "Join me at Next Level Grooming Lounge! Register at "+
+  "https://mrmbuli.github.io/Barbershop/register.html "+
+  "and use my referral code "+currentReferralCode+
   " when creating your account. Once you complete your first paid appointment, I earn 100 loyalty points. Let's level up!";
 
  const url="https://wa.me/?text="+encodeURIComponent(message);
@@ -997,10 +998,6 @@ async function loadLoyaltyPage(){
   document.getElementById("qualificationSection").classList.add("hidden");
   document.getElementById("eligibleSection").classList.remove("hidden");
 
-  /*
-   * Call the RPC every time for eligible customers.
-   * The server checks eligibility and awards the welcome bonus only once.
-   */
   const {membership,activationData}=await activateAndLoadMembership();
 
   if(!membership.client_number){
@@ -1033,4 +1030,4 @@ loadLoyaltyPage();
 </script>
 
 </body>
-</html>
+     </html>
