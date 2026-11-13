@@ -81,14 +81,6 @@ nav a {
 
 nav a:hover { color:var(--light-gold); }
 
-.nav-book {
-  background:var(--gold);
-  color:#111;
-  padding:12px 19px;
-  font-weight:bold;
-  border-radius:3px;
-}
-
 .menu-btn {
   display:none;
   color:white;
@@ -533,11 +525,6 @@ footer strong { color:var(--gold); }
     font-size:14px;
   }
 
-  nav .nav-book {
-    margin-top:12px;
-    border:0;
-  }
-
   .hero {
     min-height:590px;
     padding:75px 7%;
@@ -609,12 +596,10 @@ footer strong { color:var(--gold); }
 
   <nav id="navigation">
     <a href="#home">Home</a>
-    <a href="#services">Services</a>
-    <a href="#housecall">House Calls</a>
     <a href="#about">About</a>
     <a href="#loyalty">Loyalty</a>
     <a href="#contact">Contact</a>
-    <a href="booking.html?type=shop" class="nav-book">Book Now</a>
+    <a href="login.html">Login</a>
   </nav>
 </header>
 
@@ -850,7 +835,6 @@ menuButton.addEventListener("click", function(event) {
   }
 });
 
-// Close when the user taps anywhere outside the menu/header.
 document.addEventListener("pointerdown", function(event) {
   if (
     navigation.classList.contains("active") &&
@@ -860,21 +844,18 @@ document.addEventListener("pointerdown", function(event) {
   }
 });
 
-// Close after selecting a navigation link.
 navigation.querySelectorAll("a").forEach(function(link) {
   link.addEventListener("click", function() {
     closeMenu();
   });
 });
 
-// Close with Escape.
 document.addEventListener("keydown", function(event) {
   if (event.key === "Escape") {
     closeMenu();
   }
 });
 
-// Close if the screen changes to desktop size.
 window.addEventListener("resize", function() {
   if (window.innerWidth > 768) {
     closeMenu();
