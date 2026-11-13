@@ -10,7 +10,6 @@
 
 <style>
 *{box-sizing:border-box}
-
 :root{
  --gold:#d8b467;
  --gold-light:#f2d89b;
@@ -22,1118 +21,830 @@
  --green:#54c78b;
  --red:#ef7777;
 }
-
 body{
- margin:0;
- background:var(--bg);
- color:var(--white);
- font-family:Arial,sans-serif;
- min-height:100vh;
+ margin:0;background:var(--bg);color:white;
+ font-family:Arial,sans-serif;min-height:100vh
 }
-
 button{font:inherit;cursor:pointer}
-
+button:disabled{opacity:.5;cursor:not-allowed}
 .topbar{
- display:flex;
- align-items:center;
- justify-content:space-between;
- padding:17px 20px;
- border-bottom:1px solid #292929;
- position:sticky;
- top:0;
- background:rgba(16,16,16,.96);
- backdrop-filter:blur(12px);
- z-index:10;
+ display:flex;align-items:center;justify-content:space-between;
+ padding:17px 20px;border-bottom:1px solid #292929;
+ position:sticky;top:0;background:rgba(16,16,16,.96);
+ backdrop-filter:blur(12px);z-index:10
 }
-
-.brand{
- font-size:13px;
- font-weight:bold;
- letter-spacing:2px;
- color:var(--gold);
-}
-
+.brand{font-size:13px;font-weight:bold;letter-spacing:2px;color:var(--gold)}
 .back-btn{
- background:#242424;
- color:white;
- border:1px solid #333;
- padding:10px 14px;
- border-radius:10px;
+ background:#242424;color:white;border:1px solid #333;
+ padding:10px 14px;border-radius:10px
 }
-
-.container{
- width:min(950px,100%);
- margin:auto;
- padding:25px 17px 60px;
-}
-
+.container{width:min(950px,100%);margin:auto;padding:25px 17px 60px}
 .hero{
- padding:30px 22px;
- border:1px solid #3b3020;
- border-radius:22px;
- background:
- radial-gradient(circle at top right,rgba(216,180,103,.18),transparent 45%),
- linear-gradient(135deg,#242019,#151515 65%);
- text-align:center;
+ padding:30px 22px;border:1px solid #3b3020;border-radius:22px;
+ background:radial-gradient(circle at top right,rgba(216,180,103,.18),transparent 45%),
+ linear-gradient(135deg,#242019,#151515 65%);text-align:center
 }
-
 .crown{font-size:38px;margin-bottom:12px}
-
-.eyebrow{
- color:var(--gold);
- font-size:11px;
- letter-spacing:3px;
- font-weight:bold;
-}
-
-.hero h1{
- margin:12px 0 10px;
- font-size:clamp(25px,6vw,38px);
-}
-
-.hero p{
- color:#bbb;
- line-height:1.6;
- max-width:560px;
- margin:0 auto;
- font-size:14px;
-}
-
+.eyebrow{color:var(--gold);font-size:11px;letter-spacing:3px;font-weight:bold}
+.hero h1{margin:12px 0 10px;font-size:clamp(25px,6vw,38px)}
+.hero p{color:#bbb;line-height:1.6;max-width:560px;margin:0 auto;font-size:14px}
 .section-title{font-size:19px;margin:30px 0 7px}
-
-.section-subtitle{
- color:var(--muted);
- font-size:13px;
- line-height:1.5;
- margin:0 0 18px;
-}
-
+.section-subtitle{color:var(--muted);font-size:13px;line-height:1.5;margin:0 0 18px}
 .card{
- background:var(--panel);
- border:1px solid #303030;
- border-radius:17px;
- padding:20px;
- margin-top:17px;
+ background:var(--panel);border:1px solid #303030;
+ border-radius:17px;padding:20px;margin-top:17px
 }
-
-.progress-header{
- display:flex;
- justify-content:space-between;
- gap:12px;
- align-items:center;
- margin-bottom:12px;
-}
-
+.progress-header{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px}
 .progress-number{color:var(--gold);font-weight:bold}
-
-.progress-track{
- height:9px;
- background:#333;
- border-radius:20px;
- overflow:hidden;
-}
-
+.progress-track{height:9px;background:#333;border-radius:20px;overflow:hidden}
 .progress-fill{
- height:100%;
- width:0%;
- background:linear-gradient(90deg,#a47b36,var(--gold-light));
- border-radius:20px;
- transition:width .4s ease;
+ height:100%;width:0%;background:linear-gradient(90deg,#a47b36,var(--gold-light));
+ border-radius:20px;transition:width .4s ease
 }
-
-.requirement{
- display:flex;
- align-items:center;
- gap:13px;
- padding:15px 0;
- border-bottom:1px solid #303030;
-}
-
+.requirement{display:flex;align-items:center;gap:13px;padding:15px 0;border-bottom:1px solid #303030}
 .requirement:last-child{border-bottom:0;padding-bottom:0}
-
 .status-icon{
- width:30px;
- height:30px;
- flex-shrink:0;
- border-radius:50%;
- display:grid;
- place-items:center;
- background:#292929;
- color:#aaa;
- font-weight:bold;
+ width:30px;height:30px;flex-shrink:0;border-radius:50%;
+ display:grid;place-items:center;background:#292929;color:#aaa;font-weight:bold
 }
-
-.status-icon.complete{
- background:rgba(84,199,139,.15);
- color:var(--green);
-}
-
+.status-icon.complete{background:rgba(84,199,139,.15);color:var(--green)}
 .requirement-info{flex:1}
-
-.requirement-info strong{
- display:block;
- font-size:14px;
- margin-bottom:4px;
-}
-
-.requirement-info small{
- color:var(--muted);
- font-size:12px;
- line-height:1.4;
-}
-
-.status-label{
- font-size:10px;
- color:#aaa;
- text-transform:uppercase;
- letter-spacing:1px;
-}
-
+.requirement-info strong{display:block;font-size:14px;margin-bottom:4px}
+.requirement-info small{color:var(--muted);font-size:12px;line-height:1.4}
+.status-label{font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:1px}
 .status-label.complete{color:var(--green)}
-
 .action-btn{
- display:block;
- width:100%;
- border:0;
- border-radius:12px;
- padding:15px;
- margin-top:18px;
- background:linear-gradient(135deg,var(--gold-light),#bd9149);
- color:#17120a;
- font-weight:bold;
+ display:block;width:100%;border:0;border-radius:12px;padding:15px;
+ margin-top:18px;background:linear-gradient(135deg,var(--gold-light),#bd9149);
+ color:#17120a;font-weight:bold
 }
-
 .secondary-btn{
- width:100%;
- border:1px solid #444;
- background:#242424;
- color:white;
- border-radius:12px;
- padding:13px;
- margin-top:10px;
+ width:100%;border:1px solid #444;background:#242424;color:white;
+ border-radius:12px;padding:13px;margin-top:10px
 }
-
 .notice{
- padding:15px;
- border-radius:12px;
- background:#242018;
- border:1px solid #594728;
- color:#d9c49b;
- font-size:13px;
- line-height:1.6;
- margin-top:17px;
+ padding:15px;border-radius:12px;background:#242018;border:1px solid #594728;
+ color:#d9c49b;font-size:13px;line-height:1.6;margin-top:17px
 }
-
 .success-notice{
- background:rgba(84,199,139,.08);
- border-color:rgba(84,199,139,.3);
- color:#a8e3c4;
+ background:rgba(84,199,139,.08);border-color:rgba(84,199,139,.3);color:#a8e3c4
 }
-
-/* MEMBERSHIP CARD PREVIEW */
-
 .membership-entry{
- margin-top:28px;
- padding:20px;
- background:#191919;
- border:1px solid #393027;
- border-radius:18px;
+ margin-top:28px;padding:20px;background:#191919;
+ border:1px solid #393027;border-radius:18px
 }
-
-.membership-entry h3{
- margin:0 0 7px;
- font-size:16px;
-}
-
-.membership-entry p{
- color:#999;
- font-size:12px;
- line-height:1.5;
- margin:0 0 15px;
-}
-
+.membership-entry h3{margin:0 0 7px;font-size:16px}
+.membership-entry p{color:#999;font-size:12px;line-height:1.5;margin:0 0 15px}
 .membership-preview{
- width:100%;
- max-width:360px;
- min-height:190px;
- margin:auto;
- padding:20px;
- border:1px solid #92713b;
- border-radius:14px;
- background:
- radial-gradient(circle at 90% 10%,rgba(216,180,103,.2),transparent 40%),
+ width:100%;max-width:360px;min-height:190px;margin:auto;padding:20px;
+ border:1px solid #92713b;border-radius:14px;
+ background:radial-gradient(circle at 90% 10%,rgba(216,180,103,.2),transparent 40%),
  linear-gradient(130deg,#392c19,#171717 72%);
- color:white;
- text-align:left;
- position:relative;
- overflow:hidden;
- display:flex;
- flex-direction:column;
- justify-content:space-between;
- transition:transform .25s,border-color .25s;
+ color:white;text-align:left;position:relative;overflow:hidden;
+ display:flex;flex-direction:column;justify-content:space-between;
+ transition:transform .25s,border-color .25s
 }
-
 .membership-preview:active{transform:scale(.98)}
 .membership-preview:hover{border-color:var(--gold-light)}
-
-.preview-top{
- display:flex;
- justify-content:space-between;
- align-items:center;
- position:relative;
- z-index:1;
-}
-
-.preview-brand{
- font-size:10px;
- line-height:1.5;
- font-weight:bold;
- letter-spacing:1.5px;
- color:var(--gold-light);
-}
-
+.preview-top{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1}
+.preview-brand{font-size:10px;line-height:1.5;font-weight:bold;letter-spacing:1.5px;color:var(--gold-light)}
 .preview-star{font-size:25px;color:var(--gold)}
+.preview-title{font-size:20px;font-weight:bold;letter-spacing:1px;color:var(--gold-light);position:relative;z-index:1}
+.preview-number{font-size:10px;letter-spacing:1.2px;color:#d4c19b;position:relative;z-index:1}
+.preview-hint{text-align:center;color:#aaa;font-size:11px;margin-top:12px}
 
-.preview-title{
- font-size:20px;
- font-weight:bold;
- letter-spacing:1px;
- color:var(--gold-light);
- position:relative;
- z-index:1;
-}
-
-.preview-number{
- font-size:10px;
- letter-spacing:1.2px;
- color:#d4c19b;
- position:relative;
- z-index:1;
-}
-
-.preview-hint{
- text-align:center;
- color:#aaa;
- font-size:11px;
- margin-top:12px;
-}
-
-/* FULL CARD POPUP */
-
+/* CARD MODAL */
 .card-modal{
- position:fixed;
- inset:0;
- z-index:1000;
- background:rgba(0,0,0,.88);
- backdrop-filter:blur(9px);
- display:flex;
- align-items:center;
- justify-content:center;
- padding:18px;
+ position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.92);
+ backdrop-filter:blur(9px);display:flex;align-items:center;
+ justify-content:center;padding:18px;overflow-y:auto
 }
-
-.modal-content{
- width:100%;
- max-width:440px;
- position:relative;
-}
-
-.modal-heading{
- text-align:center;
- color:var(--gold);
- letter-spacing:2px;
- font-size:12px;
- font-weight:bold;
- margin-bottom:22px;
-}
-
+.modal-content{width:100%;max-width:440px;position:relative;margin:auto}
+.modal-heading{text-align:center;color:var(--gold);letter-spacing:2px;font-size:12px;font-weight:bold;margin-bottom:22px}
 .modal-close{
- position:absolute;
- right:0;
- top:-43px;
- border:1px solid #444;
- background:#242424;
- color:white;
- width:35px;
- height:35px;
- border-radius:50%;
- font-size:20px;
+ position:absolute;right:0;top:-43px;border:1px solid #444;
+ background:#242424;color:white;width:35px;height:35px;border-radius:50%;font-size:20px
 }
-
-.flip-scene{
- width:100%;
- perspective:1200px;
- cursor:pointer;
-}
-
+.flip-scene{width:100%;perspective:1200px;cursor:pointer}
 .flip-inner{
- width:100%;
- aspect-ratio:1.586 / 1;
- position:relative;
- transform-style:preserve-3d;
- transition:transform .75s cubic-bezier(.2,.7,.2,1);
+ width:100%;aspect-ratio:1.586 / 1;position:relative;
+ transform-style:preserve-3d;transition:transform .75s cubic-bezier(.2,.7,.2,1)
 }
-
 .flip-inner.flipped{transform:rotateY(180deg)}
-
 .virtual-card-face{
- position:absolute;
- inset:0;
- overflow:hidden;
- border-radius:18px;
- border:1px solid #a17d40;
- backface-visibility:hidden;
- -webkit-backface-visibility:hidden;
- padding:22px;
- background:
- radial-gradient(circle at 90% 5%,rgba(216,180,103,.2),transparent 40%),
+ position:absolute;inset:0;overflow:hidden;border-radius:18px;
+ border:1px solid #a17d40;backface-visibility:hidden;
+ -webkit-backface-visibility:hidden;padding:22px;
+ background:radial-gradient(circle at 90% 5%,rgba(216,180,103,.2),transparent 40%),
  linear-gradient(130deg,#392c19,#171717 72%);
  box-shadow:0 20px 60px rgba(0,0,0,.55);
- display:flex;
- flex-direction:column;
- justify-content:space-between;
+ display:flex;flex-direction:column;justify-content:space-between
 }
-
 .virtual-card-face:after{
- content:"";
- position:absolute;
- width:190px;
- height:190px;
- border:1px solid rgba(216,180,103,.17);
- border-radius:50%;
- right:-85px;
- bottom:-110px;
- box-shadow:0 0 0 18px rgba(216,180,103,.035),
-            0 0 0 38px rgba(216,180,103,.025);
- pointer-events:none;
+ content:"";position:absolute;width:190px;height:190px;
+ border:1px solid rgba(216,180,103,.17);border-radius:50%;
+ right:-85px;bottom:-110px;
+ box-shadow:0 0 0 18px rgba(216,180,103,.035),0 0 0 38px rgba(216,180,103,.025);
+ pointer-events:none
 }
-
 .card-back{transform:rotateY(180deg)}
-
-.card-face-top{
- display:flex;
- align-items:center;
- justify-content:space-between;
- position:relative;
- z-index:1;
-}
-
-.card-brand{
- color:var(--gold-light);
- font-weight:bold;
- font-size:11px;
- line-height:1.6;
- letter-spacing:1.5px;
-}
-
+.card-face-top{display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1}
+.card-brand{color:var(--gold-light);font-weight:bold;font-size:11px;line-height:1.6;letter-spacing:1.5px}
 .card-crown{font-size:26px;color:var(--gold)}
-
-.member-details{
- display:flex;
- align-items:center;
- gap:13px;
- position:relative;
- z-index:1;
-}
-
+.member-details{display:flex;align-items:center;gap:13px;position:relative;z-index:1}
 .member-photo{
- width:58px;
- height:58px;
- flex-shrink:0;
- border-radius:50%;
- border:2px solid var(--gold);
- background:#30291e;
- object-fit:cover;
- display:flex;
- align-items:center;
- justify-content:center;
- color:var(--gold-light);
- font-size:23px;
- font-weight:bold;
- overflow:hidden;
+ width:58px;height:58px;flex-shrink:0;border-radius:50%;
+ border:2px solid var(--gold);background:#30291e;object-fit:cover;
+ display:flex;align-items:center;justify-content:center;color:var(--gold-light);
+ font-size:23px;font-weight:bold;overflow:hidden
 }
-
-.member-photo img{
- width:100%;
- height:100%;
- object-fit:cover;
- display:none;
-}
-
-.card-member-name{
- color:white;
- font-size:19px;
- font-weight:bold;
- overflow-wrap:anywhere;
-}
-
-.card-member-label{
- color:#c9b58e;
- font-size:9px;
- letter-spacing:1.5px;
- margin-top:5px;
-}
-
-.card-number-label{
- color:#bca77e;
- font-size:9px;
- letter-spacing:1.5px;
- margin-bottom:5px;
-}
-
-.card-number-value{
- color:var(--gold-light);
- font-size:12px;
- letter-spacing:1px;
- overflow-wrap:anywhere;
-}
-
-.card-bottom{
- display:flex;
- justify-content:space-between;
- align-items:center;
- position:relative;
- z-index:1;
-}
-
-.card-bottom small{
- color:#bca77e;
- font-size:9px;
- letter-spacing:1.3px;
-}
-
-.card-back-heading{
- color:var(--gold-light);
- font-size:16px;
- font-weight:bold;
- letter-spacing:1px;
- position:relative;
- z-index:1;
-}
-
-.points-display{
- position:relative;
- z-index:1;
-}
-
-.points-display strong{
- display:block;
- font-size:30px;
- color:var(--gold-light);
- margin-bottom:5px;
-}
-
-.points-display span{
- color:#c9b58e;
- font-size:10px;
- letter-spacing:1.5px;
-}
-
+.member-photo img{width:100%;height:100%;object-fit:cover;display:none}
+.card-member-name{color:white;font-size:19px;font-weight:bold;overflow-wrap:anywhere}
+.card-member-label{color:#c9b58e;font-size:9px;letter-spacing:1.5px;margin-top:5px}
+.card-number-label{color:#bca77e;font-size:9px;letter-spacing:1.5px;margin-bottom:5px}
+.card-number-value{color:var(--gold-light);font-size:12px;letter-spacing:1px;overflow-wrap:anywhere}
+.card-bottom{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1;gap:8px}
+.card-bottom small{color:#bca77e;font-size:9px;letter-spacing:1.3px}
+.card-back-heading{color:var(--gold-light);font-size:15px;font-weight:bold;letter-spacing:1px;position:relative;z-index:1}
+.points-display{position:relative;z-index:1}
+.points-display strong{display:block;font-size:30px;color:var(--gold-light);margin-bottom:5px}
+.points-display span{color:#c9b58e;font-size:10px;letter-spacing:1.5px}
 .back-message{
- position:relative;
- z-index:1;
- background:rgba(0,0,0,.28);
- border:1px solid rgba(216,180,103,.25);
- padding:10px;
- border-radius:9px;
- color:#d4c19b;
- font-size:10px;
- line-height:1.5;
+ position:relative;z-index:1;background:rgba(0,0,0,.28);
+ border:1px solid rgba(216,180,103,.25);padding:9px;border-radius:9px;
+ color:#d4c19b;font-size:10px;line-height:1.5
 }
+.flip-hint{text-align:center;color:#aaa;font-size:11px;margin-top:18px}
 
-.flip-hint{
- text-align:center;
- color:#aaa;
- font-size:11px;
- margin-top:18px;
+/* LIVE WALLET */
+.wallet-summary{
+ display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px
 }
-
-.loading{
- text-align:center;
- padding:65px 20px;
- color:var(--muted);
+.wallet-stat{
+ background:#202020;border:1px solid #38322a;border-radius:13px;padding:15px
 }
-
+.wallet-stat span{display:block;color:#999;font-size:10px;letter-spacing:1px;margin-bottom:8px}
+.wallet-stat strong{font-size:23px;color:var(--gold-light)}
+.reward-list{display:grid;gap:12px;margin-top:15px}
+.reward-item{
+ background:#202020;border:1px solid #373737;border-radius:13px;
+ padding:15px;display:flex;gap:12px;align-items:center
+}
+.reward-icon{
+ width:42px;height:42px;border-radius:12px;background:#332b1d;
+ display:grid;place-items:center;color:var(--gold);font-size:20px;flex-shrink:0
+}
+.reward-info{flex:1;min-width:0}
+.reward-info strong{display:block;font-size:13px;margin-bottom:5px}
+.reward-info small{display:block;color:#999;font-size:11px;line-height:1.5}
+.reward-cost{color:var(--gold-light);font-weight:bold;font-size:12px;margin-top:6px}
+.reward-btn{
+ border:1px solid #94733e;background:#302719;color:var(--gold-light);
+ border-radius:9px;padding:9px 11px;font-size:11px;font-weight:bold;white-space:nowrap
+}
+.reward-btn.available{background:linear-gradient(135deg,var(--gold-light),#bd9149);color:#17120a;border:0}
+.reward-btn:disabled{opacity:.45}
+.reward-progress{height:7px;background:#333;border-radius:20px;overflow:hidden;margin-top:10px}
+.reward-progress-fill{height:100%;background:linear-gradient(90deg,#a47b36,var(--gold-light));width:0}
+.history-item{
+ display:flex;justify-content:space-between;gap:12px;padding:12px 0;
+ border-bottom:1px solid #303030;font-size:12px
+}
+.history-item:last-child{border-bottom:0}
+.history-item small{display:block;color:#999;margin-top:5px}
+.points-positive{color:var(--green)}
+.points-negative{color:var(--red)}
+.loading{text-align:center;padding:65px 20px;color:var(--muted)}
 .spinner{
- width:30px;
- height:30px;
- border:3px solid #333;
- border-top-color:var(--gold);
- border-radius:50%;
- animation:spin .8s linear infinite;
- margin:0 auto 15px;
+ width:30px;height:30px;border:3px solid #333;border-top-color:var(--gold);
+ border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 15px
 }
-
 @keyframes spin{to{transform:rotate(360deg)}}
-
-.error{
- background:#301d1d;
- border:1px solid #663737;
- color:#ffaaaa;
- padding:15px;
- border-radius:12px;
- line-height:1.5;
-}
-
-.footer{
- text-align:center;
- color:#666;
- font-size:11px;
- margin-top:35px;
- line-height:1.8;
-}
-
+.error{background:#301d1d;border:1px solid #663737;color:#ffaaaa;padding:15px;border-radius:12px;line-height:1.5}
+.footer{text-align:center;color:#666;font-size:11px;margin-top:35px;line-height:1.8}
 .hidden{display:none!important}
-
+.inline-message{font-size:12px;line-height:1.5;margin-top:12px;color:#bbb}
 @media(min-width:650px){
- .container{padding-top:35px}
- .hero{padding:45px 30px}
- .card{padding:25px}
+ .container{padding-top:35px}.hero{padding:45px 30px}.card{padding:25px}
 }
-
 @media(max-width:380px){
- .virtual-card-face{padding:15px}
- .card-member-name{font-size:16px}
- .member-photo{width:48px;height:48px}
- .points-display strong{font-size:25px}
+ .virtual-card-face{padding:15px}.card-member-name{font-size:16px}
+ .member-photo{width:48px;height:48px}.points-display strong{font-size:25px}
+ .reward-item{gap:8px;padding:11px}.reward-btn{padding:8px;font-size:10px}
 }
 </style>
 </head>
 
 <body>
-
 <header class="topbar">
  <div class="brand">NEXT LEVEL<br>GROOMING LOUNGE</div>
  <button class="back-btn" onclick="goBack()">← Back</button>
 </header>
 
 <main class="container">
-
  <div id="loadingScreen" class="loading">
   <div class="spinner"></div>
   Checking your membership...
  </div>
 
  <div id="mainContent" class="hidden">
-
   <section class="hero">
    <div class="crown">♛</div>
    <div class="eyebrow">THE NEXT LEVEL EXPERIENCE</div>
    <h1>Loyalty Rewards</h1>
-   <p>
-    Every visit is another step towards something special.
-    Complete your membership requirements and get ready
-    to enjoy the Next Level experience.
-   </p>
+   <p>Every visit is another step towards something special. Earn points with completed, paid appointments and exchange them for rewards.</p>
   </section>
 
   <div id="qualificationSection">
-
    <h2 class="section-title">Unlock your membership</h2>
-   <p class="section-subtitle">
-    Complete the five requirements below to qualify for
-    the Next Level loyalty programme.
-   </p>
+   <p class="section-subtitle">Complete the five requirements below to qualify for the Next Level loyalty programme.</p>
 
    <section class="card">
     <div class="progress-header">
      <strong>Your progress</strong>
      <span class="progress-number" id="progressText">0 / 5</span>
     </div>
-
-    <div class="progress-track">
-     <div class="progress-fill" id="progressFill"></div>
-    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
 
     <div id="requirementsList">
-
      <div class="requirement" data-requirement="name">
-      <div class="status-icon">1</div>
-      <div class="requirement-info">
-       <strong>Complete your full name</strong>
-       <small>Add your first and last name to your profile.</small>
-      </div>
-      <span class="status-label">Pending</span>
+      <div class="status-icon">1</div><div class="requirement-info"><strong>Complete your full name</strong><small>Add your first and last name to your profile.</small></div><span class="status-label">Pending</span>
      </div>
-
      <div class="requirement" data-requirement="phone">
-      <div class="status-icon">2</div>
-      <div class="requirement-info">
-       <strong>Add your phone number</strong>
-       <small>Make sure your contact number is on your profile.</small>
-      </div>
-      <span class="status-label">Pending</span>
+      <div class="status-icon">2</div><div class="requirement-info"><strong>Add your phone number</strong><small>Make sure your contact number is on your profile.</small></div><span class="status-label">Pending</span>
      </div>
-
      <div class="requirement" data-requirement="email">
-      <div class="status-icon">3</div>
-      <div class="requirement-info">
-       <strong>Confirm your email address</strong>
-       <small>Your registered email address must be verified.</small>
-      </div>
-      <span class="status-label">Pending</span>
+      <div class="status-icon">3</div><div class="requirement-info"><strong>Confirm your email address</strong><small>Your registered email address must be verified.</small></div><span class="status-label">Pending</span>
      </div>
-
      <div class="requirement" data-requirement="dob">
-      <div class="status-icon">4</div>
-      <div class="requirement-info">
-       <strong>Add your date of birth</strong>
-       <small>Help us celebrate your birthday with you.</small>
-      </div>
-      <span class="status-label">Pending</span>
+      <div class="status-icon">4</div><div class="requirement-info"><strong>Add your date of birth</strong><small>Help us celebrate your birthday with you.</small></div><span class="status-label">Pending</span>
      </div>
-
      <div class="requirement" data-requirement="selfie">
-      <div class="status-icon">5</div>
-      <div class="requirement-info">
-       <strong>Upload your profile selfie</strong>
-       <small>Add a profile picture to complete your membership details.</small>
-      </div>
-      <span class="status-label">Pending</span>
+      <div class="status-icon">5</div><div class="requirement-info"><strong>Upload your profile selfie</strong><small>Add a profile picture to complete your membership details.</small></div><span class="status-label">Pending</span>
      </div>
-
     </div>
 
-    <button class="action-btn" onclick="goToProfile()">
-     COMPLETE MY PROFILE
-    </button>
-
-    <p style="color:#777;font-size:11px;text-align:center;margin:13px 0 0">
-     Your progress updates when you return to this page.
-    </p>
+    <button class="action-btn" onclick="goToProfile()">COMPLETE MY PROFILE</button>
+    <p style="color:#777;font-size:11px;text-align:center;margin:13px 0 0">Your progress updates when you return to this page.</p>
    </section>
   </div>
 
   <div id="eligibleSection" class="hidden">
-
    <h2 class="section-title">Your membership</h2>
-   <p class="section-subtitle">
-    You've completed all five membership requirements.
-   </p>
+   <p class="section-subtitle">Your Next Level membership is active.</p>
 
    <div class="notice success-notice">
-    <strong>Congratulations!</strong><br>
-    Your profile meets all the requirements for the
-    Next Level loyalty programme.
+    <strong>Welcome to Next Level Rewards!</strong><br>
+    Your membership is activated. Your points are earned when an administrator confirms payment and completes your appointment.
    </div>
 
    <section class="card">
-    <div style="color:var(--gold);font-size:12px;letter-spacing:2px">
-     LOYALTY REWARDS
+    <div style="color:var(--gold);font-size:12px;letter-spacing:2px">YOUR LOYALTY WALLET</div>
+    <div class="wallet-summary">
+     <div class="wallet-stat"><span>AVAILABLE POINTS</span><strong id="walletPoints">0</strong></div>
+     <div class="wallet-stat"><span>MEMBER NUMBER</span><strong id="walletClientNumber" style="font-size:14px">NLG-...</strong></div>
     </div>
-    <h2 style="margin:12px 0 8px">Your rewards are coming</h2>
-    <p style="color:#aaa;font-size:13px;line-height:1.7;margin:0">
-     Your membership qualification is complete.
-     Your points balance and reward collection will appear
-     here once the loyalty points system is activated.
-    </p>
-    <div class="notice">
-     Your points will only appear here after they have
-     been securely recorded in your account.
-    </div>
+    <div id="nextRewardMessage" class="notice">Loading your reward progress...</div>
    </section>
-
-   <!-- MEMBERSHIP CARD ENTRY AT BOTTOM -->
 
    <section class="membership-entry">
     <h3>My Membership Card</h3>
-    <p>
-     Your personal Next Level digital membership card.
-     Tap below to open your card and view your membership details.
-    </p>
-
+    <p>Your personal Next Level digital membership card. Tap below to open your card and view your membership details.</p>
     <button class="membership-preview" onclick="openMembershipCard()">
      <span class="preview-top">
-      <span class="preview-brand">
-       NEXT LEVEL<br>GROOMING LOUNGE
-      </span>
+      <span class="preview-brand">NEXT LEVEL<br>GROOMING LOUNGE</span>
       <span class="preview-star">♛</span>
      </span>
-
      <span class="preview-title">MY MEMBERSHIP CARD</span>
-
-     <span class="preview-number" id="previewClientNumber">
-      CLIENT NUMBER LOADING...
-     </span>
+     <span class="preview-number" id="previewClientNumber">CLIENT NUMBER LOADING...</span>
     </button>
+    <div class="preview-hint">TAP TO OPEN YOUR VIRTUAL MEMBERSHIP CARD</div>
+   </section>
 
-    <div class="preview-hint">
-     TAP TO OPEN YOUR VIRTUAL MEMBERSHIP CARD
+   <section class="card">
+    <h2 style="margin:0 0 7px;font-size:19px">Your rewards</h2>
+    <p class="section-subtitle" style="margin-bottom:10px">Use your points to claim the rewards below.</p>
+    <div id="rewardList" class="reward-list">
+     <div class="loading">Loading rewards...</div>
+    </div>
+    <div id="rewardMessage" class="inline-message" aria-live="polite"></div>
+   </section>
+
+   <section class="card">
+    <h2 style="margin:0 0 7px;font-size:18px">Redemption history</h2>
+    <p class="section-subtitle" style="margin-bottom:5px">Your recent reward claims.</p>
+    <div id="redemptionHistory">
+     <p style="color:#999;font-size:12px">Loading history...</p>
     </div>
    </section>
 
-   <button class="secondary-btn" onclick="goToProfile()">
-    VIEW MY PROFILE
-   </button>
-
+   <button class="secondary-btn" onclick="goToProfile()">VIEW MY PROFILE</button>
   </div>
 
-  <div class="footer">
-   CONFIDENCE STARTS HERE<br>
-   NEXT LEVEL GROOMING LOUNGE
-  </div>
-
+  <div class="footer">CONFIDENCE STARTS HERE<br>NEXT LEVEL GROOMING LOUNGE</div>
  </div>
 
  <div id="errorScreen" class="hidden"></div>
-
 </main>
 
-<!-- FULL VIRTUAL MEMBERSHIP CARD -->
-
-<div id="membershipModal" class="card-modal hidden"
-     onclick="closeMembershipCard(event)">
-
+<!-- MEMBERSHIP CARD MODAL -->
+<div id="membershipModal" class="card-modal hidden" onclick="closeMembershipCard(event)">
  <div class="modal-content">
-
   <div class="modal-heading">YOUR NEXT LEVEL MEMBERSHIP</div>
-
   <button class="modal-close" onclick="closeMembershipCard()">×</button>
-
   <div class="flip-scene" onclick="flipMembershipCard()">
-
    <div class="flip-inner" id="flipInner">
 
-    <!-- FRONT OF CARD -->
-
     <div class="virtual-card-face card-front">
-
      <div class="card-face-top">
-      <div class="card-brand">
-       NEXT LEVEL<br>
-       GROOMING LOUNGE
-      </div>
+      <div class="card-brand">NEXT LEVEL<br>GROOMING LOUNGE</div>
       <div class="card-crown">♛</div>
      </div>
-
      <div class="member-details">
-
       <div class="member-photo" id="cardPhotoFallback">
        <span id="cardInitials">N</span>
        <img id="cardPhoto" alt="Member profile photo">
       </div>
-
       <div style="min-width:0">
-       <div class="card-member-name" id="cardMemberName">
-        Member Name
-       </div>
-       <div class="card-member-label">
-        NEXT LEVEL MEMBER
-       </div>
+       <div class="card-member-name" id="cardMemberName">Member Name</div>
+       <div class="card-member-label">NEXT LEVEL MEMBER</div>
       </div>
-
      </div>
-
      <div class="card-bottom">
       <div>
        <div class="card-number-label">UNIQUE CLIENT NUMBER</div>
-       <div class="card-number-value" id="cardClientNumber">
-        NLG-...
-       </div>
+       <div class="card-number-value" id="cardClientNumber">NLG-...</div>
       </div>
       <small>CONFIDENCE STARTS HERE</small>
      </div>
-
     </div>
 
-    <!-- BACK OF CARD -->
-
     <div class="virtual-card-face card-back">
-
      <div class="card-face-top">
-      <div class="card-brand">
-       NEXT LEVEL<br>
-       GROOMING LOUNGE
-      </div>
+      <div class="card-brand">NEXT LEVEL<br>GROOMING LOUNGE</div>
       <div class="card-crown">♛</div>
      </div>
-
-     <div class="card-back-heading">
-      YOUR REWARDS WALLET
-     </div>
-
+     <div class="card-back-heading">YOUR REWARDS WALLET</div>
      <div class="points-display">
-      <strong id="cardPoints">Not activated</strong>
+      <strong id="cardPoints">0</strong>
       <span>AVAILABLE LOYALTY POINTS</span>
      </div>
-
-     <div class="back-message" id="cardRewardsMessage">
-      Your rewards wallet is awaiting activation.
-      Your confirmed points and redeemable rewards
-      will appear here once the loyalty system is connected.
-     </div>
-
+     <div class="back-message" id="cardRewardsMessage">Loading your rewards...</div>
      <div class="card-bottom">
       <small>YOUR MEMBERSHIP • YOUR REWARDS</small>
       <small>BACK OF CARD</small>
      </div>
-
     </div>
 
    </div>
   </div>
-
-  <div class="flip-hint">
-   TAP THE CARD TO FLIP IT
-  </div>
-
+  <div class="flip-hint">TAP THE CARD TO FLIP IT</div>
  </div>
 </div>
 
 <script>
 const SUPABASE_URL = "https://teimbezoinfqlrxczafj.supabase.co";
 const SUPABASE_KEY = "sb_publishable_3lJOm65rVFwElFqLN-Gxzw_LdYacHZP";
+const PROFILE_BUCKET = "customer-profile-pictures";
 
 const supabaseClient = window.supabase.createClient(
  SUPABASE_URL,
  SUPABASE_KEY
 );
 
-const PROFILE_BUCKET = "customer-profile-pictures";
+let currentUser = null;
+let currentBalance = 0;
+let currentRewards = [];
+let redemptionBusy = false;
 
-function goBack(){
- window.location.href = "account.html";
-}
-
-function goToProfile(){
- window.location.href = "account.html";
-}
+function goBack(){window.location.href="account.html";}
+function goToProfile(){window.location.href="account.html";}
 
 function showError(message){
  document.getElementById("loadingScreen").classList.add("hidden");
+ const screen=document.getElementById("errorScreen");
+ screen.classList.remove("hidden");
 
- const errorScreen = document.getElementById("errorScreen");
- errorScreen.classList.remove("hidden");
+ const box=document.createElement("div");
+ box.className="error";
+ box.textContent=message;
 
- const errorBox = document.createElement("div");
- errorBox.className = "error";
- errorBox.textContent = message;
+ const login=document.createElement("button");
+ login.className="secondary-btn";
+ login.textContent="GO TO LOGIN";
+ login.onclick=()=>window.location.href="login.html";
 
- const loginButton = document.createElement("button");
- loginButton.className = "secondary-btn";
- loginButton.textContent = "GO TO LOGIN";
- loginButton.onclick = () => {
-  window.location.href = "login.html";
- };
+ const retry=document.createElement("button");
+ retry.className="secondary-btn";
+ retry.textContent="TRY AGAIN";
+ retry.onclick=()=>location.reload();
 
- const retryButton = document.createElement("button");
- retryButton.className = "secondary-btn";
- retryButton.textContent = "TRY AGAIN";
- retryButton.onclick = () => location.reload();
-
- errorBox.append(loginButton,retryButton);
- errorScreen.replaceChildren(errorBox);
+ box.append(login,retry);
+ screen.replaceChildren(box);
 }
 
 function setRequirement(key,complete){
- const item = document.querySelector(
-  '[data-requirement="' + key + '"]'
- );
-
- if(!item) return;
-
- const icon = item.querySelector(".status-icon");
- const label = item.querySelector(".status-label");
+ const item=document.querySelector('[data-requirement="'+key+'"]');
+ if(!item)return;
+ const icon=item.querySelector(".status-icon");
+ const label=item.querySelector(".status-label");
 
  if(complete){
-  icon.textContent = "✓";
+  icon.textContent="✓";
   icon.classList.add("complete");
-  label.textContent = "Complete";
+  label.textContent="Complete";
   label.classList.add("complete");
  }else{
-  icon.textContent = key === "name" ? "1" :
-                     key === "phone" ? "2" :
-                     key === "email" ? "3" :
-                     key === "dob" ? "4" : "5";
-
+  const numbers={name:"1",phone:"2",email:"3",dob:"4",selfie:"5"};
+  icon.textContent=numbers[key];
   icon.classList.remove("complete");
-  label.textContent = "Pending";
+  label.textContent="Pending";
   label.classList.remove("complete");
  }
 }
 
-/* MEMBERSHIP CARD CONTROLS */
-
 function openMembershipCard(){
  document.getElementById("flipInner").classList.remove("flipped");
  document.getElementById("membershipModal").classList.remove("hidden");
- document.body.style.overflow = "hidden";
+ document.body.style.overflow="hidden";
 }
-
 function closeMembershipCard(event){
- if(event && event.target !== document.getElementById("membershipModal")){
-  return;
- }
-
+ if(event && event.target!==document.getElementById("membershipModal"))return;
  document.getElementById("membershipModal").classList.add("hidden");
- document.body.style.overflow = "";
+ document.body.style.overflow="";
 }
-
 function flipMembershipCard(){
  document.getElementById("flipInner").classList.toggle("flipped");
 }
-
-document.addEventListener("keydown",function(event){
- if(event.key === "Escape"){
+document.addEventListener("keydown",event=>{
+ if(event.key==="Escape"){
   document.getElementById("membershipModal").classList.add("hidden");
-  document.body.style.overflow = "";
+  document.body.style.overflow="";
  }
 });
 
 function getInitials(name){
- return (name || "Member")
-  .trim()
-  .split(/\s+/)
-  .slice(0,2)
-  .map(part => part.charAt(0).toUpperCase())
-  .join("");
+ return (name||"Member").trim().split(/\s+/).slice(0,2)
+  .map(part=>part.charAt(0).toUpperCase()).join("");
 }
 
 async function loadMemberPhoto(avatarPath){
- if(!avatarPath) return;
-
+ if(!avatarPath)return;
  try{
-  const {data,error} = await supabaseClient
-   .storage
-   .from(PROFILE_BUCKET)
-   .createSignedUrl(avatarPath,3600);
-
-  if(error) throw error;
-
-  if(data && data.signedUrl){
-   const photo = document.getElementById("cardPhoto");
-
-   photo.onload = () => {
-    photo.style.display = "block";
-    document.getElementById("cardInitials").style.display = "none";
+  const {data,error}=await supabaseClient.storage
+   .from(PROFILE_BUCKET).createSignedUrl(avatarPath,3600);
+  if(error)throw error;
+  if(data?.signedUrl){
+   const photo=document.getElementById("cardPhoto");
+   photo.onload=()=>{
+    photo.style.display="block";
+    document.getElementById("cardInitials").style.display="none";
    };
-
-   photo.onerror = () => {
-    photo.style.display = "none";
-    document.getElementById("cardInitials").style.display = "block";
+   photo.onerror=()=>{
+    photo.style.display="none";
+    document.getElementById("cardInitials").style.display="block";
    };
-
-   photo.src = data.signedUrl;
+   photo.src=data.signedUrl;
   }
+ }catch(error){console.warn("Could not load member photo:",error);}
+}
 
- }catch(error){
-  console.warn("Could not load membership photo:",error);
+/* ACTIVATE OR REUSE THE CUSTOMER'S MEMBERSHIP */
+async function activateAndLoadMembership(){
+ const {data:existing,error:lookupError}=await supabaseClient
+  .from("loyalty_memberships")
+  .select("customer_id,client_number,activated_at")
+  .eq("customer_id",currentUser.id)
+  .maybeSingle();
+
+ if(lookupError)throw lookupError;
+ if(existing)return existing;
+
+ const {error:activationError}=await supabaseClient.rpc(
+  "activate_loyalty_membership"
+ );
+ if(activationError)throw activationError;
+
+ const {data:membership,error:reloadError}=await supabaseClient
+  .from("loyalty_memberships")
+  .select("customer_id,client_number,activated_at")
+  .eq("customer_id",currentUser.id)
+  .single();
+
+ if(reloadError)throw reloadError;
+ return membership;
+}
+
+/* LOAD REAL POINTS FROM THE SECURE LEDGER */
+async function loadPointsBalance(){
+ const {data,error}=await supabaseClient
+  .from("loyalty_points_ledger")
+  .select("points_change")
+  .eq("customer_id",currentUser.id);
+
+ if(error)throw error;
+
+ currentBalance=(data||[]).reduce(
+  (total,row)=>total+Number(row.points_change||0),0
+ );
+
+ currentBalance=Math.max(0,currentBalance);
+ document.getElementById("walletPoints").textContent=currentBalance.toLocaleString();
+ document.getElementById("cardPoints").textContent=currentBalance.toLocaleString();
+
+ updateNextReward();
+}
+
+/* LOAD ACTIVE REWARDS */
+async function loadRewards(){
+ const {data,error}=await supabaseClient
+  .from("loyalty_rewards")
+  .select("id,code,reward_name,description,points_cost,active")
+  .eq("active",true)
+  .order("points_cost",{ascending:true});
+
+ if(error)throw error;
+
+ currentRewards=data||[];
+ renderRewards();
+ updateCardRewardMessage();
+}
+
+/* SHOW REWARDS AND REDEMPTION BUTTONS */
+function renderRewards(){
+ const list=document.getElementById("rewardList");
+ list.replaceChildren();
+
+ if(!currentRewards.length){
+  const empty=document.createElement("p");
+  empty.style.color="#999";
+  empty.textContent="There are currently no active rewards.";
+  list.append(empty);
+  return;
+ }
+
+ currentRewards.forEach(reward=>{
+  const affordable=currentBalance>=Number(reward.points_cost);
+  const item=document.createElement("div");
+  item.className="reward-item";
+
+  const icon=document.createElement("div");
+  icon.className="reward-icon";
+  icon.textContent=getRewardIcon(reward.code);
+
+  const info=document.createElement("div");
+  info.className="reward-info";
+
+  const name=document.createElement("strong");
+  name.textContent=reward.reward_name;
+
+  const description=document.createElement("small");
+  description.textContent=reward.description||"Redeem this reward using your loyalty points.";
+
+  const cost=document.createElement("div");
+  cost.className="reward-cost";
+  cost.textContent=Number(reward.points_cost).toLocaleString()+" POINTS";
+
+  info.append(name,description,cost);
+
+  const button=document.createElement("button");
+  button.className="reward-btn"+(affordable?" available":"");
+  button.textContent=affordable?"REDEEM":"NEED "+(Number(reward.points_cost)-currentBalance);
+  button.disabled=!affordable||redemptionBusy;
+  button.addEventListener("click",()=>redeemReward(reward));
+
+  item.append(icon,info,button);
+  list.append(item);
+ });
+}
+
+function getRewardIcon(code){
+ const icons={
+  FREE_HAIR_WASH:"✦",
+  DISCOUNT_25:"R25",
+  DISCOUNT_50:"R50",
+  FREE_STANDARD_HAIRCUT:"✂"
+ };
+ return icons[code]||"★";
+}
+
+function updateNextReward(){
+ const next=currentRewards.find(r=>Number(r.points_cost)>currentBalance);
+ const box=document.getElementById("nextRewardMessage");
+
+ if(!next){
+  box.textContent="Amazing! You currently have enough points for every active reward.";
+  return;
+ }
+
+ const remaining=Number(next.points_cost)-currentBalance;
+ const progress=Math.min(100,(currentBalance/Number(next.points_cost))*100);
+
+ box.replaceChildren();
+ const title=document.createElement("strong");
+ title.textContent="Your next reward: "+next.reward_name;
+ const detail=document.createElement("div");
+ detail.style.marginTop="6px";
+ detail.textContent=remaining+" more points needed.";
+ const track=document.createElement("div");
+ track.className="reward-progress";
+ const fill=document.createElement("div");
+ fill.className="reward-progress-fill";
+ fill.style.width=progress+"%";
+ track.append(fill);
+ box.append(title,detail,track);
+}
+
+function updateCardRewardMessage(){
+ const affordable=currentRewards.filter(r=>currentBalance>=Number(r.points_cost));
+ const next=currentRewards.find(r=>Number(r.points_cost)>currentBalance);
+ const message=document.getElementById("cardRewardsMessage");
+
+ if(affordable.length){
+  const names=affordable.map(r=>r.reward_name).join(", ");
+  message.textContent="You can currently redeem: "+names+
+   (next? ". Next reward: "+next.reward_name+" ("+
+   (Number(next.points_cost)-currentBalance)+" more points).":".");
+ }else if(next){
+  message.textContent="Your next available reward is "+next.reward_name+
+   ". You need "+(Number(next.points_cost)-currentBalance)+" more points.";
+ }else{
+  message.textContent="Your rewards wallet is ready. Check the rewards section for available offers.";
  }
 }
 
-async function loadLoyaltyPage(){
+/* REDEEM THROUGH THE SECURE SUPABASE FUNCTION */
+async function redeemReward(reward){
+ if(redemptionBusy)return;
+
+ const cost=Number(reward.points_cost);
+ if(currentBalance<cost){
+  showRewardMessage("You do not have enough points for this reward.",true);
+  return;
+ }
+
+ const confirmed=window.confirm(
+  "Redeem "+reward.reward_name+" for "+cost+" points?"
+ );
+ if(!confirmed)return;
+
+ redemptionBusy=true;
+ showRewardMessage("Processing your reward redemption...");
 
  try{
+  const {error}=await supabaseClient.rpc(
+   "redeem_loyalty_reward",
+   {p_reward_id:reward.id}
+  );
 
-  const {data:userData,error:userError} =
-   await supabaseClient.auth.getUser();
+  if(error)throw error;
 
-  if(userError) throw userError;
+  showRewardMessage("Your reward redemption was submitted successfully.");
+  await refreshWallet();
 
-  const user = userData.user;
+ }catch(error){
+  console.error("Reward redemption error:",error);
+  showRewardMessage(
+   error.message||"We could not redeem this reward. Please try again.",true
+  );
+ }finally{
+  redemptionBusy=false;
+  renderRewards();
+ }
+}
 
-  if(!user){
-   window.location.href = "login.html";
+function showRewardMessage(message,isError=false){
+ const el=document.getElementById("rewardMessage");
+ el.textContent=message;
+ el.style.color=isError?"#ef9999":"#a8e3c4";
+}
+
+/* RELOAD BALANCE, REWARDS AND HISTORY */
+async function refreshWallet(){
+ await loadPointsBalance();
+ await loadRewards();
+ await loadRedemptionHistory();
+}
+
+async function loadRedemptionHistory(){
+ const container=document.getElementById("redemptionHistory");
+
+ const {data,error}=await supabaseClient
+  .from("loyalty_redemptions")
+  .select("id,reward_id,points_spent,status,created_at")
+  .eq("customer_id",currentUser.id)
+  .order("created_at",{ascending:false})
+  .limit(10);
+
+ if(error)throw error;
+
+ container.replaceChildren();
+
+ if(!data?.length){
+  const empty=document.createElement("p");
+  empty.style.color="#999";
+  empty.style.fontSize="12px";
+  empty.textContent="You haven't redeemed any rewards yet.";
+  container.append(empty);
+  return;
+ }
+
+ data.forEach(redemption=>{
+  const reward=currentRewards.find(r=>r.id===redemption.reward_id);
+  const row=document.createElement("div");
+  row.className="history-item";
+
+  const left=document.createElement("div");
+  const name=document.createElement("strong");
+  name.textContent=reward?.reward_name||"Loyalty reward";
+  const date=document.createElement("small");
+  date.textContent=new Date(redemption.created_at).toLocaleString();
+  left.append(name,date);
+
+  const right=document.createElement("div");
+  right.style.textAlign="right";
+  const points=document.createElement("strong");
+  points.className="points-negative";
+  points.textContent="-"+Number(redemption.points_spent)+" pts";
+  const status=document.createElement("small");
+  status.textContent=redemption.status;
+  right.append(points,status);
+
+  row.append(left,right);
+  container.append(row);
+ });
+}
+
+/* MAIN PAGE */
+async function loadLoyaltyPage(){
+ try{
+  const {data:userData,error:userError}=await supabaseClient.auth.getUser();
+  if(userError)throw userError;
+
+  currentUser=userData.user;
+  if(!currentUser){
+   window.location.href="login.html";
    return;
   }
 
-  const {data:profile,error:profileError} =
-   await supabaseClient
-    .from("customer_profiles")
-    .select("id, full_name, phone, date_of_birth, avatar_path, client_number")
-    .eq("id",user.id)
-    .maybeSingle();
+  const {data:profile,error:profileError}=await supabaseClient
+   .from("customer_profiles")
+   .select("id,full_name,phone,date_of_birth,avatar_path,client_number")
+   .eq("id",currentUser.id)
+   .maybeSingle();
 
-  if(profileError) throw profileError;
+  if(profileError)throw profileError;
+  if(!profile)throw new Error("We could not find your customer profile. Please contact the salon.");
 
-  if(!profile){
-   throw new Error(
-    "We could not find your customer profile. Please contact the salon."
-   );
-  }
-
-  const fullName = (profile.full_name || "").trim();
-
-  const requirements = {
-   name: fullName.length >= 2 && fullName.includes(" "),
-   phone: !!(profile.phone || "").trim(),
-   email: !!(user.email_confirmed_at || user.confirmed_at),
-   dob: !!profile.date_of_birth,
-   selfie: !!profile.avatar_path
+  const fullName=(profile.full_name||"").trim();
+  const requirements={
+   name:fullName.length>=2&&fullName.includes(" "),
+   phone:!!(profile.phone||"").trim(),
+   email:!!(currentUser.email_confirmed_at||currentUser.confirmed_at),
+   dob:!!profile.date_of_birth,
+   selfie:!!profile.avatar_path
   };
 
-  const completed = Object.values(requirements).filter(Boolean).length;
-  const percentage = Math.round((completed / 5) * 100);
+  const completed=Object.values(requirements).filter(Boolean).length;
+  document.getElementById("progressText").textContent=completed+" / 5";
+  document.getElementById("progressFill").style.width=Math.round(completed/5*100)+"%";
 
-  document.getElementById("progressText").textContent =
-   completed + " / 5";
-
-  document.getElementById("progressFill").style.width =
-   percentage + "%";
-
-  Object.entries(requirements).forEach(([key,value])=>{
-   setRequirement(key,value);
-  });
+  Object.entries(requirements).forEach(([key,value])=>setRequirement(key,value));
 
   document.getElementById("loadingScreen").classList.add("hidden");
   document.getElementById("mainContent").classList.remove("hidden");
 
-  if(completed === 5){
-
-   document.getElementById("qualificationSection")
-    .classList.add("hidden");
-
-   document.getElementById("eligibleSection")
-    .classList.remove("hidden");
-
-   /* Fill the membership card details */
-
-   const clientNumber = profile.client_number;
-
-   if(!clientNumber){
-    throw new Error(
-     "Your client number has not been created yet. Please run the membership card SQL in Supabase, then refresh this page."
-    );
-   }
-
-   document.getElementById("cardMemberName").textContent =
-    fullName || "Next Level Member";
-
-   document.getElementById("cardClientNumber").textContent =
-    clientNumber;
-
-   document.getElementById("previewClientNumber").textContent =
-    clientNumber;
-
-   document.getElementById("cardInitials").textContent =
-    getInitials(fullName);
-
-   await loadMemberPhoto(profile.avatar_path);
-
-  }else{
-
-   document.getElementById("qualificationSection")
-    .classList.remove("hidden");
-
-   document.getElementById("eligibleSection")
-    .classList.add("hidden");
-
+  if(completed!==5){
+   document.getElementById("qualificationSection").classList.remove("hidden");
+   document.getElementById("eligibleSection").classList.add("hidden");
+   return;
   }
 
+  document.getElementById("qualificationSection").classList.add("hidden");
+  document.getElementById("eligibleSection").classList.remove("hidden");
+
+  /* Activate once, or reuse existing membership */
+  const membership=await activateAndLoadMembership();
+  if(!membership.client_number){
+   throw new Error("Your membership client number is missing. Please contact the salon.");
+  }
+
+  document.getElementById("cardMemberName").textContent=fullName||"Next Level Member";
+  document.getElementById("cardClientNumber").textContent=membership.client_number;
+  document.getElementById("previewClientNumber").textContent=membership.client_number;
+  document.getElementById("walletClientNumber").textContent=membership.client_number;
+  document.getElementById("cardInitials").textContent=getInitials(fullName);
+
+  await loadMemberPhoto(profile.avatar_path);
+  await refreshWallet();
+
  }catch(error){
-
   console.error("Loyalty page error:",error);
-
-  showError(
-   error.message || "Something went wrong while loading your membership."
-  );
-
+  showError(error.message||"Something went wrong while loading your membership.");
  }
-
 }
 
 loadLoyaltyPage();
 </script>
-
 </body>
 </html>
