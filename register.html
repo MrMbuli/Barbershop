@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -125,6 +126,18 @@ a{color:#d5ad58}
  text-transform:uppercase;
  letter-spacing:1px
 }
+
+.referral-success{
+ display:none;
+ margin-top:9px;
+ padding:10px;
+ border:1px solid #6c9d70;
+ border-radius:7px;
+ background:#19251b;
+ color:#a9e0ae;
+ font-size:13px;
+ line-height:1.5
+}
 </style>
 </head>
 
@@ -191,6 +204,11 @@ a{color:#d5ad58}
     placeholder="e.g. NLREF-XXXXXXXXXX"
    >
 
+   <div id="referralSuccess" class="referral-success">
+    <strong>Invitation link detected!</strong><br>
+    Your friend's referral code has been added automatically.
+   </div>
+
    <p class="referral-info">
     Were you invited by an existing member?
     Enter their referral code here.
@@ -220,7 +238,7 @@ a{color:#d5ad58}
 
   <a
    class="button"
-   href="https://mail.google.com/mail/u/0/#inbox"
+   href="https://mail.google.com/"
    target="_blank"
    rel="noopener"
   >
@@ -270,15 +288,57 @@ const form = document.getElementById("registerForm");
 const message = document.getElementById("message");
 const button = document.getElementById("registerButton");
 const referralInput = document.getElementById("referralCode");
+const referralSuccess = document.getElementById("referralSuccess");
 
 
-// Automatically format referral codes.
+// =====================================
+// AUTOMATIC REFERRAL LINK DETECTION
+// =====================================
+
+const urlParams = new URLSearchParams(window.location.search);
+
+const referralFromLink = urlParams.get("ref");
+
+if(referralFromLink){
+
+ const cleanReferralCode = referralFromLink
+  .trim()
+  .toUpperCase()
+  .replace(/\s/g, "");
+
+ if(cleanReferralCode.length > 0 && cleanReferralCode.length <= 30){
+
+  referralInput.value = cleanReferralCode;
+
+  referralSuccess.style.display = "block";
+
+ }
+
+}
+
+
+// =====================================
+// FORMAT MANUALLY ENTERED REFERRAL CODE
+// =====================================
+
 referralInput.addEventListener("input", function(){
+
  this.value = this.value
   .toUpperCase()
   .replace(/\s/g, "");
+
+ // Hide the invitation message if the user changes
+ // the automatically inserted code.
+ if(this.value !== referralFromLink?.trim().toUpperCase()){
+  referralSuccess.style.display = "none";
+ }
+
 });
 
+
+// =====================================
+// ACCOUNT REGISTRATION
+// =====================================
 
 form.addEventListener("submit", async function(event){
 
@@ -300,15 +360,21 @@ form.addEventListener("submit", async function(event){
   referralInput.value.trim().toUpperCase();
 
  if(password.length < 8){
+
   message.textContent =
    "Password must have at least 8 characters.";
+
   return;
+
  }
 
  if(fullName.split(/\s+/).filter(Boolean).length < 2){
+
   message.textContent =
    "Please enter your first name and surname.";
+
   return;
+
  }
 
  button.disabled = true;
@@ -319,26 +385,28 @@ form.addEventListener("submit", async function(event){
 
  try{
 
+  // Store the referral code in Supabase user metadata.
   const metadata = {
    full_name: fullName,
    phone: phone
   };
 
-  // Only include referral metadata when supplied.
   if(referralCode){
    metadata.referral_code = referralCode;
   }
 
   const {data,error} = await supabaseClient.auth.signUp({
 
-   email,
-   password,
+   email: email,
+   password: password,
 
    options:{
-    data:metadata,
+
+    data: metadata,
 
     emailRedirectTo:
      "https://mrmbuli.github.io/Barbershop/login.html"
+
    }
 
   });
@@ -351,10 +419,13 @@ form.addEventListener("submit", async function(event){
     "Account created successfully. Taking you to login...";
 
    setTimeout(function(){
+
     window.location.href = "login.html";
+
    },1500);
 
    return;
+
   }
 
   document.getElementById("registeredEmail").textContent =
