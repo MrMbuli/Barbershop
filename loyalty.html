@@ -1,0 +1,664 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101010">
+<title>Loyalty Rewards | Next Level Grooming Lounge</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{box-sizing:border-box}
+
+:root{
+ --gold:#d8b467;
+ --gold-light:#f2d89b;
+ --bg:#101010;
+ --panel:#191919;
+ --panel2:#202020;
+ --muted:#999;
+ --white:#fff;
+ --green:#54c78b;
+ --red:#ef7777;
+}
+
+body{
+ margin:0;
+ background:var(--bg);
+ color:var(--white);
+ font-family:Arial,sans-serif;
+ min-height:100vh;
+}
+
+button{
+ font:inherit;
+ cursor:pointer;
+}
+
+.topbar{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:17px 20px;
+ border-bottom:1px solid #292929;
+ position:sticky;
+ top:0;
+ background:rgba(16,16,16,.96);
+ backdrop-filter:blur(12px);
+ z-index:10;
+}
+
+.brand{
+ font-size:13px;
+ font-weight:bold;
+ letter-spacing:2px;
+ color:var(--gold);
+}
+
+.back-btn{
+ background:#242424;
+ color:white;
+ border:1px solid #333;
+ padding:10px 14px;
+ border-radius:10px;
+}
+
+.container{
+ width:min(950px,100%);
+ margin:auto;
+ padding:25px 17px 60px;
+}
+
+.hero{
+ padding:30px 22px;
+ border:1px solid #3b3020;
+ border-radius:22px;
+ background:
+ radial-gradient(circle at top right,rgba(216,180,103,.18),transparent 45%),
+ linear-gradient(135deg,#242019,#151515 65%);
+ text-align:center;
+}
+
+.crown{
+ font-size:38px;
+ margin-bottom:12px;
+}
+
+.eyebrow{
+ color:var(--gold);
+ font-size:11px;
+ letter-spacing:3px;
+ font-weight:bold;
+}
+
+.hero h1{
+ margin:12px 0 10px;
+ font-size:clamp(25px,6vw,38px);
+}
+
+.hero p{
+ color:#bbb;
+ line-height:1.6;
+ max-width:560px;
+ margin:0 auto;
+ font-size:14px;
+}
+
+.section-title{
+ font-size:19px;
+ margin:30px 0 7px;
+}
+
+.section-subtitle{
+ color:var(--muted);
+ font-size:13px;
+ line-height:1.5;
+ margin:0 0 18px;
+}
+
+.card{
+ background:var(--panel);
+ border:1px solid #303030;
+ border-radius:17px;
+ padding:20px;
+ margin-top:17px;
+}
+
+.progress-header{
+ display:flex;
+ justify-content:space-between;
+ gap:12px;
+ align-items:center;
+ margin-bottom:12px;
+}
+
+.progress-number{
+ color:var(--gold);
+ font-weight:bold;
+}
+
+.progress-track{
+ height:9px;
+ background:#333;
+ border-radius:20px;
+ overflow:hidden;
+}
+
+.progress-fill{
+ height:100%;
+ width:0%;
+ background:linear-gradient(90deg,#a47b36,var(--gold-light));
+ border-radius:20px;
+ transition:width .4s ease;
+}
+
+.requirement{
+ display:flex;
+ align-items:center;
+ gap:13px;
+ padding:15px 0;
+ border-bottom:1px solid #303030;
+}
+
+.requirement:last-child{
+ border-bottom:0;
+ padding-bottom:0;
+}
+
+.status-icon{
+ width:30px;
+ height:30px;
+ flex-shrink:0;
+ border-radius:50%;
+ display:grid;
+ place-items:center;
+ background:#292929;
+ color:#aaa;
+ font-weight:bold;
+}
+
+.status-icon.complete{
+ background:rgba(84,199,139,.15);
+ color:var(--green);
+}
+
+.requirement-info{
+ flex:1;
+}
+
+.requirement-info strong{
+ display:block;
+ font-size:14px;
+ margin-bottom:4px;
+}
+
+.requirement-info small{
+ color:var(--muted);
+ font-size:12px;
+ line-height:1.4;
+}
+
+.status-label{
+ font-size:10px;
+ color:#aaa;
+ text-transform:uppercase;
+ letter-spacing:1px;
+}
+
+.status-label.complete{
+ color:var(--green);
+}
+
+.action-btn{
+ display:block;
+ width:100%;
+ border:0;
+ border-radius:12px;
+ padding:15px;
+ margin-top:18px;
+ background:linear-gradient(135deg,var(--gold-light),#bd9149);
+ color:#17120a;
+ font-weight:bold;
+}
+
+.secondary-btn{
+ width:100%;
+ border:1px solid #444;
+ background:#242424;
+ color:white;
+ border-radius:12px;
+ padding:13px;
+ margin-top:10px;
+}
+
+.member-card{
+ position:relative;
+ overflow:hidden;
+ padding:25px;
+ border-radius:20px;
+ background:linear-gradient(130deg,#3a2d19,#171717 70%);
+ border:1px solid #8c6b36;
+}
+
+.member-card:after{
+ content:"";
+ position:absolute;
+ width:180px;
+ height:180px;
+ border:1px solid rgba(216,180,103,.2);
+ border-radius:50%;
+ right:-60px;
+ top:-65px;
+ box-shadow:0 0 0 20px rgba(216,180,103,.035),
+            0 0 0 40px rgba(216,180,103,.025);
+}
+
+.member-card .brand{
+ position:relative;
+ z-index:1;
+}
+
+.member-name{
+ margin-top:35px;
+ font-size:21px;
+ font-weight:bold;
+ position:relative;
+ z-index:1;
+}
+
+.member-status{
+ display:inline-block;
+ margin-top:12px;
+ color:var(--gold-light);
+ font-size:11px;
+ letter-spacing:1.5px;
+ position:relative;
+ z-index:1;
+}
+
+.member-number{
+ margin-top:25px;
+ color:#c5b18c;
+ font-size:11px;
+ position:relative;
+ z-index:1;
+}
+
+.notice{
+ padding:15px;
+ border-radius:12px;
+ background:#242018;
+ border:1px solid #594728;
+ color:#d9c49b;
+ font-size:13px;
+ line-height:1.6;
+ margin-top:17px;
+}
+
+.success-notice{
+ background:rgba(84,199,139,.08);
+ border-color:rgba(84,199,139,.3);
+ color:#a8e3c4;
+}
+
+.loading{
+ text-align:center;
+ padding:65px 20px;
+ color:var(--muted);
+}
+
+.spinner{
+ width:30px;
+ height:30px;
+ border:3px solid #333;
+ border-top-color:var(--gold);
+ border-radius:50%;
+ animation:spin .8s linear infinite;
+ margin:0 auto 15px;
+}
+
+@keyframes spin{
+ to{transform:rotate(360deg)}
+}
+
+.error{
+ background:#301d1d;
+ border:1px solid #663737;
+ color:#ffaaaa;
+ padding:15px;
+ border-radius:12px;
+ line-height:1.5;
+}
+
+.footer{
+ text-align:center;
+ color:#666;
+ font-size:11px;
+ margin-top:35px;
+ line-height:1.8;
+}
+
+.hidden{display:none!important}
+
+@media(min-width:650px){
+ .container{padding-top:35px}
+ .hero{padding:45px 30px}
+ .card{padding:25px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+ <div class="brand">NEXT LEVEL<br>GROOMING LOUNGE</div>
+ <button class="back-btn" onclick="goBack()">← Back</button>
+</header>
+
+<main class="container">
+
+ <div id="loadingScreen" class="loading">
+  <div class="spinner"></div>
+  Checking your membership...
+ </div>
+
+ <div id="mainContent" class="hidden">
+
+  <section class="hero">
+   <div class="crown">♛</div>
+   <div class="eyebrow">THE NEXT LEVEL EXPERIENCE</div>
+   <h1>Loyalty Rewards</h1>
+   <p>
+    Every visit is another step towards something special.
+    Complete your membership requirements and get ready
+    to enjoy the Next Level experience.
+   </p>
+  </section>
+
+  <div id="qualificationSection">
+
+   <h2 class="section-title">Unlock your membership</h2>
+   <p class="section-subtitle">
+    Complete the five requirements below to qualify for
+    the Next Level loyalty programme.
+   </p>
+
+   <section class="card">
+    <div class="progress-header">
+     <strong>Your progress</strong>
+     <span class="progress-number" id="progressText">0 / 5</span>
+    </div>
+
+    <div class="progress-track">
+     <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div id="requirementsList">
+
+     <div class="requirement" data-requirement="name">
+      <div class="status-icon">1</div>
+      <div class="requirement-info">
+       <strong>Complete your full name</strong>
+       <small>Add your first and last name to your profile.</small>
+      </div>
+      <span class="status-label">Pending</span>
+     </div>
+
+     <div class="requirement" data-requirement="phone">
+      <div class="status-icon">2</div>
+      <div class="requirement-info">
+       <strong>Add your phone number</strong>
+       <small>Make sure your contact number is on your profile.</small>
+      </div>
+      <span class="status-label">Pending</span>
+     </div>
+
+     <div class="requirement" data-requirement="email">
+      <div class="status-icon">3</div>
+      <div class="requirement-info">
+       <strong>Confirm your email address</strong>
+       <small>Your registered email address must be verified.</small>
+      </div>
+      <span class="status-label">Pending</span>
+     </div>
+
+     <div class="requirement" data-requirement="dob">
+      <div class="status-icon">4</div>
+      <div class="requirement-info">
+       <strong>Add your date of birth</strong>
+       <small>Help us celebrate your birthday with you.</small>
+      </div>
+      <span class="status-label">Pending</span>
+     </div>
+
+     <div class="requirement" data-requirement="selfie">
+      <div class="status-icon">5</div>
+      <div class="requirement-info">
+       <strong>Upload your profile selfie</strong>
+       <small>Add a profile picture to complete your membership details.</small>
+      </div>
+      <span class="status-label">Pending</span>
+     </div>
+
+    </div>
+
+    <button class="action-btn" onclick="goToProfile()">
+     COMPLETE MY PROFILE
+    </button>
+
+    <p style="color:#777;font-size:11px;text-align:center;margin:13px 0 0">
+     Your progress updates when you return to this page.
+    </p>
+   </section>
+  </div>
+
+  <div id="eligibleSection" class="hidden">
+
+   <h2 class="section-title">Your membership</h2>
+   <p class="section-subtitle">
+    You've completed all five membership requirements.
+   </p>
+
+   <div class="member-card">
+    <div class="brand">NEXT LEVEL GROOMING LOUNGE</div>
+    <div class="member-name" id="memberName">Member</div>
+    <div class="member-status">MEMBERSHIP QUALIFIED</div>
+    <div class="member-number" id="memberEmail"></div>
+   </div>
+
+   <div class="notice success-notice">
+    <strong>Congratulations!</strong><br>
+    Your profile meets all the requirements for the
+    Next Level loyalty programme.
+   </div>
+
+   <section class="card">
+    <div style="color:var(--gold);font-size:12px;letter-spacing:2px">
+     LOYALTY REWARDS
+    </div>
+    <h2 style="margin:12px 0 8px">Your rewards are coming</h2>
+    <p style="color:#aaa;font-size:13px;line-height:1.7;margin:0">
+     Your membership qualification is complete.
+     The points balance, reward collection and redemption
+     features will become available once the loyalty
+     programme is activated.
+    </p>
+    <div class="notice">
+     Your points will only appear here after they have
+     been securely recorded in your account.
+    </div>
+   </section>
+
+   <button class="secondary-btn" onclick="goToProfile()">
+    VIEW MY PROFILE
+   </button>
+
+  </div>
+
+  <div class="footer">
+   CONFIDENCE STARTS HERE<br>
+   NEXT LEVEL GROOMING LOUNGE
+  </div>
+
+ </div>
+
+ <div id="errorScreen" class="hidden"></div>
+
+</main>
+
+<script>
+const SUPABASE_URL = "https://teimbezoinfqlrxczafj.supabase.co";
+const SUPABASE_KEY = "sb_publishable_3lJOm65rVFwElFqLN-Gxzw_LdYacHZP";
+
+const supabaseClient = window.supabase.createClient(
+ SUPABASE_URL,
+ SUPABASE_KEY
+);
+
+function goBack(){
+ window.location.href = "account.html";
+}
+
+function goToProfile(){
+ window.location.href = "account.html";
+}
+
+function showError(message){
+ document.getElementById("loadingScreen").classList.add("hidden");
+
+ const errorScreen = document.getElementById("errorScreen");
+ errorScreen.classList.remove("hidden");
+
+ errorScreen.innerHTML = `
+  <div class="error">
+   ${message}
+   <button class="secondary-btn" onclick="window.location.href='login.html'">
+    GO TO LOGIN
+   </button>
+   <button class="secondary-btn" onclick="location.reload()">
+    TRY AGAIN
+   </button>
+  </div>
+ `;
+}
+
+function setRequirement(key, complete){
+ const item = document.querySelector(
+  '[data-requirement="' + key + '"]'
+ );
+
+ if(!item) return;
+
+ const icon = item.querySelector(".status-icon");
+ const label = item.querySelector(".status-label");
+
+ if(complete){
+  icon.textContent = "✓";
+  icon.classList.add("complete");
+  label.textContent = "Complete";
+  label.classList.add("complete");
+ }else{
+  icon.classList.remove("complete");
+  label.classList.remove("complete");
+ }
+}
+
+async function loadLoyaltyPage(){
+
+ try{
+
+  const {data:userData,error:userError} =
+   await supabaseClient.auth.getUser();
+
+  if(userError) throw userError;
+
+  const user = userData.user;
+
+  if(!user){
+   window.location.href = "login.html";
+   return;
+  }
+
+  const {data:profile,error:profileError} =
+   await supabaseClient
+    .from("customer_profiles")
+    .select("id, full_name, phone, date_of_birth, avatar_path")
+    .eq("id",user.id)
+    .maybeSingle();
+
+  if(profileError) throw profileError;
+
+  if(!profile){
+   throw new Error(
+    "We could not find your customer profile. Please contact the salon."
+   );
+  }
+
+  const fullName = (profile.full_name || "").trim();
+
+  const requirements = {
+   name: fullName.length >= 2 && fullName.includes(" "),
+   phone: !!(profile.phone || "").trim(),
+   email: !!(user.email_confirmed_at || user.confirmed_at),
+   dob: !!profile.date_of_birth,
+   selfie: !!profile.avatar_path
+  };
+
+  const completed = Object.values(requirements).filter(Boolean).length;
+  const percentage = Math.round((completed / 5) * 100);
+
+  document.getElementById("progressText").textContent =
+   completed + " / 5";
+
+  document.getElementById("progressFill").style.width =
+   percentage + "%";
+
+  Object.entries(requirements).forEach(([key,value])=>{
+   setRequirement(key,value);
+  });
+
+  document.getElementById("loadingScreen").classList.add("hidden");
+  document.getElementById("mainContent").classList.remove("hidden");
+
+  if(completed === 5){
+
+   document.getElementById("qualificationSection")
+    .classList.add("hidden");
+
+   document.getElementById("eligibleSection")
+    .classList.remove("hidden");
+
+   document.getElementById("memberName").textContent =
+    fullName || "Next Level Member";
+
+   document.getElementById("memberEmail").textContent =
+    user.email || "";
+
+  }else{
+
+   document.getElementById("qualificationSection")
+    .classList.remove("hidden");
+
+   document.getElementById("eligibleSection")
+    .classList.add("hidden");
+
+  }
+
+ }catch(error){
+
+  console.error("Loyalty page error:",error);
+
+  showError(
+   error.message || "Something went wrong while loading your membership."
+  );
+
+ }
+
+}
+
+loadLoyaltyPage();
+</script>
+
+</body>
+</html>
