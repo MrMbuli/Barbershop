@@ -308,7 +308,9 @@ input[type="date"]{color-scheme:dark}
  <button class="nav-item active" data-page="dashboardPage"><span class="nav-icon">⌂</span>HOME</button>
  <button class="nav-item" data-page="appointmentsPage"><span class="nav-icon">▣</span>APPOINTMENTS</button>
  <button class="nav-item" data-page="profilePage"><span class="nav-icon">♙</span>PROFILE</button>
- <button class="nav-item" data-page="loyaltyPage"><span class="nav-icon">★</span>LOYALTY</button>
+<button class="nav-item" onclick="window.location.href='loyalty.html'">
+ <span class="nav-icon">★</span>LOYALTY
+</button>
  <button class="nav-item" data-page="settingsPage"><span class="nav-icon">⚙</span>SETTINGS</button>
 </nav>
 
@@ -343,10 +345,10 @@ input[type="date"]{color-scheme:dark}
   <div class="quick-card" data-go="profilePage">
    <div class="quick-icon">♙</div><h3>My Profile</h3>
    <p>Update your personal information.</p>
-  </div>
-  <div class="quick-card" data-go="loyaltyPage">
-   <div class="quick-icon">★</div><h3>Loyalty Programme</h3>
-   <p>Check your profile completion.</p>
+  <div class="quick-card" onclick="window.location.href='loyalty.html'">
+ <div class="quick-icon">★</div>
+ <h3>Loyalty Rewards</h3>
+ <p>Explore your points, membership and exclusive rewards.</p>
   </div>
   <div class="quick-card" data-go="settingsPage">
    <div class="quick-icon">⚙</div><h3>Account Settings</h3>
@@ -413,34 +415,7 @@ input[type="date"]{color-scheme:dark}
  </div>
 </section>
 
-<section id="loyaltyPage" hidden>
- <div class="page-title">
-  <h2>Loyalty Rewards</h2>
-  <p>Your journey towards becoming a Next Level regular.</p>
- </div>
- <div class="hero">
-  <div class="eyebrow">NEXT LEVEL CUSTOMER REWARDS</div>
-  <h2>Every detail matters.</h2>
-  <p>Complete your customer profile to qualify for the Next Level Grooming Lounge Loyalty Programme.</p>
- </div>
- <div class="completion-box">
-  <h3>Profile Completion</h3>
-  <p>Complete the requirements below to become eligible for the loyalty programme.</p>
-  <div><strong id="completionText">0% complete</strong></div>
-  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-  <div id="requirementsList"></div>
-  <div id="loyaltyStatus" class="loyalty-status loyalty-pending">Checking loyalty eligibility...</div>
- </div>
- <div class="card">
-  <h3>How to qualify</h3>
-  <p>1. Add your full name and surname.</p>
-  <p>2. Add your mobile number.</p>
-  <p>3. Confirm your email address.</p>
-  <p>4. Add your date of birth.</p>
-  <p>5. Upload a profile selfie.</p>
-  <button class="primary" data-go="profilePage">COMPLETE MY PROFILE</button>
- </div>
-</section>
+
 
 <section id="settingsPage" hidden>
  <div class="page-title">
@@ -524,7 +499,7 @@ function makeButton(parent,label,callback,className){
 
 /* NAVIGATION */
 function showPage(pageId){
- const pageIds=["dashboardPage","appointmentsPage","profilePage","loyaltyPage","settingsPage"];
+ const pageIds=["dashboardPage","appointmentsPage","profilePage","settingsPage"];
  if(!pageIds.includes(pageId))return;
  pageIds.forEach(id=>{
   document.getElementById(id).hidden=id!==pageId;
