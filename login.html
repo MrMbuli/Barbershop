@@ -4,131 +4,624 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101010">
+
 <title>Customer Login | Next Level Grooming Lounge</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{box-sizing:border-box}
+*{
+ box-sizing:border-box;
+ margin:0;
+ padding:0;
+}
+
+:root{
+ --gold:#d8b45c;
+ --gold-light:#f0d28b;
+ --bg:#101010;
+ --card:#191919;
+ --input:#242424;
+ --muted:#999;
+ --green:#69c58a;
+ --red:#ff7777;
+}
+
 body{
-  margin:0;min-height:100vh;padding:20px;
-  display:flex;align-items:center;justify-content:center;
-  background:#101010;color:white;font-family:Arial,sans-serif
+ min-height:100vh;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:25px 16px;
+ background:
+ radial-gradient(ellipse at top,#292216 0%,transparent 45%),
+ #101010;
+ color:white;
+ font-family:Arial,sans-serif;
 }
+
 .container{
-  width:100%;max-width:430px;padding:30px;
-  background:#1b1b1b;border:1px solid #b58b36;
-  border-radius:14px
+ width:100%;
+ max-width:460px;
+ animation:appear .65s ease;
 }
-h1{text-align:center;color:#d5ad58;font-size:25px}
-.subtitle{text-align:center;color:#bbb}
-h2{margin-top:30px}
-label{display:block;margin:16px 0 7px}
+
+@keyframes appear{
+ from{
+  opacity:0;
+  transform:translateY(20px);
+ }
+ to{
+  opacity:1;
+  transform:translateY(0);
+ }
+}
+
+.card{
+ background:linear-gradient(145deg,#202020,#151515);
+ border:1px solid rgba(216,180,92,.35);
+ border-radius:20px;
+ padding:32px 26px;
+ box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+
+.brand{
+ text-align:center;
+ margin-bottom:35px;
+}
+
+.brand-icon{
+ width:58px;
+ height:58px;
+ margin:0 auto 13px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ border-radius:18px;
+ background:linear-gradient(145deg,#e6c77e,#a77b2d);
+ color:#151515;
+ font-size:27px;
+ box-shadow:0 5px 25px rgba(216,180,92,.18);
+}
+
+.brand h1{
+ color:var(--gold);
+ font-size:23px;
+ letter-spacing:1.2px;
+}
+
+.brand p{
+ color:#aaa;
+ font-size:11px;
+ letter-spacing:3px;
+ margin-top:6px;
+}
+
+.welcome{
+ text-align:center;
+ margin-bottom:30px;
+}
+
+.welcome h2{
+ font-size:26px;
+ margin-bottom:9px;
+}
+
+.welcome p{
+ color:var(--muted);
+ font-size:13px;
+ line-height:1.6;
+}
+
+.field{
+ margin-bottom:21px;
+}
+
+label{
+ display:block;
+ margin-bottom:9px;
+ font-size:13px;
+ font-weight:bold;
+ color:#eee;
+}
+
+.field-input{
+ position:relative;
+}
+
 input{
-  width:100%;padding:13px;background:#292929;
-  color:white;border:1px solid #555;border-radius:7px;
-  font-size:16px
+ width:100%;
+ height:51px;
+ padding:0 14px;
+ border:1px solid #414141;
+ border-radius:10px;
+ background:var(--input);
+ color:white;
+ font-size:15px;
+ transition:.2s;
 }
-button{
-  width:100%;padding:14px;margin-top:22px;
-  background:#c49a45;color:#111;border:0;
-  border-radius:7px;font-size:16px;
-  font-weight:bold;cursor:pointer
+
+input::placeholder{
+ color:#777;
 }
-button:disabled{opacity:.6}
-a{color:#d5ad58}
-.links{text-align:center;margin-top:22px;line-height:2}
-#message{text-align:center;margin-top:18px;line-height:1.5}
+
+input:focus{
+ outline:none;
+ border-color:var(--gold);
+ box-shadow:0 0 0 3px rgba(216,180,92,.09);
+}
+
+.password-input{
+ padding-right:52px;
+}
+
+.toggle-password{
+ position:absolute;
+ right:10px;
+ top:50%;
+ transform:translateY(-50%);
+ background:none;
+ border:0;
+ color:#aaa;
+ padding:8px;
+ cursor:pointer;
+ font-size:17px;
+}
+
+.toggle-password:hover{
+ color:var(--gold);
+}
+
+.options{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+ margin:5px 0 23px;
+}
+
+.remember{
+ display:flex;
+ align-items:center;
+ gap:8px;
+ color:#aaa;
+ font-size:12px;
+}
+
+.remember input{
+ width:16px;
+ height:16px;
+ accent-color:var(--gold);
+}
+
+a{
+ color:var(--gold);
+ text-decoration:none;
+}
+
+a:hover{
+ text-decoration:underline;
+}
+
+.forgot{
+ font-size:12px;
+}
+
+.submit-button{
+ width:100%;
+ min-height:51px;
+ border:0;
+ border-radius:10px;
+ background:linear-gradient(110deg,#a77b2d,#e2c477,#b88a38);
+ color:#151515;
+ font-size:14px;
+ font-weight:bold;
+ letter-spacing:1px;
+ cursor:pointer;
+ transition:.25s;
+ box-shadow:0 5px 20px rgba(216,180,92,.12);
+}
+
+.submit-button:hover{
+ transform:translateY(-2px);
+ box-shadow:0 8px 25px rgba(216,180,92,.22);
+}
+
+.submit-button:disabled{
+ opacity:.6;
+ cursor:not-allowed;
+ transform:none;
+}
+
+.spinner{
+ display:inline-block;
+ width:15px;
+ height:15px;
+ border:2px solid rgba(0,0,0,.25);
+ border-top-color:#111;
+ border-radius:50%;
+ animation:spin .7s linear infinite;
+ vertical-align:middle;
+ margin-right:8px;
+}
+
+@keyframes spin{
+ to{transform:rotate(360deg)}
+}
+
+#message{
+ text-align:center;
+ font-size:13px;
+ line-height:1.6;
+ margin-top:18px;
+ overflow-wrap:anywhere;
+}
+
+.message-error{
+ color:var(--red);
+}
+
+.message-success{
+ color:var(--green);
+}
+
+.message-normal{
+ color:#aaa;
+}
+
+.footer{
+ text-align:center;
+ margin-top:27px;
+ color:#999;
+ font-size:13px;
+ line-height:2.3;
+}
+
+.security-note{
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ gap:7px;
+ margin-top:24px;
+ color:#777;
+ font-size:11px;
+}
+
+.security-note span{
+ color:var(--green);
+}
+
+@media(max-width:420px){
+ .card{
+  padding:27px 19px;
+ }
+
+ .brand h1{
+  font-size:21px;
+ }
+
+ .welcome h2{
+  font-size:24px;
+ }
+}
 </style>
 </head>
 
 <body>
+
 <div class="container">
-  <h1>Next Level Grooming Lounge</h1>
-  <p class="subtitle">Confidence Starts Here</p>
 
-  <h2>Customer Login</h2>
+<div class="card">
 
-  <form id="loginForm">
-    <label for="email">Email address</label>
-    <input id="email" type="email" required
-      autocomplete="email" placeholder="Your email">
+ <div class="brand">
 
-    <label for="password">Password</label>
-    <input id="password" type="password" required
-      autocomplete="current-password" placeholder="Your password">
+  <div class="brand-icon">✂</div>
 
-    <button id="loginButton" type="submit">LOG IN</button>
-  </form>
+  <h1>NEXT LEVEL</h1>
 
-  <div id="message" role="status"></div>
+  <p>GROOMING LOUNGE</p>
 
-  <div class="links">
-    <a href="register.html">Create an account</a>
-    <br>
-    <a href="index.html">Back to Home</a>
+ </div>
+
+ <div class="welcome">
+
+  <h2>Welcome back.</h2>
+
+  <p>
+   Your Next Level experience continues here.
+   Sign in to access your membership.
+  </p>
+
+ </div>
+
+
+ <form id="loginForm">
+
+  <div class="field">
+
+   <label for="email">Email address</label>
+
+   <input
+    id="email"
+    type="email"
+    required
+    autocomplete="email"
+    placeholder="Enter your email address"
+   >
+
   </div>
+
+
+  <div class="field">
+
+   <label for="password">Password</label>
+
+   <div class="field-input">
+
+    <input
+     id="password"
+     class="password-input"
+     type="password"
+     required
+     autocomplete="current-password"
+     placeholder="Enter your password"
+    >
+
+    <button
+     type="button"
+     class="toggle-password"
+     id="togglePassword"
+     aria-label="Show password"
+    >◉</button>
+
+   </div>
+
+  </div>
+
+
+  <div class="options">
+
+   <label class="remember">
+    <input type="checkbox" id="remember">
+    Remember me
+   </label>
+
+   <a href="forgot-password.html" class="forgot">
+    Forgot password?
+   </a>
+
+  </div>
+
+
+  <button
+   id="loginButton"
+   class="submit-button"
+   type="submit"
+  >
+   LOG IN TO MY ACCOUNT
+  </button>
+
+ </form>
+
+
+ <div id="message" role="status" aria-live="polite"></div>
+
+
+ <div class="footer">
+
+  New to Next Level?
+
+  <a href="register.html">Create an account</a>
+
+  <br>
+
+  <a href="index.html">← Back to home</a>
+
+ </div>
+
+
+ <div class="security-note">
+
+  <span>●</span>
+
+  Secure customer account access
+
+ </div>
+
 </div>
 
+</div>
+
+
 <script>
-const SUPABASE_URL = "https://teimbezoinfqlrxczafj.supabase.co";
-const SUPABASE_KEY = "sb_publishable_3lJOm65rVFwElFqLN-Gxzw_LdYacHZP";
+
+// =====================================
+// SUPABASE CONNECTION
+// =====================================
+
+const SUPABASE_URL =
+ "https://teimbezoinfqlrxczafj.supabase.co";
+
+const SUPABASE_KEY =
+ "sb_publishable_3lJOm65rVFwElFqLN-Gxzw_LdYacHZP";
 
 const supabaseClient = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
+ SUPABASE_URL,
+ SUPABASE_KEY
 );
 
-const form = document.getElementById("loginForm");
-const message = document.getElementById("message");
-const button = document.getElementById("loginButton");
 
-// Only allow the two intended booking destinations.
-// If login was opened directly, send the customer to account.html.
-function getPostLoginDestination() {
-  const params = new URLSearchParams(window.location.search);
-  const next = params.get("next");
+// =====================================
+// ELEMENTS
+// =====================================
 
-  if (
-    next === "booking.html?type=shop" ||
-    next === "booking.html?type=housecall"
-  ) {
-    return next;
-  }
+const form =
+ document.getElementById("loginForm");
 
-  return "account.html";
+const message =
+ document.getElementById("message");
+
+const button =
+ document.getElementById("loginButton");
+
+const passwordInput =
+ document.getElementById("password");
+
+
+// =====================================
+// POST-LOGIN DESTINATION
+// =====================================
+
+function getPostLoginDestination(){
+
+ const params =
+  new URLSearchParams(window.location.search);
+
+ const next = params.get("next");
+
+ if(
+  next === "booking.html?type=shop" ||
+  next === "booking.html?type=housecall"
+ ){
+
+  return next;
+
+ }
+
+ return "account.html";
+
 }
 
-form.addEventListener("submit", async function(event) {
-  event.preventDefault();
 
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
+// =====================================
+// PASSWORD VISIBILITY
+// =====================================
 
-  button.disabled = true;
-  button.textContent = "LOGGING IN...";
-  message.textContent = "";
+document.getElementById("togglePassword")
+ .addEventListener("click",function(){
 
-  try {
-    const { data, error } =
-      await supabaseClient.auth.signInWithPassword({
-        email,
-        password
-      });
+  const visible =
+   passwordInput.type === "password";
 
-    if (error) throw error;
+  passwordInput.type =
+   visible ? "text" : "password";
 
-    message.textContent = "Login successful! Redirecting...";
+  this.textContent =
+   visible ? "◎" : "◉";
 
-    const destination = getPostLoginDestination();
+  this.setAttribute(
+   "aria-label",
+   visible ? "Hide password" : "Show password"
+  );
 
-    window.location.replace(destination);
+ });
 
-  } catch (error) {
-    message.textContent = error.message;
-    button.disabled = false;
-    button.textContent = "LOG IN";
+
+// =====================================
+// MESSAGE DISPLAY
+// =====================================
+
+function showMessage(text,type="normal"){
+
+ message.textContent = text;
+
+ message.className = "message-" + type;
+
+}
+
+
+// =====================================
+// LOGIN
+// =====================================
+
+form.addEventListener("submit",async function(event){
+
+ event.preventDefault();
+
+ const email =
+  document.getElementById("email").value.trim();
+
+ const password =
+  passwordInput.value;
+
+ if(!email || !password){
+
+  showMessage(
+   "Please enter your email and password.",
+   "error"
+  );
+
+  return;
+
+ }
+
+ button.disabled = true;
+
+ button.innerHTML =
+  '<span class="spinner"></span> SIGNING YOU IN...';
+
+ showMessage(
+  "Please wait while we securely sign you in.",
+  "normal"
+ );
+
+
+ try{
+
+  const {data,error} =
+   await supabaseClient.auth.signInWithPassword({
+
+    email:email,
+
+    password:password
+
+   });
+
+
+  if(error) throw error;
+
+
+  if(!data.session){
+
+   throw new Error(
+    "Login could not be completed. Please try again."
+   );
+
   }
+
+
+  showMessage(
+   "Login successful! Welcome back.",
+   "success"
+  );
+
+
+  const destination =
+   getPostLoginDestination();
+
+
+  window.location.replace(destination);
+
+
+ }catch(error){
+
+  console.error("Login error:",error);
+
+  showMessage(
+   error.message || "Login failed. Please check your details.",
+   "error"
+  );
+
+  button.disabled = false;
+
+  button.textContent = "LOG IN TO MY ACCOUNT";
+
+ }
+
 });
+
 </script>
+
 </body>
 </html>
