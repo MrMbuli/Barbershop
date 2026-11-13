@@ -5,138 +5,450 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#101010">
+
 <title>Create Account | Next Level Grooming Lounge</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{box-sizing:border-box}
+*{
+ box-sizing:border-box;
+ margin:0;
+ padding:0;
+}
+
+:root{
+ --gold:#d8b45c;
+ --gold-light:#f0d28b;
+ --gold-dark:#9c742d;
+ --bg:#101010;
+ --card:#191919;
+ --input:#242424;
+ --muted:#999;
+ --green:#69c58a;
+ --red:#ff7777;
+}
 
 body{
- margin:0;
  min-height:100vh;
  display:flex;
  align-items:center;
  justify-content:center;
- padding:20px;
- background:#101010;
- color:#fff;
- font-family:Arial,sans-serif
+ padding:25px 16px;
+ background:
+ radial-gradient(ellipse at top,#292216 0%,transparent 45%),
+ #101010;
+ color:white;
+ font-family:Arial,sans-serif;
 }
 
 .container{
  width:100%;
- max-width:430px;
- padding:30px;
- background:#1b1b1b;
- border:1px solid #b58b36;
- border-radius:14px
+ max-width:460px;
+ animation:appear .65s ease;
 }
 
-h1{
- text-align:center;
- color:#d5ad58;
- font-size:25px
+@keyframes appear{
+ from{opacity:0;transform:translateY(20px)}
+ to{opacity:1;transform:translateY(0)}
 }
 
-.subtitle{
+.card{
+ background:linear-gradient(145deg,#202020,#151515);
+ border:1px solid rgba(216,180,92,.35);
+ border-radius:20px;
+ padding:30px 26px;
+ box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+
+.brand{
  text-align:center;
- color:#bbb;
- margin-bottom:25px
+ margin-bottom:28px;
+}
+
+.brand-icon{
+ width:58px;
+ height:58px;
+ margin:0 auto 13px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ border-radius:18px;
+ background:linear-gradient(145deg,#e6c77e,#a77b2d);
+ color:#151515;
+ font-size:27px;
+ box-shadow:0 5px 25px rgba(216,180,92,.18);
+}
+
+.brand h1{
+ color:var(--gold);
+ font-size:23px;
+ letter-spacing:1.2px;
+}
+
+.brand p{
+ color:#aaa;
+ font-size:11px;
+ letter-spacing:3px;
+ margin-top:6px;
+}
+
+.welcome{
+ text-align:center;
+ margin-bottom:27px;
+}
+
+.welcome h2{
+ font-size:25px;
+ margin-bottom:9px;
+}
+
+.welcome p{
+ color:var(--muted);
+ font-size:13px;
+ line-height:1.6;
+}
+
+.field{
+ margin-bottom:18px;
 }
 
 label{
- display:block;
- margin:14px 0 7px;
- font-size:14px
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin-bottom:8px;
+ font-size:13px;
+ font-weight:bold;
+ color:#eee;
+}
+
+.field-input{
+ position:relative;
 }
 
 input{
  width:100%;
- padding:13px;
- border:1px solid #555;
- border-radius:7px;
- background:#292929;
+ height:49px;
+ padding:0 14px;
+ border:1px solid #414141;
+ border-radius:10px;
+ background:var(--input);
  color:white;
- font-size:16px
+ font-size:15px;
+ transition:.2s;
+}
+
+input::placeholder{
+ color:#777;
 }
 
 input:focus{
  outline:none;
- border-color:#d5ad58
+ border-color:var(--gold);
+ box-shadow:0 0 0 3px rgba(216,180,92,.09);
 }
 
-button,.button{
- display:block;
- width:100%;
- padding:14px;
- margin-top:20px;
- background:#c49a45;
- color:#111;
+input.valid{
+ border-color:var(--green);
+}
+
+input.invalid{
+ border-color:var(--red);
+}
+
+.field-status{
+ position:absolute;
+ right:14px;
+ top:50%;
+ transform:translateY(-50%);
+ font-size:17px;
+ pointer-events:none;
+}
+
+.password-input{
+ padding-right:52px;
+}
+
+.toggle-password{
+ position:absolute;
+ right:10px;
+ top:50%;
+ transform:translateY(-50%);
+ background:none;
  border:0;
- border-radius:7px;
- font-size:16px;
+ color:#aaa;
+ padding:8px;
+ cursor:pointer;
+ font-size:17px;
+}
+
+.toggle-password:hover{
+ color:var(--gold);
+}
+
+.password-meter{
+ display:flex;
+ gap:5px;
+ margin-top:10px;
+}
+
+.password-meter span{
+ flex:1;
+ height:4px;
+ border-radius:10px;
+ background:#383838;
+ transition:.25s;
+}
+
+.password-hint{
+ color:#888;
+ font-size:11px;
+ margin-top:7px;
+}
+
+.phone-hint{
+ color:#888;
+ font-size:11px;
+ margin-top:7px;
+}
+
+.referral-box{
+ border:1px solid #49402e;
+ border-radius:12px;
+ background:rgba(216,180,92,.045);
+ margin:22px 0;
+ overflow:hidden;
+}
+
+.referral-heading{
+ width:100%;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ padding:15px;
+ background:none;
+ border:0;
+ color:var(--gold);
  font-weight:bold;
- text-align:center;
- text-decoration:none;
- cursor:pointer
+ cursor:pointer;
+ font-size:13px;
+ text-align:left;
 }
 
-button:disabled{
+.referral-heading span:last-child{
+ transition:.25s;
+}
+
+.referral-heading.open span:last-child{
+ transform:rotate(180deg);
+}
+
+.referral-content{
+ display:none;
+ padding:0 15px 15px;
+}
+
+.referral-content.show{
+ display:block;
+ animation:appear .25s ease;
+}
+
+.referral-info{
+ color:#aaa;
+ font-size:12px;
+ line-height:1.6;
+ margin-bottom:12px;
+}
+
+.referral-success{
+ display:none;
+ padding:12px;
+ margin-bottom:12px;
+ background:#19281d;
+ border:1px solid #477d50;
+ border-radius:9px;
+ color:#a8e6b2;
+ font-size:12px;
+ line-height:1.6;
+}
+
+.invitation-banner{
+ display:none;
+ margin-bottom:20px;
+ padding:13px;
+ border:1px solid #6c9d70;
+ border-radius:10px;
+ background:#19251b;
+ color:#b5e7bc;
+ font-size:12px;
+ line-height:1.6;
+ text-align:center;
+}
+
+.referral-input{
+ text-transform:uppercase;
+ letter-spacing:1px;
+}
+
+.checkbox-row{
+ display:flex;
+ align-items:flex-start;
+ gap:10px;
+ margin:20px 0;
+}
+
+.checkbox-row input{
+ width:17px;
+ height:17px;
+ min-width:17px;
+ margin-top:2px;
+ accent-color:var(--gold);
+}
+
+.checkbox-row label{
+ display:block;
+ color:#aaa;
+ font-size:12px;
+ font-weight:normal;
+ line-height:1.6;
+ margin:0;
+}
+
+.checkbox-row a{
+ color:var(--gold);
+}
+
+.submit-button{
+ width:100%;
+ min-height:51px;
+ border:0;
+ border-radius:10px;
+ background:linear-gradient(110deg,#a77b2d,#e2c477,#b88a38);
+ color:#151515;
+ font-size:14px;
+ font-weight:bold;
+ letter-spacing:1px;
+ cursor:pointer;
+ transition:.25s;
+ box-shadow:0 5px 20px rgba(216,180,92,.12);
+}
+
+.submit-button:hover{
+ transform:translateY(-2px);
+ box-shadow:0 8px 25px rgba(216,180,92,.22);
+}
+
+.submit-button:disabled{
  opacity:.6;
- cursor:not-allowed
+ cursor:not-allowed;
+ transform:none;
 }
 
-a{color:#d5ad58}
+.spinner{
+ display:inline-block;
+ width:15px;
+ height:15px;
+ border:2px solid rgba(0,0,0,.25);
+ border-top-color:#111;
+ border-radius:50%;
+ animation:spin .7s linear infinite;
+ vertical-align:middle;
+ margin-right:8px;
+}
 
-.links{
- text-align:center;
- margin-top:20px;
- color:#bbb
+@keyframes spin{
+ to{transform:rotate(360deg)}
 }
 
 #message{
  text-align:center;
- margin-top:17px;
+ font-size:13px;
  line-height:1.6;
- overflow-wrap:anywhere
+ margin-top:17px;
+ overflow-wrap:anywhere;
+}
+
+.message-error{color:var(--red)}
+.message-success{color:var(--green)}
+.message-normal{color:#aaa}
+
+.footer-links{
+ text-align:center;
+ margin-top:22px;
+ color:#999;
+ font-size:13px;
+ line-height:2.2;
+}
+
+a{
+ color:var(--gold);
+ text-decoration:none;
+}
+
+a:hover{
+ text-decoration:underline;
 }
 
 #success{
  display:none;
  text-align:center;
- line-height:1.6
+ animation:appear .5s ease;
 }
 
-#success h2{color:#d5ad58}
+.success-icon{
+ width:70px;
+ height:70px;
+ margin:0 auto 20px;
+ border-radius:50%;
+ background:#193022;
+ border:1px solid #4c9a65;
+ color:#8ee4a4;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ font-size:35px;
+}
+
+#success h2{
+ color:var(--gold);
+ font-size:25px;
+ margin-bottom:12px;
+}
+
+#success p{
+ color:#bbb;
+ font-size:13px;
+ line-height:1.8;
+ margin:12px 0;
+}
+
+.registered-email{
+ color:white;
+ overflow-wrap:anywhere;
+}
+
+.email-button{
+ display:block;
+ width:100%;
+ padding:15px;
+ margin:22px 0;
+ background:linear-gradient(110deg,#a77b2d,#e2c477);
+ color:#111;
+ border-radius:10px;
+ font-weight:bold;
+ font-size:13px;
+}
 
 .small{
- font-size:13px;
- color:#aaa;
- margin-top:15px
+ font-size:11px!important;
+ color:#888!important;
 }
 
-.referral-info{
- margin-top:8px;
- color:#aaa;
- font-size:12px;
- line-height:1.5
-}
-
-.referral-input{
- text-transform:uppercase;
- letter-spacing:1px
-}
-
-.referral-success{
- display:none;
- margin-top:9px;
- padding:10px;
- border:1px solid #6c9d70;
- border-radius:7px;
- background:#19251b;
- color:#a9e0ae;
- font-size:13px;
- line-height:1.5
+@media(max-width:420px){
+ .card{padding:25px 19px}
+ .brand h1{font-size:21px}
+ .welcome h2{font-size:23px}
 }
 </style>
 </head>
@@ -145,34 +457,86 @@ a{color:#d5ad58}
 
 <div class="container">
 
- <h1>Next Level Grooming Lounge</h1>
- <p class="subtitle">Confidence Starts Here</p>
+<div class="card">
 
- <div id="registration">
+<div id="registration">
 
-  <h2>Create Your Account</h2>
+ <div class="brand">
 
-  <form id="registerForm">
+  <div class="brand-icon">✂</div>
 
-   <label for="fullName">Full name</label>
-   <input
-    id="fullName"
-    type="text"
-    required
-    autocomplete="name"
-    placeholder="Your full name"
-   >
+  <h1>NEXT LEVEL</h1>
 
-   <label for="phone">Phone number</label>
+  <p>GROOMING LOUNGE</p>
+
+ </div>
+
+ <div class="welcome">
+
+  <h2>Join the family.</h2>
+
+  <p>
+   Create your account and unlock your Next Level
+   membership experience.
+  </p>
+
+ </div>
+
+ <div id="invitationBanner" class="invitation-banner">
+  <strong>You've been invited!</strong><br>
+  Your friend's referral code has been added to your registration.
+ </div>
+
+ <form id="registerForm" novalidate>
+
+  <div class="field">
+
+   <label for="fullName">
+    Full name
+    <span id="nameStatus" class="field-status"></span>
+   </label>
+
+   <div class="field-input">
+    <input
+     id="fullName"
+     type="text"
+     required
+     autocomplete="name"
+     placeholder="Enter your first name and surname"
+    >
+   </div>
+
+  </div>
+
+  <div class="field">
+
+   <label for="phone">
+    Phone number
+    <span id="phoneStatus" class="field-status"></span>
+   </label>
+
    <input
     id="phone"
     type="tel"
     required
     autocomplete="tel"
+    inputmode="tel"
     placeholder="e.g. 0712345678"
    >
 
-   <label for="email">Email address</label>
+   <p class="phone-hint">
+    Use your active South African mobile number.
+   </p>
+
+  </div>
+
+  <div class="field">
+
+   <label for="email">
+    Email address
+    <span id="emailStatus" class="field-status"></span>
+   </label>
+
    <input
     id="email"
     type="email"
@@ -181,98 +545,188 @@ a{color:#d5ad58}
     placeholder="you@example.com"
    >
 
-   <label for="password">Password</label>
-   <input
-    id="password"
-    type="password"
-    required
-    minlength="8"
-    autocomplete="new-password"
-    placeholder="At least 8 characters"
-   >
+  </div>
 
-   <label for="referralCode">
-    Referral code (Optional)
+  <div class="field">
+
+   <label for="password">
+    Create password
+    <span id="passwordStatus" class="field-status"></span>
    </label>
 
-   <input
-    id="referralCode"
-    type="text"
-    class="referral-input"
-    autocomplete="off"
-    maxlength="30"
-    placeholder="e.g. NLREF-XXXXXXXXXX"
-   >
+   <div class="field-input">
 
-   <div id="referralSuccess" class="referral-success">
-    <strong>Invitation link detected!</strong><br>
-    Your friend's referral code has been added automatically.
+    <input
+     id="password"
+     class="password-input"
+     type="password"
+     required
+     minlength="8"
+     autocomplete="new-password"
+     placeholder="At least 8 characters"
+    >
+
+    <button
+     type="button"
+     class="toggle-password"
+     id="togglePassword"
+     aria-label="Show password"
+    >◉</button>
+
    </div>
 
-   <p class="referral-info">
-    Were you invited by an existing member?
-    Enter their referral code here.
+   <div class="password-meter">
+    <span id="meter1"></span>
+    <span id="meter2"></span>
+    <span id="meter3"></span>
+    <span id="meter4"></span>
+   </div>
+
+   <p id="passwordHint" class="password-hint">
+    Use at least 8 characters.
    </p>
 
-   <button id="registerButton" type="submit">
-    CREATE ACCOUNT
+  </div>
+
+  <div class="referral-box">
+
+   <button
+    type="button"
+    class="referral-heading"
+    id="referralToggle"
+    aria-expanded="false"
+   >
+
+    <span>🎁 Have a referral code?</span>
+
+    <span>⌄</span>
+
    </button>
 
-  </form>
+   <div class="referral-content" id="referralContent">
 
-  <div id="message" role="status" aria-live="polite"></div>
+    <div id="referralSuccess" class="referral-success">
+     <strong>Invitation code detected!</strong><br>
+     Your friend's referral code has been added automatically.
+    </div>
 
- </div>
+    <p class="referral-info">
+     If an existing member invited you, enter their
+     referral code below.
+    </p>
 
- <div id="success">
+    <input
+     id="referralCode"
+     class="referral-input"
+     type="text"
+     autocomplete="off"
+     maxlength="30"
+     placeholder="NLREF-XXXXXXXXXX"
+    >
 
-  <h2>Account Created!</h2>
+   </div>
 
-  <p>Your registration was successful.</p>
+  </div>
 
-  <p>We've sent a confirmation email to:</p>
+  <div class="checkbox-row">
 
-  <strong id="registeredEmail"></strong>
+   <input
+    type="checkbox"
+    id="agree"
+    required
+   >
 
-  <p>Please open the email and tap the confirmation link.</p>
+   <label for="agree">
+    I confirm that the information I provided is correct
+    and agree to the terms and privacy policy of
+    Next Level Grooming Lounge.
+   </label>
 
-  <a
-   class="button"
-   href="https://mail.google.com/"
-   target="_blank"
-   rel="noopener"
+  </div>
+
+  <button
+   id="registerButton"
+   class="submit-button"
+   type="submit"
   >
-   OPEN MY EMAIL
-  </a>
+   CREATE MY ACCOUNT
+  </button>
 
-  <p class="small">
-   If you use another email provider, open its app
-   and check your inbox or spam folder.
-  </p>
+ </form>
 
-  <p>
-   After confirming your email, log in to complete
-   your membership profile.
-  </p>
+ <div id="message" role="status" aria-live="polite"></div>
 
-  <a href="login.html">Go to Login</a>
+ <div class="footer-links">
 
- </div>
-
- <div class="links">
-
-  Already have an account?
+  Already part of the family?
   <a href="login.html">Log in</a>
 
-  <br><br>
+  <br>
 
-  <a href="index.html">Back to Home</a>
+  <a href="index.html">← Back to home</a>
 
  </div>
 
 </div>
 
+
+<!-- SUCCESS SCREEN -->
+
+<div id="success">
+
+ <div class="success-icon">✓</div>
+
+ <h2>Welcome to the family!</h2>
+
+ <p>
+  Your account has been created successfully.
+ </p>
+
+ <p>
+  We've sent a confirmation email to:
+ </p>
+
+ <strong id="registeredEmail" class="registered-email"></strong>
+
+ <p>
+  Please open your email and tap the confirmation
+  link to activate your account.
+ </p>
+
+ <a
+  class="email-button"
+  href="https://mail.google.com/"
+  target="_blank"
+  rel="noopener"
+ >
+  OPEN MY EMAIL
+ </a>
+
+ <p class="small">
+  If you use another email provider, open its app
+  and check your inbox or spam folder.
+ </p>
+
+ <p>
+  Once your email is confirmed, log in to complete
+  your membership profile.
+ </p>
+
+ <a href="login.html">CONTINUE TO LOGIN →</a>
+
+</div>
+
+</div>
+
+</div>
+
+
 <script>
+
+// =====================================
+// SUPABASE CONNECTION
+// =====================================
+
 const SUPABASE_URL =
  "https://teimbezoinfqlrxczafj.supabase.co";
 
@@ -284,33 +738,97 @@ const supabaseClient = window.supabase.createClient(
  SUPABASE_KEY
 );
 
+
+// =====================================
+// ELEMENTS
+// =====================================
+
 const form = document.getElementById("registerForm");
-const message = document.getElementById("message");
+
 const button = document.getElementById("registerButton");
+
+const message = document.getElementById("message");
+
 const referralInput = document.getElementById("referralCode");
-const referralSuccess = document.getElementById("referralSuccess");
+
+const referralContent = document.getElementById("referralContent");
+
+const referralToggle = document.getElementById("referralToggle");
+
+const passwordInput = document.getElementById("password");
 
 
 // =====================================
-// AUTOMATIC REFERRAL LINK DETECTION
+// MESSAGE DISPLAY
 // =====================================
 
-const urlParams = new URLSearchParams(window.location.search);
+function showMessage(text,type="normal"){
+
+ message.textContent = text;
+
+ message.className = "message-" + type;
+
+}
+
+
+// =====================================
+// REFERRAL SECTION
+// =====================================
+
+referralToggle.addEventListener("click",function(){
+
+ const isOpen =
+  referralContent.classList.toggle("show");
+
+ referralToggle.classList.toggle("open",isOpen);
+
+ referralToggle.setAttribute(
+  "aria-expanded",
+  String(isOpen)
+ );
+
+});
+
+
+// =====================================
+// AUTOMATIC REFERRAL DETECTION
+// =====================================
+
+const urlParams = new URLSearchParams(
+ window.location.search
+);
 
 const referralFromLink = urlParams.get("ref");
+
+let originalReferralCode = "";
 
 if(referralFromLink){
 
  const cleanReferralCode = referralFromLink
   .trim()
   .toUpperCase()
-  .replace(/\s/g, "");
+  .replace(/\s/g,"");
 
- if(cleanReferralCode.length > 0 && cleanReferralCode.length <= 30){
+ if(
+  cleanReferralCode.length > 0 &&
+  cleanReferralCode.length <= 30
+ ){
+
+  originalReferralCode = cleanReferralCode;
 
   referralInput.value = cleanReferralCode;
 
-  referralSuccess.style.display = "block";
+  referralContent.classList.add("show");
+
+  referralToggle.classList.add("open");
+
+  referralToggle.setAttribute("aria-expanded","true");
+
+  document.getElementById("referralSuccess")
+   .style.display = "block";
+
+  document.getElementById("invitationBanner")
+   .style.display = "block";
 
  }
 
@@ -318,31 +836,202 @@ if(referralFromLink){
 
 
 // =====================================
-// FORMAT MANUALLY ENTERED REFERRAL CODE
+// REFERRAL INPUT FORMATTING
 // =====================================
 
-referralInput.addEventListener("input", function(){
+referralInput.addEventListener("input",function(){
 
  this.value = this.value
   .toUpperCase()
-  .replace(/\s/g, "");
+  .replace(/\s/g,"");
 
- // Hide the invitation message if the user changes
- // the automatically inserted code.
- if(this.value !== referralFromLink?.trim().toUpperCase()){
-  referralSuccess.style.display = "none";
+ if(this.value !== originalReferralCode){
+
+  document.getElementById("referralSuccess")
+   .style.display = "none";
+
  }
 
 });
 
 
 // =====================================
-// ACCOUNT REGISTRATION
+// PASSWORD VISIBILITY
 // =====================================
 
-form.addEventListener("submit", async function(event){
+document.getElementById("togglePassword")
+ .addEventListener("click",function(){
+
+  const visible = passwordInput.type === "password";
+
+  passwordInput.type = visible ? "text" : "password";
+
+  this.textContent = visible ? "◎" : "◉";
+
+  this.setAttribute(
+   "aria-label",
+   visible ? "Hide password" : "Show password"
+  );
+
+ });
+
+
+// =====================================
+// PASSWORD STRENGTH
+// =====================================
+
+function checkPasswordStrength(){
+
+ const value = passwordInput.value;
+
+ let score = 0;
+
+ if(value.length >= 8) score++;
+
+ if(/[A-Z]/.test(value)) score++;
+
+ if(/[0-9]/.test(value)) score++;
+
+ if(/[^A-Za-z0-9]/.test(value)) score++;
+
+ const meters = [
+  document.getElementById("meter1"),
+  document.getElementById("meter2"),
+  document.getElementById("meter3"),
+  document.getElementById("meter4")
+ ];
+
+ const colors = [
+  "#e05b5b",
+  "#e0a34f",
+  "#d8c15c",
+  "#69c58a"
+ ];
+
+ meters.forEach((meter,index)=>{
+
+  meter.style.background =
+   index < score ? colors[score-1] : "#383838";
+
+ });
+
+ const hint = document.getElementById("passwordHint");
+
+ const messages = [
+  "Use at least 8 characters.",
+  "Weak password.",
+  "Fair password.",
+  "Good password.",
+  "Strong password."
+ ];
+
+ hint.textContent = messages[score];
+
+ hint.style.color =
+  score >= 3 ? "#69c58a" : "#aaa";
+
+ updateFieldStatus(
+  "passwordStatus",
+  "password",
+  value.length >= 8
+ );
+
+}
+
+passwordInput.addEventListener(
+ "input",
+ checkPasswordStrength
+);
+
+
+// =====================================
+// LIVE FIELD VALIDATION
+// =====================================
+
+function updateFieldStatus(statusId,inputId,valid){
+
+ const input = document.getElementById(inputId);
+
+ const status = document.getElementById(statusId);
+
+ if(!input.value.trim()){
+
+  input.classList.remove("valid","invalid");
+
+  status.textContent = "";
+
+  return;
+
+ }
+
+ input.classList.toggle("valid",valid);
+
+ input.classList.toggle("invalid",!valid);
+
+ status.textContent = valid ? "✓" : "×";
+
+ status.style.color = valid ? "#69c58a" : "#ff7777";
+
+}
+
+
+document.getElementById("fullName")
+ .addEventListener("input",function(){
+
+  const words = this.value.trim()
+   .split(/\s+/)
+   .filter(Boolean);
+
+  updateFieldStatus(
+   "nameStatus",
+   "fullName",
+   words.length >= 2
+  );
+
+ });
+
+
+document.getElementById("phone")
+ .addEventListener("input",function(){
+
+  const digits = this.value.replace(/\D/g,"");
+
+  const valid =
+   /^(?:0[6-8][0-9]{8}|27[6-8][0-9]{8})$/.test(digits);
+
+  updateFieldStatus(
+   "phoneStatus",
+   "phone",
+   valid
+  );
+
+ });
+
+
+document.getElementById("email")
+ .addEventListener("input",function(){
+
+  const valid =
+   /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value.trim());
+
+  updateFieldStatus(
+   "emailStatus",
+   "email",
+   valid
+  );
+
+ });
+
+
+// =====================================
+// REGISTRATION
+// =====================================
+
+form.addEventListener("submit",async function(event){
 
  event.preventDefault();
+
+ showMessage("");
 
  const fullName =
   document.getElementById("fullName").value.trim();
@@ -354,100 +1043,194 @@ form.addEventListener("submit", async function(event){
   document.getElementById("email").value.trim();
 
  const password =
-  document.getElementById("password").value;
+  passwordInput.value;
 
  const referralCode =
   referralInput.value.trim().toUpperCase();
 
- if(password.length < 8){
+ const agreed =
+  document.getElementById("agree").checked;
 
-  message.textContent =
-   "Password must have at least 8 characters.";
 
-  return;
-
- }
+ // Validate full name
 
  if(fullName.split(/\s+/).filter(Boolean).length < 2){
 
-  message.textContent =
-   "Please enter your first name and surname.";
+  showMessage(
+   "Please enter your first name and surname.",
+   "error"
+  );
 
   return;
 
  }
 
- button.disabled = true;
- button.textContent = "CREATING YOUR ACCOUNT...";
 
- message.textContent =
-  "Please wait. Do not close this page.";
+ // Validate South African phone number
+
+ const phoneDigits = phone.replace(/\D/g,"");
+
+ if(
+  !/^(?:0[6-8][0-9]{8}|27[6-8][0-9]{8})$/.test(phoneDigits)
+ ){
+
+  showMessage(
+   "Please enter a valid South African mobile number.",
+   "error"
+  );
+
+  return;
+
+ }
+
+
+ // Validate email
+
+ if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+
+  showMessage(
+   "Please enter a valid email address.",
+   "error"
+  );
+
+  return;
+
+ }
+
+
+ // Validate password
+
+ if(password.length < 8){
+
+  showMessage(
+   "Your password must contain at least 8 characters.",
+   "error"
+  );
+
+  return;
+
+ }
+
+
+ // Validate terms checkbox
+
+ if(!agreed){
+
+  showMessage(
+   "Please confirm that your information is correct and agree to the terms.",
+   "error"
+  );
+
+  return;
+
+ }
+
+
+ // Prevent repeated submissions
+
+ button.disabled = true;
+
+ button.innerHTML =
+  '<span class="spinner"></span> CREATING ACCOUNT...';
+
+ showMessage(
+  "Please wait while we securely create your account.",
+  "normal"
+ );
+
 
  try{
 
-  // Store the referral code in Supabase user metadata.
+  // Prepare customer information
+
   const metadata = {
-   full_name: fullName,
-   phone: phone
+
+   full_name:fullName,
+
+   phone:phone
+
   };
 
+
+  // Attach referral code when supplied
+
   if(referralCode){
+
    metadata.referral_code = referralCode;
+
   }
 
-  const {data,error} = await supabaseClient.auth.signUp({
 
-   email: email,
-   password: password,
+  // Supabase registration
 
-   options:{
+  const {data,error} =
+   await supabaseClient.auth.signUp({
 
-    data: metadata,
+    email:email,
 
-    emailRedirectTo:
-     "https://mrmbuli.github.io/Barbershop/login.html"
+    password:password,
 
-   }
+    options:{
 
-  });
+     data:metadata,
+
+     emailRedirectTo:
+      "https://mrmbuli.github.io/Barbershop/login.html"
+
+    }
+
+   });
+
 
   if(error) throw error;
 
+
+  // If email confirmation is disabled
+  // and a session is immediately created
+
   if(data.session){
 
-   message.textContent =
-    "Account created successfully. Taking you to login...";
+   showMessage(
+    "Account created successfully. Redirecting...",
+    "success"
+   );
 
-   setTimeout(function(){
-
-    window.location.href = "login.html";
-
-   },1500);
+   window.location.href = "login.html";
 
    return;
 
   }
 
-  document.getElementById("registeredEmail").textContent =
-   email;
 
-  document.getElementById("registration").style.display =
-   "none";
+  // Show confirmation screen
 
-  document.getElementById("success").style.display =
-   "block";
+  document.getElementById("registeredEmail")
+   .textContent = email;
+
+  document.getElementById("registration")
+   .style.display = "none";
+
+  document.getElementById("success")
+   .style.display = "block";
+
 
  }catch(error){
 
-  message.textContent =
-   error.message || "Registration failed. Please try again.";
+  console.error("Registration error:",error);
+
+  showMessage(
+   error.message || "Registration failed. Please try again.",
+   "error"
+  );
 
   button.disabled = false;
-  button.textContent = "CREATE ACCOUNT";
+
+  button.textContent = "CREATE MY ACCOUNT";
 
  }
 
 });
+
 </script>
 
 </body>
