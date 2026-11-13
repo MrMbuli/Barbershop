@@ -1,110 +1,265 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101010">
 <title>Create Account | Next Level Grooming Lounge</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 *{box-sizing:border-box}
+
 body{
- margin:0;min-height:100vh;display:flex;
- align-items:center;justify-content:center;padding:20px;
- background:#101010;color:#fff;font-family:Arial,sans-serif
+ margin:0;
+ min-height:100vh;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:20px;
+ background:#101010;
+ color:#fff;
+ font-family:Arial,sans-serif
 }
+
 .container{
- width:100%;max-width:430px;padding:30px;
- background:#1b1b1b;border:1px solid #b58b36;
+ width:100%;
+ max-width:430px;
+ padding:30px;
+ background:#1b1b1b;
+ border:1px solid #b58b36;
  border-radius:14px
 }
-h1{text-align:center;color:#d5ad58;font-size:25px}
-.subtitle{text-align:center;color:#bbb;margin-bottom:25px}
-label{display:block;margin:14px 0 7px}
+
+h1{
+ text-align:center;
+ color:#d5ad58;
+ font-size:25px
+}
+
+.subtitle{
+ text-align:center;
+ color:#bbb;
+ margin-bottom:25px
+}
+
+label{
+ display:block;
+ margin:14px 0 7px;
+ font-size:14px
+}
+
 input{
- width:100%;padding:13px;border:1px solid #555;
- border-radius:7px;background:#292929;color:white;font-size:16px
+ width:100%;
+ padding:13px;
+ border:1px solid #555;
+ border-radius:7px;
+ background:#292929;
+ color:white;
+ font-size:16px
 }
+
+input:focus{
+ outline:none;
+ border-color:#d5ad58
+}
+
 button,.button{
- display:block;width:100%;padding:14px;margin-top:20px;
- background:#c49a45;color:#111;border:0;border-radius:7px;
- font-size:16px;font-weight:bold;text-align:center;
- text-decoration:none;cursor:pointer
+ display:block;
+ width:100%;
+ padding:14px;
+ margin-top:20px;
+ background:#c49a45;
+ color:#111;
+ border:0;
+ border-radius:7px;
+ font-size:16px;
+ font-weight:bold;
+ text-align:center;
+ text-decoration:none;
+ cursor:pointer
 }
-button:disabled{opacity:.6}
+
+button:disabled{
+ opacity:.6;
+ cursor:not-allowed
+}
+
 a{color:#d5ad58}
-.links{text-align:center;margin-top:20px;color:#bbb}
-#message{text-align:center;margin-top:17px;line-height:1.6}
-#success{display:none;text-align:center;line-height:1.6}
+
+.links{
+ text-align:center;
+ margin-top:20px;
+ color:#bbb
+}
+
+#message{
+ text-align:center;
+ margin-top:17px;
+ line-height:1.6;
+ overflow-wrap:anywhere
+}
+
+#success{
+ display:none;
+ text-align:center;
+ line-height:1.6
+}
+
 #success h2{color:#d5ad58}
-.small{font-size:13px;color:#aaa;margin-top:15px}
+
+.small{
+ font-size:13px;
+ color:#aaa;
+ margin-top:15px
+}
+
+.referral-info{
+ margin-top:8px;
+ color:#aaa;
+ font-size:12px;
+ line-height:1.5
+}
+
+.referral-input{
+ text-transform:uppercase;
+ letter-spacing:1px
+}
 </style>
 </head>
+
 <body>
+
 <div class="container">
 
  <h1>Next Level Grooming Lounge</h1>
  <p class="subtitle">Confidence Starts Here</p>
 
  <div id="registration">
+
   <h2>Create Your Account</h2>
 
   <form id="registerForm">
+
    <label for="fullName">Full name</label>
-   <input id="fullName" type="text" required
-    autocomplete="name" placeholder="Your full name">
+   <input
+    id="fullName"
+    type="text"
+    required
+    autocomplete="name"
+    placeholder="Your full name"
+   >
 
    <label for="phone">Phone number</label>
-   <input id="phone" type="tel" required
-    autocomplete="tel" placeholder="e.g. 0712345678">
+   <input
+    id="phone"
+    type="tel"
+    required
+    autocomplete="tel"
+    placeholder="e.g. 0712345678"
+   >
 
    <label for="email">Email address</label>
-   <input id="email" type="email" required
-    autocomplete="email" placeholder="you@example.com">
+   <input
+    id="email"
+    type="email"
+    required
+    autocomplete="email"
+    placeholder="you@example.com"
+   >
 
    <label for="password">Password</label>
-   <input id="password" type="password" required
-    minlength="8" autocomplete="new-password"
-    placeholder="At least 8 characters">
+   <input
+    id="password"
+    type="password"
+    required
+    minlength="8"
+    autocomplete="new-password"
+    placeholder="At least 8 characters"
+   >
+
+   <label for="referralCode">
+    Referral code (Optional)
+   </label>
+
+   <input
+    id="referralCode"
+    type="text"
+    class="referral-input"
+    autocomplete="off"
+    maxlength="30"
+    placeholder="e.g. NLREF-XXXXXXXXXX"
+   >
+
+   <p class="referral-info">
+    Were you invited by an existing member?
+    Enter their referral code here.
+   </p>
 
    <button id="registerButton" type="submit">
     CREATE ACCOUNT
    </button>
+
   </form>
-  <div id="message" role="status"></div>
+
+  <div id="message" role="status" aria-live="polite"></div>
+
  </div>
 
  <div id="success">
+
   <h2>Account Created!</h2>
+
   <p>Your registration was successful.</p>
+
   <p>We've sent a confirmation email to:</p>
+
   <strong id="registeredEmail"></strong>
+
   <p>Please open the email and tap the confirmation link.</p>
 
-  <a class="button"
+  <a
+   class="button"
    href="https://mail.google.com/mail/u/0/#inbox"
-   target="_blank" rel="noopener">
+   target="_blank"
+   rel="noopener"
+  >
    OPEN MY EMAIL
   </a>
 
   <p class="small">
-   If you use another email provider, open its app and check
-   your inbox or spam folder.
+   If you use another email provider, open its app
+   and check your inbox or spam folder.
   </p>
-  <p>After confirming, you'll be redirected to the login page.</p>
+
+  <p>
+   After confirming your email, log in to complete
+   your membership profile.
+  </p>
+
+  <a href="login.html">Go to Login</a>
+
  </div>
 
  <div class="links">
+
   Already have an account?
   <a href="login.html">Log in</a>
+
   <br><br>
+
   <a href="index.html">Back to Home</a>
+
  </div>
+
 </div>
 
 <script>
-const SUPABASE_URL = "https://teimbezoinfqlrxczafj.supabase.co";
-const SUPABASE_KEY = "sb_publishable_3lJOm65rVFwElFqLN-Gxzw_LdYacHZP";
+const SUPABASE_URL =
+ "https://teimbezoinfqlrxczafj.supabase.co";
+
+const SUPABASE_KEY =
+ "sb_publishable_3lJOm65rVFwElFqLN-Gxzw_LdYacHZP";
 
 const supabaseClient = window.supabase.createClient(
  SUPABASE_URL,
@@ -114,58 +269,115 @@ const supabaseClient = window.supabase.createClient(
 const form = document.getElementById("registerForm");
 const message = document.getElementById("message");
 const button = document.getElementById("registerButton");
+const referralInput = document.getElementById("referralCode");
+
+
+// Automatically format referral codes.
+referralInput.addEventListener("input", function(){
+ this.value = this.value
+  .toUpperCase()
+  .replace(/\s/g, "");
+});
+
 
 form.addEventListener("submit", async function(event){
+
  event.preventDefault();
 
- const fullName = document.getElementById("fullName").value.trim();
- const phone = document.getElementById("phone").value.trim();
- const email = document.getElementById("email").value.trim();
- const password = document.getElementById("password").value;
+ const fullName =
+  document.getElementById("fullName").value.trim();
+
+ const phone =
+  document.getElementById("phone").value.trim();
+
+ const email =
+  document.getElementById("email").value.trim();
+
+ const password =
+  document.getElementById("password").value;
+
+ const referralCode =
+  referralInput.value.trim().toUpperCase();
 
  if(password.length < 8){
-  message.textContent = "Password must have at least 8 characters.";
+  message.textContent =
+   "Password must have at least 8 characters.";
+  return;
+ }
+
+ if(fullName.split(/\s+/).filter(Boolean).length < 2){
+  message.textContent =
+   "Please enter your first name and surname.";
   return;
  }
 
  button.disabled = true;
  button.textContent = "CREATING YOUR ACCOUNT...";
- message.textContent = "Please wait. Do not close this page.";
+
+ message.textContent =
+  "Please wait. Do not close this page.";
 
  try{
+
+  const metadata = {
+   full_name: fullName,
+   phone: phone
+  };
+
+  // Only include referral metadata when supplied.
+  if(referralCode){
+   metadata.referral_code = referralCode;
+  }
+
   const {data,error} = await supabaseClient.auth.signUp({
+
    email,
    password,
+
    options:{
-    data:{
-     full_name:fullName,
-     phone:phone
-    },
+    data:metadata,
+
     emailRedirectTo:
      "https://mrmbuli.github.io/Barbershop/login.html"
    }
+
   });
 
   if(error) throw error;
 
   if(data.session){
-   message.textContent = "Account created. Taking you to login...";
+
+   message.textContent =
+    "Account created successfully. Taking you to login...";
+
    setTimeout(function(){
     window.location.href = "login.html";
    },1500);
+
    return;
   }
 
-  document.getElementById("registeredEmail").textContent = email;
-  document.getElementById("registration").style.display = "none";
-  document.getElementById("success").style.display = "block";
+  document.getElementById("registeredEmail").textContent =
+   email;
+
+  document.getElementById("registration").style.display =
+   "none";
+
+  document.getElementById("success").style.display =
+   "block";
 
  }catch(error){
-  message.textContent = error.message;
+
+  message.textContent =
+   error.message || "Registration failed. Please try again.";
+
   button.disabled = false;
   button.textContent = "CREATE ACCOUNT";
+
  }
+
 });
 </script>
+
 </body>
 </html>
