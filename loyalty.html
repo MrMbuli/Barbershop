@@ -31,10 +31,7 @@ body{
  min-height:100vh;
 }
 
-button{
- font:inherit;
- cursor:pointer;
-}
+button{font:inherit;cursor:pointer}
 
 .topbar{
  display:flex;
@@ -80,10 +77,7 @@ button{
  text-align:center;
 }
 
-.crown{
- font-size:38px;
- margin-bottom:12px;
-}
+.crown{font-size:38px;margin-bottom:12px}
 
 .eyebrow{
  color:var(--gold);
@@ -105,10 +99,7 @@ button{
  font-size:14px;
 }
 
-.section-title{
- font-size:19px;
- margin:30px 0 7px;
-}
+.section-title{font-size:19px;margin:30px 0 7px}
 
 .section-subtitle{
  color:var(--muted);
@@ -133,10 +124,7 @@ button{
  margin-bottom:12px;
 }
 
-.progress-number{
- color:var(--gold);
- font-weight:bold;
-}
+.progress-number{color:var(--gold);font-weight:bold}
 
 .progress-track{
  height:9px;
@@ -161,10 +149,7 @@ button{
  border-bottom:1px solid #303030;
 }
 
-.requirement:last-child{
- border-bottom:0;
- padding-bottom:0;
-}
+.requirement:last-child{border-bottom:0;padding-bottom:0}
 
 .status-icon{
  width:30px;
@@ -183,9 +168,7 @@ button{
  color:var(--green);
 }
 
-.requirement-info{
- flex:1;
-}
+.requirement-info{flex:1}
 
 .requirement-info strong{
  display:block;
@@ -206,9 +189,7 @@ button{
  letter-spacing:1px;
 }
 
-.status-label.complete{
- color:var(--green);
-}
+.status-label.complete{color:var(--green)}
 
 .action-btn{
  display:block;
@@ -232,59 +213,6 @@ button{
  margin-top:10px;
 }
 
-.member-card{
- position:relative;
- overflow:hidden;
- padding:25px;
- border-radius:20px;
- background:linear-gradient(130deg,#3a2d19,#171717 70%);
- border:1px solid #8c6b36;
-}
-
-.member-card:after{
- content:"";
- position:absolute;
- width:180px;
- height:180px;
- border:1px solid rgba(216,180,103,.2);
- border-radius:50%;
- right:-60px;
- top:-65px;
- box-shadow:0 0 0 20px rgba(216,180,103,.035),
-            0 0 0 40px rgba(216,180,103,.025);
-}
-
-.member-card .brand{
- position:relative;
- z-index:1;
-}
-
-.member-name{
- margin-top:35px;
- font-size:21px;
- font-weight:bold;
- position:relative;
- z-index:1;
-}
-
-.member-status{
- display:inline-block;
- margin-top:12px;
- color:var(--gold-light);
- font-size:11px;
- letter-spacing:1.5px;
- position:relative;
- z-index:1;
-}
-
-.member-number{
- margin-top:25px;
- color:#c5b18c;
- font-size:11px;
- position:relative;
- z-index:1;
-}
-
 .notice{
  padding:15px;
  border-radius:12px;
@@ -300,6 +228,324 @@ button{
  background:rgba(84,199,139,.08);
  border-color:rgba(84,199,139,.3);
  color:#a8e3c4;
+}
+
+/* MEMBERSHIP CARD PREVIEW */
+
+.membership-entry{
+ margin-top:28px;
+ padding:20px;
+ background:#191919;
+ border:1px solid #393027;
+ border-radius:18px;
+}
+
+.membership-entry h3{
+ margin:0 0 7px;
+ font-size:16px;
+}
+
+.membership-entry p{
+ color:#999;
+ font-size:12px;
+ line-height:1.5;
+ margin:0 0 15px;
+}
+
+.membership-preview{
+ width:100%;
+ max-width:360px;
+ min-height:190px;
+ margin:auto;
+ padding:20px;
+ border:1px solid #92713b;
+ border-radius:14px;
+ background:
+ radial-gradient(circle at 90% 10%,rgba(216,180,103,.2),transparent 40%),
+ linear-gradient(130deg,#392c19,#171717 72%);
+ color:white;
+ text-align:left;
+ position:relative;
+ overflow:hidden;
+ display:flex;
+ flex-direction:column;
+ justify-content:space-between;
+ transition:transform .25s,border-color .25s;
+}
+
+.membership-preview:active{transform:scale(.98)}
+.membership-preview:hover{border-color:var(--gold-light)}
+
+.preview-top{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ position:relative;
+ z-index:1;
+}
+
+.preview-brand{
+ font-size:10px;
+ line-height:1.5;
+ font-weight:bold;
+ letter-spacing:1.5px;
+ color:var(--gold-light);
+}
+
+.preview-star{font-size:25px;color:var(--gold)}
+
+.preview-title{
+ font-size:20px;
+ font-weight:bold;
+ letter-spacing:1px;
+ color:var(--gold-light);
+ position:relative;
+ z-index:1;
+}
+
+.preview-number{
+ font-size:10px;
+ letter-spacing:1.2px;
+ color:#d4c19b;
+ position:relative;
+ z-index:1;
+}
+
+.preview-hint{
+ text-align:center;
+ color:#aaa;
+ font-size:11px;
+ margin-top:12px;
+}
+
+/* FULL CARD POPUP */
+
+.card-modal{
+ position:fixed;
+ inset:0;
+ z-index:1000;
+ background:rgba(0,0,0,.88);
+ backdrop-filter:blur(9px);
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:18px;
+}
+
+.modal-content{
+ width:100%;
+ max-width:440px;
+ position:relative;
+}
+
+.modal-heading{
+ text-align:center;
+ color:var(--gold);
+ letter-spacing:2px;
+ font-size:12px;
+ font-weight:bold;
+ margin-bottom:22px;
+}
+
+.modal-close{
+ position:absolute;
+ right:0;
+ top:-43px;
+ border:1px solid #444;
+ background:#242424;
+ color:white;
+ width:35px;
+ height:35px;
+ border-radius:50%;
+ font-size:20px;
+}
+
+.flip-scene{
+ width:100%;
+ perspective:1200px;
+ cursor:pointer;
+}
+
+.flip-inner{
+ width:100%;
+ aspect-ratio:1.586 / 1;
+ position:relative;
+ transform-style:preserve-3d;
+ transition:transform .75s cubic-bezier(.2,.7,.2,1);
+}
+
+.flip-inner.flipped{transform:rotateY(180deg)}
+
+.virtual-card-face{
+ position:absolute;
+ inset:0;
+ overflow:hidden;
+ border-radius:18px;
+ border:1px solid #a17d40;
+ backface-visibility:hidden;
+ -webkit-backface-visibility:hidden;
+ padding:22px;
+ background:
+ radial-gradient(circle at 90% 5%,rgba(216,180,103,.2),transparent 40%),
+ linear-gradient(130deg,#392c19,#171717 72%);
+ box-shadow:0 20px 60px rgba(0,0,0,.55);
+ display:flex;
+ flex-direction:column;
+ justify-content:space-between;
+}
+
+.virtual-card-face:after{
+ content:"";
+ position:absolute;
+ width:190px;
+ height:190px;
+ border:1px solid rgba(216,180,103,.17);
+ border-radius:50%;
+ right:-85px;
+ bottom:-110px;
+ box-shadow:0 0 0 18px rgba(216,180,103,.035),
+            0 0 0 38px rgba(216,180,103,.025);
+ pointer-events:none;
+}
+
+.card-back{transform:rotateY(180deg)}
+
+.card-face-top{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ position:relative;
+ z-index:1;
+}
+
+.card-brand{
+ color:var(--gold-light);
+ font-weight:bold;
+ font-size:11px;
+ line-height:1.6;
+ letter-spacing:1.5px;
+}
+
+.card-crown{font-size:26px;color:var(--gold)}
+
+.member-details{
+ display:flex;
+ align-items:center;
+ gap:13px;
+ position:relative;
+ z-index:1;
+}
+
+.member-photo{
+ width:58px;
+ height:58px;
+ flex-shrink:0;
+ border-radius:50%;
+ border:2px solid var(--gold);
+ background:#30291e;
+ object-fit:cover;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ color:var(--gold-light);
+ font-size:23px;
+ font-weight:bold;
+ overflow:hidden;
+}
+
+.member-photo img{
+ width:100%;
+ height:100%;
+ object-fit:cover;
+ display:none;
+}
+
+.card-member-name{
+ color:white;
+ font-size:19px;
+ font-weight:bold;
+ overflow-wrap:anywhere;
+}
+
+.card-member-label{
+ color:#c9b58e;
+ font-size:9px;
+ letter-spacing:1.5px;
+ margin-top:5px;
+}
+
+.card-number-label{
+ color:#bca77e;
+ font-size:9px;
+ letter-spacing:1.5px;
+ margin-bottom:5px;
+}
+
+.card-number-value{
+ color:var(--gold-light);
+ font-size:12px;
+ letter-spacing:1px;
+ overflow-wrap:anywhere;
+}
+
+.card-bottom{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ position:relative;
+ z-index:1;
+}
+
+.card-bottom small{
+ color:#bca77e;
+ font-size:9px;
+ letter-spacing:1.3px;
+}
+
+.card-back-heading{
+ color:var(--gold-light);
+ font-size:16px;
+ font-weight:bold;
+ letter-spacing:1px;
+ position:relative;
+ z-index:1;
+}
+
+.points-display{
+ position:relative;
+ z-index:1;
+}
+
+.points-display strong{
+ display:block;
+ font-size:30px;
+ color:var(--gold-light);
+ margin-bottom:5px;
+}
+
+.points-display span{
+ color:#c9b58e;
+ font-size:10px;
+ letter-spacing:1.5px;
+}
+
+.back-message{
+ position:relative;
+ z-index:1;
+ background:rgba(0,0,0,.28);
+ border:1px solid rgba(216,180,103,.25);
+ padding:10px;
+ border-radius:9px;
+ color:#d4c19b;
+ font-size:10px;
+ line-height:1.5;
+}
+
+.flip-hint{
+ text-align:center;
+ color:#aaa;
+ font-size:11px;
+ margin-top:18px;
 }
 
 .loading{
@@ -318,9 +564,7 @@ button{
  margin:0 auto 15px;
 }
 
-@keyframes spin{
- to{transform:rotate(360deg)}
-}
+@keyframes spin{to{transform:rotate(360deg)}}
 
 .error{
  background:#301d1d;
@@ -345,6 +589,13 @@ button{
  .container{padding-top:35px}
  .hero{padding:45px 30px}
  .card{padding:25px}
+}
+
+@media(max-width:380px){
+ .virtual-card-face{padding:15px}
+ .card-member-name{font-size:16px}
+ .member-photo{width:48px;height:48px}
+ .points-display strong{font-size:25px}
 }
 </style>
 </head>
@@ -460,13 +711,6 @@ button{
     You've completed all five membership requirements.
    </p>
 
-   <div class="member-card">
-    <div class="brand">NEXT LEVEL GROOMING LOUNGE</div>
-    <div class="member-name" id="memberName">Member</div>
-    <div class="member-status">MEMBERSHIP QUALIFIED</div>
-    <div class="member-number" id="memberEmail"></div>
-   </div>
-
    <div class="notice success-notice">
     <strong>Congratulations!</strong><br>
     Your profile meets all the requirements for the
@@ -480,13 +724,41 @@ button{
     <h2 style="margin:12px 0 8px">Your rewards are coming</h2>
     <p style="color:#aaa;font-size:13px;line-height:1.7;margin:0">
      Your membership qualification is complete.
-     The points balance, reward collection and redemption
-     features will become available once the loyalty
-     programme is activated.
+     Your points balance and reward collection will appear
+     here once the loyalty points system is activated.
     </p>
     <div class="notice">
      Your points will only appear here after they have
      been securely recorded in your account.
+    </div>
+   </section>
+
+   <!-- MEMBERSHIP CARD ENTRY AT BOTTOM -->
+
+   <section class="membership-entry">
+    <h3>My Membership Card</h3>
+    <p>
+     Your personal Next Level digital membership card.
+     Tap below to open your card and view your membership details.
+    </p>
+
+    <button class="membership-preview" onclick="openMembershipCard()">
+     <span class="preview-top">
+      <span class="preview-brand">
+       NEXT LEVEL<br>GROOMING LOUNGE
+      </span>
+      <span class="preview-star">♛</span>
+     </span>
+
+     <span class="preview-title">MY MEMBERSHIP CARD</span>
+
+     <span class="preview-number" id="previewClientNumber">
+      CLIENT NUMBER LOADING...
+     </span>
+    </button>
+
+    <div class="preview-hint">
+     TAP TO OPEN YOUR VIRTUAL MEMBERSHIP CARD
     </div>
    </section>
 
@@ -507,6 +779,107 @@ button{
 
 </main>
 
+<!-- FULL VIRTUAL MEMBERSHIP CARD -->
+
+<div id="membershipModal" class="card-modal hidden"
+     onclick="closeMembershipCard(event)">
+
+ <div class="modal-content">
+
+  <div class="modal-heading">YOUR NEXT LEVEL MEMBERSHIP</div>
+
+  <button class="modal-close" onclick="closeMembershipCard()">×</button>
+
+  <div class="flip-scene" onclick="flipMembershipCard()">
+
+   <div class="flip-inner" id="flipInner">
+
+    <!-- FRONT OF CARD -->
+
+    <div class="virtual-card-face card-front">
+
+     <div class="card-face-top">
+      <div class="card-brand">
+       NEXT LEVEL<br>
+       GROOMING LOUNGE
+      </div>
+      <div class="card-crown">♛</div>
+     </div>
+
+     <div class="member-details">
+
+      <div class="member-photo" id="cardPhotoFallback">
+       <span id="cardInitials">N</span>
+       <img id="cardPhoto" alt="Member profile photo">
+      </div>
+
+      <div style="min-width:0">
+       <div class="card-member-name" id="cardMemberName">
+        Member Name
+       </div>
+       <div class="card-member-label">
+        NEXT LEVEL MEMBER
+       </div>
+      </div>
+
+     </div>
+
+     <div class="card-bottom">
+      <div>
+       <div class="card-number-label">UNIQUE CLIENT NUMBER</div>
+       <div class="card-number-value" id="cardClientNumber">
+        NLG-...
+       </div>
+      </div>
+      <small>CONFIDENCE STARTS HERE</small>
+     </div>
+
+    </div>
+
+    <!-- BACK OF CARD -->
+
+    <div class="virtual-card-face card-back">
+
+     <div class="card-face-top">
+      <div class="card-brand">
+       NEXT LEVEL<br>
+       GROOMING LOUNGE
+      </div>
+      <div class="card-crown">♛</div>
+     </div>
+
+     <div class="card-back-heading">
+      YOUR REWARDS WALLET
+     </div>
+
+     <div class="points-display">
+      <strong id="cardPoints">Not activated</strong>
+      <span>AVAILABLE LOYALTY POINTS</span>
+     </div>
+
+     <div class="back-message" id="cardRewardsMessage">
+      Your rewards wallet is awaiting activation.
+      Your confirmed points and redeemable rewards
+      will appear here once the loyalty system is connected.
+     </div>
+
+     <div class="card-bottom">
+      <small>YOUR MEMBERSHIP • YOUR REWARDS</small>
+      <small>BACK OF CARD</small>
+     </div>
+
+    </div>
+
+   </div>
+  </div>
+
+  <div class="flip-hint">
+   TAP THE CARD TO FLIP IT
+  </div>
+
+ </div>
+</div>
+
 <script>
 const SUPABASE_URL = "https://teimbezoinfqlrxczafj.supabase.co";
 const SUPABASE_KEY = "sb_publishable_3lJOm65rVFwElFqLN-Gxzw_LdYacHZP";
@@ -515,6 +888,8 @@ const supabaseClient = window.supabase.createClient(
  SUPABASE_URL,
  SUPABASE_KEY
 );
+
+const PROFILE_BUCKET = "customer-profile-pictures";
 
 function goBack(){
  window.location.href = "account.html";
@@ -530,20 +905,27 @@ function showError(message){
  const errorScreen = document.getElementById("errorScreen");
  errorScreen.classList.remove("hidden");
 
- errorScreen.innerHTML = `
-  <div class="error">
-   ${message}
-   <button class="secondary-btn" onclick="window.location.href='login.html'">
-    GO TO LOGIN
-   </button>
-   <button class="secondary-btn" onclick="location.reload()">
-    TRY AGAIN
-   </button>
-  </div>
- `;
+ const errorBox = document.createElement("div");
+ errorBox.className = "error";
+ errorBox.textContent = message;
+
+ const loginButton = document.createElement("button");
+ loginButton.className = "secondary-btn";
+ loginButton.textContent = "GO TO LOGIN";
+ loginButton.onclick = () => {
+  window.location.href = "login.html";
+ };
+
+ const retryButton = document.createElement("button");
+ retryButton.className = "secondary-btn";
+ retryButton.textContent = "TRY AGAIN";
+ retryButton.onclick = () => location.reload();
+
+ errorBox.append(loginButton,retryButton);
+ errorScreen.replaceChildren(errorBox);
 }
 
-function setRequirement(key, complete){
+function setRequirement(key,complete){
  const item = document.querySelector(
   '[data-requirement="' + key + '"]'
  );
@@ -559,8 +941,83 @@ function setRequirement(key, complete){
   label.textContent = "Complete";
   label.classList.add("complete");
  }else{
+  icon.textContent = key === "name" ? "1" :
+                     key === "phone" ? "2" :
+                     key === "email" ? "3" :
+                     key === "dob" ? "4" : "5";
+
   icon.classList.remove("complete");
+  label.textContent = "Pending";
   label.classList.remove("complete");
+ }
+}
+
+/* MEMBERSHIP CARD CONTROLS */
+
+function openMembershipCard(){
+ document.getElementById("flipInner").classList.remove("flipped");
+ document.getElementById("membershipModal").classList.remove("hidden");
+ document.body.style.overflow = "hidden";
+}
+
+function closeMembershipCard(event){
+ if(event && event.target !== document.getElementById("membershipModal")){
+  return;
+ }
+
+ document.getElementById("membershipModal").classList.add("hidden");
+ document.body.style.overflow = "";
+}
+
+function flipMembershipCard(){
+ document.getElementById("flipInner").classList.toggle("flipped");
+}
+
+document.addEventListener("keydown",function(event){
+ if(event.key === "Escape"){
+  document.getElementById("membershipModal").classList.add("hidden");
+  document.body.style.overflow = "";
+ }
+});
+
+function getInitials(name){
+ return (name || "Member")
+  .trim()
+  .split(/\s+/)
+  .slice(0,2)
+  .map(part => part.charAt(0).toUpperCase())
+  .join("");
+}
+
+async function loadMemberPhoto(avatarPath){
+ if(!avatarPath) return;
+
+ try{
+  const {data,error} = await supabaseClient
+   .storage
+   .from(PROFILE_BUCKET)
+   .createSignedUrl(avatarPath,3600);
+
+  if(error) throw error;
+
+  if(data && data.signedUrl){
+   const photo = document.getElementById("cardPhoto");
+
+   photo.onload = () => {
+    photo.style.display = "block";
+    document.getElementById("cardInitials").style.display = "none";
+   };
+
+   photo.onerror = () => {
+    photo.style.display = "none";
+    document.getElementById("cardInitials").style.display = "block";
+   };
+
+   photo.src = data.signedUrl;
+  }
+
+ }catch(error){
+  console.warn("Could not load membership photo:",error);
  }
 }
 
@@ -583,7 +1040,7 @@ async function loadLoyaltyPage(){
   const {data:profile,error:profileError} =
    await supabaseClient
     .from("customer_profiles")
-    .select("id, full_name, phone, date_of_birth, avatar_path")
+    .select("id, full_name, phone, date_of_birth, avatar_path, client_number")
     .eq("id",user.id)
     .maybeSingle();
 
@@ -629,11 +1086,29 @@ async function loadLoyaltyPage(){
    document.getElementById("eligibleSection")
     .classList.remove("hidden");
 
-   document.getElementById("memberName").textContent =
+   /* Fill the membership card details */
+
+   const clientNumber = profile.client_number;
+
+   if(!clientNumber){
+    throw new Error(
+     "Your client number has not been created yet. Please run the membership card SQL in Supabase, then refresh this page."
+    );
+   }
+
+   document.getElementById("cardMemberName").textContent =
     fullName || "Next Level Member";
 
-   document.getElementById("memberEmail").textContent =
-    user.email || "";
+   document.getElementById("cardClientNumber").textContent =
+    clientNumber;
+
+   document.getElementById("previewClientNumber").textContent =
+    clientNumber;
+
+   document.getElementById("cardInitials").textContent =
+    getInitials(fullName);
+
+   await loadMemberPhoto(profile.avatar_path);
 
   }else{
 
