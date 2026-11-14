@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,15 +11,9 @@
 <style>
 *{box-sizing:border-box}
 :root{
- --gold:#d8b467;
- --gold-light:#f2d89b;
- --bg:#101010;
- --panel:#191919;
- --panel2:#202020;
- --muted:#999;
- --white:#fff;
- --green:#54c78b;
- --red:#ef7777;
+ --gold:#d8b467;--gold-light:#f2d89b;--bg:#101010;
+ --panel:#191919;--panel2:#202020;--muted:#999;
+ --white:#fff;--green:#54c78b;--red:#ef7777;
 }
 html,body{margin:0;width:100%;max-width:100%;overflow-x:hidden}
 body{background:var(--bg);color:white;font-family:Arial,sans-serif;min-height:100vh}
@@ -142,11 +137,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .points-negative{color:var(--red)}
 
 /* REFERRAL DASHBOARD */
-.referral-card{
- background:linear-gradient(145deg,#211d16,#191919 65%);
- border:1px solid #554329;
- border-radius:17px;padding:20px;margin-top:18px
-}
+.referral-card{background:linear-gradient(145deg,#211d16,#191919 65%);border:1px solid #554329;border-radius:17px;padding:20px;margin-top:18px}
 .referral-heading{display:flex;align-items:center;gap:12px;margin-bottom:8px}
 .referral-symbol{width:43px;height:43px;border-radius:13px;background:#352b1b;color:var(--gold-light);display:grid;place-items:center;font-size:22px;flex-shrink:0}
 .referral-heading h2{font-size:18px;margin:0}
@@ -178,45 +169,32 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .footer{text-align:center;color:#666;font-size:11px;margin-top:35px;line-height:1.8}
 .hidden{display:none!important}
 .inline-message{font-size:12px;line-height:1.5;margin-top:12px;color:#bbb}
-
-@media(min-width:650px){
- .container{padding-top:35px}
- .hero{padding:45px 30px}
- .card{padding:25px}
-}
+@media(min-width:650px){.container{padding-top:35px}.hero{padding:45px 30px}.card{padding:25px}}
 @media(max-width:380px){
- .virtual-card-face{padding:15px}
- .card-member-name{font-size:16px}
- .member-photo{width:48px;height:48px}
- .points-display strong{font-size:25px}
- .reward-item{gap:8px;padding:11px}
- .reward-btn{padding:8px;font-size:10px}
+ .virtual-card-face{padding:15px}.card-member-name{font-size:16px}
+ .member-photo{width:48px;height:48px}.points-display strong{font-size:25px}
+ .reward-item{gap:8px;padding:11px}.reward-btn{padding:8px;font-size:10px}
  .card-bottom small{font-size:7px;letter-spacing:.5px}
- .card-number-value{font-size:11px}
- .referral-stats{gap:6px}
- .referral-stat{padding:11px 5px}
- .referral-stat strong{font-size:19px}
+ .card-number-value{font-size:11px}.referral-stats{gap:6px}
+ .referral-stat{padding:11px 5px}.referral-stat strong{font-size:19px}
  .referral-stat span{font-size:8px}
 }
 </style>
 </head>
 
 <body>
-
 <header class="topbar">
  <div class="brand">NEXT LEVEL<br>GROOMING LOUNGE</div>
  <button class="back-btn" onclick="goBack()">← Back</button>
 </header>
 
 <main class="container">
-
  <div id="loadingScreen" class="loading">
   <div class="spinner"></div>
   Checking your membership...
  </div>
 
  <div id="mainContent" class="hidden">
-
   <section class="hero">
    <div class="crown">♛</div>
    <div class="eyebrow">THE NEXT LEVEL EXPERIENCE</div>
@@ -225,61 +203,30 @@ button:disabled{opacity:.5;cursor:not-allowed}
   </section>
 
   <div id="qualificationSection">
-
    <h2 class="section-title">Unlock your membership</h2>
    <p class="section-subtitle">Complete the five requirements below to qualify for the Next Level loyalty programme.</p>
-
    <section class="card">
     <div class="progress-header">
      <strong>Your progress</strong>
      <span class="progress-number" id="progressText">0 / 5</span>
     </div>
-    <div class="progress-track">
-     <div class="progress-fill" id="progressFill"></div>
-    </div>
-
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
     <div id="requirementsList">
-     <div class="requirement" data-requirement="name">
-      <div class="status-icon">1</div>
-      <div class="requirement-info"><strong>Complete your full name</strong><small>Add your first and last name to your profile.</small></div>
-      <span class="status-label">Pending</span>
-     </div>
-     <div class="requirement" data-requirement="phone">
-      <div class="status-icon">2</div>
-      <div class="requirement-info"><strong>Add your phone number</strong><small>Make sure your contact number is on your profile.</small></div>
-      <span class="status-label">Pending</span>
-     </div>
-     <div class="requirement" data-requirement="email">
-      <div class="status-icon">3</div>
-      <div class="requirement-info"><strong>Confirm your email address</strong><small>Your registered email address must be verified.</small></div>
-      <span class="status-label">Pending</span>
-     </div>
-     <div class="requirement" data-requirement="dob">
-      <div class="status-icon">4</div>
-      <div class="requirement-info"><strong>Add your date of birth</strong><small>Help us celebrate your birthday with you.</small></div>
-      <span class="status-label">Pending</span>
-     </div>
-     <div class="requirement" data-requirement="selfie">
-      <div class="status-icon">5</div>
-      <div class="requirement-info"><strong>Upload your profile selfie</strong><small>Add a profile picture to complete your membership details.</small></div>
-      <span class="status-label">Pending</span>
-     </div>
+     <div class="requirement" data-requirement="name"><div class="status-icon">1</div><div class="requirement-info"><strong>Complete your full name</strong><small>Add your first and last name to your profile.</small></div><span class="status-label">Pending</span></div>
+     <div class="requirement" data-requirement="phone"><div class="status-icon">2</div><div class="requirement-info"><strong>Add your phone number</strong><small>Make sure your contact number is on your profile.</small></div><span class="status-label">Pending</span></div>
+     <div class="requirement" data-requirement="email"><div class="status-icon">3</div><div class="requirement-info"><strong>Confirm your email address</strong><small>Your registered email address must be verified.</small></div><span class="status-label">Pending</span></div>
+     <div class="requirement" data-requirement="dob"><div class="status-icon">4</div><div class="requirement-info"><strong>Add your date of birth</strong><small>Help us celebrate your birthday with you.</small></div><span class="status-label">Pending</span></div>
+     <div class="requirement" data-requirement="selfie"><div class="status-icon">5</div><div class="requirement-info"><strong>Upload your profile selfie</strong><small>Add a profile picture to complete your membership details.</small></div><span class="status-label">Pending</span></div>
     </div>
-
     <button class="action-btn" onclick="goToProfile()">COMPLETE MY PROFILE</button>
     <p style="color:#777;font-size:11px;text-align:center;margin:13px 0 0">Your progress updates when you return to this page.</p>
    </section>
   </div>
 
   <div id="eligibleSection" class="hidden">
-
    <h2 class="section-title">Your membership</h2>
    <p class="section-subtitle">Your Next Level membership is active.</p>
-
-   <div class="notice success-notice">
-    <strong>Welcome to Next Level Rewards!</strong><br>
-    Your membership is activated. Your points are earned when an administrator confirms payment and completes your appointment.
-   </div>
+   <div class="notice success-notice"><strong>Welcome to Next Level Rewards!</strong><br>Your membership is activated. Your points are earned when an administrator confirms payment and completes your appointment.</div>
 
    <section class="card">
     <div style="color:var(--gold);font-size:12px;letter-spacing:2px">YOUR LOYALTY WALLET</div>
@@ -294,10 +241,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
     <h3>My Membership Card</h3>
     <p>Your personal Next Level digital membership card. Tap below to open your card and view your membership details.</p>
     <button class="membership-preview" onclick="openMembershipCard()">
-     <span class="preview-top">
-      <span class="preview-brand">NEXT LEVEL<br>GROOMING LOUNGE</span>
-      <span class="preview-star">♛</span>
-     </span>
+     <span class="preview-top"><span class="preview-brand">NEXT LEVEL<br>GROOMING LOUNGE</span><span class="preview-star">♛</span></span>
      <span class="preview-title">MY MEMBERSHIP CARD</span>
      <span class="preview-number" id="previewClientNumber">NL-MEMBER</span>
     </button>
@@ -307,51 +251,21 @@ button:disabled{opacity:.5;cursor:not-allowed}
    <section class="referral-card">
     <div class="referral-heading">
      <div class="referral-symbol">♧</div>
-     <div>
-      <h2>Refer a Friend</h2>
-      <p>Invite friends and earn loyalty points together.</p>
-     </div>
+     <div><h2>Refer a Friend</h2><p>Invite friends and earn loyalty points together.</p></div>
     </div>
-
-    <p style="color:#bbb;font-size:12px;line-height:1.6;margin:12px 0 0">
-     Share your personal referral code. When someone registers with your code and completes their first paid appointment, you receive <strong style="color:var(--gold-light)">100 bonus points</strong>.
-    </p>
-
+    <p style="color:#bbb;font-size:12px;line-height:1.6;margin:12px 0 0">Share your personal referral code. When someone registers with your code and completes their first paid appointment, you receive <strong style="color:var(--gold-light)">100 bonus points</strong>.</p>
     <div class="referral-code-box">
      <div class="referral-code-label">YOUR PERSONAL REFERRAL CODE</div>
-     <div class="referral-code-row">
-      <div class="referral-code-value" id="referralCode">LOADING...</div>
-      <button class="copy-btn" id="copyReferralButton" onclick="copyReferralCode()">COPY</button>
-     </div>
+     <div class="referral-code-row"><div class="referral-code-value" id="referralCode">LOADING...</div><button class="copy-btn" id="copyReferralButton" onclick="copyReferralCode()">COPY</button></div>
     </div>
-
-    <button class="share-btn" id="shareReferralButton" onclick="shareReferralWhatsApp()">
-     SHARE INVITATION ON WHATSAPP
-    </button>
-
+    <button class="share-btn" id="shareReferralButton" onclick="shareReferralWhatsApp()">SHARE INVITATION ON WHATSAPP</button>
     <div class="referral-message" id="referralMessage" aria-live="polite"></div>
-
     <div class="referral-stats">
-     <div class="referral-stat">
-      <strong id="pendingReferralCount">0</strong>
-      <span>PENDING</span>
-     </div>
-     <div class="referral-stat">
-      <strong id="qualifiedReferralCount">0</strong>
-      <span>SUCCESSFUL</span>
-     </div>
-     <div class="referral-stat">
-      <strong id="referralPointsEarned">0</strong>
-      <span>POINTS EARNED</span>
-     </div>
+     <div class="referral-stat"><strong id="pendingReferralCount">0</strong><span>PENDING</span></div>
+     <div class="referral-stat"><strong id="qualifiedReferralCount">0</strong><span>SUCCESSFUL</span></div>
+     <div class="referral-stat"><strong id="referralPointsEarned">0</strong><span>POINTS EARNED</span></div>
     </div>
-
-    <div class="referral-list">
-     <div class="referral-list-heading">Your referral activity</div>
-     <div id="referralHistory">
-      <div class="referral-empty">Loading your referrals...</div>
-     </div>
-    </div>
+    <div class="referral-list"><div class="referral-list-heading">Your referral activity</div><div id="referralHistory"><div class="referral-empty">Loading your referrals...</div></div></div>
    </section>
 
    <section class="card">
@@ -366,16 +280,10 @@ button:disabled{opacity:.5;cursor:not-allowed}
     <p class="section-subtitle" style="margin-bottom:5px">Your recent reward claims.</p>
     <div id="redemptionHistory"><p style="color:#999;font-size:12px">Loading history...</p></div>
    </section>
-
    <button class="secondary-btn" onclick="goToProfile()">VIEW MY PROFILE</button>
-
   </div>
 
-  <div class="footer">
-   CONFIDENCE STARTS HERE<br>
-   NEXT LEVEL GROOMING LOUNGE
-  </div>
-
+  <div class="footer">CONFIDENCE STARTS HERE<br>NEXT LEVEL GROOMING LOUNGE</div>
  </div>
 
  <div id="errorScreen" class="hidden"></div>
@@ -387,48 +295,21 @@ button:disabled{opacity:.5;cursor:not-allowed}
   <button class="modal-close" onclick="closeMembershipCard()">×</button>
   <div class="flip-scene" onclick="flipMembershipCard()">
    <div class="flip-inner" id="flipInner">
-
     <div class="virtual-card-face card-front">
-     <div class="card-face-top">
-      <div class="card-brand">NEXT LEVEL<br>GROOMING LOUNGE</div>
-      <div class="card-crown">♛</div>
-     </div>
+     <div class="card-face-top"><div class="card-brand">NEXT LEVEL<br>GROOMING LOUNGE</div><div class="card-crown">♛</div></div>
      <div class="member-details">
-      <div class="member-photo" id="cardPhotoFallback">
-       <span id="cardInitials">N</span>
-       <img id="cardPhoto" alt="Member profile photo">
-      </div>
-      <div style="min-width:0">
-       <div class="card-member-name" id="cardMemberName">Member Name</div>
-       <div class="card-member-label">NEXT LEVEL MEMBER</div>
-      </div>
+      <div class="member-photo" id="cardPhotoFallback"><span id="cardInitials">N</span><img id="cardPhoto" alt="Member profile photo"></div>
+      <div style="min-width:0"><div class="card-member-name" id="cardMemberName">Member Name</div><div class="card-member-label">NEXT LEVEL MEMBER</div></div>
      </div>
-     <div class="card-bottom">
-      <div>
-       <div class="card-number-label">UNIQUE CLIENT NUMBER</div>
-       <div class="card-number-value" id="cardClientNumber">NL-MEMBER</div>
-      </div>
-      <small>CONFIDENCE STARTS HERE</small>
-     </div>
+     <div class="card-bottom"><div><div class="card-number-label">UNIQUE CLIENT NUMBER</div><div class="card-number-value" id="cardClientNumber">NL-MEMBER</div></div><small>CONFIDENCE STARTS HERE</small></div>
     </div>
-
     <div class="virtual-card-face card-back">
-     <div class="card-face-top">
-      <div class="card-brand">NEXT LEVEL<br>GROOMING LOUNGE</div>
-      <div class="card-crown">♛</div>
-     </div>
+     <div class="card-face-top"><div class="card-brand">NEXT LEVEL<br>GROOMING LOUNGE</div><div class="card-crown">♛</div></div>
      <div class="card-back-heading">YOUR REWARDS WALLET</div>
-     <div class="points-display">
-      <strong id="cardPoints">0</strong>
-      <span>AVAILABLE LOYALTY POINTS</span>
-     </div>
+     <div class="points-display"><strong id="cardPoints">0</strong><span>AVAILABLE LOYALTY POINTS</span></div>
      <div class="back-message" id="cardRewardsMessage">Loading your rewards...</div>
-     <div class="card-bottom">
-      <small>YOUR MEMBERSHIP • YOUR REWARDS</small>
-      <small>BACK OF CARD</small>
-     </div>
+     <div class="card-bottom"><small>YOUR MEMBERSHIP • YOUR REWARDS</small><small>BACK OF CARD</small></div>
     </div>
-
    </div>
   </div>
   <div class="flip-hint">TAP THE CARD TO FLIP IT</div>
@@ -437,23 +318,16 @@ button:disabled{opacity:.5;cursor:not-allowed}
 
 <script>
 /* SUPABASE CONFIGURATION */
-const SUPABASE_URL = "https://teimbezoinfqlrxczafj.supabase.co";
+const SUPABASE_URL="https://teimbezoinfqlrxczafj.supabase.co";
+const SUPABASE_KEY="sb_publishable_3lJOm65rVFwElFqLN-Gxzw_LdYacHZP";
+const PROFILE_BUCKET="customer-profile-pictures";
 
-/* Corrected publishable key: final P restored */
-const SUPABASE_KEY = "sb_publishable_3lJOm65rVFwElFqLN-Gxzw_LdYacHZP";
-
-const PROFILE_BUCKET = "customer-profile-pictures";
-
-const supabaseClient = window.supabase.createClient(
- SUPABASE_URL,
- SUPABASE_KEY
-);
-
-let currentUser = null;
-let currentBalance = 0;
-let currentRewards = [];
-let currentReferralCode = "";
-let redemptionBusy = false;
+let supabaseClient=null;
+let currentUser=null;
+let currentBalance=0;
+let currentRewards=[];
+let currentReferralCode="";
+let redemptionBusy=false;
 
 function goBack(){window.location.href="account.html"}
 function goToProfile(){window.location.href="account.html"}
@@ -467,6 +341,7 @@ function formatClientNumber(number){
 
 function showError(message){
  document.getElementById("loadingScreen").classList.add("hidden");
+ document.getElementById("mainContent").classList.add("hidden");
  const screen=document.getElementById("errorScreen");
  screen.classList.remove("hidden");
  const box=document.createElement("div");
@@ -510,7 +385,7 @@ function openMembershipCard(){
 }
 
 function closeMembershipCard(event){
- if(event && event.target!==document.getElementById("membershipModal"))return;
+ if(event&&event.target!==document.getElementById("membershipModal"))return;
  document.getElementById("membershipModal").classList.add("hidden");
  document.body.style.overflow="";
 }
@@ -535,8 +410,7 @@ function getInitials(name){
 async function loadMemberPhoto(avatarPath){
  if(!avatarPath)return;
  try{
-  const {data,error}=await supabaseClient.storage
-   .from(PROFILE_BUCKET).createSignedUrl(avatarPath,3600);
+  const {data,error}=await supabaseClient.storage.from(PROFILE_BUCKET).createSignedUrl(avatarPath,3600);
   if(error)throw error;
   if(data?.signedUrl){
    const photo=document.getElementById("cardPhoto");
@@ -557,10 +431,7 @@ async function loadMemberPhoto(avatarPath){
 
 /* ACTIVATE OR LOAD MEMBERSHIP */
 async function activateAndLoadMembership(){
- const {data:activationData,error:activationError}=await supabaseClient.rpc(
-  "activate_loyalty_membership"
- );
-
+ const {data:activationData,error:activationError}=await supabaseClient.rpc("activate_loyalty_membership");
  if(activationError)throw activationError;
 
  const {data:membership,error:reloadError}=await supabaseClient
@@ -570,7 +441,6 @@ async function activateAndLoadMembership(){
   .single();
 
  if(reloadError)throw reloadError;
-
  return {membership,activationData};
 }
 
@@ -580,18 +450,13 @@ async function loadPointsBalance(){
   .from("loyalty_points_ledger")
   .select("points_change")
   .eq("customer_id",currentUser.id);
-
  if(error)throw error;
 
- currentBalance=(data||[]).reduce(
-  (total,row)=>total+Number(row.points_change||0),0
- );
-
+ currentBalance=(data||[]).reduce((total,row)=>total+Number(row.points_change||0),0);
  currentBalance=Math.max(0,currentBalance);
 
  document.getElementById("walletPoints").textContent=currentBalance.toLocaleString();
  document.getElementById("cardPoints").textContent=currentBalance.toLocaleString();
-
  updateNextReward();
 }
 
@@ -602,12 +467,12 @@ async function loadRewards(){
   .select("id,code,reward_name,description,points_cost,active")
   .eq("active",true)
   .order("points_cost",{ascending:true});
-
  if(error)throw error;
 
  currentRewards=data||[];
  renderRewards();
  updateCardRewardMessage();
+ updateNextReward();
 }
 
 function renderRewards(){
@@ -658,20 +523,16 @@ function renderRewards(){
 }
 
 function getRewardIcon(code){
- const icons={
-  FREE_HAIR_WASH:"✦",
-  DISCOUNT_25:"R25",
-  DISCOUNT_50:"R50",
-  FREE_STANDARD_HAIRCUT:"✂"
- };
+ const icons={FREE_HAIR_WASH:"✦",DISCOUNT_25:"R25",DISCOUNT_50:"R50",FREE_STANDARD_HAIRCUT:"✂"};
  return icons[code]||"★";
 }
 
 /* NEXT REWARD PROGRESS */
 function updateNextReward(){
- const next=currentRewards.find(r=>Number(r.points_cost)>currentBalance);
  const box=document.getElementById("nextRewardMessage");
+ if(!box)return;
 
+ const next=currentRewards.find(r=>Number(r.points_cost)>currentBalance);
  if(!next){
   box.textContent="Amazing! You currently have enough points for every active reward.";
   return;
@@ -679,7 +540,6 @@ function updateNextReward(){
 
  const remaining=Number(next.points_cost)-currentBalance;
  const progress=Math.min(100,(currentBalance/Number(next.points_cost))*100);
-
  box.replaceChildren();
 
  const title=document.createElement("strong");
@@ -709,8 +569,7 @@ function updateCardRewardMessage(){
  if(affordable.length){
   const names=affordable.map(r=>r.reward_name).join(", ");
   message.textContent="You can currently redeem: "+names+
-   (next?". Next reward: "+next.reward_name+" ("+
-   (Number(next.points_cost)-currentBalance)+" more points).":".");
+   (next?". Next reward: "+next.reward_name+" ("+(Number(next.points_cost)-currentBalance)+" more points).":".");
  }else if(next){
   message.textContent="Your next available reward is "+next.reward_name+
    ". You need "+(Number(next.points_cost)-currentBalance)+" more points.";
@@ -722,27 +581,22 @@ function updateCardRewardMessage(){
 /* REDEEM REWARD */
 async function redeemReward(reward){
  if(redemptionBusy)return;
-
  const cost=Number(reward.points_cost);
+
  if(currentBalance<cost){
   showRewardMessage("You do not have enough points for this reward.",true);
   return;
  }
 
- const confirmed=window.confirm("Redeem "+reward.reward_name+" for "+cost+" points?");
- if(!confirmed)return;
+ if(!window.confirm("Redeem "+reward.reward_name+" for "+cost+" points?"))return;
 
  redemptionBusy=true;
  renderRewards();
  showRewardMessage("Processing your reward redemption...");
 
  try{
-  const {error}=await supabaseClient.rpc(
-   "redeem_loyalty_reward",
-   {p_reward_id:reward.id}
-  );
+  const {error}=await supabaseClient.rpc("redeem_loyalty_reward",{p_reward_id:reward.id});
   if(error)throw error;
-
   showRewardMessage("Your reward redemption was submitted successfully.");
   await refreshWallet();
  }catch(error){
@@ -770,18 +624,15 @@ async function refreshWallet(){
 /* REDEMPTION HISTORY */
 async function loadRedemptionHistory(){
  const container=document.getElementById("redemptionHistory");
-
  const {data,error}=await supabaseClient
   .from("loyalty_redemptions")
   .select("id,reward_id,points_spent,status,created_at")
   .eq("customer_id",currentUser.id)
   .order("created_at",{ascending:false})
   .limit(10);
-
  if(error)throw error;
 
  container.replaceChildren();
-
  if(!data?.length){
   const empty=document.createElement("p");
   empty.style.color="#999";
@@ -850,7 +701,6 @@ async function loadReferralDashboard(membership){
   .select("id,status,created_at,qualified_at")
   .eq("referrer_customer_id",currentUser.id)
   .order("created_at",{ascending:false});
-
  if(error)throw error;
 
  const rows=referrals||[];
@@ -885,9 +735,7 @@ function renderReferralHistory(referrals){
   title.textContent=referral.status==="Qualified"?"Successful referral":"Referral registered";
 
   const date=document.createElement("small");
-  const dateValue=referral.qualified_at||referral.created_at;
-  date.textContent=new Date(dateValue).toLocaleDateString();
-
+  date.textContent=new Date(referral.qualified_at||referral.created_at).toLocaleDateString();
   info.append(title,date);
 
   const status=document.createElement("span");
@@ -920,40 +768,24 @@ async function copyReferralCode(){
    input.remove();
    if(!copied)throw new Error("Copy not supported");
   }
-
   setReferralMessage("Referral code copied. Share it with your friends.");
  }catch(error){
   setReferralMessage("Copy was not available. Please select and copy your code manually.",true);
  }
 }
 
-/* WHATSAPP REFERRAL INVITATION */
-
+/* WHATSAPP REFERRAL INVITATION — CORRECTED */
 function shareReferralWhatsApp(){
  if(!currentReferralCode){
   setReferralMessage("Your referral code is not available.",true);
   return;
  }
 
- const registerUrl =
-  "https://mrmbuli.github.io/Barbershop/register.html?ref=" +
-  encodeURIComponent(currentReferralCode);
-
- const message =
-  "Join me at Next Level Grooming Lounge! Register using my personal invitation link:\n\n" +
-  registerUrl +
-  "\n\nOnce you complete your first paid appointment, I earn 100 loyalty points. Let's level up!";
-
- const url="https://wa.me/?text="+encodeURIComponent(message);
- window.open(url,"_blank","noopener,noreferrer");
-}
-
-
+ const registerUrl="https://mrmbuli.github.io/Barbershop/register.html?ref="+encodeURIComponent(currentReferralCode);
  const message=
-  "Join me at Next Level Grooming Lounge! Register at "+
-  "https://mrmbuli.github.io/Barbershop/register.html "+
-  "and use my referral code "+currentReferralCode+
-  " when creating your account. Once you complete your first paid appointment, I earn 100 loyalty points. Let's level up!";
+  "Join me at Next Level Grooming Lounge! Register using my personal invitation link:\n\n"+
+  registerUrl+
+  "\n\nOnce you complete your first paid appointment, I earn 100 loyalty points. Let's level up!";
 
  const url="https://wa.me/?text="+encodeURIComponent(message);
  window.open(url,"_blank","noopener,noreferrer");
@@ -962,11 +794,16 @@ function shareReferralWhatsApp(){
 /* MAIN PAGE */
 async function loadLoyaltyPage(){
  try{
+  if(!window.supabase){
+   throw new Error("The Supabase library could not load. Check your internet connection and refresh the page.");
+  }
+
+  supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
   const {data:userData,error:userError}=await supabaseClient.auth.getUser();
   if(userError)throw userError;
 
   currentUser=userData.user;
-
   if(!currentUser){
    window.location.href="login.html";
    return;
@@ -977,7 +814,6 @@ async function loadLoyaltyPage(){
    .select("id,full_name,phone,date_of_birth,avatar_path,client_number")
    .eq("id",currentUser.id)
    .maybeSingle();
-
   if(profileError)throw profileError;
 
   if(!profile){
@@ -985,7 +821,6 @@ async function loadLoyaltyPage(){
   }
 
   const fullName=(profile.full_name||"").trim();
-
   const requirements={
    name:fullName.length>=2&&fullName.includes(" "),
    phone:!!(profile.phone||"").trim(),
@@ -995,10 +830,8 @@ async function loadLoyaltyPage(){
   };
 
   const completed=Object.values(requirements).filter(Boolean).length;
-
   document.getElementById("progressText").textContent=completed+" / 5";
   document.getElementById("progressFill").style.width=Math.round(completed/5*100)+"%";
-
   Object.entries(requirements).forEach(([key,value])=>setRequirement(key,value));
 
   document.getElementById("loadingScreen").classList.add("hidden");
@@ -1020,7 +853,6 @@ async function loadLoyaltyPage(){
   }
 
   const shortMemberNumber=formatClientNumber(membership.client_number);
-
   document.getElementById("cardMemberName").textContent=fullName||"Next Level Member";
   document.getElementById("cardClientNumber").textContent=shortMemberNumber;
   document.getElementById("previewClientNumber").textContent=shortMemberNumber;
@@ -1041,8 +873,17 @@ async function loadLoyaltyPage(){
  }
 }
 
-loadLoyaltyPage();
-</script>
+/* PREVENT INFINITE LOADING */
+const loyaltyTimeout=setTimeout(()=>{
+ const loading=document.getElementById("loadingScreen");
+ if(!loading.classList.contains("hidden")){
+  showError("The loyalty page is taking too long to respond. Please check your internet connection and try again.");
+ }
+},25000);
 
+loadLoyaltyPage().finally(()=>{
+ clearTimeout(loyaltyTimeout);
+});
+</script>
 </body>
-     </html>
+</html>
