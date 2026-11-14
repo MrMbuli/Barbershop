@@ -8,6 +8,38 @@
 <meta name="description" content="Next Level Grooming Lounge. Professional barbering, hairstyling and personal house-call grooming services.">
 <title>Next Level Grooming Lounge | Confidence Starts Here</title>
 
+<!-- PREVENT OLD SCROLL POSITION FROM BEING RESTORED -->
+<script>
+(function () {
+    if ("scrollRestoration" in history) {
+        history.scrollRestoration = "manual";
+    }
+
+    // Remove an incoming section link when opening the homepage.
+    // This makes shared homepage links start at the top.
+    if (window.location.hash) {
+        history.replaceState(
+            null,
+            "",
+            window.location.pathname + window.location.search
+        );
+    }
+
+    function forceTop() {
+        document.documentElement.style.scrollBehavior = "auto";
+        window.scrollTo(0, 0);
+
+        requestAnimationFrame(function () {
+            document.documentElement.style.scrollBehavior = "";
+        });
+    }
+
+    window.addEventListener("DOMContentLoaded", forceTop);
+    window.addEventListener("pageshow", forceTop);
+    window.addEventListener("load", forceTop);
+})();
+</script>
+
 <style>
 :root{--black:#101010;--dark:#171717;--panel:#202020;--gold:#c49a50;--light-gold:#e5c17e;--white:#fff;--muted:#aaa}
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
@@ -151,7 +183,12 @@ section.content-section{padding:85px 7%}
 footer{background:#080808;color:#888;text-align:center;padding:30px 15px;font-size:12px;line-height:2;border-top:1px solid #28231b}
 footer strong{color:var(--gold)}
 
-@media(max-width:900px){nav{gap:15px}nav a{font-size:12px}.hero-tools{right:3%;opacity:.7}}
+@media(max-width:900px){
+ nav{gap:15px}
+ nav a{font-size:12px}
+ .hero-tools{right:3%;opacity:.7}
+}
+
 @media(max-width:768px){
  header{padding:14px 5%}
  .menu-btn{display:block;position:relative;z-index:1002}
@@ -196,26 +233,42 @@ footer strong{color:var(--gold)}
  .look-card:hover{transform:none}
  .lookbook-hint{font-size:9px;letter-spacing:1px}
 }
+
 @media(max-width:360px){
  .daily-heading{display:block}
  .daily-heading p{text-align:left;max-width:none;margin-top:6px}
  .daily-card{padding:11px 9px}
  .daily-quote,.welcome-message{font-size:12px}
 }
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{
+  scroll-behavior:auto!important;
+  animation:none!important;
+  transition:none!important
+ }
+}
 </style>
 </head>
 
 <body>
+
 <header id="siteHeader">
  <a href="#home" class="brand">NEXT LEVEL<span>GROOMING LOUNGE</span></a>
  <button class="menu-btn" id="menuButton" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="navigation">☰</button>
  <nav id="navigation">
-  <a href="#home">Home</a><a href="#services">Services</a><a href="#lookbook">Our Work</a><a href="#about">About</a><a href="#loyalty">Loyalty</a><a href="#contact">Contact</a><a href="login.html">Login</a>
+  <a href="#home">Home</a>
+  <a href="#services">Services</a>
+  <a href="#lookbook">Our Work</a>
+  <a href="#about">About</a>
+  <a href="#loyalty">Loyalty</a>
+  <a href="#contact">Contact</a>
+  <a href="login.html">Login</a>
  </nav>
 </header>
 
 <main>
+
 <section class="hero" id="home">
  <div class="hero-content">
   <div class="hero-label">THE ART OF GROOMING</div>
@@ -230,18 +283,32 @@ footer strong{color:var(--gold)}
 
 <section class="daily-level" id="dailyLevel">
  <div class="daily-heading">
-  <div><small>YOUR DAILY DOSE OF CONFIDENCE</small><h2>THE DAILY LEVEL-UP <span style="color:var(--gold)">✦</span></h2></div>
+  <div>
+   <small>YOUR DAILY DOSE OF CONFIDENCE</small>
+   <h2>THE DAILY LEVEL-UP <span style="color:var(--gold)">✦</span></h2>
+  </div>
   <p>A little motivation, a little attitude and a whole lot of confidence.</p>
  </div>
+
  <div class="daily-grid">
   <div class="daily-card">
-   <div class="daily-card-top"><span class="daily-tag">✦ TODAY'S MOTIVATION</span><span class="daily-date" id="dailyDate">TODAY</span></div>
+   <div class="daily-card-top">
+    <span class="daily-tag">✦ TODAY'S MOTIVATION</span>
+    <span class="daily-date" id="dailyDate">TODAY</span>
+   </div>
    <div class="daily-quote" id="dailyQuote" aria-live="polite">Your next level starts with the decision to show up.</div>
    <div class="daily-author">THE NEXT LEVEL MINDSET</div>
   </div>
+
   <div class="daily-card welcome-card">
-   <div><div class="daily-tag">😎 THE VIBE CHECK</div><div class="welcome-message" id="welcomeMessage" aria-live="polite">Welcome to the family. <span>Let's get you looking fresh.</span></div><p class="welcome-caption" id="welcomeCaption">Good energy only. Your next level starts here.</p></div>
-   <div><button class="daily-action" id="newMessageButton" type="button">GIVE ME ANOTHER ✦</button></div>
+   <div>
+    <div class="daily-tag">😎 THE VIBE CHECK</div>
+    <div class="welcome-message" id="welcomeMessage" aria-live="polite">Welcome to the family. <span>Let's get you looking fresh.</span></div>
+    <p class="welcome-caption" id="welcomeCaption">Good energy only. Your next level starts here.</p>
+   </div>
+   <div>
+    <button class="daily-action" id="newMessageButton" type="button">GIVE ME ANOTHER ✦</button>
+   </div>
   </div>
  </div>
  <div class="daily-bottom">LOOK GOOD · FEEL GOOD · MOVE DIFFERENT</div>
@@ -261,33 +328,70 @@ footer strong{color:var(--gold)}
 </section>
 
 <section class="content-section services-section" id="services">
- <div class="section-heading"><small>WHAT WE OFFER</small><h2>Our Grooming Services</h2><p>Precision, creativity and confidence in every detail.</p></div>
+ <div class="section-heading">
+  <small>WHAT WE OFFER</small>
+  <h2>Our Grooming Services</h2>
+  <p>Precision, creativity and confidence in every detail.</p>
+ </div>
+
  <div class="services-grid">
   <a href="barbering.html" class="service-card">
    <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=900&q=80" alt="Professional barbering tools">
-   <div class="service-info"><h3>Professional Barbering</h3><p>Fresh fades, haircuts, beard grooming, line-ups and personalised styles.</p><span class="service-link">VIEW BARBERING SERVICES →</span></div>
+   <div class="service-info">
+    <h3>Professional Barbering</h3>
+    <p>Fresh fades, haircuts, beard grooming, line-ups and personalised styles.</p>
+    <span class="service-link">VIEW BARBERING SERVICES →</span>
+   </div>
   </a>
+
   <a href="booking.html?type=shop&category=hair" class="service-card">
    <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=900&q=80" alt="Professional hair styling">
-   <div class="service-info"><h3>Hair Salon</h3><p>Professional hairstyling, washing, treatments and hair care services.</p><span class="service-link">EXPLORE OUR SERVICES</span></div>
+   <div class="service-info">
+    <h3>Hair Salon</h3>
+    <p>Professional hairstyling, washing, treatments and hair care services.</p>
+    <span class="service-link">EXPLORE OUR SERVICES</span>
+   </div>
   </a>
+
   <a href="booking.html?type=shop&category=nails" class="service-card">
    <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=900&q=80" alt="Nail grooming and nail care">
-   <div class="service-info"><h3>Nail Grooming</h3><p>Beautiful nail finishes, manicures, gel overlays and nail care.</p><span class="service-link">EXPLORE OUR SERVICES</span></div>
+   <div class="service-info">
+    <h3>Nail Grooming</h3>
+    <p>Beautiful nail finishes, manicures, gel overlays and nail care.</p>
+    <span class="service-link">EXPLORE OUR SERVICES</span>
+   </div>
   </a>
  </div>
 </section>
 
 <section class="lookbook" id="lookbook">
- <div class="section-heading"><small>FIND YOUR NEXT LOOK</small><h2>Explore Our Work</h2><p>Choose your grooming department and discover your next style.</p></div>
+ <div class="section-heading">
+  <small>FIND YOUR NEXT LOOK</small>
+  <h2>Explore Our Work</h2>
+  <p>Choose your grooming department and discover your next style.</p>
+ </div>
+
  <div class="lookbook-categories">
   <button class="lookbook-tab active" type="button" data-category="barbershop" aria-pressed="true">BARBERSHOP</button>
   <button class="lookbook-tab" type="button" data-category="hair" aria-pressed="false">HAIR SALON</button>
   <button class="lookbook-tab" type="button" data-category="nails" aria-pressed="false">NAILS</button>
  </div>
- <div class="lookbook-panel active" id="lookbook-barbershop"><p class="lookbook-intro">Professional cuts, fades and grooming styles.</p><div class="lookbook-track" id="barbershopGallery"></div></div>
- <div class="lookbook-panel" id="lookbook-hair"><p class="lookbook-intro">Discover your next hairstyle and salon experience.</p><div class="lookbook-track" id="hairGallery"></div></div>
- <div class="lookbook-panel" id="lookbook-nails"><p class="lookbook-intro">Explore beautiful nail finishes and designs.</p><div class="lookbook-track" id="nailsGallery"></div></div>
+
+ <div class="lookbook-panel active" id="lookbook-barbershop">
+  <p class="lookbook-intro">Professional cuts, fades and grooming styles.</p>
+  <div class="lookbook-track" id="barbershopGallery"></div>
+ </div>
+
+ <div class="lookbook-panel" id="lookbook-hair">
+  <p class="lookbook-intro">Discover your next hairstyle and salon experience.</p>
+  <div class="lookbook-track" id="hairGallery"></div>
+ </div>
+
+ <div class="lookbook-panel" id="lookbook-nails">
+  <p class="lookbook-intro">Explore beautiful nail finishes and designs.</p>
+  <div class="lookbook-track" id="nailsGallery"></div>
+ </div>
+
  <p class="lookbook-hint">SWIPE OR SCROLL TO EXPLORE MORE STYLES →</p>
 </section>
 
@@ -309,7 +413,10 @@ footer strong{color:var(--gold)}
 </section>
 
 <section class="content-section about" id="about">
- <div class="section-heading"><small>OUR IDENTITY</small><h2>Confidence Starts Here.</h2></div>
+ <div class="section-heading">
+  <small>OUR IDENTITY</small>
+  <h2>Confidence Starts Here.</h2>
+ </div>
  <div class="about-text">
   <p>Next Level Grooming Lounge is built around professional grooming, personal service and helping every customer look and feel their best.</p>
   <p>Growing from the personal barber concept of King's Cut Barbershop, our vision is to bring barbering, hairstyling and grooming together under one brand.</p>
@@ -318,7 +425,10 @@ footer strong{color:var(--gold)}
 </section>
 
 <section class="content-section loyalty" id="loyalty">
- <div class="section-heading"><small>REWARDS FOR OUR CUSTOMERS</small><h2>Join Our Loyalty Family</h2></div>
+ <div class="section-heading">
+  <small>REWARDS FOR OUR CUSTOMERS</small>
+  <h2>Join Our Loyalty Family</h2>
+ </div>
  <p>Become part of the Next Level family. Stay updated with promotions and future loyalty rewards.</p>
  <a href="register.html" class="btn">REGISTER YOUR ACCOUNT</a>
 </section>
@@ -329,6 +439,7 @@ footer strong{color:var(--gold)}
  <p>Contact Next Level Grooming Lounge to enquire about appointments and house calls.</p>
  <a href="https://wa.me/27635892769" class="btn" target="_blank" rel="noopener">CONTACT US ON WHATSAPP</a>
 </section>
+
 </main>
 
 <footer>
@@ -350,22 +461,35 @@ function closeMenu(){
  menuButton.setAttribute("aria-label","Open navigation");
  menuButton.textContent="☰";
 }
+
 function openMenu(){
  navigation.classList.add("active");
  menuButton.setAttribute("aria-expanded","true");
  menuButton.setAttribute("aria-label","Close navigation");
  menuButton.textContent="✕";
 }
+
 menuButton.addEventListener("click",function(event){
  event.stopPropagation();
  navigation.classList.contains("active")?closeMenu():openMenu();
 });
+
 document.addEventListener("pointerdown",function(event){
  if(navigation.classList.contains("active")&&!siteHeader.contains(event.target))closeMenu();
 });
+
 navigation.querySelectorAll("a").forEach(link=>link.addEventListener("click",closeMenu));
-document.addEventListener("keydown",function(event){if(event.key==="Escape"){closeMenu();closeLookViewer();}});
-window.addEventListener("resize",function(){if(window.innerWidth>768)closeMenu();});
+
+document.addEventListener("keydown",function(event){
+ if(event.key==="Escape"){
+  closeMenu();
+  closeLookViewer();
+ }
+});
+
+window.addEventListener("resize",function(){
+ if(window.innerWidth>768)closeMenu();
+});
 
 /* DAILY LEVEL-UP */
 const dailyQuotes=[
@@ -383,6 +507,7 @@ const dailyQuotes=[
  "Keep showing up. Great things take time.",
  "You were not made to blend in. Keep growing."
 ];
+
 const welcomeMessages=[
  {message:"Welcome to the family. <span>Let's get you looking fresh.</span>",caption:"Good energy only. Your next level starts here."},
  {message:"Bad hair day? <span>We don't know her. 😎</span>",caption:"Life is too short for an average haircut."},
@@ -395,6 +520,7 @@ const welcomeMessages=[
  {message:"You bring the vision. <span>We'll handle the fresh look.</span>",caption:"Your next grooming experience starts here."},
  {message:"Confidence looks good on you. <span>Wear it proudly.</span>",caption:"Look good. Feel good. Move different."}
 ];
+
 const dailyQuote=document.getElementById("dailyQuote");
 const dailyDate=document.getElementById("dailyDate");
 const welcomeMessage=document.getElementById("welcomeMessage");
@@ -405,43 +531,74 @@ function getLocalDateKey(){
  const now=new Date();
  return `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")}`;
 }
+
 function displayDailyQuote(){
  const parts=getLocalDateKey().split("-").map(Number);
  const dateNumber=parts[0]*10000+parts[1]*100+parts[2];
+
  dailyQuote.textContent=dailyQuotes[dateNumber%dailyQuotes.length];
- dailyDate.textContent=new Date().toLocaleDateString("en-ZA",{weekday:"long",day:"numeric",month:"long"}).toUpperCase();
+
+ dailyDate.textContent=new Date().toLocaleDateString("en-ZA",{
+  weekday:"long",
+  day:"numeric",
+  month:"long"
+ }).toUpperCase();
 }
+
 let welcomeIndex=-1;
+
 function displayWelcomeMessage(){
  let nextIndex;
- do{nextIndex=Math.floor(Math.random()*welcomeMessages.length)}while(welcomeMessages.length>1&&nextIndex===welcomeIndex);
+
+ do{
+  nextIndex=Math.floor(Math.random()*welcomeMessages.length);
+ }while(welcomeMessages.length>1&&nextIndex===welcomeIndex);
+
  welcomeIndex=nextIndex;
+
  const selected=welcomeMessages[welcomeIndex];
+
  welcomeMessage.classList.add("message-changing");
+
  window.setTimeout(function(){
   welcomeMessage.innerHTML=selected.message;
   welcomeCaption.textContent=selected.caption;
   welcomeMessage.classList.remove("message-changing");
  },180);
 }
+
 displayDailyQuote();
 displayWelcomeMessage();
+
 newMessageButton.addEventListener("click",function(){
  displayWelcomeMessage();
+
  newMessageButton.textContent="NEW VIBE LOADING...";
- window.setTimeout(()=>newMessageButton.textContent="GIVE ME ANOTHER ✦",400);
+
+ window.setTimeout(()=>{
+  newMessageButton.textContent="GIVE ME ANOTHER ✦";
+ },400);
 });
+
 let welcomeTimer=null;
+
 function startWelcomeRotation(){
  if(welcomeTimer||document.hidden)return;
  welcomeTimer=window.setInterval(displayWelcomeMessage,12000);
 }
+
 function stopWelcomeRotation(){
- if(welcomeTimer){window.clearInterval(welcomeTimer);welcomeTimer=null;}
+ if(welcomeTimer){
+  window.clearInterval(welcomeTimer);
+  welcomeTimer=null;
+ }
 }
+
 document.addEventListener("visibilitychange",function(){
- if(document.hidden)stopWelcomeRotation();else startWelcomeRotation();
+ if(document.hidden)stopWelcomeRotation();
+ else startWelcomeRotation();
 });
+
 startWelcomeRotation();
 
 /* PROMOTION SLIDER */
@@ -449,19 +606,39 @@ let currentIndex=0;
 const totalSlides=3;
 const adsContainer=document.getElementById("adsContainer");
 const dots=document.querySelectorAll(".dot");
+
 function showSlide(index){
  currentIndex=index;
  adsContainer.style.transform=`translateX(-${index*33.333333}%)`;
- dots.forEach((dot,i)=>dot.classList.toggle("active",i===index));
+
+ dots.forEach((dot,i)=>{
+  dot.classList.toggle("active",i===index);
+ });
 }
-function setSlide(index){if(index>=0&&index<totalSlides)showSlide(index);}
-dots.forEach(dot=>dot.addEventListener("click",()=>setSlide(Number(dot.dataset.slide))));
-window.setInterval(()=>showSlide((currentIndex+1)%totalSlides),12000);
+
+function setSlide(index){
+ if(index>=0&&index<totalSlides)showSlide(index);
+}
+
+dots.forEach(dot=>{
+ dot.addEventListener("click",()=>setSlide(Number(dot.dataset.slide)));
+});
+
+window.setInterval(()=>{
+ showSlide((currentIndex+1)%totalSlides);
+},12000);
 
 /* ROTATING HERO SLOGANS */
-const slogans=["CONFIDENCE STARTS HERE.","PRECISION IN EVERY DETAIL.","YOUR STYLE. YOUR STANDARD.","LOOK GOOD. FEEL NEXT LEVEL."];
+const slogans=[
+ "CONFIDENCE STARTS HERE.",
+ "PRECISION IN EVERY DETAIL.",
+ "YOUR STYLE. YOUR STANDARD.",
+ "LOOK GOOD. FEEL NEXT LEVEL."
+];
+
 let sloganIndex=0;
 const heroSlogan=document.getElementById("heroSlogan");
+
 window.setInterval(function(){
  sloganIndex=(sloganIndex+1)%slogans.length;
  heroSlogan.textContent=slogans[sloganIndex];
@@ -476,6 +653,7 @@ const lookbookData={
   {name:"Barber Finish",image:"https://images.unsplash.com/photo-1622286346003-c4c7e6b9f4a7?auto=format&fit=crop&w=900&q=85"},
   {name:"Fresh Cut",image:"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=85"}
  ],
+
  hair:[
   {name:"Braided Style",image:"https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=900&q=85"},
   {name:"Silk Press Inspiration",image:"https://images.unsplash.com/photo-1560869713-da86a9ecb9b6?auto=format&fit=crop&w=900&q=85"},
@@ -483,6 +661,7 @@ const lookbookData={
   {name:"Cornrow Inspiration",image:"https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=900&q=85"},
   {name:"Elegant Hair Style",image:"https://images.unsplash.com/photo-1562088287-bde35a1ea917?auto=format&fit=crop&w=900&q=85"}
  ],
+
  nails:[
   {name:"Nude Elegance",image:"https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=900&q=85"},
   {name:"French Tips",image:"https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=900&q=85"},
@@ -499,32 +678,46 @@ function createLookbook(){
   hair:document.getElementById("hairGallery"),
   nails:document.getElementById("nailsGallery")
  };
+
  Object.keys(lookbookData).forEach(category=>{
   const gallery=galleries[category];
+
   if(!gallery)return;
+
   gallery.replaceChildren();
+
   lookbookData[category].forEach((look,index)=>{
    const card=document.createElement("article");
    card.className="look-card";
+
    const imageArea=document.createElement("div");
    imageArea.className="look-image";
+
    const img=document.createElement("img");
    img.src=look.image;
    img.alt=look.name;
    img.loading="lazy";
+
    const number=document.createElement("span");
    number.className="look-number";
    number.textContent="LOOK "+String(index+1).padStart(2,"0");
+
    imageArea.append(img,number);
    imageArea.addEventListener("click",()=>openLookViewer(look,category));
+
    const info=document.createElement("div");
    info.className="look-info";
+
    const heading=document.createElement("h3");
    heading.textContent=look.name;
+
    const booking=document.createElement("a");
    booking.className="look-book";
+
    booking.href="booking.html?type=shop&category="+encodeURIComponent(category)+"&style="+encodeURIComponent(look.name);
+
    booking.textContent="BOOK THIS LOOK →";
+
    info.append(heading,booking);
    card.append(imageArea,info);
    gallery.appendChild(card);
@@ -535,57 +728,91 @@ function createLookbook(){
 /* CATEGORY SWITCHING + SAVED PREFERENCE */
 function selectLookbookCategory(category,save=true){
  if(!lookbookData[category])category="barbershop";
+
  document.querySelectorAll(".lookbook-tab").forEach(tab=>{
   const active=tab.dataset.category===category;
+
   tab.classList.toggle("active",active);
   tab.setAttribute("aria-pressed",String(active));
  });
+
  document.querySelectorAll(".lookbook-panel").forEach(panel=>{
   panel.classList.toggle("active",panel.id==="lookbook-"+category);
  });
+
  if(save){
-  try{localStorage.setItem("nl_preferred_category",category);}
-  catch(error){console.warn("Could not save Lookbook preference.",error);}
+  try{
+   localStorage.setItem("nl_preferred_category",category);
+  }catch(error){
+   console.warn("Could not save Lookbook preference.",error);
+  }
  }
 }
+
 document.querySelectorAll(".lookbook-tab").forEach(tab=>{
- tab.addEventListener("click",()=>selectLookbookCategory(tab.dataset.category));
+ tab.addEventListener("click",()=>{
+  selectLookbookCategory(tab.dataset.category);
+ });
 });
 
 /* FULL-SCREEN LOOK VIEWER */
 function openLookViewer(look,category){
  let viewer=document.getElementById("lookViewer");
+
  if(!viewer){
   viewer=document.createElement("div");
   viewer.id="lookViewer";
   viewer.className="look-viewer";
+
   viewer.innerHTML='<div class="viewer-content"><button class="viewer-close" type="button" aria-label="Close viewer">×</button><img id="viewerImage" alt="Selected grooming style"><h3 id="viewerTitle"></h3><a id="viewerBooking" class="viewer-book">BOOK THIS LOOK →</a></div>';
+
   document.body.appendChild(viewer);
+
   viewer.querySelector(".viewer-close").addEventListener("click",closeLookViewer);
-  viewer.addEventListener("click",event=>{if(event.target===viewer)closeLookViewer();});
+
+  viewer.addEventListener("click",event=>{
+   if(event.target===viewer)closeLookViewer();
+  });
  }
+
  document.getElementById("viewerImage").src=look.image;
  document.getElementById("viewerImage").alt=look.name;
  document.getElementById("viewerTitle").textContent=look.name;
- document.getElementById("viewerBooking").href="booking.html?type=shop&category="+encodeURIComponent(category)+"&style="+encodeURIComponent(look.name);
+
+ document.getElementById("viewerBooking").href=
+  "booking.html?type=shop&category="+encodeURIComponent(category)+"&style="+encodeURIComponent(look.name);
+
  viewer.classList.add("active");
  document.body.style.overflow="hidden";
 }
+
 function closeLookViewer(){
  const viewer=document.getElementById("lookViewer");
+
  if(viewer)viewer.classList.remove("active");
+
  document.body.style.overflow="";
 }
 
 /* INITIALISE LOOKBOOK */
 createLookbook();
+
 let savedCategory="barbershop";
-try{savedCategory=localStorage.getItem("nl_preferred_category")||"barbershop";}
-catch(error){console.warn("Using default Lookbook category.",error);}
-selectLookbookCategory(lookbookData[savedCategory]?savedCategory:"barbershop",false);
+
+try{
+ savedCategory=localStorage.getItem("nl_preferred_category")||"barbershop";
+}catch(error){
+ console.warn("Using default Lookbook category.",error);
+}
+
+selectLookbookCategory(
+ lookbookData[savedCategory]?savedCategory:"barbershop",
+ false
+);
 
 /* FOOTER YEAR */
 document.getElementById("year").textContent=new Date().getFullYear();
+
 </script>
 </body>
 </html>
