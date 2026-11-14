@@ -928,11 +928,26 @@ async function copyReferralCode(){
 }
 
 /* WHATSAPP REFERRAL INVITATION */
+
 function shareReferralWhatsApp(){
  if(!currentReferralCode){
   setReferralMessage("Your referral code is not available.",true);
   return;
  }
+
+ const registerUrl =
+  "https://mrmbuli.github.io/Barbershop/register.html?ref=" +
+  encodeURIComponent(currentReferralCode);
+
+ const message =
+  "Join me at Next Level Grooming Lounge! Register using my personal invitation link:\n\n" +
+  registerUrl +
+  "\n\nOnce you complete your first paid appointment, I earn 100 loyalty points. Let's level up!";
+
+ const url="https://wa.me/?text="+encodeURIComponent(message);
+ window.open(url,"_blank","noopener,noreferrer");
+}
+
 
  const message=
   "Join me at Next Level Grooming Lounge! Register at "+
