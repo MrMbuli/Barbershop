@@ -479,10 +479,16 @@ input[type="date"]{color-scheme:dark}
 const SUPABASE_URL="https://teimbezoinfqlrxczafj.supabase.co";
 const SUPABASE_KEY="sb_publishable_3lJOm65rVFwElFqLN-Gxzw_LdYacHZP";
 
-const supabaseClient=window.supabase.createClient(
- SUPABASE_URL,
- SUPABASE_KEY
-);
+/* PREVENT ACCESS TO ACCOUNT AFTER LOGOUT */
+window.addEventListener("pageshow",async()=>{
+
+ const {data:{session},error}=await supabaseClient.auth.getSession();
+
+ if(error||!session){
+  window.location.replace("index.html");
+ }
+
+});
 
 const MANAGER_WHATSAPP="27635892769";
 const HIDE_AFTER_MS=3*60*1000;
