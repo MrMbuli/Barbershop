@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#101010">
 <title>Book an Appointment | Next Level Grooming Lounge</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
@@ -15,12 +15,11 @@ html{scroll-behavior:smooth}
 
 body{
  margin:0;
- padding:20px;
+ padding:18px;
  min-height:100vh;
  background:#101010;
  color:white;
  font-family:Arial,sans-serif;
- position:relative;
 }
 
 body:before{
@@ -28,20 +27,20 @@ body:before{
  position:fixed;
  inset:0;
  background:
- linear-gradient(rgba(10,10,10,.88),rgba(10,10,10,.96)),
+ linear-gradient(rgba(10,10,10,.89),rgba(10,10,10,.97)),
  url("https://www.academiaotronivel.com/images/barber-tools.jpg")
  center/cover no-repeat;
  z-index:-1;
 }
 
 .container{
- max-width:680px;
+ max-width:850px;
  margin:20px auto;
 }
 
 .brand{
  text-align:center;
- margin-bottom:20px;
+ margin-bottom:25px;
 }
 
 .brand h1{
@@ -65,10 +64,10 @@ body:before{
  margin:12px auto 22px;
 }
 
-/* SPECIALS SECTION */
+/* SPECIALS */
 
 .specials-section{
- margin:25px 0 30px;
+ margin:25px 0 35px;
 }
 
 .specials-heading{
@@ -101,7 +100,6 @@ body:before{
  border:1px solid #b58b36;
  cursor:pointer;
  background:#171717;
- box-shadow:0 12px 30px rgba(0,0,0,.4);
 }
 
 .special-preview img{
@@ -109,11 +107,11 @@ body:before{
  height:100%;
  object-fit:cover;
  filter:brightness(.57);
- transition:transform .5s,filter .5s;
+ transition:.4s;
 }
 
 .special-preview:hover img{
- transform:scale(1.06);
+ transform:scale(1.05);
  filter:brightness(.75);
 }
 
@@ -136,7 +134,6 @@ body:before{
 }
 
 .preview-overlay h3{
- color:white;
  font-size:24px;
  margin:10px 0;
 }
@@ -144,16 +141,15 @@ body:before{
 .preview-overlay p{
  color:#ddd;
  font-size:13px;
- margin:0;
 }
 
-/* EXPANDING SPECIAL CARD */
+/* SPECIAL POPUP */
 
 .special-backdrop{
  position:fixed;
  inset:0;
- z-index:9999;
- background:rgba(0,0,0,.84);
+ z-index:9000;
+ background:rgba(0,0,0,.88);
  display:flex;
  align-items:center;
  justify-content:center;
@@ -161,7 +157,7 @@ body:before{
  opacity:0;
  visibility:hidden;
  pointer-events:none;
- transition:opacity .3s,visibility .3s;
+ transition:.3s;
  perspective:1200px;
 }
 
@@ -173,24 +169,18 @@ body:before{
 
 .special-detail{
  width:min(100%,390px);
- min-height:430px;
+ min-height:420px;
  position:relative;
  border:1px solid #c49a45;
  border-radius:20px;
  overflow:hidden;
  background:
- linear-gradient(
-  rgba(0,0,0,.38),
-  rgba(0,0,0,.94)
- ),
+ linear-gradient(rgba(0,0,0,.38),rgba(0,0,0,.94)),
  url("https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1000")
- center/cover no-repeat;
- box-shadow:0 20px 65px rgba(0,0,0,.75);
+ center/cover;
  transform:rotateY(85deg) scale(.55);
  opacity:0;
- transition:
- transform .55s cubic-bezier(.2,.8,.2,1),
- opacity .35s;
+ transition:.5s;
 }
 
 .special-backdrop.open .special-detail{
@@ -204,28 +194,16 @@ body:before{
  right:12px;
  width:39px;
  height:39px;
- padding:0;
- margin:0;
  border:1px solid #d5ad58;
  border-radius:50%;
- background:rgba(0,0,0,.8);
+ background:#111;
  color:white;
- font-size:27px;
- line-height:1;
+ font-size:25px;
  cursor:pointer;
- z-index:3;
- display:flex;
- align-items:center;
- justify-content:center;
-}
-
-.special-close:hover{
- background:#c49a45;
- color:#111;
 }
 
 .special-detail-content{
- min-height:430px;
+ min-height:420px;
  padding:65px 25px 30px;
  display:flex;
  flex-direction:column;
@@ -233,47 +211,181 @@ body:before{
 }
 
 .special-tag{
- display:inline-block;
  color:#e4c783;
  font-size:11px;
  letter-spacing:2px;
- margin-bottom:12px;
 }
 
 .special-detail-content h2{
  color:#e4c783;
  font-size:27px;
- margin:0 0 12px;
 }
 
 .special-detail-content p{
- color:white;
  font-size:14px;
  line-height:1.7;
 }
 
 .special-detail-content a{
- display:inline-block;
- width:max-content;
- margin-top:18px;
- padding:13px 0;
  color:#e4c783;
- font-size:13px;
- font-weight:bold;
- letter-spacing:1px;
  text-decoration:none;
- border-bottom:1px solid #d5ad58;
+ font-weight:bold;
+ margin-top:15px;
 }
 
-.special-detail-content a:hover{
- color:white;
- border-color:white;
+/* SERVICE CATEGORY SELECTOR */
+
+.services-section{
+ margin:30px 0;
 }
 
-/* BOOKING FORM */
+.services-heading{
+ text-align:center;
+ margin-bottom:17px;
+}
+
+.services-heading h2{
+ color:#d5ad58;
+ font-size:24px;
+ margin-bottom:7px;
+}
+
+.services-heading p{
+ color:#aaa;
+ font-size:13px;
+}
+
+.category-grid{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:10px;
+}
+
+.category-button{
+ border:1px solid #765c2e;
+ background:#1c1c1c;
+ color:#ccc;
+ border-radius:12px;
+ padding:17px 7px;
+ min-height:85px;
+ cursor:pointer;
+ transition:.25s;
+ text-align:center;
+}
+
+.category-button strong{
+ display:block;
+ font-size:14px;
+ margin-bottom:6px;
+}
+
+.category-button span{
+ color:#aaa;
+ font-size:10px;
+}
+
+.category-button.active{
+ background:linear-gradient(135deg,#d5ad58,#a77b2d);
+ color:#111;
+ border-color:#e5c47b;
+}
+
+.category-button.active span{
+ color:#222;
+}
+
+/* PHOTO GALLERIES */
+
+.gallery-panel{
+ margin-top:20px;
+}
+
+.gallery-title{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+ margin-bottom:12px;
+}
+
+.gallery-title h3{
+ color:#e4c783;
+ font-size:17px;
+ margin:0;
+}
+
+.gallery-title span{
+ color:#888;
+ font-size:11px;
+}
+
+.photo-track{
+ display:flex;
+ gap:13px;
+ overflow-x:auto;
+ padding:5px 2px 17px;
+ scroll-snap-type:x mandatory;
+ scrollbar-width:thin;
+ scrollbar-color:#b58b36 #222;
+}
+
+.photo-card{
+ flex:0 0 225px;
+ background:#1c1c1c;
+ border:1px solid #49402d;
+ border-radius:13px;
+ overflow:hidden;
+ scroll-snap-align:start;
+}
+
+.photo-card img{
+ display:block;
+ width:100%;
+ height:155px;
+ object-fit:cover;
+}
+
+.photo-info{
+ padding:12px;
+}
+
+.photo-info h4{
+ color:#e4c783;
+ margin:0 0 6px;
+ font-size:14px;
+}
+
+.photo-info p{
+ color:#aaa;
+ font-size:12px;
+ margin:0 0 12px;
+ line-height:1.5;
+}
+
+.photo-book{
+ width:100%;
+ margin:0;
+ padding:11px;
+ border-radius:7px;
+ background:#c49a45;
+ color:#111;
+ border:0;
+ font-weight:bold;
+ font-size:12px;
+ cursor:pointer;
+}
+
+.gallery-hint{
+ color:#888;
+ text-align:center;
+ font-size:11px;
+ margin-top:4px;
+}
+
+/* BOOKING CARD */
 
 .card{
- background:rgba(24,24,24,.96);
+ background:rgba(24,24,24,.97);
  border:1px solid #b58b36;
  border-radius:14px;
  padding:25px;
@@ -281,7 +393,7 @@ body:before{
  scroll-margin-top:20px;
 }
 
-h2{
+.card h2{
  color:#d5ad58;
  margin-top:5px;
 }
@@ -319,19 +431,21 @@ textarea{
  resize:vertical;
 }
 
-button,.choice{
+button{
+ font-family:Arial,sans-serif;
+}
+
+.choice{
  display:block;
  width:100%;
  padding:15px;
- margin-top:14px;
+ margin-top:12px;
  border:1px solid #b58b36;
  border-radius:8px;
  background:#292929;
- color:#fff;
+ color:white;
  font-weight:bold;
- font-size:14px;
  cursor:pointer;
- transition:.25s;
 }
 
 .choice.active{
@@ -339,15 +453,16 @@ button,.choice{
  color:#111;
 }
 
-button:hover{
- border-color:#edc56d;
-}
-
 #submitButton{
+ width:100%;
+ padding:16px;
  background:linear-gradient(135deg,#d5ad58,#a77b2d);
  color:#111;
  border:0;
+ border-radius:8px;
  margin-top:25px;
+ font-weight:bold;
+ cursor:pointer;
 }
 
 button:disabled{
@@ -355,41 +470,163 @@ button:disabled{
  cursor:not-allowed;
 }
 
-.hidden{display:none}
+.hidden{display:none!important}
+
+.small{
+ font-size:12px;
+ color:#999;
+ line-height:1.6;
+}
 
 #message{
  margin-top:18px;
  text-align:center;
  line-height:1.6;
+ font-size:14px;
+}
+
+.links{
+ text-align:center;
+ margin-top:25px;
+ line-height:2;
 }
 
 a{color:#d5ad58}
 
-.links{
+/* ACCOUNT PROMPT */
+
+.account-backdrop{
+ position:fixed;
+ inset:0;
+ z-index:10000;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:18px;
+ background:rgba(0,0,0,.9);
+ opacity:0;
+ visibility:hidden;
+ transition:.3s;
+}
+
+.account-backdrop.open{
+ opacity:1;
+ visibility:visible;
+}
+
+.account-modal{
+ width:100%;
+ max-width:390px;
+ padding:28px 23px;
+ border:1px solid #b58b36;
+ border-radius:17px;
+ background:#1c1c1c;
  text-align:center;
- margin-top:24px;
- line-height:1.8;
+ box-shadow:0 20px 60px #000;
+ transform:translateY(20px);
+ transition:.3s;
 }
 
-.small{
- font-size:13px;
+.account-backdrop.open .account-modal{
+ transform:translateY(0);
+}
+
+.account-icon{
+ width:60px;
+ height:60px;
+ border:1px solid #b58b36;
+ border-radius:50%;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ margin:0 auto 17px;
+ color:#e4c783;
+ font-size:25px;
+}
+
+.account-modal h2{
+ color:#e4c783;
+ font-size:23px;
+ margin:0 0 12px;
+}
+
+.account-modal p{
  color:#aaa;
- line-height:1.5;
+ font-size:13px;
+ line-height:1.7;
 }
 
-body.special-open{
+.account-modal button,
+.account-modal a{
+ display:block;
+ width:100%;
+ padding:14px;
+ margin-top:12px;
+ border-radius:8px;
+ text-decoration:none;
+ font-size:13px;
+ font-weight:bold;
+ cursor:pointer;
+}
+
+.create-account{
+ background:linear-gradient(135deg,#d5ad58,#a77b2d);
+ color:#111!important;
+ border:0;
+}
+
+.sign-in{
+ background:#292929;
+ color:#e4c783;
+ border:1px solid #b58b36;
+}
+
+.cancel-account{
+ color:#aaa!important;
+ background:transparent;
+ border:0;
+}
+
+body.modal-open{
  overflow:hidden;
 }
 
+/* RESPONSIVE */
+
 @media(max-width:480px){
- body{padding:13px}
- .card{padding:19px}
- .brand h1{font-size:24px}
+
+ body{padding:12px}
+
+ .container{margin:10px auto}
+
+ .brand h1{font-size:23px}
+
+ .category-grid{gap:7px}
+
+ .category-button{
+  min-height:78px;
+  padding:13px 4px;
+ }
+
+ .category-button strong{font-size:12px}
+
+ .category-button span{font-size:9px}
+
+ .photo-card{flex-basis:195px}
+
+ .photo-card img{height:140px}
+
+ .card{padding:18px}
+
  .special-preview{height:165px}
+
  .preview-overlay h3{font-size:21px}
- .special-detail{min-height:400px}
+
+ .special-detail,
  .special-detail-content{min-height:400px}
+
 }
+
 </style>
 </head>
 
@@ -397,315 +634,866 @@ body.special-open{
 
 <div class="container">
 
- <header class="brand">
-  <h1>Next Level Grooming Lounge</h1>
-  <div class="subtitle">Confidence Starts Here</div>
-  <div class="gold-line"></div>
- </header>
+<header class="brand">
 
- <!-- SPECIALS DISPLAY -->
+ <h1>Next Level Grooming Lounge</h1>
 
- <section class="specials-section">
+ <div class="subtitle">Confidence Starts Here</div>
 
-  <div class="specials-heading">
-   <span>EXCLUSIVE OFFERS</span>
-   <h2>Our Specials</h2>
-   <p>Discover something special at Next Level Grooming Lounge.</p>
-  </div>
+ <div class="gold-line"></div>
 
-  <div
-   class="special-preview"
-   id="specialPreview"
-   role="button"
-   tabindex="0"
-   aria-label="View our special offer"
-  >
-   <img
-    src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1000"
-    alt="Professional barber tools and grooming station"
-   >
+</header>
 
-   <div class="preview-overlay">
-    <span>EXCLUSIVE OFFER</span>
-    <h3>Discover Our Latest Special</h3>
-    <p>Tap to reveal the offer</p>
-   </div>
-  </div>
 
- </section>
+<!-- SPECIALS -->
 
- <!-- EXPANDED SPECIAL CARD -->
+<section class="specials-section">
 
- <div class="special-backdrop" id="specialBackdrop">
+ <div class="specials-heading">
 
-  <div
-   class="special-detail"
-   id="specialDetail"
-   role="dialog"
-   aria-modal="true"
-   aria-labelledby="specialTitle"
-  >
+  <span>EXCLUSIVE OFFERS</span>
 
-   <button
-    type="button"
-    class="special-close"
-    id="specialClose"
-    aria-label="Close special"
-   >&times;</button>
+  <h2>Our Specials</h2>
 
-   <div class="special-detail-content">
+  <p>Discover something special at Next Level Grooming Lounge.</p>
 
-    <span class="special-tag">LIMITED SPECIAL</span>
+ </div>
 
-    <h2 id="specialTitle">Fresh Look Special</h2>
+ <div class="special-preview" id="specialPreview"
+      role="button" tabindex="0">
 
-    <p id="specialDescription">
-     Treat yourself to a fresh new look at Next Level Grooming Lounge.
-     Discover our grooming offers and book your next appointment.
-    </p>
+  <img
+   src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1000"
+   alt="Professional grooming station">
 
-    <a href="#bookingCard" id="addSpecialToBooking">
-     ADD TO BOOKING →
-    </a>
+  <div class="preview-overlay">
 
-   </div>
+   <span>EXCLUSIVE OFFER</span>
+
+   <h3>Discover Our Latest Special</h3>
+
+   <p>Tap to reveal the offer</p>
 
   </div>
 
  </div>
 
- <!-- BOOKING FORM -->
+</section>
 
- <div class="card" id="bookingCard" style="visibility:hidden">
 
-  <h2>Book Your Service</h2>
+<!-- SPECIAL POPUP -->
 
-  <p class="section-intro">
-   Choose your service, preferred professional and appointment details.
-   We'll contact you to confirm your booking.
-  </p>
+<div class="special-backdrop" id="specialBackdrop">
 
-  <button type="button" class="choice active" id="loungeChoice">
-   BOOK AT THE LOUNGE
-  </button>
+ <div class="special-detail"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="specialTitle">
 
-  <button type="button" class="choice" id="houseChoice">
-   REQUEST A HOUSE CALL
-  </button>
+  <button class="special-close" id="specialClose"
+          type="button">&times;</button>
 
-  <form id="bookingForm">
+  <div class="special-detail-content">
 
-   <label for="category">Service category</label>
+   <span class="special-tag">LIMITED SPECIAL</span>
 
-   <select id="category" required>
-    <option value="">Choose a category</option>
-    <option value="Barbering">Barbering</option>
-    <option value="Hair salon">Hair salon</option>
-    <option value="Nail services">Nail services</option>
-   </select>
+   <h2 id="specialTitle">Fresh Look Special</h2>
 
-   <label for="service">Service required</label>
-
-   <input
-    id="service"
-    type="text"
-    required
-    placeholder="e.g. Haircut, braiding, gel overlay"
-   >
-
-   <label for="staffMember">Preferred professional</label>
-
-   <select id="staffMember" required disabled>
-    <option value="">Select a service category first</option>
-   </select>
-
-   <p class="small">
-    Choose your preferred professional or select Any Available Professional.
+   <p id="specialDescription">
+    Treat yourself to a fresh new look at Next Level Grooming Lounge.
+    Discover our grooming offers and book your next appointment.
    </p>
 
-   <label for="date">Preferred date</label>
-   <input id="date" type="date" required>
+   <a href="#bookingCard" id="addSpecialToBooking">
+    ADD TO BOOKING →
+   </a>
 
-   <label for="time">Preferred time</label>
-   <input id="time" type="time" required>
+  </div>
 
-   <div id="houseFields" class="hidden">
-
-    <h2>House Call Details</h2>
-
-    <label for="area">Your area / suburb</label>
-
-    <input
-     id="area"
-     type="text"
-     placeholder="e.g. Roodepoort or Soweto"
-    >
-
-    <label for="address">House call address</label>
-
-    <textarea
-     id="address"
-     placeholder="Enter your street address and directions"
-    ></textarea>
-
-   </div>
-
-   <label for="notes">Additional instructions (optional)</label>
-
-   <textarea
-    id="notes"
-    placeholder="Anything we should know before your appointment?"
-   ></textarea>
-
-   <button type="submit" id="submitButton">
-    SUBMIT BOOKING REQUEST
-   </button>
-
-  </form>
-
-  <div id="message" role="status"></div>
-
- </div>
-
- <div class="links">
-  <a href="account.html">Back to My Account</a>
-  <br>
-  <a href="index.html">Back to Home</a>
  </div>
 
 </div>
 
+
+<!-- SERVICE CATEGORIES -->
+
+<section class="services-section">
+
+ <div class="services-heading">
+
+  <h2>Choose Your Experience</h2>
+
+  <p>Select a department to explore our work and book your service.</p>
+
+ </div>
+
+ <div class="category-grid">
+
+  <button class="category-button active"
+          type="button"
+          data-category="Barbering">
+
+   <strong>BARBERSHOP</strong>
+   <span>Fresh cuts & grooming</span>
+
+  </button>
+
+  <button class="category-button"
+          type="button"
+          data-category="Hair salon">
+
+   <strong>HAIR SALON</strong>
+   <span>Styles & treatments</span>
+
+  </button>
+
+  <button class="category-button"
+          type="button"
+          data-category="Nail services">
+
+   <strong>NAILS</strong>
+   <span>Beautiful nail care</span>
+
+  </button>
+
+ </div>
+
+
+ <!-- BARBERSHOP GALLERY -->
+
+ <div class="gallery-panel" id="barberGallery">
+
+  <div class="gallery-title">
+
+   <h3>Barbershop Collection</h3>
+
+   <span>EXPLORE OUR WORK</span>
+
+  </div>
+
+  <div class="photo-track">
+
+   <article class="photo-card">
+
+    <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=600"
+         alt="Professional barber station">
+
+    <div class="photo-info">
+
+     <h4>Fresh Fade</h4>
+
+     <p>Clean fades and professional finishing.</p>
+
+     <button class="photo-book"
+             data-category="Barbering"
+             data-service="Fresh Fade">
+      BOOK THIS SERVICE →
+     </button>
+
+    </div>
+
+   </article>
+
+   <article class="photo-card">
+
+    <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=600"
+         alt="Modern barber haircut">
+
+    <div class="photo-info">
+
+     <h4>Classic Haircut</h4>
+
+     <p>Sharp cuts tailored to your style.</p>
+
+     <button class="photo-book"
+             data-category="Barbering"
+             data-service="Classic Haircut">
+      BOOK THIS SERVICE →
+     </button>
+
+    </div>
+
+   </article>
+
+   <article class="photo-card">
+
+    <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=600"
+         alt="Professional beard grooming">
+
+    <div class="photo-info">
+
+     <h4>Beard Grooming</h4>
+
+     <p>Professional beard shaping and finishing.</p>
+
+     <button class="photo-book"
+             data-category="Barbering"
+             data-service="Beard Grooming">
+      BOOK THIS SERVICE →
+     </button>
+
+    </div>
+
+   </article>
+
+   <article class="photo-card">
+
+    <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=600"
+         alt="Professional barber haircut">
+
+    <div class="photo-info">
+
+     <h4>Signature Cut</h4>
+
+     <p>Get a look that stands out.</p>
+
+     <button class="photo-book"
+             data-category="Barbering"
+             data-service="Signature Cut">
+      BOOK THIS SERVICE →
+     </button>
+
+    </div>
+
+   </article>
+
+  </div>
+
+ </div>
+
+
+ <!-- HAIR SALON GALLERY -->
+
+ <div class="gallery-panel hidden" id="hairGallery">
+
+  <div class="gallery-title">
+
+   <h3>Hair Salon Collection</h3>
+
+   <span>EXPLORE OUR WORK</span>
+
+  </div>
+
+  <div class="photo-track">
+
+   <article class="photo-card">
+
+    <img src="https://images.unsplash.com/photo-1560869713-7d0a29430803?w=600"
+         alt="Professional hairstyling">
+
+    <div class="photo-info">
+
+     <h4>Hair Styling</h4>
+
+     <p>Professional styling for your next look.</p>
+
+     <button class="photo-book"
+             data-category="Hair salon"
+             data-service="Hair Styling">
+      BOOK THIS SERVICE →
+     </button>
+
+    </div>
+
+   </article>
+
+   <article class="photo-card">
+
+    <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=600"
+         alt="Hair treatment">
+
+    <div class="photo-info">
+
+     <h4>Hair Treatment</h4>
+
+     <p>Give your hair the care it deserves.</p>
+
+     <button class="photo-book"
+             data-category="Hair salon"
+             data-service="Hair Treatment">
+      BOOK THIS SERVICE →
+     </button>
+
+    </div>
+
+   </article>
+
+   <article class="photo-card">
+
+    <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600"
+         alt="Braided hairstyle">
+
+    <div class="photo-info">
+
+     <h4>Braiding</h4>
+
+     <p>Beautiful styles and creative finishes.</p>
+
+     <button class="photo-book"
+             data-category="Hair salon"
+             data-service="Braiding">
+      BOOK THIS SERVICE →
+     </button>
+
+    </div>
+
+   </article>
+
+   <article class="photo-card">
+
+    <img src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=600"
+         alt="Salon hairstyle">
+
+    <div class="photo-info">
+
+     <h4>Hair Makeover</h4>
+
+     <p>Refresh your appearance with a new style.</p>
+
+     <button class="photo-book"
+             data-category="Hair salon"
+             data-service="Hair Makeover">
+      BOOK THIS SERVICE →
+     </button>
+
+    </div>
+
+   </article>
+
+  </div>
+
+ </div>
+
+
+ <!-- NAIL GALLERY -->
+
+ <div class="gallery-panel hidden" id="nailGallery">
+
+  <div class="gallery-title">
+
+   <h3>Nail Collection</h3>
+
+   <span>EXPLORE OUR WORK</span>
+
+  </div>
+
+  <div class="photo-track">
+
+   <article class="photo-card">
+
+    <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600"
+         alt="Elegant nail design">
+
+    <div class="photo-info">
+
+     <h4>Gel Overlay</h4>
+
+     <p>Beautiful gel finishes and nail care.</p>
+
+     <button class="photo-book"
+             data-category="Nail services"
+             data-service="Gel Overlay">
+      BOOK THIS SERVICE →
+     </button>
+
+    </div>
+
+   </article>
+
+   <article class="photo-card">
+
+    <img src="https://images.unsplash.com/photo-1610992015732-2449b76344bc?w=600"
+         alt="Nail art">
+
+    <div class="photo-info">
+
+     <h4>Nail Art</h4>
+
+     <p>Creative designs for your personal style.</p>
+
+     <button class="photo-book"
+             data-category="Nail services"
+             data-service="Nail Art">
+      BOOK THIS SERVICE →
+     </button>
+
+    </div>
+
+   </article>
+
+   <article class="photo-card">
+
+    <img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=600"
+         alt="Professional manicure">
+
+    <div class="photo-info">
+
+     <h4>Manicure</h4>
+
+     <p>Professional nail grooming and finishing.</p>
+
+     <button class="photo-book"
+             data-category="Nail services"
+             data-service="Manicure">
+      BOOK THIS SERVICE →
+     </button>
+
+    </div>
+
+   </article>
+
+   <article class="photo-card">
+
+    <img src="https://images.unsplash.com/photo-1519014816548-bf5fe059798b?w=600"
+         alt="Nail beauty treatment">
+
+    <div class="photo-info">
+
+     <h4>Pedicure</h4>
+
+     <p>Give your feet the attention they deserve.</p>
+
+     <button class="photo-book"
+             data-category="Nail services"
+             data-service="Pedicure">
+      BOOK THIS SERVICE →
+     </button>
+
+    </div>
+
+   </article>
+
+  </div>
+
+ </div>
+
+ <p class="gallery-hint">
+  ← Swipe sideways to explore more services →
+ </p>
+
+</section>
+
+
+<!-- BOOKING FORM -->
+
+<div class="card" id="bookingCard" style="visibility:hidden">
+
+ <h2>Complete Your Booking</h2>
+
+ <p class="section-intro">
+  Select your preferred professional and appointment details.
+  We will contact you to confirm your appointment.
+ </p>
+
+ <button type="button" class="choice active" id="loungeChoice">
+  BOOK AT THE LOUNGE
+ </button>
+
+ <button type="button" class="choice" id="houseChoice">
+  REQUEST A HOUSE CALL
+ </button>
+
+ <form id="bookingForm">
+
+  <label for="category">Service category</label>
+
+  <select id="category" required>
+
+   <option value="">Choose a category</option>
+   <option value="Barbering">Barbershop</option>
+   <option value="Hair salon">Hair salon</option>
+   <option value="Nail services">Nails</option>
+
+  </select>
+
+  <label for="service">Service required</label>
+
+  <input id="service"
+         type="text"
+         required
+         placeholder="e.g. Fresh fade, braiding, gel overlay">
+
+  <label for="staffMember">Preferred professional</label>
+
+  <select id="staffMember" required disabled>
+
+   <option value="">Select a service category first</option>
+
+  </select>
+
+  <p class="small">
+   Select your preferred professional or choose Any Available Professional.
+  </p>
+
+  <label for="date">Preferred date</label>
+
+  <input id="date" type="date" required>
+
+  <label for="time">Preferred time</label>
+
+  <input id="time" type="time" required>
+
+  <div id="houseFields" class="hidden">
+
+   <h2>House Call Details</h2>
+
+   <label for="area">Your area / suburb</label>
+
+   <input id="area"
+          type="text"
+          placeholder="e.g. Roodepoort or Soweto">
+
+   <label for="address">House call address</label>
+
+   <textarea id="address"
+             placeholder="Enter your street address and directions"></textarea>
+
+  </div>
+
+  <label for="notes">Additional instructions (optional)</label>
+
+  <textarea id="notes"
+            placeholder="Anything we should know before your appointment?"></textarea>
+
+  <button type="submit" id="submitButton">
+   SUBMIT BOOKING REQUEST
+  </button>
+
+ </form>
+
+ <div id="message" role="status"></div>
+
+</div>
+
+
+<!-- ACCOUNT PROMPT -->
+
+<div class="account-backdrop" id="accountBackdrop">
+
+ <div class="account-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="accountTitle">
+
+  <div class="account-icon">✦</div>
+
+  <h2 id="accountTitle">Your Next Level Journey Starts Here</h2>
+
+  <p>
+   You're just one step away from booking your service.
+   Create your free membership to book appointments,
+   track your loyalty points and manage your bookings.
+  </p>
+
+  <a href="register.html" class="create-account" id="registerLink">
+   CREATE MY FREE ACCOUNT
+  </a>
+
+  <a href="login.html" class="sign-in" id="loginLink">
+   I ALREADY HAVE AN ACCOUNT
+  </a>
+
+  <button type="button" class="cancel-account" id="cancelAccount">
+   Maybe later
+  </button>
+
+ </div>
+
+</div>
+
+
+<div class="links">
+
+ <a href="account.html">Back to My Account</a>
+
+ <br>
+
+ <a href="index.html">Back to Home</a>
+
+</div>
+
+</div>
+
+
 <script>
-const SUPABASE_URL = "https://teimbezoinfqlrxczafj.supabase.co";
-const SUPABASE_KEY = "sb_publishable_3lJOm65rVFwElFqLN-Gxzw_LdYacHZP";
+
+/* SUPABASE */
+
+const SUPABASE_URL =
+"https://teimbezoinfqlrxczafj.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_3lJOm65rVFwElFqLN-Gxzw_LdYacHZP";
 
 const db = window.supabase.createClient(
  SUPABASE_URL,
  SUPABASE_KEY
 );
 
-const params = new URLSearchParams(window.location.search);
+
+/* PAGE PARAMETERS */
+
+const params = new URLSearchParams(location.search);
+
 const requestedType = params.get("type");
+
+const requestedCategory = params.get("category");
+
+const requestedService =
+ params.get("service") || params.get("product");
+
+const requestedDepartment = params.get("department");
+
+
+/* ELEMENTS */
+
+const bookingCard = document.getElementById("bookingCard");
+
+const form = document.getElementById("bookingForm");
+
+const categorySelect = document.getElementById("category");
+
+const staffSelect = document.getElementById("staffMember");
+
+const message = document.getElementById("message");
+
+const submitButton = document.getElementById("submitButton");
+
+const areaInput = document.getElementById("area");
+
+const addressInput = document.getElementById("address");
+
+const houseFields = document.getElementById("houseFields");
+
+const accountBackdrop =
+ document.getElementById("accountBackdrop");
+
+
+/* BOOKING STATE */
 
 let bookingType = "In Lounge";
 
-const loungeChoice = document.getElementById("loungeChoice");
-const houseChoice = document.getElementById("houseChoice");
-const houseFields = document.getElementById("houseFields");
-const areaInput = document.getElementById("area");
-const addressInput = document.getElementById("address");
-const message = document.getElementById("message");
-const submitButton = document.getElementById("submitButton");
-const form = document.getElementById("bookingForm");
-const bookingCard = document.getElementById("bookingCard");
-const categorySelect = document.getElementById("category");
-const staffSelect = document.getElementById("staffMember");
+let currentUser = null;
 
-// SPECIAL CARD ELEMENTS
+const galleryMap = {
+ "Barbering":"barberGallery",
+ "Hair salon":"hairGallery",
+ "Nail services":"nailGallery"
+};
 
-const specialPreview = document.getElementById("specialPreview");
-const specialBackdrop = document.getElementById("specialBackdrop");
-const specialClose = document.getElementById("specialClose");
-const addSpecialToBooking = document.getElementById("addSpecialToBooking");
+const categoryAliases = {
+ "barbering":"Barbering",
+ "barbershop":"Barbering",
+ "hair salon":"Hair salon",
+ "hair":"Hair salon",
+ "nails":"Nail services",
+ "nail":"Nail services",
+ "nail services":"Nail services"
+};
 
-// Open the special card.
+function normalizeCategory(value){
 
-function openSpecial(){
- specialBackdrop.classList.add("open");
- document.body.classList.add("special-open");
- specialClose.focus();
+ if(!value) return "";
+
+ return categoryAliases[value.trim().toLowerCase()] || "";
+
 }
 
-// Close the special card.
 
-function closeSpecial(){
- specialBackdrop.classList.remove("open");
- document.body.classList.remove("special-open");
+/* SAVE PENDING BOOKING */
+
+function savePendingBooking(){
+
+ const pending = {
+
+  category:categorySelect.value,
+
+  service:document.getElementById("service").value,
+
+  type:bookingType,
+
+  createdAt:Date.now()
+
+ };
+
+ try{
+
+  localStorage.setItem(
+   "nextLevelPendingBooking",
+   JSON.stringify(pending)
+  );
+
+ }catch(error){
+
+  console.warn("Could not save booking details",error);
+
+ }
+
 }
 
-// Click the promotional picture.
 
-specialPreview.addEventListener("click",openSpecial);
+/* RESTORE PENDING BOOKING */
 
-// Allow keyboard access.
+function restorePendingBooking(){
 
-specialPreview.addEventListener("keydown",function(event){
- if(event.key === "Enter" || event.key === " "){
-  event.preventDefault();
-  openSpecial();
+ try{
+
+  const saved = localStorage.getItem(
+   "nextLevelPendingBooking"
+  );
+
+  if(!saved) return;
+
+  const pending = JSON.parse(saved);
+
+  if(!pending || !pending.createdAt) return;
+
+  // Do not restore an old abandoned booking.
+
+  if(Date.now() - pending.createdAt > 86400000){
+
+   localStorage.removeItem("nextLevelPendingBooking");
+
+   return;
+
+  }
+
+  if(pending.category){
+
+   categorySelect.value =
+    normalizeCategory(pending.category);
+
+   updateStaffOptions();
+
+  }
+
+  if(pending.service){
+
+   document.getElementById("service").value =
+    pending.service;
+
+  }
+
+  if(pending.type === "House Call"){
+
+   chooseBookingType("House Call");
+
+  }else{
+
+   chooseBookingType("In Lounge");
+
+  }
+
+ }catch(error){
+
+  console.warn("Could not restore booking",error);
+
  }
-});
 
-// Close using X.
+}
 
-specialClose.addEventListener("click",closeSpecial);
 
-// Close when clicking outside the card.
+/* BOOKING DESTINATION */
 
-specialBackdrop.addEventListener("click",function(event){
- if(event.target === specialBackdrop){
-  closeSpecial();
+function getBookingDestination(){
+
+ const type =
+  bookingType === "House Call" ? "housecall" : "shop";
+
+ return "booking.html?type=" + type;
+
+}
+
+
+/* ACCOUNT PROMPT */
+
+function openAccountPrompt(){
+
+ savePendingBooking();
+
+ accountBackdrop.classList.add("open");
+
+ document.body.classList.add("modal-open");
+
+ const destination = getBookingDestination();
+
+ document.getElementById("loginLink").href =
+  "login.html?next=" + encodeURIComponent(destination);
+
+ document.getElementById("registerLink").href =
+  "register.html?next=" + encodeURIComponent(destination);
+
+}
+
+
+function closeAccountPrompt(){
+
+ accountBackdrop.classList.remove("open");
+
+ document.body.classList.remove("modal-open");
+
+}
+
+
+document.getElementById("cancelAccount")
+ .addEventListener("click",closeAccountPrompt);
+
+
+/* SERVICE GALLERY SWITCHING */
+
+function showGallery(category){
+
+ Object.values(galleryMap).forEach(function(id){
+
+  document.getElementById(id).classList.add("hidden");
+
+ });
+
+ const gallery = galleryMap[category];
+
+ if(gallery){
+
+  document.getElementById(gallery)
+   .classList.remove("hidden");
+
  }
-});
 
-// Escape key also closes the card.
+ document.querySelectorAll(".category-button")
+ .forEach(function(button){
 
-document.addEventListener("keydown",function(event){
- if(event.key === "Escape"){
-  closeSpecial();
- }
-});
+  button.classList.toggle(
+   "active",
+   button.dataset.category === category
+  );
 
-// ADD SPECIAL TO BOOKING
+ });
 
-addSpecialToBooking.addEventListener("click",function(event){
+}
 
- event.preventDefault();
 
- // Automatically choose the correct service category.
- categorySelect.value = "Barbering";
+/* CATEGORY BUTTONS */
 
- // Refresh the professional list.
- updateStaffOptions();
+document.querySelectorAll(".category-button")
+.forEach(function(button){
 
- // Automatically enter the special service.
- document.getElementById("service").value =
-  "Fresh Look Special";
+ button.addEventListener("click",function(){
 
- // Select any available professional.
- staffSelect.value = "Any Available Professional";
+  const category = button.dataset.category;
 
- // Clear previous booking message.
- message.textContent = "";
+  showGallery(category);
 
- // Close the special card.
- closeSpecial();
+  categorySelect.value = category;
 
- // Scroll to the booking form.
- bookingCard.scrollIntoView({
-  behavior:"smooth",
-  block:"start"
+  updateStaffOptions();
+
+  message.textContent = "";
+
  });
 
 });
 
-// Remember the selected booking type when sending the customer to login.
 
-function getBookingDestination(){
- const type = bookingType === "House Call" ? "housecall" : "shop";
-
- return "booking.html?type=" + type;
-}
-
-function redirectToLogin(){
- const destination = getBookingDestination();
-
- window.location.replace(
-  "login.html?next=" + encodeURIComponent(destination)
- );
-}
-
-// Show staff options according to the selected service category.
+/* STAFF OPTIONS */
 
 function updateStaffOptions(){
 
@@ -715,19 +1503,21 @@ function updateStaffOptions(){
 
  if(!category){
 
-  staffSelect.add(new Option(
-   "Select a service category first",""
-  ));
+  staffSelect.add(
+   new Option("Select a service category first","")
+  );
 
   staffSelect.disabled = true;
+
   return;
+
  }
 
  staffSelect.disabled = false;
 
- staffSelect.add(new Option(
-  "Choose your preferred professional",""
- ));
+ staffSelect.add(
+  new Option("Choose your preferred professional","")
+ );
 
  let professionals = [];
 
@@ -755,22 +1545,165 @@ function updateStaffOptions(){
  }
 
  professionals.forEach(function(name){
+
   staffSelect.add(new Option(name,name));
+
  });
 
- staffSelect.add(new Option(
-  "Any Available Professional",
-  "Any Available Professional"
- ));
+ staffSelect.add(
+  new Option(
+   "Any Available Professional",
+   "Any Available Professional"
+  )
+ );
 
 }
 
+
 categorySelect.addEventListener(
  "change",
- updateStaffOptions
+ function(){
+
+  updateStaffOptions();
+
+  showGallery(categorySelect.value);
+
+ }
 );
 
-// Lounge and house-call selection.
+
+/* BOOK DIRECTLY FROM A PHOTO */
+
+document.querySelectorAll(".photo-book")
+.forEach(function(button){
+
+ button.addEventListener("click",function(){
+
+  const category = button.dataset.category;
+
+  const service = button.dataset.service;
+
+  categorySelect.value = category;
+
+  document.getElementById("service").value = service;
+
+  updateStaffOptions();
+
+  showGallery(category);
+
+  message.textContent = "";
+
+  bookingCard.scrollIntoView({
+   behavior:"smooth",
+   block:"start"
+  });
+
+  if(!currentUser){
+
+   openAccountPrompt();
+
+  }else{
+
+   bookingCard.style.visibility = "visible";
+
+  }
+
+ });
+
+});
+
+
+/* SPECIAL CARD */
+
+const specialPreview =
+ document.getElementById("specialPreview");
+
+const specialBackdrop =
+ document.getElementById("specialBackdrop");
+
+function openSpecial(){
+
+ specialBackdrop.classList.add("open");
+
+ document.body.classList.add("modal-open");
+
+}
+
+function closeSpecial(){
+
+ specialBackdrop.classList.remove("open");
+
+ document.body.classList.remove("modal-open");
+
+}
+
+specialPreview.addEventListener("click",openSpecial);
+
+specialPreview.addEventListener("keydown",function(event){
+
+ if(event.key === "Enter" || event.key === " "){
+
+  event.preventDefault();
+
+  openSpecial();
+
+ }
+
+});
+
+document.getElementById("specialClose")
+ .addEventListener("click",closeSpecial);
+
+specialBackdrop.addEventListener("click",function(event){
+
+ if(event.target === specialBackdrop){
+
+  closeSpecial();
+
+ }
+
+});
+
+
+/* ADD SPECIAL TO BOOKING */
+
+document.getElementById("addSpecialToBooking")
+ .addEventListener("click",function(event){
+
+  event.preventDefault();
+
+  categorySelect.value = "Barbering";
+
+  document.getElementById("service").value =
+   "Fresh Look Special";
+
+  updateStaffOptions();
+
+  showGallery("Barbering");
+
+  closeSpecial();
+
+  bookingCard.scrollIntoView({
+   behavior:"smooth"
+  });
+
+  if(!currentUser){
+
+   openAccountPrompt();
+
+  }
+
+ });
+
+
+/* LOUNGE / HOUSE CALL */
+
+const loungeChoice =
+ document.getElementById("loungeChoice");
+
+const houseChoice =
+ document.getElementById("houseChoice");
+
 
 function chooseBookingType(type){
 
@@ -794,27 +1727,97 @@ function chooseBookingType(type){
  );
 
  areaInput.required = isHouseCall;
+
  addressInput.required = isHouseCall;
 
 }
 
+
 loungeChoice.addEventListener("click",function(){
+
  chooseBookingType("In Lounge");
+
 });
 
 houseChoice.addEventListener("click",function(){
+
  chooseBookingType("House Call");
+
 });
 
-// Read the booking type selected on the homepage.
+
+/* INITIAL BOOKING TYPE */
 
 if(requestedType === "housecall"){
+
  chooseBookingType("House Call");
+
 }else{
+
  chooseBookingType("In Lounge");
+
 }
 
-// Prevent customers from choosing a date in the past.
+
+/* PERSONALISE CATEGORY FROM PROFILE */
+
+function getPreferredCategory(user){
+
+ const metadata = user?.user_metadata || {};
+
+ const preference =
+  metadata.preferred_category ||
+  metadata.service_category ||
+  metadata.preferred_service ||
+  metadata.favorite_category ||
+  "";
+
+ return normalizeCategory(preference);
+
+}
+
+
+/* INITIAL CATEGORY PRIORITY
+
+1. Category selected on homepage.
+2. Saved customer preference, if available.
+3. Barbershop as default.
+*/
+
+function setInitialCategory(user){
+
+ const queryCategory =
+  normalizeCategory(requestedCategory);
+
+ const profileCategory =
+  getPreferredCategory(user);
+
+ const departmentCategory =
+  normalizeCategory(requestedDepartment);
+
+ const category =
+  queryCategory ||
+  departmentCategory ||
+  profileCategory ||
+  "Barbering";
+
+ categorySelect.value = category;
+
+ showGallery(category);
+
+ updateStaffOptions();
+
+ if(requestedService){
+
+  document.getElementById("service").value =
+   requestedService;
+
+ }
+
+}
+
+
+/* DATE VALIDATION */
 
 const today = new Date();
 
@@ -826,7 +1829,8 @@ const localToday = [
 
 document.getElementById("date").min = localToday;
 
-// Verify login before showing the booking form.
+
+/* CUSTOMER AUTHENTICATION */
 
 async function checkCustomer(){
 
@@ -834,25 +1838,47 @@ async function checkCustomer(){
 
   const {data,error} = await db.auth.getUser();
 
-  if(error || !data.user){
-   redirectToLogin();
+  if(error) throw error;
+
+  currentUser = data.user;
+
+  if(!currentUser){
+
+   bookingCard.style.visibility = "visible";
+
+   restorePendingBooking();
+
+   openAccountPrompt();
+
    return;
+
   }
 
   bookingCard.style.visibility = "visible";
 
+  setInitialCategory(currentUser);
+
+  restorePendingBooking();
+
+  // Refresh the saved booking category display.
+
+  showGallery(categorySelect.value);
+
  }catch(error){
 
-  message.textContent =
-   "Unable to verify your login. Please try again.";
+  console.error("Authentication error:",error);
 
   bookingCard.style.visibility = "visible";
+
+  message.textContent =
+   "We could not verify your account. Please refresh the page or sign in again.";
 
  }
 
 }
 
-// SUBMIT BOOKING
+
+/* SUBMIT BOOKING */
 
 form.addEventListener("submit",async function(event){
 
@@ -860,7 +1886,16 @@ form.addEventListener("submit",async function(event){
 
  message.textContent = "";
 
+ if(!currentUser){
+
+  openAccountPrompt();
+
+  return;
+
+ }
+
  submitButton.disabled = true;
+
  submitButton.textContent = "SUBMITTING REQUEST...";
 
  try{
@@ -871,8 +1906,13 @@ form.addEventListener("submit",async function(event){
   if(authError) throw authError;
 
   if(!authData.user){
-   redirectToLogin();
+
+   currentUser = null;
+
+   openAccountPrompt();
+
    return;
+
   }
 
   const category = categorySelect.value;
@@ -895,20 +1935,52 @@ form.addEventListener("submit",async function(event){
   const notes =
    document.getElementById("notes").value.trim();
 
+
+  if(!category){
+
+   throw new Error("Please select a service category.");
+
+  }
+
+  if(!service){
+
+   throw new Error("Please enter the service you require.");
+
+  }
+
   if(!staffMember){
+
    throw new Error(
     "Please select a professional or Any Available Professional."
    );
+
+  }
+
+  if(!date || !time){
+
+   throw new Error(
+    "Please select your preferred appointment date and time."
+   );
+
+  }
+
+  if(date < localToday){
+
+   throw new Error("You cannot select a date in the past.");
+
   }
 
   if(
    bookingType === "House Call" &&
    (!area || !address)
   ){
+
    throw new Error(
     "Please enter your area and house call address."
    );
+
   }
+
 
   const booking = {
 
@@ -934,11 +2006,17 @@ form.addEventListener("submit",async function(event){
 
   };
 
+
   const {error} = await db
    .from("bookings")
    .insert([booking]);
 
   if(error) throw error;
+
+
+  // Remove saved pending booking after success.
+
+  localStorage.removeItem("nextLevelPendingBooking");
 
   form.reset();
 
@@ -946,12 +2024,18 @@ form.addEventListener("submit",async function(event){
 
   chooseBookingType("In Lounge");
 
+  showGallery(category);
+
+  message.style.color = "#e4c783";
+
   message.textContent =
    "Your booking request has been submitted successfully! " +
-   "It is PENDING until the lounge confirms your appointment. " +
+   "Your appointment is PENDING until the lounge confirms it. " +
    "Please check My Account for updates.";
 
  }catch(error){
+
+  message.style.color = "#ff8585";
 
   message.textContent =
    "Booking error: " + error.message;
@@ -967,12 +2051,29 @@ form.addEventListener("submit",async function(event){
 
 });
 
-// START PAGE
+
+/* ESCAPE KEY */
+
+document.addEventListener("keydown",function(event){
+
+ if(event.key === "Escape"){
+
+  closeSpecial();
+
+  closeAccountPrompt();
+
+ }
+
+});
+
+
+/* START PAGE */
 
 updateStaffOptions();
+
 checkCustomer();
 
 </script>
 
 </body>
-</html>
+  </html>
