@@ -1503,6 +1503,16 @@ setInterval(function() {
   sloganIndex = (sloganIndex + 1) % slogans.length;
   heroSlogan.textContent = slogans[sloganIndex];
 }, 4000);
+  const savedCategory = localStorage.getItem(
+  "nl_preferred_category"
+);
+
+createLookbook();
+
+selectLookbookCategory(
+  lookbookData[savedCategory] ? savedCategory : "barbershop",
+  false
+);
 
 // FOOTER YEAR
 
