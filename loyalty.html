@@ -118,6 +118,68 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .wallet-stat span{display:block;color:#999;font-size:10px;letter-spacing:1px;margin-bottom:8px}
 .wallet-stat strong{font-size:23px;color:var(--gold-light)}
 #walletClientNumber{display:block;max-width:100%;font-size:13px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* LOYALTY 2.0 TIERS */
+.tier-panel{
+ background:linear-gradient(135deg,#292319,#191919);
+ border:1px solid #594728;
+ border-radius:14px;
+ padding:17px;
+ margin-top:16px;
+}
+.tier-top{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+}
+.tier-label{
+ color:#999;
+ font-size:10px;
+ letter-spacing:1.5px;
+}
+.tier-name{
+ color:var(--gold-light);
+ font-size:22px;
+ font-weight:bold;
+ margin-top:6px;
+}
+.tier-icon{
+ font-size:27px;
+ color:var(--gold);
+}
+.tier-description{
+ color:#aaa;
+ font-size:11px;
+ line-height:1.5;
+ margin-top:9px;
+}
+.tier-progress-track{
+ height:8px;
+ background:#383838;
+ border-radius:20px;
+ overflow:hidden;
+ margin-top:13px;
+}
+.tier-progress-fill{
+ height:100%;
+ width:0;
+ background:linear-gradient(90deg,#a47b36,var(--gold-light));
+ transition:width .4s;
+}
+.tier-progress-text{
+ display:flex;
+ justify-content:space-between;
+ gap:10px;
+ color:#aaa;
+ font-size:10px;
+ margin-top:8px;
+}
+.tier-lifetime{
+ color:var(--gold-light);
+ font-weight:bold;
+}
+
 .reward-list{display:grid;gap:12px;margin-top:15px}
 .reward-item{background:#202020;border:1px solid #373737;border-radius:13px;padding:15px;display:flex;gap:12px;align-items:center;min-width:0}
 .reward-icon{width:42px;height:42px;border-radius:12px;background:#332b1d;display:grid;place-items:center;color:var(--gold);font-size:20px;flex-shrink:0}
@@ -178,6 +240,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
  .card-number-value{font-size:11px}.referral-stats{gap:6px}
  .referral-stat{padding:11px 5px}.referral-stat strong{font-size:19px}
  .referral-stat span{font-size:8px}
+ .tier-progress-text{font-size:9px}
 }
 </style>
 </head>
@@ -234,6 +297,35 @@ button:disabled{opacity:.5;cursor:not-allowed}
      <div class="wallet-stat"><span>AVAILABLE POINTS</span><strong id="walletPoints">0</strong></div>
      <div class="wallet-stat"><span>MEMBER NUMBER</span><strong id="walletClientNumber">NL-MEMBER</strong></div>
     </div>
+
+    <div class="tier-panel">
+     <div class="tier-top">
+      <div>
+       <div class="tier-label">YOUR MEMBERSHIP LEVEL</div>
+       <div class="tier-name" id="membershipTier">BRONZE</div>
+      </div>
+      <div class="tier-icon">♛</div>
+     </div>
+
+     <div class="tier-description" id="tierDescription">
+      Welcome to the Next Level loyalty programme.
+     </div>
+
+     <div class="tier-progress-track">
+      <div class="tier-progress-fill" id="tierProgressFill"></div>
+     </div>
+
+     <div class="tier-progress-text">
+      <span id="tierProgressText">0 lifetime points</span>
+      <span id="nextTierText">Next: Silver</span>
+     </div>
+
+     <div class="tier-description">
+      Lifetime points earned:
+      <strong class="tier-lifetime" id="lifetimePoints">0</strong>
+     </div>
+    </div>
+
     <div id="nextRewardMessage" class="notice">Loading your reward progress...</div>
    </section>
 
@@ -299,7 +391,10 @@ button:disabled{opacity:.5;cursor:not-allowed}
      <div class="card-face-top"><div class="card-brand">NEXT LEVEL<br>GROOMING LOUNGE</div><div class="card-crown">♛</div></div>
      <div class="member-details">
       <div class="member-photo" id="cardPhotoFallback"><span id="cardInitials">N</span><img id="cardPhoto" alt="Member profile photo"></div>
-      <div style="min-width:0"><div class="card-member-name" id="cardMemberName">Member Name</div><div class="card-member-label">NEXT LEVEL MEMBER</div></div>
+      <div style="min-width:0">
+       <div class="card-member-name" id="cardMemberName">Member Name</div>
+       <div class="card-member-label">NEXT LEVEL <span id="cardMembershipTier">BRONZE</span> MEMBER</div>
+      </div>
      </div>
      <div class="card-bottom"><div><div class="card-number-label">UNIQUE CLIENT NUMBER</div><div class="card-number-value" id="cardClientNumber">NL-MEMBER</div></div><small>CONFIDENCE STARTS HERE</small></div>
     </div>
@@ -325,6 +420,8 @@ const PROFILE_BUCKET="customer-profile-pictures";
 let supabaseClient=null;
 let currentUser=null;
 let currentBalance=0;
+let lifetimePoints=0;
+let currentTier="Bronze";
 let currentRewards=[];
 let currentReferralCode="";
 let redemptionBusy=false;
@@ -444,19 +541,116 @@ async function activateAndLoadMembership(){
  return {membership,activationData};
 }
 
-/* LOAD POINTS */
+/* LOYALTY 2.0 TIER SYSTEM */
+function calculateMembershipTier(points){
+ points=Math.max(0,Number(points)||0);
+
+ if(points>=3000)return "VIP";
+ if(points>=1500)return "Gold";
+ if(points>=500)return "Silver";
+
+ return "Bronze";
+}
+
+function updateMembershipTier(){
+ const tiers=[
+  {name:"Bronze",min:0,next:500},
+  {name:"Silver",min:500,next:1500},
+  {name:"Gold",min:1500,next:3000},
+  {name:"VIP",min:3000,next:null}
+ ];
+
+ const tier=tiers.find(t=>
+  lifetimePoints>=t.min &&
+  (t.next===null||lifetimePoints<t.next)
+ );
+
+ currentTier=tier.name;
+
+ document.getElementById("membershipTier").textContent=
+  tier.name.toUpperCase();
+
+ document.getElementById("cardMembershipTier").textContent=
+  tier.name.toUpperCase();
+
+ document.getElementById("lifetimePoints").textContent=
+  lifetimePoints.toLocaleString();
+
+ const descriptions={
+  Bronze:"Your Next Level journey starts here. Keep earning points with completed paid appointments.",
+  Silver:"You've reached Silver status. Keep visiting and earning to unlock Gold.",
+  Gold:"You're a Gold member. Enjoy your progress and work towards VIP status.",
+  VIP:"You've reached VIP status. Thank you for being one of our most valued members."
+ };
+
+ document.getElementById("tierDescription").textContent=
+  descriptions[tier.name];
+
+ let progress=100;
+ let progressText="VIP membership achieved";
+ let nextText="Highest tier";
+
+ if(tier.next!==null){
+  const pointsIntoTier=lifetimePoints-tier.min;
+  const tierRange=tier.next-tier.min;
+
+  progress=Math.min(100,(pointsIntoTier/tierRange)*100);
+
+  progressText=
+   lifetimePoints.toLocaleString()+" lifetime points";
+
+  const nextTier=tiers[tiers.indexOf(tier)+1];
+
+  nextText=
+   (tier.next-lifetimePoints).toLocaleString()+
+   " points to "+nextTier.name;
+ }
+
+ document.getElementById("tierProgressFill").style.width=
+  progress+"%";
+
+ document.getElementById("tierProgressText").textContent=
+  progressText;
+
+ document.getElementById("nextTierText").textContent=
+  nextText;
+}
+
+/* LOAD AVAILABLE AND LIFETIME POINTS */
 async function loadPointsBalance(){
  const {data,error}=await supabaseClient
   .from("loyalty_points_ledger")
   .select("points_change")
   .eq("customer_id",currentUser.id);
+
  if(error)throw error;
 
- currentBalance=(data||[]).reduce((total,row)=>total+Number(row.points_change||0),0);
+ const entries=data||[];
+
+ // Available wallet points: credits and debits combined.
+ currentBalance=entries.reduce(
+  (total,row)=>total+Number(row.points_change||0),0
+ );
+
  currentBalance=Math.max(0,currentBalance);
 
- document.getElementById("walletPoints").textContent=currentBalance.toLocaleString();
- document.getElementById("cardPoints").textContent=currentBalance.toLocaleString();
+ // Lifetime points: positive ledger entries only.
+ // Spending or redeeming points does not reduce membership tier.
+ lifetimePoints=entries.reduce(
+  (total,row)=>{
+   const points=Number(row.points_change||0);
+   return total+(points>0?points:0);
+  },
+  0
+ );
+
+ document.getElementById("walletPoints").textContent=
+  currentBalance.toLocaleString();
+
+ document.getElementById("cardPoints").textContent=
+  currentBalance.toLocaleString();
+
+ updateMembershipTier();
  updateNextReward();
 }
 
@@ -774,7 +968,7 @@ async function copyReferralCode(){
  }
 }
 
-/* WHATSAPP REFERRAL INVITATION — CORRECTED */
+/* WHATSAPP REFERRAL INVITATION */
 function shareReferralWhatsApp(){
  if(!currentReferralCode){
   setReferralMessage("Your referral code is not available.",true);
