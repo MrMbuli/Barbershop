@@ -5,350 +5,506 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#101010">
-<title>Loyalty Rewards | Next Level Grooming Lounge</title>
+<title>My Loyalty | Next Level Grooming Lounge</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+:root {
+  --bg:#101010;
+  --panel:#191919;
+  --panel2:#202020;
+  --gold:#d6ad55;
+  --gold2:#f0d58e;
+  --text:#fff;
+  --muted:#aaa;
+  --line:#303030;
+  --green:#65d69a;
+  --red:#ff7777;
+}
 *{box-sizing:border-box}
 body{
-  margin:0;padding:16px;background:#101010;color:#fff;
-  font-family:Arial,sans-serif
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,sans-serif;
 }
-.container{max-width:950px;margin:20px auto}
-header{text-align:center;margin-bottom:22px}
-header h1{color:#d5ad58;font-size:25px}
-header p{color:#aaa}
+button,a{font:inherit}
+button{cursor:pointer}
+.topbar{
+  padding:17px 20px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.brand{font-weight:900;letter-spacing:1px}
+.brand span{color:var(--gold)}
+.topbar a{
+  color:var(--gold2);
+  text-decoration:none;
+  font-size:13px;
+}
+.container{
+  width:min(1100px,94%);
+  margin:25px auto 60px;
+}
+.heading{margin-bottom:22px}
+.heading h1{margin:0 0 7px;font-size:27px}
+.heading p{color:var(--muted);margin:0;font-size:14px}
 .card{
-  background:#1b1b1b;border:1px solid #765b2e;
-  border-radius:13px;padding:20px;margin-bottom:17px
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:17px;
+  padding:19px;
+  margin-bottom:17px;
 }
-h2,h3{color:#d5ad58;margin-top:0}
-p{line-height:1.5}
-.muted{color:#aaa;font-size:13px}
-button{
-  border:0;border-radius:7px;padding:12px 16px;
-  background:#c49a45;color:#111;font-weight:bold;
-  cursor:pointer;font-size:14px
-}
-button:hover{background:#e0b75f}
-button:disabled{opacity:.5;cursor:not-allowed}
-input{
-  width:100%;padding:12px;border-radius:7px;
-  border:1px solid #555;background:#292929;color:white
-}
-[hidden]{display:none!important}
-.message{text-align:center;padding:15px;color:#ccc}
-.error{color:#ff7777}
-.success{color:#65d99b}
-.gold{color:#d5ad58}
-.row{display:flex;justify-content:space-between;gap:12px;align-items:center}
+.card h2{font-size:17px;margin:0 0 15px}
+.card h3{font-size:15px;margin:0 0 8px}
+.muted{color:var(--muted)}
+.small{font-size:12px;color:var(--muted);line-height:1.5}
 .grid{
-  display:grid;grid-template-columns:repeat(2,1fr);gap:12px
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:15px;
+}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
 }
 .stat{
-  background:#252525;border:1px solid #444;
-  border-radius:10px;padding:17px;text-align:center
+  background:var(--panel2);
+  border-radius:12px;
+  padding:15px 12px;
 }
 .stat strong{
-  display:block;color:#d5ad58;font-size:28px;margin-bottom:7px
+  display:block;
+  font-size:25px;
+  color:var(--gold2);
+  margin-bottom:5px;
 }
-.stat span{font-size:12px;color:#bbb}
+.stat span{font-size:12px;color:var(--muted)}
 .membership{
-  background:linear-gradient(135deg,#29231a,#171717 65%,#483719);
-  border:1px solid #d5ad58;border-radius:15px;
-  padding:23px;position:relative;overflow:hidden
+  background:linear-gradient(130deg,#282116,#151515 65%,#302515);
+  border:1px solid #8e7139;
+  border-radius:19px;
+  padding:23px;
+  position:relative;
+  overflow:hidden;
+  min-height:190px;
 }
 .membership:after{
-  content:"NL";position:absolute;right:15px;bottom:-25px;
-  font-size:115px;font-weight:bold;color:#ffffff08
+  content:"NL";
+  position:absolute;
+  right:10px;
+  bottom:-35px;
+  font-size:130px;
+  font-weight:900;
+  color:rgba(214,173,85,.07);
 }
-.membership h2{letter-spacing:2px}
-.membership .number{
-  font-size:24px;letter-spacing:3px;color:#f0cc7b;
-  margin:22px 0
+.member-top,.member-bottom{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  align-items:center;
+  position:relative;
+  z-index:1;
 }
-.membership small{color:#bbb}
+.member-logo{font-size:12px;letter-spacing:2px;font-weight:bold;color:var(--gold2)}
+.member-tier{
+  border:1px solid var(--gold);
+  color:var(--gold2);
+  padding:6px 11px;
+  border-radius:30px;
+  font-size:11px;
+  text-transform:uppercase;
+}
+.member-name{font-size:21px;font-weight:bold;margin:26px 0 7px;position:relative;z-index:1}
+.member-number{font-size:12px;color:#d4c6a7;letter-spacing:1px;position:relative;z-index:1}
+.member-bottom{margin-top:23px;font-size:11px;color:#d4c6a7}
+.progress-track{
+  height:9px;
+  border-radius:20px;
+  background:#333;
+  overflow:hidden;
+  margin:12px 0 8px;
+}
+.progress-fill{
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--gold),var(--gold2));
+  border-radius:20px;
+  transition:width .3s;
+}
+.tier-list{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+  margin-top:17px;
+}
 .tier{
-  display:inline-block;border:1px solid #d5ad58;
-  color:#f0cc7b;padding:7px 15px;border-radius:30px;
-  font-size:12px;font-weight:bold
+  text-align:center;
+  padding:11px 4px;
+  background:var(--panel2);
+  border:1px solid var(--line);
+  border-radius:10px;
+  opacity:.65;
 }
-.progress{
-  height:11px;background:#333;border-radius:20px;
-  overflow:hidden;margin:12px 0
+.tier.active{border-color:var(--gold);opacity:1}
+.tier strong{display:block;font-size:12px;color:var(--gold2)}
+.tier span{display:block;font-size:10px;color:var(--muted);margin-top:5px}
+.btn{
+  border:0;
+  border-radius:9px;
+  background:var(--gold);
+  color:#151515;
+  padding:11px 15px;
+  font-weight:bold;
+  font-size:13px;
 }
-.progress div{
-  height:100%;background:linear-gradient(90deg,#98712e,#f0cc7b);
-  width:0%;transition:width .3s
+.btn:hover{background:var(--gold2)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn-outline{
+  background:transparent;
+  border:1px solid var(--gold);
+  color:var(--gold2);
 }
-.reward,.history,.referral-item{
-  background:#252525;border:1px solid #444;
-  border-left:4px solid #c49a45;
-  border-radius:9px;padding:15px;margin-bottom:11px
+.btn-outline:hover{background:#302515}
+.reward{
+  background:var(--panel2);
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:15px;
+  display:flex;
+  flex-direction:column;
+  gap:9px;
 }
-.reward p,.history p,.referral-item p{
-  color:#ccc;font-size:13px;margin:6px 0
+.reward .cost{color:var(--gold2);font-weight:bold}
+.reward p{font-size:13px;color:var(--muted);margin:0;line-height:1.5}
+.reward button{margin-top:auto}
+.reward-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
 }
-.reward button{width:100%;margin-top:10px}
-.points-cost{color:#d5ad58;font-weight:bold}
+.row-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  padding:13px 0;
+  border-bottom:1px solid var(--line);
+  font-size:13px;
+}
+.row-item:last-child{border-bottom:0}
+.positive{color:var(--green)}
+.negative{color:var(--red)}
+.pill{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  background:#302515;
+  color:var(--gold2);
+  font-size:10px;
+  text-transform:uppercase;
+}
+.profile-check{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:11px 0;
+  border-bottom:1px solid var(--line);
+  font-size:13px;
+}
+.profile-check:last-child{border-bottom:0}
+.check{color:var(--green);font-weight:bold}
+.incomplete{color:var(--red);font-weight:bold}
 .referral-code{
-  background:#292929;border:1px dashed #d5ad58;
-  border-radius:9px;padding:16px;text-align:center;
-  font-size:22px;letter-spacing:3px;color:#f0cc7b;
-  overflow-wrap:anywhere;margin:12px 0
+  background:#111;
+  border:1px dashed var(--gold);
+  border-radius:12px;
+  padding:17px;
+  font-size:23px;
+  letter-spacing:3px;
+  font-weight:bold;
+  text-align:center;
+  color:var(--gold2);
+  margin:12px 0;
+  overflow-wrap:anywhere;
 }
-.check{
-  background:#252525;border-radius:8px;
-  padding:11px;margin-bottom:8px;
-  font-size:13px
+.empty{
+  color:var(--muted);
+  font-size:13px;
+  padding:15px 0;
 }
-.check.yes{color:#65d99b}
-.check.no{color:#ff8888}
-.profile-picture{
-  width:75px;height:75px;border-radius:50%;
-  object-fit:cover;border:2px solid #d5ad58
+.notice{
+  padding:12px 14px;
+  border-radius:10px;
+  background:#242016;
+  color:#e6d5a9;
+  font-size:13px;
+  line-height:1.5;
+  margin-bottom:14px;
 }
+.error{background:#321d1d;color:#ffb0b0}
+.success{background:#183024;color:#a6edc3}
+.avatar{
+  width:65px;height:65px;border-radius:50%;
+  object-fit:cover;background:#333;border:2px solid var(--gold);
+}
+.profile-top{display:flex;align-items:center;gap:13px;margin-bottom:15px}
+.profile-top strong{display:block;margin-bottom:5px}
 .section-title{
-  display:flex;justify-content:space-between;
-  align-items:center;gap:10px
+  display:flex;justify-content:space-between;align-items:center;gap:10px
 }
-.logout{background:#842d2d;color:white}
-.empty{text-align:center;color:#aaa;padding:18px}
-footer{text-align:center;color:#777;font-size:12px;padding:20px}
-@media(max-width:600px){
-  body{padding:10px}
-  .container{margin:10px auto}
-  .card{padding:15px}
-  .grid{grid-template-columns:1fr 1fr}
-  .membership .number{font-size:19px}
-  .row{align-items:flex-start}
+.loading{text-align:center;padding:35px;color:var(--gold2)}
+footer{text-align:center;color:#777;font-size:11px;padding:20px}
+@media(max-width:650px){
+  .grid,.reward-grid{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .stat{padding:12px 8px}
+  .stat strong{font-size:21px}
+  .tier-list{grid-template-columns:repeat(2,1fr)}
+  .container{margin-top:19px}
 }
 </style>
 </head>
 
 <body>
-<div class="container">
-
-<header>
-  <h1>NEXT LEVEL GROOMING LOUNGE</h1>
-  <p>LOYALTY REWARDS PROGRAMME</p>
-  <p>Confidence Starts Here.</p>
+<header class="topbar">
+  <div class="brand">NEXT LEVEL <span>GROOMING LOUNGE</span></div>
+  <a href="account.html">← My Account</a>
 </header>
 
-<div id="message" class="card message">
-  Checking your membership...
-</div>
-
-<main id="loyaltyDashboard" hidden>
-
-<!-- MEMBERSHIP CARD -->
-<section class="card">
-  <div class="section-title">
-    <h2>My Membership Card</h2>
-    <span class="tier" id="tierBadge">BRONZE</span>
+<main class="container">
+  <div class="heading">
+    <h1>My Loyalty Rewards</h1>
+    <p>Your visits. Your points. Your rewards.</p>
   </div>
 
-  <div class="membership">
-    <small>NEXT LEVEL GROOMING LOUNGE</small>
-    <h2>LOYALTY MEMBER</h2>
-    <p id="memberName">Customer</p>
-    <div class="number" id="clientNumber">Loading...</div>
-    <div class="row">
-      <small>MEMBER SINCE</small>
-      <small id="memberSince">Loading...</small>
-    </div>
+  <div id="message" class="notice" style="display:none"></div>
+  <div id="loading" class="loading">Loading your membership...</div>
+
+  <div id="loyaltyContent" style="display:none">
+
+    <!-- DIGITAL MEMBERSHIP CARD -->
+    <section class="card">
+      <div class="section-title">
+        <h2>My Membership Card</h2>
+        <span class="pill">Digital Member</span>
+      </div>
+
+      <div class="membership">
+        <div class="member-top">
+          <div class="member-logo">NEXT LEVEL<br>GROOMING LOUNGE</div>
+          <div class="member-tier" id="cardTier">BRONZE</div>
+        </div>
+        <div class="member-name" id="memberName">Member</div>
+        <div class="member-number" id="memberNumber">MEMBER NUMBER</div>
+        <div class="member-bottom">
+          <span>CONFIDENCE STARTS HERE</span>
+          <span id="memberSince">MEMBER</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- POINTS -->
+    <section class="card">
+      <h2>My Points</h2>
+      <div class="stats">
+        <div class="stat">
+          <strong id="availablePoints">0</strong>
+          <span>Available points</span>
+        </div>
+        <div class="stat">
+          <strong id="lifetimePoints">0</strong>
+          <span>Lifetime points</span>
+        </div>
+        <div class="stat">
+          <strong id="completedVisits">0</strong>
+          <span>Completed appointments</span>
+        </div>
+      </div>
+      <p class="small" style="margin-top:14px">
+        Available points are what you can spend. Lifetime points track the points
+        you have earned and determine your loyalty tier.
+      </p>
+    </section>
+
+    <!-- TIER PROGRESS -->
+    <section class="card">
+      <h2>My Loyalty Level</h2>
+      <div class="section-title">
+        <div>
+          <h3 id="tierName">Bronze Member</h3>
+          <div class="small" id="tierDescription">Your loyalty journey starts here.</div>
+        </div>
+        <span class="pill" id="nextTierLabel">Silver next</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="tierProgress"></div>
+      </div>
+      <div class="small" id="tierProgressText">0 points earned</div>
+
+      <div class="tier-list">
+        <div class="tier" id="bronzeTier">
+          <strong>BRONZE</strong><span>0–499 points</span>
+        </div>
+        <div class="tier" id="silverTier">
+          <strong>SILVER</strong><span>500–1,499 points</span>
+        </div>
+        <div class="tier" id="goldTier">
+          <strong>GOLD</strong><span>1,500–2,999 points</span>
+        </div>
+        <div class="tier" id="vipTier">
+          <strong>VIP</strong><span>3,000+ points</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW TO EARN -->
+    <section class="card">
+      <h2>How to Earn Points</h2>
+      <div class="row-item">
+        <div>
+          <strong>Every R10 spent</strong>
+          <div class="small">On eligible completed appointments</div>
+        </div>
+        <strong class="positive">2 points</strong>
+      </div>
+      <div class="row-item">
+        <div>
+          <strong>First-visit bonus</strong>
+          <div class="small">For an eligible first visit</div>
+        </div>
+        <strong class="positive">50 points</strong>
+      </div>
+      <div class="row-item">
+        <div>
+          <strong>Successful referral</strong>
+          <div class="small">When your referral qualifies</div>
+        </div>
+        <strong class="positive">100 points</strong>
+      </div>
+      <div class="notice" style="margin-top:13px;margin-bottom:0">
+        Points are awarded through the existing loyalty system. Only completed
+        eligible appointments count. Pending, cancelled or declined bookings
+        do not earn appointment points.
+      </div>
+    </section>
+
+    <!-- REWARDS -->
+    <section class="card">
+      <h2>Available Rewards</h2>
+      <p class="small">Use your available points to redeem rewards.</p>
+      <div id="rewardsList" class="reward-grid"></div>
+    </section>
+
+    <!-- REDEMPTION HISTORY -->
+    <section class="card">
+      <h2>My Redemption History</h2>
+      <div id="redemptionHistory"></div>
+    </section>
+
+    <!-- POINT HISTORY -->
+    <section class="card">
+      <h2>Points Activity</h2>
+      <div id="pointsHistory"></div>
+    </section>
+
+    <!-- REFERRALS -->
+    <section class="card">
+      <h2>Refer a Friend</h2>
+      <p class="small">
+        Share your personal referral code. When a referral qualifies,
+        the referral bonus is recorded in your loyalty account.
+      </p>
+      <div class="referral-code" id="referralCode">LOADING</div>
+      <div class="grid">
+        <button class="btn" id="copyReferral">Copy Referral Code</button>
+        <button class="btn btn-outline" id="shareReferral">Share with a Friend</button>
+      </div>
+      <div style="margin-top:19px">
+        <h3>My Referrals</h3>
+        <div id="referralHistory"></div>
+      </div>
+    </section>
+
+    <!-- PROFILE COMPLETION -->
+    <section class="card">
+      <div class="section-title">
+        <h2>Membership Profile</h2>
+        <span class="pill" id="profilePercent">0% complete</span>
+      </div>
+      <div class="profile-top">
+        <img id="profileAvatar" class="avatar" alt="Profile picture">
+        <div>
+          <strong id="profileDisplayName">Your profile</strong>
+          <div class="small">Complete your profile to meet the loyalty membership requirements.</div>
+        </div>
+      </div>
+
+      <div id="profileChecklist"></div>
+      <div class="progress-track">
+        <div class="progress-fill" id="profileProgress"></div>
+      </div>
+      <p class="small">
+        Update your personal details and profile picture from your account page.
+        Your existing profile editing rules still apply.
+      </p>
+      <a class="btn" href="account.html" style="display:inline-block;text-decoration:none;margin-top:5px">
+        Go to My Account
+      </a>
+    </section>
+
+    <section class="card">
+      <h2>Membership Information</h2>
+      <div class="small">
+        Your membership is linked to your signed-in account. Your points,
+        rewards, referrals and redemptions are loaded from your own Supabase
+        records. Reward redemption is checked securely by the existing
+        database function.
+      </div>
+    </section>
   </div>
-</section>
-
-<!-- POINTS -->
-<section class="card">
-  <h2>My Points</h2>
-
-  <div class="grid">
-    <div class="stat">
-      <strong id="availablePoints">0</strong>
-      <span>AVAILABLE POINTS</span>
-    </div>
-    <div class="stat">
-      <strong id="lifetimePoints">0</strong>
-      <span>LIFETIME POINTS</span>
-    </div>
-  </div>
-
-  <hr style="border-color:#444;margin:20px 0">
-
-  <h3 id="tierHeading">Bronze Member</h3>
-  <p id="tierDescription" class="muted"></p>
-
-  <div class="progress">
-    <div id="tierProgress"></div>
-  </div>
-
-  <div class="row">
-    <span class="muted" id="tierStart">0 points</span>
-    <span class="muted" id="tierTarget">500 points</span>
-  </div>
-
-  <p id="nextTierMessage" class="gold"></p>
-
-  <p class="muted">
-    Earn 2 points for every R10 spent on completed appointments.
-    Points are awarded automatically when your appointment is marked completed.
-  </p>
-</section>
-
-<!-- HOW TO EARN -->
-<section class="card">
-  <h2>How to Earn Points</h2>
-
-  <div class="history">
-    <h3>Earn While You Groom</h3>
-    <p>Earn 2 points for every R10 spent on a completed appointment.</p>
-  </div>
-
-  <div class="history">
-    <h3>First Visit Bonus</h3>
-    <p>Receive 50 bonus points after your first completed visit.</p>
-  </div>
-
-  <div class="history">
-    <h3>Refer a Friend</h3>
-    <p>Receive 100 bonus points when your referral successfully qualifies.</p>
-  </div>
-</section>
-
-<!-- REWARDS -->
-<section class="card">
-  <h2>Available Rewards</h2>
-  <p class="muted">
-    Exchange your available points for rewards.
-    Your points will only be deducted after a successful redemption.
-  </p>
-
-  <div id="rewardsList" class="message">Loading rewards...</div>
-</section>
-
-<!-- REDEMPTION HISTORY -->
-<section class="card">
-  <h2>My Redemptions</h2>
-  <div id="redemptionHistory" class="message">Loading history...</div>
-</section>
-
-<!-- REFERRALS -->
-<section class="card">
-  <h2>Refer a Friend</h2>
-
-  <p class="muted">
-    Share your personal referral code with friends.
-    When a referral successfully qualifies, you receive 100 bonus points.
-  </p>
-
-  <div class="referral-code" id="referralCode">Loading...</div>
-
-  <button id="copyReferral" style="width:100%">
-    COPY REFERRAL CODE
-  </button>
-
-  <div style="margin-top:12px">
-    <button id="shareReferral" style="width:100%">
-      SHARE ON WHATSAPP
-    </button>
-  </div>
-
-  <hr style="border-color:#444;margin:20px 0">
-
-  <h3>My Referrals</h3>
-  <div id="referralHistory" class="message">Loading referrals...</div>
-</section>
-
-<!-- PROFILE COMPLETION -->
-<section class="card">
-  <h2>Profile Completion</h2>
-
-  <p class="muted">
-    Complete your profile to meet the loyalty programme profile requirements.
-  </p>
-
-  <div id="profileChecks"></div>
-
-  <div class="progress">
-    <div id="profileProgress"></div>
-  </div>
-
-  <p id="profilePercentage" class="gold"></p>
-</section>
-
-<!-- POINTS HISTORY -->
-<section class="card">
-  <h2>Points Activity</h2>
-  <div id="pointsHistory" class="message">Loading points activity...</div>
-</section>
-
-<section class="card">
-  <div class="row">
-    <div>
-      <h3>Need Assistance?</h3>
-      <p class="muted">Contact Next Level Grooming Lounge for loyalty assistance.</p>
-    </div>
-  </div>
-  <button id="contactButton" style="width:100%">
-    CONTACT US ON WHATSAPP
-  </button>
-</section>
-
-<section class="card">
-  <button id="refreshButton" style="width:100%">
-    REFRESH MY LOYALTY ACCOUNT
-  </button>
-  <button id="logoutButton" class="logout" style="width:100%;margin-top:10px">
-    LOG OUT
-  </button>
-</section>
-
 </main>
 
-<footer>
-  NEXT LEVEL GROOMING LOUNGE<br>
-  Confidence Starts Here.
-</footer>
-
-</div>
+<footer>Next Level Grooming Lounge · Confidence Starts Here</footer>
 
 <script>
 /* ==========================================
    SUPABASE CONNECTION
+   Uses the existing project configuration.
 ========================================== */
 
-const SUPABASE_URL="https://teimbezoinfqlrxczafj.supabase.co";
-const SUPABASE_KEY="sb_publishable_3lJOm65rVFwElFqLN-Gxzw_LdYacHZP";
+const SUPABASE_URL = "https://teimbezoinfqlrxczafj.supabase.co";
+const SUPABASE_KEY = "sb_publishable_3lJOm65rVFwElFqLN-Gxzw_LdYacHZP";
+const PROFILE_BUCKET = "customer-profile-pictures";
 
-const supabaseClient=window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-const PROFILE_BUCKET="customer-profile-pictures";
-const MANAGER_WHATSAPP="27635892769";
+let currentUser = null;
+let currentProfile = null;
+let currentMembership = null;
+let currentReferralCode = "";
 
-let currentUser=null;
-let customerProfile=null;
-let membership=null;
-let rewards=[];
-let ledger=[];
-let redemptions=[];
-let referrals=[];
-let availablePoints=0;
-let lifetimePoints=0;
-let loading=false;
+const $ = id => document.getElementById(id);
 
-/* ==========================================
-   GENERAL HELPERS
-========================================== */
+function showMessage(message, type="notice") {
+  const box = $("message");
+  box.textContent = message;
+  box.className = "notice " + (type === "error" ? "error" : type === "success" ? "success" : "");
+  box.style.display = "block";
+}
 
-const $=id=>document.getElementById(id);
+function hideMessage() {
+  $("message").style.display = "none";
+}
 
-function escapeHTML(value){
-  return String(value??"").replace(/[&<>"']/g,char=>({
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
     "&":"&amp;",
     "<":"&lt;",
     ">":"&gt;",
@@ -357,743 +513,450 @@ function escapeHTML(value){
   })[char]);
 }
 
-function showMessage(text,isError=false){
-  $("message").hidden=false;
-  $("message").className="card message"+(isError?" error":"");
-  $("message").textContent=text;
-}
-
-function formatDate(value){
-  if(!value) return "Not provided";
-
-  const date=new Date(value);
-
-  if(isNaN(date.getTime())) return String(value);
-
-  return date.toLocaleDateString("en-ZA",{
-    day:"numeric",
-    month:"long",
-    year:"numeric"
+function formatDate(value) {
+  if (!value) return "—";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "—";
+  return date.toLocaleDateString("en-ZA", {
+    day:"numeric", month:"short", year:"numeric"
   });
 }
 
-function formatDateTime(value){
-  if(!value) return "Not available";
-
-  const date=new Date(value);
-
-  if(isNaN(date.getTime())) return "Not available";
-
-  return date.toLocaleString("en-ZA");
+function number(value) {
+  return Number(value || 0).toLocaleString("en-ZA");
 }
 
-function numberFormat(value){
-  return Number(value||0).toLocaleString("en-ZA");
-}
-
-function whatsappNumber(phone){
-  let number=String(phone||"").replace(/\D/g,"");
-
-  if(number.startsWith("0")){
-    number="27"+number.substring(1);
-  }else if(number.length===9){
-    number="27"+number;
+function tierFor(points) {
+  if (points >= 3000) {
+    return {name:"VIP", next:null, floor:3000, ceiling:3000,
+      description:"You have reached VIP status."};
   }
-
-  return number;
-}
-
-function showDashboard(){
-  $("message").hidden=true;
-  $("loyaltyDashboard").hidden=false;
-}
-
-/* ==========================================
-   MEMBERSHIP ACTIVATION
-========================================== */
-
-async function loadMembership(){
-
-  let {data,error}=await supabaseClient
-    .from("loyalty_memberships")
-    .select("*")
-    .eq("customer_id",currentUser.id)
-    .maybeSingle();
-
-  if(error) throw error;
-
-  if(!data){
-
-    const {error:activationError}=await supabaseClient
-      .rpc("activate_loyalty_membership");
-
-    if(activationError) throw activationError;
-
-    const result=await supabaseClient
-      .from("loyalty_memberships")
-      .select("*")
-      .eq("customer_id",currentUser.id)
-      .maybeSingle();
-
-    if(result.error) throw result.error;
-
-    data=result.data;
+  if (points >= 1500) {
+    return {name:"Gold", next:"VIP", floor:1500, ceiling:3000,
+      description:"You are enjoying Gold membership."};
   }
-
-  if(!data){
-    throw new Error("Your membership could not be activated. Please contact the lounge.");
+  if (points >= 500) {
+    return {name:"Silver", next:"Gold", floor:500, ceiling:1500,
+      description:"You have reached Silver membership."};
   }
-
-  membership=data;
+  return {name:"Bronze", next:"Silver", floor:0, ceiling:500,
+    description:"Your loyalty journey starts here."};
 }
 
-/* ==========================================
-   LOAD CUSTOMER DATA
-========================================== */
+function renderTier(lifetime) {
+  const tier = tierFor(lifetime);
+  $("cardTier").textContent = tier.name.toUpperCase();
+  $("tierName").textContent = tier.name + " Member";
+  $("tierDescription").textContent = tier.description;
 
-async function loadCustomerData(){
-
-  const {data,error}=await supabaseClient
-    .from("customer_profiles")
-    .select("*")
-    .eq("id",currentUser.id)
-    .maybeSingle();
-
-  if(error) throw error;
-
-  if(!data){
-    throw new Error("Your customer profile could not be found.");
-  }
-
-  customerProfile=data;
-}
-
-/* ==========================================
-   LOAD POINTS LEDGER
-========================================== */
-
-async function loadPoints(){
-
-  const {data,error}=await supabaseClient
-    .from("loyalty_points_ledger")
-    .select("*")
-    .eq("customer_id",currentUser.id)
-    .order("created_at",{ascending:false});
-
-  if(error) throw error;
-
-  ledger=data||[];
-
-  availablePoints=ledger.reduce(
-    (total,item)=>total+Number(item.points_change||0),0
-  );
-
-  // Lifetime points count earned points only.
-  // Reward redemptions do not reduce lifetime points.
-  lifetimePoints=ledger.reduce(
-    (total,item)=>total+
-      Math.max(0,Number(item.points_change||0)),0
-  );
-}
-
-/* ==========================================
-   LOAD ACTIVE REWARDS
-========================================== */
-
-async function loadRewards(){
-
-  const {data,error}=await supabaseClient
-    .from("loyalty_rewards")
-    .select("*")
-    .eq("active",true)
-    .order("points_cost",{ascending:true});
-
-  if(error) throw error;
-
-  rewards=data||[];
-}
-
-/* ==========================================
-   LOAD REDEMPTIONS
-========================================== */
-
-async function loadRedemptions(){
-
-  const {data,error}=await supabaseClient
-    .from("loyalty_redemptions")
-    .select("*")
-    .eq("customer_id",currentUser.id)
-    .order("created_at",{ascending:false});
-
-  if(error) throw error;
-
-  redemptions=data||[];
-}
-
-/* ==========================================
-   LOAD REFERRALS
-========================================== */
-
-async function loadReferrals(){
-
-  const {data,error}=await supabaseClient
-    .from("loyalty_referrals")
-    .select("*")
-    .eq("referrer_customer_id",currentUser.id)
-    .order("created_at",{ascending:false});
-
-  if(error) throw error;
-
-  referrals=data||[];
-}
-
-/* ==========================================
-   DISPLAY MEMBERSHIP CARD
-========================================== */
-
-function getTier(points){
-
-  if(points>=3000){
-    return {
-      name:"VIP",
-      minimum:3000,
-      next:null,
-      description:"You have reached VIP membership status."
-    };
-  }
-
-  if(points>=1500){
-    return {
-      name:"GOLD",
-      minimum:1500,
-      next:3000,
-      description:"Enjoy your Gold membership status."
-    };
-  }
-
-  if(points>=500){
-    return {
-      name:"SILVER",
-      minimum:500,
-      next:1500,
-      description:"Keep earning points towards Gold."
-    };
-  }
-
-  return {
-    name:"BRONZE",
-    minimum:0,
-    next:500,
-    description:"Start earning points towards Silver."
-  };
-}
-
-function displayMembership(){
-
-  const profile=customerProfile;
-
-  $("memberName").textContent=profile.full_name||"Loyalty Member";
-
-  $("clientNumber").textContent=
-    membership.client_number||
-    profile.client_number||
-    "Membership active";
-
-  $("memberSince").textContent=
-    formatDate(membership.activated_at);
-
-  $("availablePoints").textContent=numberFormat(availablePoints);
-  $("lifetimePoints").textContent=numberFormat(lifetimePoints);
-
-  const tier=getTier(lifetimePoints);
-
-  $("tierBadge").textContent=tier.name;
-  $("tierHeading").textContent=tier.name+" MEMBER";
-  $("tierDescription").textContent=tier.description;
-
-  $("tierStart").textContent=numberFormat(tier.minimum)+" points";
-
-  if(tier.next){
-
-    const percentage=Math.min(
-      100,
-      ((lifetimePoints-tier.minimum)/
-      (tier.next-tier.minimum))*100
-    );
-
-    $("tierProgress").style.width=percentage+"%";
-    $("tierTarget").textContent=numberFormat(tier.next)+" points";
-
-    $("nextTierMessage").textContent=
-      numberFormat(Math.max(0,tier.next-lifetimePoints))+
-      " more lifetime points to reach the next tier.";
-
-  }else{
-
-    $("tierProgress").style.width="100%";
-    $("tierTarget").textContent="MAXIMUM TIER";
-    $("nextTierMessage").textContent=
-      "Congratulations! You have achieved VIP status.";
-  }
-}
-
-/* ==========================================
-   DISPLAY REWARDS
-========================================== */
-
-function displayRewards(){
-
-  const container=$("rewardsList");
-  container.replaceChildren();
-
-  if(rewards.length===0){
-    container.innerHTML=
-      '<p class="empty">No active rewards are available right now.</p>';
-    return;
-  }
-
-  rewards.forEach(reward=>{
-
-    const cost=Number(reward.points_cost||0);
-    const canRedeem=availablePoints>=cost;
-
-    const card=document.createElement("div");
-    card.className="reward";
-
-    card.innerHTML=`
-      <h3>${escapeHTML(reward.reward_name)}</h3>
-      <p>${escapeHTML(reward.description||"Exclusive loyalty reward.")}</p>
-      <p class="points-cost">${numberFormat(cost)} POINTS</p>
-      <p>${canRedeem
-        ? "You have enough points to redeem this reward."
-        : "You need "+numberFormat(cost-availablePoints)+" more points."
-      }</p>
-      <button ${canRedeem?"":"disabled"}>
-        ${canRedeem?"REDEEM REWARD":"NOT ENOUGH POINTS"}
-      </button>
-    `;
-
-    card.querySelector("button").addEventListener("click",()=>{
-      redeemReward(reward);
-    });
-
-    container.appendChild(card);
+  ["bronze","silver","gold","vip"].forEach(name => {
+    $(name + "Tier").classList.toggle("active",
+      name.toLowerCase() === tier.name.toLowerCase());
   });
-}
 
-/* ==========================================
-   REDEEM REWARD
-========================================== */
-
-async function redeemReward(reward){
-
-  const cost=Number(reward.points_cost||0);
-
-  if(availablePoints<cost){
-    alert("You do not have enough available points.");
-    return;
-  }
-
-  const confirmed=confirm(
-    "Redeem "+reward.reward_name+
-    " for "+cost+" points?\n\n"+
-    "Your available points will be deducted."
-  );
-
-  if(!confirmed) return;
-
-  const buttons=document.querySelectorAll("#rewardsList button");
-
-  buttons.forEach(button=>button.disabled=true);
-
-  try{
-
-    // Existing secure Supabase function.
-    // The function uses auth.uid() and handles the
-    // points deduction and redemption transaction.
-
-    const {data,error}=await supabaseClient.rpc(
-      "redeem_loyalty_reward",
-      {p_reward_id:reward.id}
-    );
-
-    if(error) throw error;
-
-    alert(
-      "Your reward redemption was submitted successfully!\n"+
-      "Redemption reference: "+String(data||"Created")
-    );
-
-    await refreshLoyalty();
-
-  }catch(error){
-
-    console.error(error);
-
-    alert("Unable to redeem reward: "+error.message);
-
-    buttons.forEach(button=>button.disabled=false);
+  if (tier.next) {
+    const progress = Math.max(0, Math.min(100,
+      ((lifetime - tier.floor) / (tier.ceiling - tier.floor)) * 100));
+    $("tierProgress").style.width = progress + "%";
+    $("nextTierLabel").textContent = tier.next + " next";
+    $("tierProgressText").textContent =
+      number(lifetime) + " lifetime points · " +
+      number(tier.ceiling - lifetime) + " points to " + tier.next;
+  } else {
+    $("tierProgress").style.width = "100%";
+    $("nextTierLabel").textContent = "Top tier";
+    $("tierProgressText").textContent = "You have reached the highest tier.";
   }
 }
 
-/* ==========================================
-   REDEMPTION HISTORY
-========================================== */
+function renderProfile(profile, authUser) {
+  const fullName = profile?.full_name || "";
+  const phone = profile?.phone || "";
+  const dob = profile?.date_of_birth || "";
+  const email = authUser?.email || "";
+  const avatarPath = profile?.avatar_path || "";
 
-function displayRedemptions(){
-
-  const container=$("redemptionHistory");
-  container.replaceChildren();
-
-  if(redemptions.length===0){
-    container.innerHTML=
-      '<p class="empty">You have not redeemed any rewards yet.</p>';
-    return;
-  }
-
-  redemptions.forEach(item=>{
-
-    const reward=rewards.find(r=>r.id===item.reward_id);
-
-    // The reward may no longer be active.
-    const card=document.createElement("div");
-    card.className="history";
-
-    card.innerHTML=`
-      <h3>${escapeHTML(
-        reward?.reward_name||"Loyalty reward"
-      )}</h3>
-      <p>Points spent: ${numberFormat(item.points_spent)}</p>
-      <p>Status: ${escapeHTML(item.status||"Pending")}</p>
-      <p>Date: ${escapeHTML(formatDateTime(item.created_at))}</p>
-    `;
-
-    container.appendChild(card);
-  });
-}
-
-/* ==========================================
-   REFERRAL PROGRAMME
-========================================== */
-
-function displayReferrals(){
-
-  $("referralCode").textContent=
-    membership.referral_code||"No referral code available";
-
-  const container=$("referralHistory");
-  container.replaceChildren();
-
-  if(referrals.length===0){
-    container.innerHTML=
-      '<p class="empty">You have not referred anyone yet.</p>';
-    return;
-  }
-
-  referrals.forEach(referral=>{
-
-    const card=document.createElement("div");
-    card.className="referral-item";
-
-    card.innerHTML=`
-      <h3>Referral</h3>
-      <p>Code: ${escapeHTML(referral.referral_code)}</p>
-      <p>Status: ${escapeHTML(referral.status)}</p>
-      <p>Submitted: ${escapeHTML(formatDateTime(referral.created_at))}</p>
-      <p>Qualified: ${escapeHTML(
-        referral.qualified_at
-          ? formatDateTime(referral.qualified_at)
-          : "Awaiting qualification"
-      )}</p>
-    `;
-
-    container.appendChild(card);
-  });
-}
-
-/* ==========================================
-   REFERRAL BUTTONS
-========================================== */
-
-$("copyReferral").addEventListener("click",async()=>{
-
-  const code=membership?.referral_code;
-
-  if(!code){
-    alert("Your referral code is not available.");
-    return;
-  }
-
-  try{
-    await navigator.clipboard.writeText(code);
-    alert("Referral code copied successfully!");
-  }catch(error){
-    prompt("Copy your referral code:",code);
-  }
-});
-
-$("shareReferral").addEventListener("click",()=>{
-
-  const code=membership?.referral_code;
-
-  if(!code){
-    alert("Your referral code is not available.");
-    return;
-  }
-
-  const message=
-    "Join me at Next Level Grooming Lounge!\n\n"+
-    "Use my referral code: "+code+
-    "\n\nConfidence Starts Here.";
-
-  window.open(
-    "https://wa.me/?text="+encodeURIComponent(message),
-    "_blank"
-  );
-});
-
-/* ==========================================
-   PROFILE COMPLETION
-========================================== */
-
-function displayProfileCompletion(){
-
-  const profile=customerProfile;
-
-  const checks=[
-    {
-      label:"Full name provided",
-      complete:!!profile.full_name
-    },
-    {
-      label:"Mobile number provided",
-      complete:!!profile.phone
-    },
-    {
-      label:"Email address recorded",
-      complete:!!(currentUser.email)
-    },
-    {
-      label:"Date of birth provided",
-      complete:!!profile.date_of_birth
-    },
-    {
-      label:"Profile picture uploaded",
-      complete:!!profile.avatar_path
-    }
+  const requirements = [
+    ["Full name", !!fullName],
+    ["Mobile number", !!phone],
+    ["Confirmed email", !!email && !!authUser?.email_confirmed_at],
+    ["Date of birth", !!dob],
+    ["Profile picture", !!avatarPath]
   ];
 
-  const container=$("profileChecks");
-  container.replaceChildren();
+  const completed = requirements.filter(item => item[1]).length;
+  const percent = Math.round((completed / requirements.length) * 100);
 
-  checks.forEach(check=>{
+  $("profilePercent").textContent = percent + "% complete";
+  $("profileProgress").style.width = percent + "%";
+  $("profileDisplayName").textContent = fullName || "Your profile";
 
-    const item=document.createElement("div");
+  $("profileChecklist").innerHTML = requirements.map(item => `
+    <div class="profile-check">
+      <span>${escapeHTML(item[0])}</span>
+      <span class="${item[1] ? "check" : "incomplete"}">
+        ${item[1] ? "✓ Complete" : "Not complete"}
+      </span>
+    </div>
+  `).join("");
 
-    item.className="check "+(check.complete?"yes":"no");
+  $("memberName").textContent = fullName || "Loyalty Member";
 
-    item.textContent=
-      (check.complete?"✓ ":"✗ ")+check.label;
-
-    container.appendChild(item);
-  });
-
-  const completed=checks.filter(item=>item.complete).length;
-
-  const percentage=Math.round(
-    completed/checks.length*100
-  );
-
-  $("profileProgress").style.width=percentage+"%";
-
-  $("profilePercentage").textContent=
-    completed+" of "+checks.length+
-    " profile requirements completed ("+percentage+"%).";
+  $("profileAvatar").src = "";
+  if (avatarPath) {
+    db.storage.from(PROFILE_BUCKET)
+      .createSignedUrl(avatarPath, 3600)
+      .then(({data, error}) => {
+        if (!error && data?.signedUrl) {
+          $("profileAvatar").src = data.signedUrl;
+        }
+      });
+  }
 }
 
-/* ==========================================
-   POINTS ACTIVITY
-========================================== */
+async function loadMembership() {
+  let {data, error} = await db
+    .from("loyalty_memberships")
+    .select("customer_id,client_number,activated_at,referral_code")
+    .eq("customer_id", currentUser.id)
+    .maybeSingle();
 
-function displayPointsHistory(){
+  if (error) throw error;
 
-  const container=$("pointsHistory");
-  container.replaceChildren();
+  if (!data) {
+    const activation = await db.rpc("activate_loyalty_membership");
+    if (activation.error) throw activation.error;
 
-  if(ledger.length===0){
-    container.innerHTML=
-      '<p class="empty">No points activity recorded yet.</p>';
+    const retry = await db
+      .from("loyalty_memberships")
+      .select("customer_id,client_number,activated_at,referral_code")
+      .eq("customer_id", currentUser.id)
+      .maybeSingle();
+
+    if (retry.error) throw retry.error;
+    data = retry.data;
+  }
+
+  if (!data) {
+    throw new Error("Your membership could not be loaded. Please contact the lounge.");
+  }
+
+  currentMembership = data;
+  currentReferralCode = data.referral_code || "";
+
+  $("memberNumber").textContent =
+    data.client_number ? "CLIENT NO. " + data.client_number : "MEMBER";
+  $("memberSince").textContent = "SINCE " + formatDate(data.activated_at).toUpperCase();
+  $("referralCode").textContent = currentReferralCode || "NOT AVAILABLE";
+}
+
+async function loadProfile() {
+  const {data, error} = await db
+    .from("customer_profiles")
+    .select("id,full_name,phone,date_of_birth,avatar_path,client_number")
+    .eq("id", currentUser.id)
+    .maybeSingle();
+
+  if (error) throw error;
+  currentProfile = data || {};
+  renderProfile(currentProfile, currentUser);
+}
+
+async function loadLedger() {
+  const {data, error} = await db
+    .from("loyalty_points_ledger")
+    .select("id,points_change,entry_type,description,created_at")
+    .eq("customer_id", currentUser.id)
+    .order("created_at", {ascending:false});
+
+  if (error) throw error;
+
+  const ledger = data || [];
+  const available = ledger.reduce((sum, item) =>
+    sum + Number(item.points_change || 0), 0);
+
+  // Lifetime points count earned points only.
+  // Redemptions and other negative ledger entries do not lower lifetime points.
+  const lifetime = ledger.reduce((sum, item) =>
+    sum + Math.max(0, Number(item.points_change || 0)), 0);
+
+  $("availablePoints").textContent = number(available);
+  $("lifetimePoints").textContent = number(lifetime);
+
+  renderTier(lifetime);
+  renderLedger(ledger);
+
+  return {available, lifetime, ledger};
+}
+
+function renderLedger(ledger) {
+  if (!ledger.length) {
+    $("pointsHistory").innerHTML =
+      '<div class="empty">Your points activity will appear here.</div>';
     return;
   }
 
-  ledger.forEach(item=>{
-
-    const points=Number(item.points_change||0);
-
-    const card=document.createElement("div");
-    card.className="history";
-
-    const amount=(points>0?"+":"")+numberFormat(points);
-
-    card.innerHTML=`
-      <div class="row">
-        <h3>${escapeHTML(item.entry_type||"Points activity")}</h3>
-        <strong class="${points>=0?"success":"error"}">
-          ${amount} points
+  $("pointsHistory").innerHTML = ledger.map(item => {
+    const points = Number(item.points_change || 0);
+    const positive = points >= 0;
+    return `
+      <div class="row-item">
+        <div>
+          <strong>${escapeHTML(item.description || item.entry_type || "Points activity")}</strong>
+          <div class="small">${formatDate(item.created_at)}</div>
+        </div>
+        <strong class="${positive ? "positive" : "negative"}">
+          ${positive ? "+" : ""}${number(points)} pts
         </strong>
-      </div>
-      <p>${escapeHTML(item.description||"Points transaction")}</p>
-      <p>${escapeHTML(formatDateTime(item.created_at))}</p>
-    `;
+      </div>`;
+  }).join("");
+}
 
-    container.appendChild(card);
+async function loadRewards(balance) {
+  const {data, error} = await db
+    .from("loyalty_rewards")
+    .select("id,code,reward_name,description,points_cost,active")
+    .eq("active", true)
+    .order("points_cost", {ascending:true});
+
+  if (error) throw error;
+
+  const rewards = data || [];
+
+  if (!rewards.length) {
+    $("rewardsList").innerHTML =
+      '<div class="empty">There are no active rewards available right now. Please check again soon.</div>';
+    return;
+  }
+
+  $("rewardsList").innerHTML = rewards.map(reward => {
+    const cost = Number(reward.points_cost || 0);
+    const canRedeem = balance >= cost;
+    return `
+      <article class="reward">
+        <h3>${escapeHTML(reward.reward_name)}</h3>
+        <p>${escapeHTML(reward.description || "A reward from Next Level Grooming Lounge.")}</p>
+        <div class="cost">${number(cost)} points</div>
+        <button class="btn redeem-button"
+          data-reward-id="${escapeHTML(reward.id)}"
+          ${canRedeem ? "" : "disabled"}>
+          ${canRedeem ? "Redeem Reward" : "Not enough points"}
+        </button>
+      </article>`;
+  }).join("");
+
+  document.querySelectorAll(".redeem-button").forEach(button => {
+    button.addEventListener("click", () => redeemReward(button.dataset.rewardId, button));
   });
 }
 
-/* ==========================================
-   CONTACT
-========================================== */
-
-$("contactButton").addEventListener("click",()=>{
-
-  const phone=whatsappNumber(MANAGER_WHATSAPP);
-
-  const message=
-    "Hello Next Level Grooming Lounge. "+
-    "I need assistance with my loyalty membership.";
-
-  window.open(
-    "https://wa.me/"+phone+
-    "?text="+encodeURIComponent(message),
-    "_blank"
+async function redeemReward(rewardId, button) {
+  const confirmed = confirm(
+    "Redeem this reward using your available loyalty points?"
   );
-});
+  if (!confirmed) return;
 
-/* ==========================================
-   REFRESH ACCOUNT
-========================================== */
+  button.disabled = true;
+  button.textContent = "Processing...";
 
-async function refreshLoyalty(){
+  try {
+    const {data, error} = await db.rpc("redeem_loyalty_reward", {
+      p_reward_id: rewardId
+    });
 
-  if(loading) return;
+    if (error) throw error;
 
-  loading=true;
-
-  $("refreshButton").disabled=true;
-  $("refreshButton").textContent="REFRESHING...";
-
-  try{
-
-    await loadMembership();
-    await loadCustomerData();
-
-    await Promise.all([
-      loadPoints(),
-      loadRewards(),
-      loadRedemptions(),
-      loadReferrals()
-    ]);
-
-    displayMembership();
-    displayRewards();
-    displayRedemptions();
-    displayReferrals();
-    displayProfileCompletion();
-    displayPointsHistory();
-
-    showDashboard();
-
-  }catch(error){
-
-    console.error(error);
-
-    showMessage(
-      "Unable to load your loyalty account: "+error.message,
-      true
-    );
-
-  }finally{
-
-    loading=false;
-    $("refreshButton").disabled=false;
-    $("refreshButton").textContent="REFRESH MY LOYALTY ACCOUNT";
+    showMessage("Your redemption has been submitted successfully.", "success");
+    await refreshLoyalty();
+  } catch (error) {
+    console.error("Redemption error:", error);
+    showMessage(error.message || "We could not process your redemption. Please try again.", "error");
+    button.disabled = false;
+    button.textContent = "Redeem Reward";
   }
 }
 
-/* ==========================================
-   AUTHENTICATION
-========================================== */
+async function loadRedemptions() {
+  const {data, error} = await db
+    .from("loyalty_redemptions")
+    .select("id,reward_id,points_spent,status,created_at")
+    .eq("customer_id", currentUser.id)
+    .order("created_at", {ascending:false});
 
-async function initialise(){
+  if (error) throw error;
 
-  try{
+  const redemptions = data || [];
 
-    const {
-      data:{user},
-      error
-    }=await supabaseClient.auth.getUser();
+  if (!redemptions.length) {
+    $("redemptionHistory").innerHTML =
+      '<div class="empty">You have not redeemed a reward yet.</div>';
+    return;
+  }
 
-    if(error) throw error;
+  const rewardIds = [...new Set(redemptions.map(item => item.reward_id).filter(Boolean))];
+  let rewardMap = {};
 
-    if(!user){
-      window.location.href="login.html";
+  if (rewardIds.length) {
+    const rewardsResult = await db
+      .from("loyalty_rewards")
+      .select("id,reward_name")
+      .in("id", rewardIds);
+
+    if (!rewardsResult.error) {
+      (rewardsResult.data || []).forEach(reward => {
+        rewardMap[reward.id] = reward.reward_name;
+      });
+    }
+  }
+
+  $("redemptionHistory").innerHTML = redemptions.map(item => `
+    <div class="row-item">
+      <div>
+        <strong>${escapeHTML(rewardMap[item.reward_id] || "Loyalty reward")}</strong>
+        <div class="small">${formatDate(item.created_at)} · ${escapeHTML(item.status || "Submitted")}</div>
+      </div>
+      <strong class="negative">-${number(item.points_spent)} pts</strong>
+    </div>
+  `).join("");
+}
+
+async function loadReferrals() {
+  const {data, error} = await db
+    .from("loyalty_referrals")
+    .select("id,referred_customer_id,status,created_at,qualified_at")
+    .eq("referrer_customer_id", currentUser.id)
+    .order("created_at", {ascending:false});
+
+  if (error) throw error;
+
+  const referrals = data || [];
+
+  if (!referrals.length) {
+    $("referralHistory").innerHTML =
+      '<div class="empty">You have not referred anyone yet. Share your code to get started.</div>';
+    return;
+  }
+
+  $("referralHistory").innerHTML = referrals.map(item => `
+    <div class="row-item">
+      <div>
+        <strong>Referral</strong>
+        <div class="small">
+          Joined: ${formatDate(item.created_at)}
+          ${item.qualified_at ? " · Qualified: " + formatDate(item.qualified_at) : ""}
+        </div>
+      </div>
+      <span class="pill">${escapeHTML(item.status || "Pending")}</span>
+    </div>
+  `).join("");
+}
+
+async function loadCompletedAppointments() {
+  const {data, error} = await db
+    .from("bookings")
+    .select("id,status")
+    .eq("customer_id", currentUser.id)
+    .eq("status", "completed");
+
+  if (error) {
+    console.warn("Could not load completed appointment count:", error);
+    $("completedVisits").textContent = "—";
+    return;
+  }
+
+  $("completedVisits").textContent = number((data || []).length);
+}
+
+async function refreshLoyalty() {
+  hideMessage();
+
+  const totals = await loadLedger();
+  await loadRewards(totals.available);
+  await loadRedemptions();
+  await loadReferrals();
+  await loadCompletedAppointments();
+}
+
+async function copyReferral() {
+  if (!currentReferralCode) {
+    showMessage("Your referral code is not available yet.", "error");
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(currentReferralCode);
+    showMessage("Referral code copied. Share it with your friends!", "success");
+  } catch {
+    const input = document.createElement("textarea");
+    input.value = currentReferralCode;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand("copy");
+    input.remove();
+    showMessage("Referral code copied.", "success");
+  }
+}
+
+async function shareReferral() {
+  if (!currentReferralCode) {
+    showMessage("Your referral code is not available yet.", "error");
+    return;
+  }
+
+  const message =
+    "Join me at Next Level Grooming Lounge! Use my referral code: " +
+    currentReferralCode;
+
+  if (navigator.share) {
+    try {
+      await navigator.share({title:"Next Level Grooming Lounge", text:message});
+    } catch (error) {
+      if (error.name !== "AbortError") showMessage("Unable to open sharing.", "error");
+    }
+  } else {
+    await copyReferral();
+  }
+}
+
+async function startPage() {
+  try {
+    const {data, error} = await db.auth.getSession();
+    if (error) throw error;
+
+    currentUser = data.session?.user;
+
+    if (!currentUser) {
+      window.location.replace("login.html");
       return;
     }
 
-    currentUser=user;
-
+    await loadProfile();
+    await loadMembership();
     await refreshLoyalty();
 
-  }catch(error){
+    $("loading").style.display = "none";
+    $("loyaltyContent").style.display = "block";
 
-    console.error(error);
-
+  } catch (error) {
+    console.error("Loyalty page error:", error);
+    $("loading").style.display = "none";
     showMessage(
-      "Unable to open your loyalty account: "+error.message,
-      true
+      error.message || "We could not load your loyalty account. Please refresh the page.",
+      "error"
     );
   }
 }
 
-/* ==========================================
-   LOG OUT
-========================================== */
+$("copyReferral").addEventListener("click", copyReferral);
+$("shareReferral").addEventListener("click", shareReferral);
 
-$("logoutButton").addEventListener("click",async()=>{
-
-  const confirmed=confirm("Are you sure you want to log out?");
-
-  if(!confirmed) return;
-
-  const {error}=await supabaseClient.auth.signOut();
-
-  if(error){
-    alert(error.message);
-    return;
-  }
-
-  window.location.href="login.html";
-});
-
-/* ==========================================
-   AUTOMATIC REFRESH
-========================================== */
-
-document.addEventListener("visibilitychange",()=>{
-
-  if(
-    document.visibilityState==="visible" &&
-    currentUser &&
-    !loading
-  ){
-    refreshLoyalty();
+db.auth.onAuthStateChange((event, session) => {
+  if (event === "SIGNED_OUT" || !session) {
+    window.location.replace("login.html");
   }
 });
 
-$("refreshButton").addEventListener("click",refreshLoyalty);
-
-initialise();
-
+startPage();
 </script>
 </body>
 </html>
